@@ -69,7 +69,7 @@ func cleanupFiles() {
 	}
 	for _, f := range files {
 		if err := os.Remove(f); err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 	}
 }
