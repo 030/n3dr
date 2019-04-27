@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/savaki/jq"
 	log "github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
+	"github.com/svenfuchs/jq"
+
 	"io/ioutil"
 	"net/http"
 )
@@ -30,8 +30,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		// bodyString := string(bodyBytes)
-		// log.Info(bodyString)
+		bodyString := string(bodyBytes)
+		log.Info(bodyString)
 
 		// op, _ := jq.Parse(".continuationToken")
 		// value, _ := op.Apply(bodyBytes)
@@ -41,7 +41,8 @@ func main() {
 		// value2, _ := op2.Apply(bodyBytes)
 		// fmt.Println(string(value2))
 
-		op, err := jq.Parse(".items.[1].downloadUrl") // create an Op
+		op, err := jq.Parse(".items[].downloadUrl") // create an Op
+		// op, err := jq.Parse(".continuationToken")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -53,13 +54,6 @@ func main() {
 		}
 		fmt.Println(string(value))
 
-		viper.SetConfigType("json") // Need to explicitly set this to json
-		err2 := viper.ReadConfig(resp.Body)
-		if err2 != nil {
-			log.Fatal(err)
-		}
-
-		fmt.Println(viper.Get("downloadUrl"))
 	}
 
 }
