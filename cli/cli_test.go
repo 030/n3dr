@@ -155,9 +155,4 @@ func TestSum(t *testing.T) {
 	//curl -X GET "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases" -H  "accept: application/json" | jq .items[].downloadUrl | wc -l
 	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
 	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
-
-	total := Sum(5, 5)
-	if total != 10 {
-		t.Errorf("Sum was incorrect, got: %d, want: %d.", total, 10)
-	}
 }
