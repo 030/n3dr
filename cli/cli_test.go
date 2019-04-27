@@ -106,8 +106,8 @@ func postArtifacts() {
 	}
 }
 
-func cleanupFiles() {
-	files, err := filepath.Glob("file*")
+func cleanupFiles(re string) {
+	files, err := filepath.Glob(re)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -144,7 +144,7 @@ func downloadArtifact(repository string, f string, version string, extension str
 
 	// retrieved somewhere else
 	body, err := ioutil.ReadAll(resp.Body)
-	createArtifact(f+"-"+version+"-downloaded."+extension, string(body))
+	createArtifact("downloaded-"+f+"-"+version+"."+extension, string(body))
 }
 
 func fileExists(f string) bool {
@@ -160,8 +160,8 @@ func TestSum(t *testing.T) {
 	available()
 	pongAvailable()
 	postArtifacts()
-	defer cleanupFiles()
-	defer cleanup()
+	defer cleanupFiles("file*")
+
 	//get all downloadUrls
 	//curl -X GET "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases" -H  "accept: application/json" | jq .items[].downloadUrl | wc -l
 }
@@ -170,10 +170,12 @@ func TestDownloadedFiles(t *testing.T) {
 	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
 	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
 
-	files := []string{"file20-1.0.0-downloaded.pom", "file20-1.0.0-downloaded.jar"}
+	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
 	for _, f := range files {
 		if !fileExists(f) {
 			t.Errorf("File %s should exist, but does not.", f)
 		}
 	}
+	defer cleanupFiles("downloaded-*")
+	defer cleanup()
 }
