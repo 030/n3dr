@@ -1,7 +1,10 @@
 package cli
 
 import (
+	"os"
 	"os/exec"
+	"path/filepath"
+	"strconv"
 	"testing"
 
 	"github.com/030/go-utils"
@@ -22,11 +25,52 @@ func available() {
 	}
 }
 
-func submitArtifacts() {
-	cmd := exec.Command("bash", "-c", "curl -u admin:admin123 -X POST \"http://localhost:8081/service/rest/v1/components?repository=maven-releases\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@5.1.6.RELEASE.pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@5.1.6.RELEASE.jar\" -F \"maven2.asset2.extension=jar\"")
+func submitArtifact(f string) {
+	cmd := exec.Command("bash", "-c", "curl -u admin:admin123 -X POST \"http://localhost:8081/service/rest/v1/components?repository=maven-releases\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@file"+f+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@file"+f+".jar\" -F \"maven2.asset2.extension=jar\"")
 	stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
+	}
+}
+
+func createArtifact(f string, content string) {
+	file, err := os.Create(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file.WriteString(content)
+}
+
+func createPOM(f string) {
+	createArtifact("file"+f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+f+"</groupId>\n<artifactId>file"+f+"</artifactId>\n<version>1.0.0</version>\n</project>")
+}
+
+func createJAR(f string) {
+	createArtifact("file"+f+".jar", "some-content")
+}
+
+func createArtifactsAndSubmit(f string) {
+	createPOM(f)
+	createJAR(f)
+	submitArtifact(f)
+}
+
+func postArtifacts() {
+	for i := 1; i <= 100; i++ {
+		createArtifactsAndSubmit(strconv.Itoa(i))
+	}
+}
+
+func cleanupFiles() {
+	files, err := filepath.Glob("file*")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, f := range files {
+		if err := os.Remove(f); err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -41,7 +85,8 @@ func cleanup() {
 func TestSum(t *testing.T) {
 	initializer()
 	available()
-	submitArtifacts()
+	postArtifacts()
+	cleanupFiles()
 	cleanup()
 
 	total := Sum(5, 5)
