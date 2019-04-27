@@ -147,14 +147,6 @@ func downloadArtifact(repository string, f string, version string, extension str
 	createArtifact("downloaded-"+f+"-"+version+"."+extension, string(body))
 }
 
-func fileExists(f string) bool {
-	_, err := os.Stat(f)
-	if err != nil {
-		return false
-	}
-	return true
-}
-
 func TestSum(t *testing.T) {
 	initializer()
 	available()
@@ -166,16 +158,16 @@ func TestSum(t *testing.T) {
 	//curl -X GET "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases" -H  "accept: application/json" | jq .items[].downloadUrl | wc -l
 }
 
-func TestDownloadedFiles(t *testing.T) {
-	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
-	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
+// func TestDownloadedFiles(t *testing.T) {
+// 	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
+// 	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
 
-	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
-	for _, f := range files {
-		if !fileExists(f) {
-			t.Errorf("File %s should exist, but does not.", f)
-		}
-	}
-	defer cleanupFiles("downloaded-*")
-	defer cleanup()
-}
+// 	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
+// 	for _, f := range files {
+// 		if !utils.FileExists(f) {
+// 			t.Errorf("File %s should exist, but does not.", f)
+// 		}
+// 	}
+// 	defer cleanupFiles("downloaded-*")
+// 	defer cleanup()
+// }
