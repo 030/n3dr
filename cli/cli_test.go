@@ -98,7 +98,7 @@ func createArtifactsAndSubmit(f string) {
 }
 
 func postArtifacts() {
-	for i := 1; i <= 25; i++ {
+	for i := 1; i <= 60; i++ {
 		createArtifactsAndSubmit(strconv.Itoa(i))
 	}
 }
@@ -141,16 +141,18 @@ func downloadArtifact(repository string, f string, version string, extension str
 
 	// retrieved somewhere else
 	body, err := ioutil.ReadAll(resp.Body)
-	createArtifact("downloads/"+f+"."+extension, string(body))
+	createArtifact(f+"-downloaded."+extension, string(body))
 }
 
 func TestSum(t *testing.T) {
-	// initializer()
-	// available()
-	// pongAvailable()
-	// postArtifacts()
-	// defer cleanupFiles()
-	// defer cleanup()
+	initializer()
+	available()
+	pongAvailable()
+	postArtifacts()
+	defer cleanupFiles()
+	defer cleanup()
+	//get all downloadUrls
+	//curl -X GET "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases" -H  "accept: application/json" | jq .items[].downloadUrl | wc -l
 	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
 	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
 
