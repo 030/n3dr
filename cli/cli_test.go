@@ -144,7 +144,15 @@ func downloadArtifact(repository string, f string, version string, extension str
 
 	// retrieved somewhere else
 	body, err := ioutil.ReadAll(resp.Body)
-	createArtifact(f+"-downloaded."+extension, string(body))
+	createArtifact(f+"-"+version+"-downloaded."+extension, string(body))
+}
+
+func fileExists(f string) bool {
+	_, err := os.Stat(f)
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 func TestSum(t *testing.T) {
@@ -158,4 +166,13 @@ func TestSum(t *testing.T) {
 	//curl -X GET "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases" -H  "accept: application/json" | jq .items[].downloadUrl | wc -l
 	downloadArtifact("maven-releases", "file20", "1.0.0", "p2om")
 	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
+}
+
+func TestDownloadedFiles(t *testing.T) {
+	files := []string{"file20-1.0.0-downloaded.pom", "file20-1.0.0-downloaded.jar"}
+	for _, f := range files {
+		if !fileExists(f) {
+			t.Errorf("File %s should exist, but does not.", f)
+		}
+	}
 }
