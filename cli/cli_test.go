@@ -25,8 +25,8 @@ func initializer() {
 func available() {
 	for !utils.URLExists(pingURL) {
 		log.Info("Nexus not available.")
+		time.Sleep(30 * time.Second)
 	}
-	time.Sleep(30 * time.Second)
 }
 
 func pong() bool {
