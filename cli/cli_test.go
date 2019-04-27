@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/030/go-utils"
 	log "github.com/sirupsen/logrus"
@@ -25,6 +26,7 @@ func available() {
 	for !utils.URLExists(pingURL) {
 		log.Info("Nexus not available.")
 	}
+	time.Sleep(30 * time.Second)
 }
 
 func pong() bool {
@@ -62,6 +64,7 @@ func pong() bool {
 func pongAvailable() {
 	for !pong() {
 		log.Info("Nexus Pong not returned yet.")
+		time.Sleep(3 * time.Second)
 	}
 }
 
