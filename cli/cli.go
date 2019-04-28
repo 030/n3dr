@@ -56,3 +56,14 @@ func continuationToken(token string) string {
 	}
 	return tokenWithoutQuotes
 }
+
+var tokenMap = []string{}
+
+func continuationTokenRecursion(s string) []string {
+	token := continuationToken(s)
+	tokenMap = append(tokenMap, token)
+	if token == "null" {
+		return tokenMap
+	}
+	return continuationTokenRecursion(token)
+}

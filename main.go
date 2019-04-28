@@ -69,12 +69,3 @@ func main() {
 	}
 
 }
-
-// func fact(s string) {
-// 	if s == "null" {
-// 		return
-// 	}
-// 	token := continuationToken2(s)
-// 	fmt.Println(token)
-// 	fact(token)
-// }
