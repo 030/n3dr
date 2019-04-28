@@ -147,27 +147,50 @@ func downloadArtifact(repository string, f string, version string, extension str
 	createArtifact("downloaded-"+f+"-"+version+"."+extension, string(body))
 }
 
-func TestSum(t *testing.T) {
-	initializer()
-	available()
-	pongAvailable()
-	postArtifacts()
-	defer cleanupFiles("file*")
+// func TestSum(t *testing.T) {
+// 	initializer()
+// 	available()
+// 	pongAvailable()
+// 	postArtifacts()
+// 	defer cleanupFiles("file*")
+// }
 
-	//get all downloadUrls
-	//curl -X GET "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases" -H  "accept: application/json" | jq .items[].downloadUrl | wc -l
+func TestDownloadedFiles(t *testing.T) {
+	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
+	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
+
+	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
+	for _, f := range files {
+		if !utils.FileExists(f) {
+			t.Errorf("File %s should exist, but does not.", f)
+		}
+	}
+	defer cleanupFiles("downloaded-*")
+	// defer cleanup()
 }
 
-// func TestDownloadedFiles(t *testing.T) {
-// 	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
-// 	downloadArtifact("maven-releases", "file20", "1.0.0", "jar")
+func TestContinuationToken(t *testing.T) {
+	actual := continuationToken("null")
+	expected := "35303a6235633862633138616131326331613030356565393061336664653966613733"
+	if actual != expected {
+		t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expected, actual)
+	}
 
-// 	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
-// 	for _, f := range files {
-// 		if !utils.FileExists(f) {
-// 			t.Errorf("File %s should exist, but does not.", f)
-// 		}
-// 	}
-// 	defer cleanupFiles("downloaded-*")
-// 	defer cleanup()
-// }
+	actual2 := continuationToken("35303a6235633862633138616131326331613030356565393061336664653966613733")
+	expected2 := "3130303a6235633862633138616131326331613030356565393061336664653966613733"
+	if actual2 != expected2 {
+		t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expected2, actual2)
+	}
+
+	actual3 := continuationToken("3130303a6235633862633138616131326331613030356565393061336664653966613733")
+	expected3 := "3135303a6235633862633138616131326331613030356565393061336664653966613733"
+	if actual3 != expected3 {
+		t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expected3, actual3)
+	}
+
+	actual4 := continuationToken("3135303a6235633862633138616131326331613030356565393061336664653966613733")
+	expected4 := "null"
+	if actual4 != expected4 {
+		t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expected4, actual4)
+	}
+}
