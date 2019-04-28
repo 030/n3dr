@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"strconv"
 	"testing"
 	"time"
@@ -147,13 +148,13 @@ func downloadArtifact(repository string, f string, version string, extension str
 	createArtifact("downloaded-"+f+"-"+version+"."+extension, string(body))
 }
 
-func TestSum(t *testing.T) {
-	initializer()
-	available()
-	pongAvailable()
-	postArtifacts()
-	defer cleanupFiles("file*")
-}
+// func TestSum(t *testing.T) {
+// 	initializer()
+// 	available()
+// 	pongAvailable()
+// 	postArtifacts()
+// 	defer cleanupFiles("file*")
+// }
 
 func TestDownloadedFiles(t *testing.T) {
 	downloadArtifact("maven-releases", "file20", "1.0.0", "pom")
@@ -183,5 +184,16 @@ func TestContinuationToken(t *testing.T) {
 			t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expectedContinuationToken, actual)
 		}
 	}
-	defer cleanup()
+	// defer cleanup()
+}
+
+func TestContinuationTokenHash(t *testing.T) {
+	expected := []string{"35303a6235633862633138616131326331613030356565393061336664653966613733",
+		"3130303a6235633862633138616131326331613030356565393061336664653966613733",
+		"3135303a6235633862633138616131326331613030356565393061336664653966613733",
+		"null"}
+	actual := continuationTokenRecursion("null")
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("Maps not equal. Expected %s, but was %s.", expected, actual)
+	}
 }
