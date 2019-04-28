@@ -101,7 +101,7 @@ func createArtifactsAndSubmit(f string) {
 }
 
 func postArtifacts() {
-	for i := 1; i <= 60; i++ {
+	for i := 1; i <= 160; i++ {
 		createArtifactsAndSubmit(strconv.Itoa(i))
 	}
 }
