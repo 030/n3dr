@@ -1,3 +1,4 @@
-*.jar
-*.pom
+*.jar*
+*.out*
+*.pom*
 .vscode

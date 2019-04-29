@@ -1,6 +1,14 @@
 language: go
 go:
   - 1.12.4
+env:
+  - GO111MODULE=on
+addons:
+  sonarcloud:
+    organization: 030-github
+    token:
+      secure: $SONAR_TOKEN
 script:
   - diff -u <(echo -n) <(gofmt -d ./)
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
+  - sonar-scanner -Dsonar.projectKey=030_nexus3-cli -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"
