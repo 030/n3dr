@@ -1,5 +1,7 @@
 # nexus3-cli
 
+[![Build Status](https://travis-ci.org/030/nexus3-cli.svg?branch=master)](https://travis-ci.org/030/nexus3-cli)
+
 The aims of the nexus3-cli tool are:
  * to backup all artifacts from a certain Nexus maven repository.
  * to migrate all artifacts from NexusA to NexusB.
