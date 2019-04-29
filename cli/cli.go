@@ -6,6 +6,8 @@ import (
 	"github.com/svenfuchs/jq"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"regexp"
 	"strings"
 )
 
@@ -77,4 +79,42 @@ func ContinuationTokenRecursion(s string) []string {
 		return tokenMap
 	}
 	return ContinuationTokenRecursion(token)
+}
+
+func createArtifact(f string, content string) {
+	file, err := os.Create(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file.WriteString(content)
+	defer file.Close()
+}
+
+func artifactName(url string) string {
+	re := regexp.MustCompile("^.*/(.+)$")
+	match := re.FindStringSubmatch(url)
+	f := match[1]
+	log.Info(f)
+	return f
+}
+
+func DownloadArtifact(url string) {
+	f := artifactName(url)
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req.SetBasicAuth("admin", "admin123")
+	req.Header.Set("Accept", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	createArtifact("download/"+f, string(body))
 }
