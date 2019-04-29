@@ -1,6 +1,17 @@
 # nexus3-cli
 
 [![Build Status](https://travis-ci.org/030/nexus3-cli.svg?branch=master)](https://travis-ci.org/030/nexus3-cli)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=bugs)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=code_smells)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=coverage)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=ncloc)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=alert_status)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=security_rating)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 
 The aims of the nexus3-cli tool are:
  * to backup all artifacts from a certain Nexus maven repository.
