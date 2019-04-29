@@ -2,12 +2,15 @@ package cli
 
 import (
 	"errors"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"github.com/svenfuchs/jq"
+	"github.com/thedevsaddam/gojsonq"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -16,7 +19,7 @@ const (
 	assetURL = "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases"
 )
 
-func DownloadURL(token string) ([]byte, error) {
+func downloadURL(token string) ([]byte, error) {
 	url := assetURL
 	if !(token == "null") {
 		url = assetURL + "&continuationToken=" + token
@@ -49,7 +52,7 @@ func DownloadURL(token string) ([]byte, error) {
 }
 
 func continuationToken(token string) string {
-	bodyBytes, err := DownloadURL(token)
+	bodyBytes, err := downloadURL(token)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,13 +75,13 @@ func continuationToken(token string) string {
 
 var tokenMap = []string{}
 
-func ContinuationTokenRecursion(s string) []string {
+func continuationTokenRecursion(s string) []string {
 	token := continuationToken(s)
 	tokenMap = append(tokenMap, token)
 	if token == "null" {
 		return tokenMap
 	}
-	return ContinuationTokenRecursion(token)
+	return continuationTokenRecursion(token)
 }
 
 func createArtifact(f string, content string) {
@@ -99,7 +102,7 @@ func artifactName(url string) string {
 	return f
 }
 
-func DownloadArtifact(url string) {
+func downloadArtifact(url string) {
 	f := artifactName(url)
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -117,4 +120,28 @@ func DownloadArtifact(url string) {
 
 	body, err := ioutil.ReadAll(resp.Body)
 	createArtifact("download/"+f, string(body))
+}
+
+// DownloadURLs is able to find the downloadURLs of all artifacts that reside in nexus
+func DownloadURLs() {
+	continuationTokenMap := continuationTokenRecursion("null")
+	for tokenNumber, token := range continuationTokenMap {
+		tokenNumberString := strconv.Itoa(tokenNumber)
+		log.Info("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
+		bytes, err := downloadURL(token)
+		if err != nil {
+			log.Fatal(err)
+		}
+		json := string(bytes)
+
+		jq := gojsonq.New().JSONString(json)
+		downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
+
+		downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
+
+		for i, downloadURL := range downloadURLsInterfaceArray {
+			log.Printf("OK: message %d => %s\n", i, downloadURL)
+			downloadArtifact(fmt.Sprint(downloadURL))
+		}
+	}
 }
