@@ -1,6 +1,7 @@
 # nexus3-cli
 
 [![Build Status](https://travis-ci.org/030/nexus3-cli.svg?branch=master)](https://travis-ci.org/030/nexus3-cli)
+[![Go Report Card](https://goreportcard.com/badge/github.com/030/nexus3-cli)](https://goreportcard.com/report/github.com/030/nexus3-cli)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=bugs)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=code_smells)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=coverage)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
