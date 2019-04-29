@@ -121,12 +121,9 @@ func downloadArtifact(url string) {
 }
 
 func downloadURLs() []interface{} {
-	var downloadURLsInterfaceArray []interface{}
+	var downloadURLsInterfaceArrayAll []interface{}
 	continuationTokenMap := continuationTokenRecursion("null")
-	log.Info("hi")
-	log.Info(continuationTokenMap)
-	log.Info(continuationTokenMap)
-	log.Info("bye")
+
 	for tokenNumber, token := range continuationTokenMap {
 		tokenNumberString := strconv.Itoa(tokenNumber)
 		log.Info("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
@@ -139,20 +136,16 @@ func downloadURLs() []interface{} {
 		jq := gojsonq.New().JSONString(json)
 		downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
 
-		downloadURLsInterfaceArray = downloadURLsInterface.([]interface{})
-
-		// downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray)
+		downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
+		downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
 	}
 
-	log.Info("CP5")
-	return downloadURLsInterfaceArray
+	return downloadURLsInterfaceArrayAll
 }
 
-// StoreArtifactsOnDisk download all artifacts from nexus and saves them on disk
+// StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
 func StoreArtifactsOnDisk() {
-	log.Info("CP10")
-	for i, downloadURL := range downloadURLs() {
-		log.Printf("OK: message %d => %s\n", i, downloadURL)
+	for _, downloadURL := range downloadURLs() {
 		downloadArtifact(fmt.Sprint(downloadURL))
 	}
 }
