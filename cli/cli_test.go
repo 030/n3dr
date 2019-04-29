@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"io/ioutil"
+	"os"
 	"reflect"
 	"testing"
 
@@ -9,11 +11,11 @@ import (
 
 // See https://stackoverflow.com/a/34102842/2777965
 func TestMain(m *testing.M) {
-	// setup()
+	setup()
 	m.Run()
-	// code := m.Run()
-	// shutdown()
-	// os.Exit(code)
+	code := m.Run()
+	shutdown()
+	os.Exit(code)
 }
 
 func TestDownloadedFiles(t *testing.T) {
@@ -63,17 +65,24 @@ func TestContinuationTokenHash(t *testing.T) {
 	}
 }
 
-// func TestDownloadURLs(t *testing.T) {
-// 	actual := len(downloadURLs())
-// 	expected := 960 //160 artifacts * 6different files, e.g. pom, jar, checksum
-// 	if expected != actual {
-// 		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
-// 	}
-// }
+func TestDownloadURLs(t *testing.T) {
+	actual := len(downloadURLs())
+	expected := 960 //160 artifacts * 6 different files, e.g. pom, pom.md5, pom.sha1, jar, jar.md5, jar.sha1
+	if expected != actual {
+		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
+	}
+}
 
-// func TestStoreArtifactsOnDisk(t *testing.T) {
-// 	// defer cleanupFiles("download/file*")
-// 	StoreArtifactsOnDisk()
-// 	files, _ := ioutil.ReadDir("download")
-// 	fmt.Println(len(files))
-// }
+func TestStoreArtifactsOnDisk(t *testing.T) {
+	defer cleanupFiles("download/file*")
+
+	StoreArtifactsOnDisk()
+	files, _ := ioutil.ReadDir("download")
+
+	actual := len(files)
+	expected := 961 //+1 due to .gitkeep
+
+	if expected != actual {
+		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
+	}
+}
