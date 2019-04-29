@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	cli.DownloadURLs()
+	cli.StoreArtifactsOnDisk()
 }
