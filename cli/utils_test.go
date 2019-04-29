@@ -14,11 +14,15 @@ import (
 )
 
 func setup() {
+	// Start docker nexus
 	cmd := exec.Command("bash", "-c", "docker run -d -p 8081:8081 --name nexus sonatype/nexus3:3.16.1")
 	stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
 	}
+
+	n := Nexus3{URL: "http://localhost:8081"}
+	pingURL := n.URL + pingURI
 
 	// Waitfor ping URL to become available
 	for !utils.URLExists(pingURL) {

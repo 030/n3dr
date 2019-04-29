@@ -16,11 +16,17 @@ import (
 )
 
 const (
-	pingURL  = "http://localhost:8081/service/metrics/ping"
-	assetURL = "http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases"
+	pingURI  = "/service/metrics/ping"
+	assetURI = "/service/rest/v1/search/assets?repository=maven-releases"
 )
 
-func downloadURL(token string) ([]byte, error) {
+// Nexus3 contains the attributes that are used by several functions
+type Nexus3 struct {
+	URL string
+}
+
+func (n Nexus3) downloadURL(token string) ([]byte, error) {
+	assetURL := n.URL + assetURI
 	url := assetURL
 	if !(token == "null") {
 		url = assetURL + "&continuationToken=" + token
@@ -52,8 +58,8 @@ func downloadURL(token string) ([]byte, error) {
 	return bodyBytes, nil
 }
 
-func continuationToken(token string) string {
-	bodyBytes, err := downloadURL(token)
+func (n Nexus3) continuationToken(token string) string {
+	bodyBytes, err := n.downloadURL(token)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -74,12 +80,12 @@ func continuationToken(token string) string {
 	return tokenWithoutQuotes
 }
 
-func continuationTokenRecursion(s string) []string {
-	token := continuationToken(s)
+func (n Nexus3) continuationTokenRecursion(s string) []string {
+	token := n.continuationToken(s)
 	if token == "null" {
 		return []string{token}
 	}
-	return append(continuationTokenRecursion(token), token)
+	return append(n.continuationTokenRecursion(token), token)
 }
 
 func createArtifact(f string, content string) {
@@ -120,14 +126,14 @@ func downloadArtifact(url string) {
 	createArtifact("download/"+f, string(body))
 }
 
-func downloadURLs() []interface{} {
+func (n Nexus3) downloadURLs() []interface{} {
 	var downloadURLsInterfaceArrayAll []interface{}
-	continuationTokenMap := continuationTokenRecursion("null")
+	continuationTokenMap := n.continuationTokenRecursion("null")
 
 	for tokenNumber, token := range continuationTokenMap {
 		tokenNumberString := strconv.Itoa(tokenNumber)
 		log.Info("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
-		bytes, err := downloadURL(token)
+		bytes, err := n.downloadURL(token)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -144,8 +150,8 @@ func downloadURLs() []interface{} {
 }
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
-func StoreArtifactsOnDisk() {
-	for _, downloadURL := range downloadURLs() {
+func (n Nexus3) StoreArtifactsOnDisk() {
+	for _, downloadURL := range n.downloadURLs() {
 		downloadArtifact(fmt.Sprint(downloadURL))
 	}
 }
