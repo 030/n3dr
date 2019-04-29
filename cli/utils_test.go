@@ -50,6 +50,8 @@ func shutdown() {
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
 	}
+
+	cleanupFiles("download/file*")
 }
 
 func pong() bool {
