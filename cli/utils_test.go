@@ -1,13 +1,52 @@
 package cli
 
 import (
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
+	"time"
+
+	"github.com/030/go-utils"
+	log "github.com/sirupsen/logrus"
 )
+
+func setup() {
+	cmd := exec.Command("bash", "-c", "docker run -d -p 8081:8081 --name nexus sonatype/nexus3:3.16.1")
+	stdoutStderr, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatal(err, string(stdoutStderr))
+	}
+
+	// Waitfor ping URL to become available
+	for !utils.URLExists(pingURL) {
+		log.Info("Nexus not available.")
+		time.Sleep(30 * time.Second)
+	}
+
+	// Waitfor ping endpoint to return pong
+	for !pong() {
+		log.Info("Nexus Pong not returned yet.")
+		time.Sleep(3 * time.Second)
+	}
+
+	// Send test artifacts to docker nexus
+	for i := 1; i <= 160; i++ {
+		createArtifactsAndSubmit(strconv.Itoa(i))
+	}
+
+	defer cleanupFiles("file*")
+}
+
+func shutdown() {
+	cmd := exec.Command("bash", "-c", "docker stop nexus && docker rm nexus")
+	stdoutStderr, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatal(err, string(stdoutStderr))
+	}
+}
 
 func pong() bool {
 	pongAvailable := false
@@ -41,14 +80,6 @@ func pong() bool {
 	return pongAvailable
 }
 
-func shutdown() {
-	cmd := exec.Command("bash", "-c", "docker stop nexus && docker rm nexus")
-	stdoutStderr, err := cmd.CombinedOutput()
-	if err != nil {
-		log.Fatal(err, string(stdoutStderr))
-	}
-}
-
 func submitArtifact(f string) {
 	cmd := exec.Command("bash", "-c", "curl -u admin:admin123 -X POST \"http://localhost:8081/service/rest/v1/components?repository=maven-releases\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@file"+f+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@file"+f+".jar\" -F \"maven2.asset2.extension=jar\"")
 	stdoutStderr, err := cmd.CombinedOutput()
@@ -75,6 +106,9 @@ func cleanupFiles(re string) {
 	files, err := filepath.Glob(re)
 	if err != nil {
 		log.Fatal(err)
+	}
+	if len(files) == 0 {
+		log.Fatal("No files to be removed were found")
 	}
 	for _, f := range files {
 		if err := os.Remove(f); err != nil {
