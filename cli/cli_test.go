@@ -82,7 +82,7 @@ func TestContinuationTokenHash(t *testing.T) {
 		"3130303a6235633862633138616131326331613030356565393061336664653966613733",
 		"3135303a6235633862633138616131326331613030356565393061336664653966613733",
 		"null"}
-	actual := ContinuationTokenRecursion("null")
+	actual := continuationTokenRecursion("null")
 	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf("Maps not equal. Expected %s, but was %s.", expected, actual)
 	}
