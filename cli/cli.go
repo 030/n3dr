@@ -3,15 +3,16 @@ package cli
 import (
 	"errors"
 	"fmt"
-	log "github.com/sirupsen/logrus"
-	"github.com/svenfuchs/jq"
-	"github.com/thedevsaddam/gojsonq"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/svenfuchs/jq"
+	"github.com/thedevsaddam/gojsonq"
 )
 
 const (
@@ -24,7 +25,7 @@ func downloadURL(token string) ([]byte, error) {
 	if !(token == "null") {
 		url = assetURL + "&continuationToken=" + token
 	}
-	log.Info("DownloadURL: ", url)
+	// log.Info("DownloadURL: ", url)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -73,15 +74,12 @@ func continuationToken(token string) string {
 	return tokenWithoutQuotes
 }
 
-var tokenMap = []string{}
-
 func continuationTokenRecursion(s string) []string {
 	token := continuationToken(s)
-	tokenMap = append(tokenMap, token)
 	if token == "null" {
-		return tokenMap
+		return []string{token}
 	}
-	return continuationTokenRecursion(token)
+	return append(continuationTokenRecursion(token), token)
 }
 
 func createArtifact(f string, content string) {
@@ -122,9 +120,13 @@ func downloadArtifact(url string) {
 	createArtifact("download/"+f, string(body))
 }
 
-// DownloadURLs is able to find the downloadURLs of all artifacts that reside in nexus
-func DownloadURLs() {
+func downloadURLs() []interface{} {
+	var downloadURLsInterfaceArray []interface{}
 	continuationTokenMap := continuationTokenRecursion("null")
+	log.Info("hi")
+	log.Info(continuationTokenMap)
+	log.Info(continuationTokenMap)
+	log.Info("bye")
 	for tokenNumber, token := range continuationTokenMap {
 		tokenNumberString := strconv.Itoa(tokenNumber)
 		log.Info("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
@@ -137,11 +139,20 @@ func DownloadURLs() {
 		jq := gojsonq.New().JSONString(json)
 		downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
 
-		downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
+		downloadURLsInterfaceArray = downloadURLsInterface.([]interface{})
 
-		for i, downloadURL := range downloadURLsInterfaceArray {
-			log.Printf("OK: message %d => %s\n", i, downloadURL)
-			downloadArtifact(fmt.Sprint(downloadURL))
-		}
+		// downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray)
+	}
+
+	log.Info("CP5")
+	return downloadURLsInterfaceArray
+}
+
+// StoreArtifactsOnDisk download all artifacts from nexus and saves them on disk
+func StoreArtifactsOnDisk() {
+	log.Info("CP10")
+	for i, downloadURL := range downloadURLs() {
+		log.Printf("OK: message %d => %s\n", i, downloadURL)
+		downloadArtifact(fmt.Sprint(downloadURL))
 	}
 }
