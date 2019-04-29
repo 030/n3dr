@@ -1,9 +1,6 @@
 # nexus3-cli
 
 [![Build Status](https://travis-ci.org/030/nexus3-cli.svg?branch=master)](https://travis-ci.org/030/nexus3-cli)
-
-## Sonar
-
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=bugs)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=code_smells)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=coverage)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
