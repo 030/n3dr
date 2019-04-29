@@ -11,4 +11,6 @@ addons:
 script:
   - diff -u <(echo -n) <(gofmt -d ./)
   - go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...
-  - sonar-scanner
+  - sonar-scanner \
+      -Dsonar.projectKey=030_nexus3-cli \
+      -Dsonar.host.url=https://sonarcloud.io
