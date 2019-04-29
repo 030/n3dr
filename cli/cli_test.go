@@ -81,10 +81,8 @@ func TestDownloadURLs(t *testing.T) {
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
 	n := Nexus3{URL: "http://localhost:8081"}
-
-	defer cleanupFiles("download/file*")
-
 	n.StoreArtifactsOnDisk()
+
 	files, _ := ioutil.ReadDir("download")
 
 	actual := len(files)
