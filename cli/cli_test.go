@@ -32,6 +32,8 @@ func TestDownloadedFiles(t *testing.T) {
 }
 
 func TestContinuationToken(t *testing.T) {
+	n := Nexus3{URL: "http://localhost:8081"}
+
 	continuationTokenHashMap := map[string]string{
 		"null": "35303a6235633862633138616131326331613030356565393061336664653966613733",
 		"35303a6235633862633138616131326331613030356565393061336664653966613733":   "3130303a6235633862633138616131326331613030356565393061336664653966613733",
@@ -40,7 +42,7 @@ func TestContinuationToken(t *testing.T) {
 	}
 
 	for token, expectedContinuationToken := range continuationTokenHashMap {
-		actual := continuationToken(token)
+		actual := n.continuationToken(token)
 
 		if actual != expectedContinuationToken {
 			t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expectedContinuationToken, actual)
@@ -49,11 +51,13 @@ func TestContinuationToken(t *testing.T) {
 }
 
 func TestContinuationTokenHash(t *testing.T) {
+	n := Nexus3{URL: "http://localhost:8081"}
+
 	expected := []string{"null",
 		"3135303a6235633862633138616131326331613030356565393061336664653966613733",
 		"3130303a6235633862633138616131326331613030356565393061336664653966613733",
 		"35303a6235633862633138616131326331613030356565393061336664653966613733"}
-	actual := continuationTokenRecursion("null")
+	actual := n.continuationTokenRecursion("null")
 	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf("Maps not equal. Expected %s, but was %s.", expected, actual)
 	}
@@ -66,7 +70,9 @@ func TestContinuationTokenHash(t *testing.T) {
 }
 
 func TestDownloadURLs(t *testing.T) {
-	actual := len(downloadURLs())
+	n := Nexus3{URL: "http://localhost:8081"}
+
+	actual := len(n.downloadURLs())
 	expected := 960 //160 artifacts * 6 different files, e.g. pom, pom.md5, pom.sha1, jar, jar.md5, jar.sha1
 	if expected != actual {
 		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
@@ -74,9 +80,11 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
+	n := Nexus3{URL: "http://localhost:8081"}
+
 	defer cleanupFiles("download/file*")
 
-	StoreArtifactsOnDisk()
+	n.StoreArtifactsOnDisk()
 	files, _ := ioutil.ReadDir("download")
 
 	actual := len(files)
