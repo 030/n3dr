@@ -70,7 +70,6 @@ func (n Nexus3) pong() bool {
 	}
 	defer resp.Body.Close()
 
-	//so
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
@@ -124,25 +123,6 @@ func cleanupFiles(re string) {
 		}
 	}
 }
-
-// func (n Nexus3) downloadTestArtifact(repository string, f string, version string, extension string) {
-// 	req, err := http.NewRequest("GET", n.URL+assetURI+n.Repository+"&name="+f+"&version="+version+"&maven.extension="+extension+"", nil)
-
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	req.SetBasicAuth(n.User, n.Pass)
-// 	req.Header.Set("Accept", "application/json")
-
-// 	resp, err := http.DefaultClient.Do(req)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer resp.Body.Close()
-
-// 	body, err := ioutil.ReadAll(resp.Body)
-// 	createArtifact("downloaded-"+f+"-"+version+"."+extension, string(body))
-// }
 
 func allFiles(dir string) ([]string, error) {
 	fileList := []string{}
