@@ -118,7 +118,6 @@ func (n Nexus3) artifactName(url string) (string, string) {
 }
 
 func (n Nexus3) downloadArtifact(url string) {
-	log.Info("CP3")
 	d, f := n.artifactName(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -138,7 +137,6 @@ func (n Nexus3) downloadArtifact(url string) {
 }
 
 func (n Nexus3) downloadURLs() []interface{} {
-	log.Info("CP2")
 	var downloadURLsInterfaceArrayAll []interface{}
 	continuationTokenMap := n.continuationTokenRecursion("null")
 
@@ -163,7 +161,6 @@ func (n Nexus3) downloadURLs() []interface{} {
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
 func (n Nexus3) StoreArtifactsOnDisk() {
-	log.Info("CP1")
 	for _, downloadURL := range n.downloadURLs() {
 		n.downloadArtifact(fmt.Sprint(downloadURL))
 	}
