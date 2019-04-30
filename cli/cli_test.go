@@ -9,6 +9,12 @@ import (
 	"github.com/030/go-utils"
 )
 
+var n = Nexus3{
+	URL:  "http://localhost:8081",
+	User: "admin",
+	Pass: "admin123",
+}
+
 // See https://stackoverflow.com/a/34102842/2777965
 func TestMain(m *testing.M) {
 	setup()
@@ -18,9 +24,9 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestDownloadedFiles(t *testing.T) {
-	downloadTestArtifact("maven-releases", "file20", "1.0.0", "pom")
-	downloadTestArtifact("maven-releases", "file20", "1.0.0", "jar")
+func (n Nexus3) TestDownloadedFiles(t *testing.T) {
+	n.downloadTestArtifact("maven-releases", "file20", "1.0.0", "pom")
+	n.downloadTestArtifact("maven-releases", "file20", "1.0.0", "jar")
 
 	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
 	for _, f := range files {
@@ -32,8 +38,6 @@ func TestDownloadedFiles(t *testing.T) {
 }
 
 func TestContinuationToken(t *testing.T) {
-	n := Nexus3{URL: "http://localhost:8081"}
-
 	continuationTokenHashMap := map[string]string{
 		"null": "35303a6235633862633138616131326331613030356565393061336664653966613733",
 		"35303a6235633862633138616131326331613030356565393061336664653966613733":   "3130303a6235633862633138616131326331613030356565393061336664653966613733",
@@ -51,8 +55,6 @@ func TestContinuationToken(t *testing.T) {
 }
 
 func TestContinuationTokenHash(t *testing.T) {
-	n := Nexus3{URL: "http://localhost:8081"}
-
 	expected := []string{"null",
 		"3135303a6235633862633138616131326331613030356565393061336664653966613733",
 		"3130303a6235633862633138616131326331613030356565393061336664653966613733",
@@ -70,8 +72,6 @@ func TestContinuationTokenHash(t *testing.T) {
 }
 
 func TestDownloadURLs(t *testing.T) {
-	n := Nexus3{URL: "http://localhost:8081"}
-
 	actual := len(n.downloadURLs())
 	expected := 960 //160 artifacts * 6 different files, e.g. pom, pom.md5, pom.sha1, jar, jar.md5, jar.sha1
 	if expected != actual {
@@ -80,7 +80,6 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	n := Nexus3{URL: "http://localhost:8081"}
 	n.StoreArtifactsOnDisk()
 
 	files, _ := ioutil.ReadDir("download")

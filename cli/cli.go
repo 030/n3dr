@@ -22,7 +22,9 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL string
+	URL  string
+	User string
+	Pass string
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
@@ -106,14 +108,14 @@ func artifactName(url string) string {
 	return f
 }
 
-func downloadArtifact(url string) {
+func (n Nexus3) downloadArtifact(url string) {
 	f := artifactName(url)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	req.SetBasicAuth("admin", "admin123")
+	req.SetBasicAuth(n.User, n.Pass)
 	req.Header.Set("Accept", "application/json")
 
 	resp, err := http.DefaultClient.Do(req)
@@ -152,6 +154,6 @@ func (n Nexus3) downloadURLs() []interface{} {
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
 func (n Nexus3) StoreArtifactsOnDisk() {
 	for _, downloadURL := range n.downloadURLs() {
-		downloadArtifact(fmt.Sprint(downloadURL))
+		n.downloadArtifact(fmt.Sprint(downloadURL))
 	}
 }
