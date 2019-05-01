@@ -54,7 +54,7 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 
 	if resp.StatusCode != http.StatusOK {
 		log.Info(resp.StatusCode)
-		return nil, errors.New("HTTP response not 200. Does the URL exist?")
+		return nil, errors.New("HTTP response not 200. Does the URL: " + url + " exist?")
 	}
 
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
