@@ -110,3 +110,11 @@ func TestStoreArtifactsOnDisk(t *testing.T) {
 		t.Errorf("Slice not identical. Expected %s, but was %s.", expectedDownloads, actual)
 	}
 }
+func TestDownloadURL(t *testing.T) {
+	_, actualError := n.downloadURL("some-token")
+	expectedError := "HTTP response not 200. Does the URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token exist?"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+	}
+}
