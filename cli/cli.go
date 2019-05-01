@@ -11,14 +11,16 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/asaskevich/govalidator"
 	log "github.com/sirupsen/logrus"
 	"github.com/svenfuchs/jq"
 	"github.com/thedevsaddam/gojsonq"
 )
 
 const (
-	pingURI  = "/service/metrics/ping"
-	assetURI = "/service/rest/v1/assets?repository="
+	pingURI     = "/service/metrics/ping"
+	assetURI    = "/service/rest/v1/assets?repository="
+	tokenErrMsg = "Token should be either a hexadecimal or \"null\" and not: "
 )
 
 // Nexus3 contains the attributes that are used by several functions
@@ -63,48 +65,61 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	return bodyBytes, nil
 }
 
-func (n Nexus3) continuationToken(token string) string {
+func (n Nexus3) continuationToken(token string) (string, error) {
+	// The continuationToken should consists of 32 characters and should be a hexadecimal or "null"
+	if !((govalidator.IsHexadecimal(token) && govalidator.StringLength(token, "32", "32")) || token == "null") {
+		return "", errors.New(tokenErrMsg + token)
+	}
+
 	bodyBytes, err := n.downloadURL(token)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
 	op, err := jq.Parse(".continuationToken")
 	if err != nil {
-		//
+		return "", err
 	}
 
 	value, err := op.Apply(bodyBytes)
 	if err != nil {
-		//
+		return "", err
 	}
 	var tokenWithoutQuotes string
 	tokenWithoutQuotes = strings.Trim(string(value), "\"")
 
-	return tokenWithoutQuotes
+	return tokenWithoutQuotes, nil
 }
 
-func (n Nexus3) continuationTokenRecursion(s string) []string {
-	token := n.continuationToken(s)
-	if token == "null" {
-		return []string{token}
+func (n Nexus3) continuationTokenRecursion(t string) ([]string, error) {
+	token, err := n.continuationToken(t)
+	if err != nil {
+		return nil, err
 	}
-	return append(n.continuationTokenRecursion(token), token)
+	if token == "null" {
+		return []string{token}, nil
+	}
+	tokenSlice, err := n.continuationTokenRecursion(token)
+	if err != nil {
+		return nil, err
+	}
+	return append(tokenSlice, token), nil
 }
 
-func createArtifact(d string, f string, content string) {
+func createArtifact(d string, f string, content string) error {
 	err := os.MkdirAll(d, os.ModePerm)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	file, err2 := os.Create(filepath.Join(d, f))
 	if err2 != nil {
-		log.Fatal(err)
+		return err2
 	}
 
 	file.WriteString(content)
 	defer file.Close()
+	return nil
 }
 
 func (n Nexus3) artifactName(url string) (string, string) {
@@ -117,35 +132,39 @@ func (n Nexus3) artifactName(url string) (string, string) {
 	return d, f
 }
 
-func (n Nexus3) downloadArtifact(url string) {
+func (n Nexus3) downloadArtifact(url string) error {
 	d, f := n.artifactName(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	req.SetBasicAuth(n.User, n.Pass)
 	req.Header.Set("Accept", "application/json")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	createArtifact(filepath.Join("download", d), f, string(body))
+	return nil
 }
 
-func (n Nexus3) downloadURLs() []interface{} {
+func (n Nexus3) downloadURLs() ([]interface{}, error) {
 	var downloadURLsInterfaceArrayAll []interface{}
-	continuationTokenMap := n.continuationTokenRecursion("null")
+	continuationTokenMap, err := n.continuationTokenRecursion("null")
+	if err != nil {
+		return nil, err
+	}
 
 	for tokenNumber, token := range continuationTokenMap {
 		tokenNumberString := strconv.Itoa(tokenNumber)
 		log.Info("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
 		bytes, err := n.downloadURL(token)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 		json := string(bytes)
 
@@ -156,12 +175,17 @@ func (n Nexus3) downloadURLs() []interface{} {
 		downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
 	}
 
-	return downloadURLsInterfaceArrayAll
+	return downloadURLsInterfaceArrayAll, nil
 }
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
-func (n Nexus3) StoreArtifactsOnDisk() {
-	for _, downloadURL := range n.downloadURLs() {
+func (n Nexus3) StoreArtifactsOnDisk() error {
+	urls, err := n.downloadURLs()
+	if err != nil {
+		return err
+	}
+	for _, downloadURL := range urls {
 		n.downloadArtifact(fmt.Sprint(downloadURL))
 	}
+	return nil
 }

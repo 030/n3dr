@@ -23,5 +23,8 @@ func main() {
 	log.Info("Nexus3pass: ****")
 	log.Info("Nexus3repo: " + n.Repository)
 
-	n.StoreArtifactsOnDisk()
+	err := n.StoreArtifactsOnDisk()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
