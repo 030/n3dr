@@ -20,7 +20,7 @@ func TestMain(m *testing.M) {
 	setup()
 	m.Run()
 	code := m.Run()
-	// shutdown()
+	shutdown()
 	os.Exit(code)
 }
 
