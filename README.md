@@ -21,8 +21,7 @@ The aims of the nexus3-cli tool are:
 ## How do the tests look like?
 
 The tests start a nexus docker container. The tests will be started once
-the docker container is running. A springboot app will be deployed,
-the Spring dependencies will be downloaded and uploaded to nexus. Finally,
+the docker container is running and fake artifacts have been uploaded. Finally,
 all submitted artifacts will be downloaded.
 
 ## How to use this tool?
@@ -32,13 +31,22 @@ all submitted artifacts will be downloaded.
 In order to read the help menu, one has to run:
 
 ```
-docker run utrecht/nexus3-cli:1.0.0 -h
+go run main.go -h
 ```
 
 The output will look as follows:
 
 ```
-Welcome to nexus3-cli
+Usage of /tmp/go-build840407725/b001/exe/main:
+  -nexus3URL string
+        The Nexus3URL (default "http://localhost:8081")
+  -nexus3pass string
+        The Nexus password (default "admin123")
+  -nexus3repo string
+        The Nexus3 repository (default "maven-releases")
+  -nexus3user string
+        The Nexus user (default "admin")
+exit status 2
 ```
 
 ### Download

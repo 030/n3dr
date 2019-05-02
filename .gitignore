@@ -2,3 +2,5 @@
 *.out*
 *.pom*
 .vscode
+maven-metadata*
+download
