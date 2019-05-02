@@ -1,13 +1,19 @@
 package cli
 
 import (
-	"io/ioutil"
 	"os"
 	"reflect"
 	"testing"
 
 	"github.com/030/go-utils"
 )
+
+var n = Nexus3{
+	URL:        "http://localhost:9999",
+	User:       "admin",
+	Pass:       "admin123",
+	Repository: "maven-releases",
+}
 
 // See https://stackoverflow.com/a/34102842/2777965
 func TestMain(m *testing.M) {
@@ -18,71 +24,123 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestDownloadedFiles(t *testing.T) {
-	downloadTestArtifact("maven-releases", "file20", "1.0.0", "pom")
-	downloadTestArtifact("maven-releases", "file20", "1.0.0", "jar")
-
-	files := []string{"downloaded-file20-1.0.0.pom", "downloaded-file20-1.0.0.jar"}
-	for _, f := range files {
-		if !utils.FileExists(f) {
-			t.Errorf("File %s should exist, but does not.", f)
-		}
-	}
-	defer cleanupFiles("downloaded-*")
-}
-
-func TestContinuationToken(t *testing.T) {
-	continuationTokenHashMap := map[string]string{
-		"null": "35303a6235633862633138616131326331613030356565393061336664653966613733",
-		"35303a6235633862633138616131326331613030356565393061336664653966613733":   "3130303a6235633862633138616131326331613030356565393061336664653966613733",
-		"3130303a6235633862633138616131326331613030356565393061336664653966613733": "3135303a6235633862633138616131326331613030356565393061336664653966613733",
-		"3135303a6235633862633138616131326331613030356565393061336664653966613733": "null",
-	}
-
-	for token, expectedContinuationToken := range continuationTokenHashMap {
-		actual := continuationToken(token)
-
-		if actual != expectedContinuationToken {
-			t.Errorf("ContinuationToken incorrect. Expected %s, but was %s.", expectedContinuationToken, actual)
-		}
-	}
-}
-
 func TestContinuationTokenHash(t *testing.T) {
-	expected := []string{"null",
-		"3135303a6235633862633138616131326331613030356565393061336664653966613733",
-		"3130303a6235633862633138616131326331613030356565393061336664653966613733",
-		"35303a6235633862633138616131326331613030356565393061336664653966613733"}
-	actual := continuationTokenRecursion("null")
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Maps not equal. Expected %s, but was %s.", expected, actual)
-	}
-
+	actual, _ := n.continuationTokenRecursion("null")
 	actualSize := len(actual)
-	expectedSize := 4
+	expectedSize := 3
 	if expectedSize != actualSize {
 		t.Errorf("Not equal. Expected: %d. Actual: %d.", expectedSize, actualSize)
+	}
+
+	tokenSlice := []string{
+		"foo",
+		"boo",
+		"",
+		"----",
+		"123",
+		"11111111111111111111111111111111111",
+	}
+	for _, token := range tokenSlice {
+		_, actualError := n.continuationTokenRecursion(token)
+
+		expectedError := tokenErrMsg + token
+		if actualError.Error() != expectedError {
+			t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+		}
 	}
 }
 
 func TestDownloadURLs(t *testing.T) {
-	actual := len(downloadURLs())
-	expected := 960 //160 artifacts * 6 different files, e.g. pom, pom.md5, pom.sha1, jar, jar.md5, jar.sha1
+	url, _ := n.downloadURLs()
+	actual := len(url)
+	expected := 27 // 3files*9
 	if expected != actual {
 		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
 	}
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	defer cleanupFiles("download/file*")
+	n.StoreArtifactsOnDisk()
 
-	StoreArtifactsOnDisk()
-	files, _ := ioutil.ReadDir("download")
+	actual, _ := allFiles("download")
 
-	actual := len(files)
-	expected := 961 //+1 due to .gitkeep
+	actualFileNumber := len(actual)
+	expected := 28 // +1 due to .gitkeep
+	if expected != actualFileNumber {
+		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actualFileNumber)
+	}
 
-	if expected != actual {
-		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
+	expectedDownloads := []string{
+		"download/.gitkeep",
+		"download/file1/file1/1.0.0/file1-1.0.0.jar",
+		"download/file1/file1/1.0.0/file1-1.0.0.jar.md5",
+		"download/file1/file1/1.0.0/file1-1.0.0.jar.sha1",
+		"download/file1/file1/1.0.0/file1-1.0.0.pom",
+		"download/file1/file1/1.0.0/file1-1.0.0.pom.md5",
+		"download/file1/file1/1.0.0/file1-1.0.0.pom.sha1",
+		"download/file1/file1/maven-metadata.xml",
+		"download/file1/file1/maven-metadata.xml.md5",
+		"download/file1/file1/maven-metadata.xml.sha1",
+		"download/file2/file2/1.0.0/file2-1.0.0.jar",
+		"download/file2/file2/1.0.0/file2-1.0.0.jar.md5",
+		"download/file2/file2/1.0.0/file2-1.0.0.jar.sha1",
+		"download/file2/file2/1.0.0/file2-1.0.0.pom",
+		"download/file2/file2/1.0.0/file2-1.0.0.pom.md5",
+		"download/file2/file2/1.0.0/file2-1.0.0.pom.sha1",
+		"download/file2/file2/maven-metadata.xml",
+		"download/file2/file2/maven-metadata.xml.md5",
+		"download/file2/file2/maven-metadata.xml.sha1",
+		"download/file3/file3/1.0.0/file3-1.0.0.jar",
+		"download/file3/file3/1.0.0/file3-1.0.0.jar.md5",
+		"download/file3/file3/1.0.0/file3-1.0.0.jar.sha1",
+		"download/file3/file3/1.0.0/file3-1.0.0.pom",
+		"download/file3/file3/1.0.0/file3-1.0.0.pom.md5",
+		"download/file3/file3/1.0.0/file3-1.0.0.pom.sha1",
+		"download/file3/file3/maven-metadata.xml",
+		"download/file3/file3/maven-metadata.xml.md5",
+		"download/file3/file3/maven-metadata.xml.sha1",
+	}
+	for _, f := range expectedDownloads {
+		if !utils.FileExists(f) {
+			t.Errorf("File %s should exist, but does not.", f)
+		}
+	}
+
+	if !reflect.DeepEqual(expectedDownloads, actual) {
+		t.Errorf("Slice not identical. Expected %s, but was %s.", expectedDownloads, actual)
+	}
+}
+func TestDownloadURL(t *testing.T) {
+	_, actualError := n.downloadURL("some-token")
+	expectedError := "HTTP response not 200. Does the URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token exist?"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+	}
+}
+
+func TestArtifactName(t *testing.T) {
+	actualDir, actualFile, _ := n.artifactName("http://localhost:9999/repository/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar")
+	expectedDir := "file1/file1/1.0.0"
+	expectedFile := "file1-1.0.0.jar"
+
+	if expectedDir != actualDir || expectedFile != actualFile {
+		t.Errorf("Dir and file incorrect. Expected: %v & %v. Actual: %v & %v", expectedDir, expectedFile, actualDir, actualFile)
+	}
+
+	_, _, actualError := n.artifactName("some-url")
+	expectedError := "some-url is not an URL"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+	}
+}
+
+func TestCreateArtifact(t *testing.T) {
+	actualErrorFile := createArtifact("testFiles", "file100/file100", "some-content")
+	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
+
+	if actualErrorFile.Error() != expectedErrorFile {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedErrorFile, actualErrorFile)
 	}
 }
