@@ -124,7 +124,7 @@ func TestArtifactName(t *testing.T) {
 	expectedDir := "file1/file1/1.0.0"
 	expectedFile := "file1-1.0.0.jar"
 
-	if expectedDir != actualDir || expectedFile != expectedFile {
+	if expectedDir != actualDir || expectedFile != actualFile {
 		t.Errorf("Dir and file incorrect. Expected: %v & %v. Actual: %v & %v", expectedDir, expectedFile, actualDir, actualFile)
 	}
 
