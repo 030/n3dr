@@ -112,9 +112,9 @@ func createArtifact(d string, f string, content string) error {
 		return err
 	}
 
-	file, err2 := os.Create(filepath.Join(d, f))
-	if err2 != nil {
-		return err2
+	file, err := os.Create(filepath.Join(d, f))
+	if err != nil {
+		return err
 	}
 
 	file.WriteString(content)
@@ -122,18 +122,26 @@ func createArtifact(d string, f string, content string) error {
 	return nil
 }
 
-func (n Nexus3) artifactName(url string) (string, string) {
+func (n Nexus3) artifactName(url string) (string, string, error) {
+	if !govalidator.IsURL(url) {
+		return "", "", errors.New(url + " is not an URL")
+	}
+
 	re := regexp.MustCompile("^.*/" + n.Repository + "/(.*)/(.+)$")
 	match := re.FindStringSubmatch(url)
 	d := match[1]
 	f := match[2]
 	log.Info(d)
 	log.Info(f)
-	return d, f
+	return d, f, nil
 }
 
 func (n Nexus3) downloadArtifact(url string) error {
-	d, f := n.artifactName(url)
+	d, f, err := n.artifactName(url)
+	if err != nil {
+		return err
+	}
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return err
