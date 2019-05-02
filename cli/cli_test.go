@@ -118,3 +118,29 @@ func TestDownloadURL(t *testing.T) {
 		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
 	}
 }
+
+func TestArtifactName(t *testing.T) {
+	actualDir, actualFile, _ := n.artifactName("http://localhost:9999/repository/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar")
+	expectedDir := "file1/file1/1.0.0"
+	expectedFile := "file1-1.0.0.jar"
+
+	if expectedDir != actualDir || expectedFile != expectedFile {
+		t.Errorf("Dir and file incorrect. Expected: %v & %v. Actual: %v & %v", expectedDir, expectedFile, actualDir, actualFile)
+	}
+
+	_, _, actualError := n.artifactName("some-url")
+	expectedError := "some-url is not an URL"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+	}
+}
+
+func TestCreateArtifact(t *testing.T) {
+	actualErrorFile := createArtifact("testFiles", "file100/file100", "some-content")
+	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
+
+	if actualErrorFile.Error() != expectedErrorFile {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedErrorFile, actualErrorFile)
+	}
+}
