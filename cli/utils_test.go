@@ -131,6 +131,9 @@ func cleanupFiles(re string) {
 func allFiles(dir string) ([]string, error) {
 	fileList := []string{}
 	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		if f.Mode().IsRegular() {
 			fileList = append(fileList, path)
 		}
