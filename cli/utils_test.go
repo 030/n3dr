@@ -97,7 +97,7 @@ func createPOM(d string, f string, number string) {
 	createArtifact(d, f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+number+"</groupId>\n<artifactId>file"+number+"</artifactId>\n<version>1.0.0</version>\n</project>")
 }
 
-func createJAR(d string, f string, number string) {
+func createJAR(d string, f string) {
 	createArtifact(d, f+".jar", "some-content")
 }
 
@@ -105,7 +105,7 @@ func (n Nexus3) createArtifactsAndSubmit(i int) {
 	number := strconv.Itoa(i)
 	f := "file" + number
 	createPOM("testFiles", f, number)
-	createJAR("testFiles", f, number)
+	createJAR("testFiles", f)
 	n.submitArtifact("testFiles", f)
 }
 
