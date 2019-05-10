@@ -13,6 +13,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const (
+	testFilesDir = "testFiles"
+)
+
 func setup() {
 	log.SetReportCaller(true)
 
@@ -42,7 +46,7 @@ func setup() {
 		n.createArtifactsAndSubmit(i)
 	}
 
-	defer cleanupFiles("testFiles/file*")
+	defer cleanupFiles(testFilesDir + "/file*")
 }
 
 func shutdown() {
@@ -97,16 +101,16 @@ func createPOM(d string, f string, number string) {
 	createArtifact(d, f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+number+"</groupId>\n<artifactId>file"+number+"</artifactId>\n<version>1.0.0</version>\n</project>")
 }
 
-func createJAR(d string, f string, number string) {
+func createJAR(d string, f string) {
 	createArtifact(d, f+".jar", "some-content")
 }
 
 func (n Nexus3) createArtifactsAndSubmit(i int) {
 	number := strconv.Itoa(i)
 	f := "file" + number
-	createPOM("testFiles", f, number)
-	createJAR("testFiles", f, number)
-	n.submitArtifact("testFiles", f)
+	createPOM(testFilesDir, f, number)
+	createJAR(testFilesDir, f)
+	n.submitArtifact(testFilesDir, f)
 }
 
 func cleanupFiles(re string) {
@@ -127,6 +131,9 @@ func cleanupFiles(re string) {
 func allFiles(dir string) ([]string, error) {
 	fileList := []string{}
 	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		if f.Mode().IsRegular() {
 			fileList = append(fileList, path)
 		}

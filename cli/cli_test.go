@@ -8,6 +8,11 @@ import (
 	"github.com/030/go-utils"
 )
 
+const (
+	errMsg    = "Not equal. Expected: %d. Actual: %d."
+	errMsgTxt = "Error incorrect. Expected: %v. Actual: %v"
+)
+
 var n = Nexus3{
 	URL:        "http://localhost:9999",
 	User:       "admin",
@@ -29,7 +34,7 @@ func TestContinuationTokenHash(t *testing.T) {
 	actualSize := len(actual)
 	expectedSize := 3
 	if expectedSize != actualSize {
-		t.Errorf("Not equal. Expected: %d. Actual: %d.", expectedSize, actualSize)
+		t.Errorf(errMsg, expectedSize, actualSize)
 	}
 
 	tokenSlice := []string{
@@ -45,7 +50,7 @@ func TestContinuationTokenHash(t *testing.T) {
 
 		expectedError := tokenErrMsg + token
 		if actualError.Error() != expectedError {
-			t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+			t.Errorf(errMsgTxt, expectedError, actualError)
 		}
 	}
 }
@@ -55,7 +60,7 @@ func TestDownloadURLs(t *testing.T) {
 	actual := len(url)
 	expected := 27 // 3files*9
 	if expected != actual {
-		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actual)
+		t.Errorf(errMsg, expected, actual)
 	}
 }
 
@@ -67,7 +72,7 @@ func TestStoreArtifactsOnDisk(t *testing.T) {
 	actualFileNumber := len(actual)
 	expected := 28 // +1 due to .gitkeep
 	if expected != actualFileNumber {
-		t.Errorf("Not equal. Expected: %d. Actual: %d.", expected, actualFileNumber)
+		t.Errorf(errMsg, expected, actualFileNumber)
 	}
 
 	expectedDownloads := []string{
@@ -115,7 +120,7 @@ func TestDownloadURL(t *testing.T) {
 	expectedError := "HTTP response not 200. Does the URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token exist?"
 
 	if actualError.Error() != expectedError {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+		t.Errorf(errMsgTxt, expectedError, actualError)
 	}
 }
 
@@ -132,7 +137,7 @@ func TestArtifactName(t *testing.T) {
 	expectedError := "some-url is not an URL"
 
 	if actualError.Error() != expectedError {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+		t.Errorf(errMsgTxt, expectedError, actualError)
 	}
 }
 
@@ -141,6 +146,6 @@ func TestCreateArtifact(t *testing.T) {
 	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
 
 	if actualErrorFile.Error() != expectedErrorFile {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedErrorFile, actualErrorFile)
+		t.Errorf(errMsgTxt, expectedErrorFile, actualErrorFile)
 	}
 }
