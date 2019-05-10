@@ -13,6 +13,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=security_rating)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_nexus3-cli&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_nexus3-cli)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2762/badge)](https://bestpractices.coreinfrastructure.org/projects/2762)
 
 The aims of the nexus3-cli tool are:
  * to backup all artifacts from a certain Nexus maven repository.
