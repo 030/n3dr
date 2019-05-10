@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	errMsg = "Not equal. Expected: %d. Actual: %d."
+	errMsg    = "Not equal. Expected: %d. Actual: %d."
+	errMsgTxt = "Error incorrect. Expected: %v. Actual: %v"
 )
 
 var n = Nexus3{
@@ -49,7 +50,7 @@ func TestContinuationTokenHash(t *testing.T) {
 
 		expectedError := tokenErrMsg + token
 		if actualError.Error() != expectedError {
-			t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+			t.Errorf(errMsgTxt, expectedError, actualError)
 		}
 	}
 }
@@ -119,7 +120,7 @@ func TestDownloadURL(t *testing.T) {
 	expectedError := "HTTP response not 200. Does the URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token exist?"
 
 	if actualError.Error() != expectedError {
-		t.Errorf(errMsg, expectedError, actualError)
+		t.Errorf(errMsgTxt, expectedError, actualError)
 	}
 }
 
@@ -136,7 +137,7 @@ func TestArtifactName(t *testing.T) {
 	expectedError := "some-url is not an URL"
 
 	if actualError.Error() != expectedError {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+		t.Errorf(errMsgTxt, expectedError, actualError)
 	}
 }
 
@@ -145,6 +146,6 @@ func TestCreateArtifact(t *testing.T) {
 	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
 
 	if actualErrorFile.Error() != expectedErrorFile {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedErrorFile, actualErrorFile)
+		t.Errorf(errMsgTxt, expectedErrorFile, actualErrorFile)
 	}
 }
