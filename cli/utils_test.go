@@ -13,6 +13,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const (
+	testFilesDir = "testFiles"
+)
+
 func setup() {
 	log.SetReportCaller(true)
 
@@ -42,7 +46,7 @@ func setup() {
 		n.createArtifactsAndSubmit(i)
 	}
 
-	defer cleanupFiles("testFiles/file*")
+	defer cleanupFiles(testFilesDir + "/file*")
 }
 
 func shutdown() {
@@ -104,9 +108,9 @@ func createJAR(d string, f string) {
 func (n Nexus3) createArtifactsAndSubmit(i int) {
 	number := strconv.Itoa(i)
 	f := "file" + number
-	createPOM("testFiles", f, number)
-	createJAR("testFiles", f)
-	n.submitArtifact("testFiles", f)
+	createPOM(testFilesDir, f, number)
+	createJAR(testFilesDir, f)
+	n.submitArtifact(testFilesDir, f)
 }
 
 func cleanupFiles(re string) {
