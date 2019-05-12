@@ -1,4 +1,4 @@
-module nexus3-cli
+module n3dr
 
 go 1.12
 
