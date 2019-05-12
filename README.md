@@ -44,7 +44,7 @@ all submitted artifacts will be downloaded.
 In order to read the help menu, one has to run:
 
 ```
-go run main.go -h
+./n3dr -h
 ```
 
 The output will look as follows:
@@ -60,7 +60,6 @@ Usage of /tmp/go-build840407725/b001/exe/main:
   -n3drUser string
     	The Nexus user (default "admin")
 exit status 2
-exit status 2
 ```
 
 ### Download
@@ -71,3 +70,9 @@ repository.
 ### Upload
 
 The upload command will upload all artifacts to a Nexus maven repository.
+
+[![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
+
+```
+docker run n3dr:1.0.0 -h
+```
