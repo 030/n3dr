@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"nexus3-cli/cli"
+	"n3dr/cli"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -10,18 +10,18 @@ import (
 func main() {
 	log.SetReportCaller(true)
 
-	nexus3URL := flag.String("nexus3URL", "http://localhost:8081", "The Nexus3URL")
-	nexus3user := flag.String("nexus3user", "admin", "The Nexus user")
-	nexus3pass := flag.String("nexus3pass", "admin123", "The Nexus password")
-	nexus3repo := flag.String("nexus3repo", "maven-releases", "The Nexus3 repository")
+	n3drURL := flag.String("n3drURL", "http://localhost:8081", "The Nexus3URL")
+	n3drUser := flag.String("n3drUser", "admin", "The Nexus user")
+	n3drPass := flag.String("n3drPass", "admin123", "The Nexus password")
+	n3drRepo := flag.String("n3drRepo", "maven-releases", "The Nexus3 repository")
 
 	flag.Parse()
 
-	n := cli.Nexus3{URL: *nexus3URL, User: *nexus3user, Pass: *nexus3pass, Repository: *nexus3repo}
-	log.Info("Nexus3URL: " + n.URL)
-	log.Info("Nexus3user: " + n.User)
-	log.Info("Nexus3pass: ****")
-	log.Info("Nexus3repo: " + n.Repository)
+	n := cli.Nexus3{URL: *n3drURL, User: *n3drUser, Pass: *n3drPass, Repository: *n3drRepo}
+	log.Info("n3drURL: " + n.URL)
+	log.Info("n3drUser: " + n.User)
+	log.Info("n3drPass: ****")
+	log.Info("n3drRepo: " + n.Repository)
 
 	err := n.StoreArtifactsOnDisk()
 	if err != nil {
