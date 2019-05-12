@@ -74,5 +74,5 @@ The upload command will upload all artifacts to a Nexus maven repository.
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
 
 ```
-docker run n3dr:1.0.0 -h
+docker run utrecht:n3dr:1.0.0 -h
 ```
