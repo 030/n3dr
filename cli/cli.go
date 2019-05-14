@@ -123,16 +123,23 @@ func createArtifact(d string, f string, content string) error {
 }
 
 func (n Nexus3) artifactName(url string) (string, string, error) {
+	log.Info("Validate whether: '" + url + "' is an URL")
 	if !govalidator.IsURL(url) {
 		return "", "", errors.New(url + " is not an URL")
 	}
 
 	re := regexp.MustCompile("^.*/" + n.Repository + "/(.*)/(.+)$")
 	match := re.FindStringSubmatch(url)
+	if match == nil {
+		return "", "", errors.New("URL: '" + url + "' does not seem to contain an artifactName")
+	}
+
 	d := match[1]
+	log.Info("ArtifactName directory: " + d)
+
 	f := match[2]
-	log.Info(d)
-	log.Info(f)
+	log.Info("ArtifactName file: " + f)
+
 	return d, f, nil
 }
 
