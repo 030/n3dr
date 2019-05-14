@@ -23,7 +23,6 @@ var n = Nexus3{
 // See https://stackoverflow.com/a/34102842/2777965
 func TestMain(m *testing.M) {
 	setup()
-	m.Run()
 	code := m.Run()
 	shutdown()
 	os.Exit(code)
@@ -147,5 +146,14 @@ func TestCreateArtifact(t *testing.T) {
 
 	if actualErrorFile.Error() != expectedErrorFile {
 		t.Errorf(errMsgTxt, expectedErrorFile, actualErrorFile)
+	}
+}
+
+func TestDownloadArtifact(t *testing.T) {
+	actualError := n.downloadArtifact("http://releasesoftwaremoreoften.com")
+	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
 	}
 }
