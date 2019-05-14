@@ -149,3 +149,12 @@ func TestCreateArtifact(t *testing.T) {
 		t.Errorf(errMsgTxt, expectedErrorFile, actualErrorFile)
 	}
 }
+
+func TestDownloadArtifact(t *testing.T) {
+	actualError := n.downloadArtifact("http://releasesoftwaremoreoften.com")
+	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+	}
+}
