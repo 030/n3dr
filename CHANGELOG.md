@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Restrict testing to linux as docker is omitted on Mac and Windows build in travis.
 
+### Fixed
+- Broken Windows build due to formatting solved by enforcing LF using gitattributes.
+
 ## [1.0.1] - 2019-05-14
 ### Fixed
 - Publication of artifacts.
