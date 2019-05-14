@@ -23,7 +23,6 @@ var n = Nexus3{
 // See https://stackoverflow.com/a/34102842/2777965
 func TestMain(m *testing.M) {
 	setup()
-	m.Run()
 	code := m.Run()
 	shutdown()
 	os.Exit(code)
