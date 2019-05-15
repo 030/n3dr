@@ -195,6 +195,7 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
 func (n Nexus3) StoreArtifactsOnDisk() error {
+	log.SetReportCaller(true)
 	urls, err := n.downloadURLs()
 	if err != nil {
 		return err
