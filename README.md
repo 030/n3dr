@@ -44,22 +44,26 @@ all submitted artifacts will be downloaded.
 In order to read the help menu, one has to run:
 
 ```
-./n3dr -h
+./n3dr
 ```
 
 The output will look as follows:
 
 ```
-Usage of /tmp/go-build840407725/b001/exe/main:
-  -n3drURL string
-    	The Nexus3URL (default "http://localhost:8081")
-  -n3drPass string
-    	The Nexus password (default "admin123")
-  -n3drRepo string
-    	The Nexus3 repository (default "maven-releases")
-  -n3drUser string
-    	The Nexus user (default "admin")
-exit status 2
+N3DR is a tool that is able to download all artifacts from
+a certain Nexus3 repository.
+
+Usage:
+  n3dr [command]
+
+Available Commands:
+  download    Download all artifacts from a Nexus3 repository
+  help        Help about any command
+
+Flags:
+  -h, --help   help for n3dr
+
+Use "n3dr [command] --help" for more information about a command.
 ```
 
 ### Download
@@ -67,12 +71,24 @@ exit status 2
 The download command will download all artifacts that reside in a Nexus maven
 repository.
 
-### Upload
+```
+[user@localhost n3dr]$ ./n3dr download -h
+Use this command in order to download all artifacts that
+reside in a certain Nexus3 repository
 
-The upload command will upload all artifacts to a Nexus maven repository.
+Usage:
+  n3dr download [flags]
+
+Flags:
+  -h, --help              help for download
+  -p, --n3drPass string   The Nexus3 password (default "admin123")
+  -r, --n3drRepo string   The Nexus3 repository (default "maven-releases")
+  -n, --n3drURL string    The Nexus3 URL (default "http://localhost:8081")
+  -u, --n3drUser string   The Nexus3 user (default "admin")
+```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
 
 ```
-docker run utrecht/n3dr:1.0.0 -h
+docker run utrecht/n3dr:2.0.0 -h
 ```
