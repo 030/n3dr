@@ -21,55 +21,32 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	n3drURL  string
+	n3drPass string
+	n3drRepo string
+	n3drUser string
+)
+
 // downloadCmd represents the download command
 var downloadCmd = &cobra.Command{
 	Use:   "download",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Download all artifacts from a Nexus3 repository",
+	Long: `Use this command in order to download all artifacts that
+reside in a certain Nexus3 repository`,
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Info("download called")
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: n3drRepo}
+		err := n.StoreArtifactsOnDisk()
+		if err != nil {
+			log.Fatal(err)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(downloadCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// downloadCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	downloadCmd.Flags().StringP("n3drURL", "n", "http://localhost:8081", "The Nexus3 URL")
-	downloadCmd.Flags().StringP("n3drPass", "p", "admin123", "The Nexus3 password")
-	downloadCmd.Flags().StringP("n3drRepo", "r", "maven-releases", "The Nexus3 repository")
-	downloadCmd.Flags().StringP("n3drUser", "u", "admin", "The Nexus3 user")
-	downloadCmd.MarkFlagRequired("n3drURL")
-	downloadCmd.MarkFlagRequired("n3drPass")
-	downloadCmd.MarkFlagRequired("n3drRepo")
-	downloadCmd.MarkFlagRequired("n3drUser")
-}
-
-func lookupCobraFlag(cobraFlag string) string {
-	v, err := downloadCmd.Flags().GetString(cobraFlag)
-	log.Info(cobraFlag + ": " + v)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return v
-}
-
-func downloadArtifacts() {
-	n := cli.Nexus3{URL: lookupCobraFlag("n3drURL"), User: lookupCobraFlag("n3drUser"), Pass: lookupCobraFlag("n3drPass"), Repository: lookupCobraFlag("n3drRepo")}
-	err := n.StoreArtifactsOnDisk()
-	if err != nil {
-		log.Fatal(err)
-	}
+	downloadCmd.Flags().StringVarP(&n3drURL, "n3drURL", "n", "http://localhost:8081", "The Nexus3 URL")
+	downloadCmd.Flags().StringVarP(&n3drPass, "n3drPass", "p", "admin123", "The Nexus3 password")
+	downloadCmd.Flags().StringVarP(&n3drRepo, "n3drRepo", "r", "maven-releases", "The Nexus3 repository")
+	downloadCmd.Flags().StringVarP(&n3drUser, "n3drUser", "u", "admin", "The Nexus3 user")
 }
