@@ -4,8 +4,9 @@ go 1.12
 
 require (
 	github.com/030/go-utils v0.0.0-20190427204242-b7d6df265912
+	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
-	github.com/cloudflare/cfssl v0.0.0-20190510060611-9c027c93ba9e
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/sirupsen/logrus v1.4.1
 	github.com/spf13/cobra v0.0.3
