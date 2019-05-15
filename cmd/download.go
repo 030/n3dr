@@ -15,8 +15,9 @@
 package cmd
 
 import (
-	"fmt"
+	"n3dr/cli"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -31,7 +32,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("download called")
+		log.Info("download called")
 	},
 }
 
@@ -46,5 +47,29 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// downloadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	downloadCmd.Flags().StringP("n3drURL", "n", "http://localhost:8081", "The Nexus3 URL")
+	downloadCmd.Flags().StringP("n3drPass", "p", "admin123", "The Nexus3 password")
+	downloadCmd.Flags().StringP("n3drRepo", "r", "maven-releases", "The Nexus3 repository")
+	downloadCmd.Flags().StringP("n3drUser", "u", "admin", "The Nexus3 user")
+	downloadCmd.MarkFlagRequired("n3drURL")
+	downloadCmd.MarkFlagRequired("n3drPass")
+	downloadCmd.MarkFlagRequired("n3drRepo")
+	downloadCmd.MarkFlagRequired("n3drUser")
+}
+
+func lookupCobraFlag(cobraFlag string) string {
+	v, err := downloadCmd.Flags().GetString(cobraFlag)
+	log.Info(cobraFlag + ": " + v)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return v
+}
+
+func downloadArtifacts() {
+	n := cli.Nexus3{URL: lookupCobraFlag("n3drURL"), User: lookupCobraFlag("n3drUser"), Pass: lookupCobraFlag("n3drPass"), Repository: lookupCobraFlag("n3drRepo")}
+	err := n.StoreArtifactsOnDisk()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
