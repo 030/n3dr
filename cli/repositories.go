@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -33,9 +34,23 @@ func repositories() string {
 	return bodyString
 }
 
-func repositoryNames(json string) interface{} {
+func repositoryNamesJSON(json string) interface{} {
 	jq := gojsonq.New().JSONString(json)
 	jq.SortBy("name", "asc")
 	name := jq.Pluck("name")
 	return name
+}
+
+func repositoriesSlice() []interface{} {
+	return repositoryNamesJSON(repositories()).([]interface{})
+}
+
+func RepositoryNames() {
+	for _, name := range repositoriesSlice() {
+		fmt.Printf("%s\n", name)
+	}
+}
+
+func CountRepositories() {
+	fmt.Println(len(repositoriesSlice()))
 }

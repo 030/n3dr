@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"os"
 	"reflect"
 	"testing"
 
@@ -21,12 +20,12 @@ var n = Nexus3{
 }
 
 // See https://stackoverflow.com/a/34102842/2777965
-func TestMain(m *testing.M) {
-	setup()
-	code := m.Run()
-	shutdown()
-	os.Exit(code)
-}
+// func TestMain(m *testing.M) {
+// 	setup()
+// 	code := m.Run()
+// 	// shutdown()
+// 	os.Exit(code)
+// }
 
 func TestContinuationTokenHash(t *testing.T) {
 	actual, _ := n.continuationTokenRecursion("null")
