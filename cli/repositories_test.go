@@ -45,6 +45,8 @@ var testRepositories = `[ {
   "url" : "http://localhost:9999/repository/maven-public"
 } ]`
 
+var bla = `{"name":{"first":"Tom","last":"Hanks"},"age":61}`
+
 func marshal(j string) []byte {
 	m, err := json.Marshal(j)
 	if err != nil {
@@ -53,11 +55,20 @@ func marshal(j string) []byte {
 	return m
 }
 
-func Test(t *testing.T) {
+func TestRepositories(t *testing.T) {
 	expected := marshal(testRepositories)
 	actual := marshal(repositories())
 
 	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Expected '%s'. Actual '%s'", expected, actual)
+		t.Errorf("Expected: '%s'. Actual: '%s'", expected, actual)
+	}
+}
+
+func TestRepositoryNames(t *testing.T) {
+	var expected interface{} = []interface{}{"maven-central", "maven-public", "maven-releases", "maven-snapshots", "nuget-group", "nuget-hosted", "nuget.org-proxy"}
+	actual := repositoryNames(testRepositories)
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("Expected: '%v'. Actual: '%v'", expected, actual)
 	}
 }

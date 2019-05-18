@@ -3,6 +3,8 @@ package cli
 import (
 	"io/ioutil"
 	"net/http"
+
+	"github.com/thedevsaddam/gojsonq"
 )
 
 func repositories() string {
@@ -29,4 +31,11 @@ func repositories() string {
 		bodyString = string(bodyBytes)
 	}
 	return bodyString
+}
+
+func repositoryNames(json string) interface{} {
+	jq := gojsonq.New().JSONString(json)
+	jq.SortBy("name", "asc")
+	name := jq.Pluck("name")
+	return name
 }
