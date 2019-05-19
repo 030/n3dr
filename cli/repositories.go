@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/thedevsaddam/gojsonq"
@@ -20,13 +21,13 @@ func repositories() string {
 
 	req, err := http.NewRequest("GET", "http://localhost:9999/service/rest/v1/repositories", nil)
 	if err != nil {
-		// handle err
+		log.Fatal(err)
 	}
 	req.Header.Set("Accept", "application/json")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		// handle err
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 
@@ -34,7 +35,7 @@ func repositories() string {
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			//
+			log.Fatal(err)
 		}
 		bodyString = string(bodyBytes)
 	}

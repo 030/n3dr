@@ -54,7 +54,11 @@ func shutdown() {
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
 	}
-	cleanupFilesSlice := []string{filepath.Join(testFilesDir, "/file*"), "download/file*/file*/*/file*", "download/file*/file*/maven-metadata*"}
+
+	testFiles := filepath.Join(testFilesDir, "/file*")
+	testDownloads := filepath.Join("download", n.Repository, "file*", "file*", "*", "file*")
+	testDownloadsMetadata := filepath.Join("download", n.Repository, "file*", "file*", "maven-metadata*")
+	cleanupFilesSlice := []string{testFiles, testDownloads, testDownloadsMetadata}
 	for _, f := range cleanupFilesSlice {
 		err := cleanupFiles(f)
 		if err != nil {
