@@ -34,15 +34,16 @@ var repositoriesCmd = &cobra.Command{
 	Long: `Count the number of repositories, count the total or
 download artifacts from all repositories`,
 	Run: func(cmd *cobra.Command, args []string) {
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass}
 		if names {
-			cli.RepositoryNames()
+			n.RepositoryNames()
 		}
 		if count {
-			cli.CountRepositories()
+			n.CountRepositories()
 		}
 		if download {
-			na := cli.Nexus3All{URL: n3drURL, User: n3drUser, Pass: n3drPass}
-			err := na.Downloads()
+			n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass}
+			err := n.Downloads()
 			if err != nil {
 				log.Fatal(err)
 			}
