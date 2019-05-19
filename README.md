@@ -106,6 +106,12 @@ Flags:
   -n, --names   Print all repository names
 ```
 
+#### Download artifacts from all repositories
+
+```
+go run main.go repositories --download --n3drURL http://localhost:9999
+```
+
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
 
 ```
