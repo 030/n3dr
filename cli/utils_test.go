@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -45,8 +46,6 @@ func setup() {
 	for i := 1; i <= 3; i++ {
 		n.createArtifactsAndSubmit(i)
 	}
-
-	defer cleanupFiles(testFilesDir + "/file*")
 }
 
 func shutdown() {
@@ -55,8 +54,13 @@ func shutdown() {
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
 	}
-	cleanupFiles("download/file*/file*/*/file*")
-	cleanupFiles("download/file*/file*/maven-metadata*")
+	cleanupFilesSlice := []string{filepath.Join(testFilesDir, "/file*"), "download/file*/file*/*/file*", "download/file*/file*/maven-metadata*"}
+	for _, f := range cleanupFilesSlice {
+		err := cleanupFiles(f)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }
 
 func (n Nexus3) pong() bool {
@@ -113,19 +117,20 @@ func (n Nexus3) createArtifactsAndSubmit(i int) {
 	n.submitArtifact(testFilesDir, f)
 }
 
-func cleanupFiles(re string) {
+func cleanupFiles(re string) error {
 	files, err := filepath.Glob(re)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	if len(files) == 0 {
-		log.Fatal("No files to be removed were found")
+		return errors.New("No files to be removed were found in: '" + re + "'")
 	}
 	for _, f := range files {
 		if err := os.Remove(f); err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
+	return nil
 }
 
 func allFiles(dir string) ([]string, error) {
