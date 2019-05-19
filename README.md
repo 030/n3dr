@@ -115,7 +115,10 @@ go run main.go repositories --download --n3drURL http://localhost:9999
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
 
 ```
-docker run utrecht/n3dr:2.0.0 -h
+docker run --rm -e HTTPS_PROXY=some-proxy \
+           -v ${PWD}/nexus3backup:/download utrecht/n3dr:2.1.0 \
+           download -p pass -r maven-releases \
+           -n https://some-nexus-repo -u admin
 ```
 
 ### Difference with equivalent tools
