@@ -14,7 +14,9 @@
 
 package main
 
-import "n3dr/cmd"
+import (
+	"n3dr/cmd"
+)
 
 func main() {
 	cmd.Execute()
