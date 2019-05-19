@@ -45,8 +45,6 @@ var testRepositories = `[ {
   "url" : "http://localhost:9999/repository/maven-public"
 } ]`
 
-var bla = `{"name":{"first":"Tom","last":"Hanks"},"age":61}`
-
 func marshal(j string) []byte {
 	m, err := json.Marshal(j)
 	if err != nil {
