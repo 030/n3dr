@@ -57,8 +57,9 @@ Usage:
   n3dr [command]
 
 Available Commands:
-  download    Download all artifacts from a Nexus3 repository
-  help        Help about any command
+  download     Download all artifacts from a Nexus3 repository
+  help         Help about any command
+  repositories Count the number of repositories or return their names
 
 Flags:
   -h, --help   help for n3dr
@@ -85,6 +86,24 @@ Flags:
   -r, --n3drRepo string   The Nexus3 repository (default "maven-releases")
   -n, --n3drURL string    The Nexus3 URL (default "http://localhost:8081")
   -u, --n3drUser string   The Nexus3 user (default "admin")
+```
+
+### Repositories
+
+In order to get an overview of all repositories that are available in a certain
+Nexus3 instance, one could use the following commands:
+
+```
+Count the number of repositories or
+count the total
+
+Usage:
+  n3dr repositories [flags]
+
+Flags:
+  -c, --count   Count the number of repositories
+  -h, --help    help for repositories
+  -n, --names   Print all repository names
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
