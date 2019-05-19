@@ -1,7 +1,6 @@
 package cli
 
 import (
-	// "os"
 	"os"
 	"reflect"
 	"testing"
