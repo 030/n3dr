@@ -163,7 +163,7 @@ func (n Nexus3) downloadArtifact(url string) error {
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
-	createArtifact(filepath.Join("download", d), f, string(body))
+	createArtifact(filepath.Join("download", n.Repository, d), f, string(body))
 	return nil
 }
 
