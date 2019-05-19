@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Issue templates.
+- URL validation.
+- Difference with equivalent tools explained.
 
 ### Fixed
 - URL in repositories subcommand always set to http://localhost:9999.

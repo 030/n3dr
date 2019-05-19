@@ -117,3 +117,14 @@ go run main.go repositories --download --n3drURL http://localhost:9999
 ```
 docker run utrecht/n3dr:2.0.0 -h
 ```
+
+### Difference with equivalent tools
+
+There is a number of equivalent tools:
+
+* https://github.com/RiotGamesMinions/nexus_cli
+* https://github.com/packagemgmt/repositorytools
+* https://github.com/thiagofigueiro/nexus3-cli
+
+The difference is that n3dr is able to download artifacts from all Nexus3
+repositories.
