@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Issue templates.
 
+### Fixed
+- URL in repositories subcommand always set to http://localhost:9999.
+
 ## [2.1.0] - 2019-05-19
 ### Added
 - Count number of repositories in a certain Nexus3 instance.
