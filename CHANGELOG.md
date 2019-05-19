@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Count number of repositories in a certain Nexus3 instance.
 - Display names of all repositories.
 - Download artifacts from all repositories.
+- Updated README how to download all artifacts.
 
 ### Changed
 - Create dedicated download folder for each repository.
