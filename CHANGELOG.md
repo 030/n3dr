@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2019-05-19
+### Added
+- Count number of repositories in a certain Nexus3 instance.
+- Display names of all repositories.
+- Download artifacts from all repositories.
+- Updated README how to download all artifacts.
+
+### Changed
+- Create dedicated download folder for each repository.
+
 ## [2.0.0] - 2019-05-15
 ### Added
 - Command Line Interface using [Cobra](https://github.com/spf13/cobra).
@@ -34,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/030/n3dr/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/030/n3dr/compare/1.0.2...2.0.0
 [1.0.2]: https://github.com/030/n3dr/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/030/n3dr/compare/1.0.0...1.0.1

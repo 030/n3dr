@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -45,8 +46,6 @@ func setup() {
 	for i := 1; i <= 3; i++ {
 		n.createArtifactsAndSubmit(i)
 	}
-
-	defer cleanupFiles(testFilesDir + "/file*")
 }
 
 func shutdown() {
@@ -55,8 +54,17 @@ func shutdown() {
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
 	}
-	cleanupFiles("download/file*/file*/*/file*")
-	cleanupFiles("download/file*/file*/maven-metadata*")
+
+	testFiles := filepath.Join(testFilesDir, "/file*")
+	testDownloads := filepath.Join("download", n.Repository, "file*", "file*", "*", "file*")
+	testDownloadsMetadata := filepath.Join("download", n.Repository, "file*", "file*", "maven-metadata*")
+	cleanupFilesSlice := []string{testFiles, testDownloads, testDownloadsMetadata}
+	for _, f := range cleanupFilesSlice {
+		err := cleanupFiles(f)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }
 
 func (n Nexus3) pong() bool {
@@ -90,7 +98,7 @@ func (n Nexus3) pong() bool {
 
 func (n Nexus3) submitArtifact(d string, f string) {
 	path := filepath.Join(d, f)
-	cmd := exec.Command("bash", "-c", "curl -u "+n.User+":"+n.Pass+" -X POST \""+n.URL+"/service/rest/v1/components?repository=maven-releases\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@"+path+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@"+path+".jar\" -F \"maven2.asset2.extension=jar\"")
+	cmd := exec.Command("bash", "-c", "curl -u "+n.User+":"+n.Pass+" -X POST \""+n.URL+"/service/rest/v1/components?repository="+n.Repository+"\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@"+path+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@"+path+".jar\" -F \"maven2.asset2.extension=jar\"")
 	stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
@@ -113,19 +121,20 @@ func (n Nexus3) createArtifactsAndSubmit(i int) {
 	n.submitArtifact(testFilesDir, f)
 }
 
-func cleanupFiles(re string) {
+func cleanupFiles(re string) error {
 	files, err := filepath.Glob(re)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	if len(files) == 0 {
-		log.Fatal("No files to be removed were found")
+		return errors.New("No files to be removed were found in: '" + re + "'")
 	}
 	for _, f := range files {
 		if err := os.Remove(f); err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
+	return nil
 }
 
 func allFiles(dir string) ([]string, error) {
