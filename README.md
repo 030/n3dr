@@ -115,5 +115,19 @@ go run main.go repositories --download --n3drURL http://localhost:9999
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
 
 ```
-docker run utrecht/n3dr:2.0.0 -h
+docker run --rm -e HTTPS_PROXY=some-proxy \
+           -v ${PWD}/nexus3backup:/download utrecht/n3dr:2.1.0 \
+           download -p pass -r maven-releases \
+           -n https://some-nexus-repo -u admin
 ```
+
+### Difference with equivalent tools
+
+There is a number of equivalent tools:
+
+* https://github.com/RiotGamesMinions/nexus_cli
+* https://github.com/packagemgmt/repositorytools
+* https://github.com/thiagofigueiro/nexus3-cli
+
+The difference is that n3dr is able to download artifacts from all Nexus3
+repositories.

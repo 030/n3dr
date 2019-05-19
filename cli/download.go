@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -33,13 +34,17 @@ type Nexus3 struct {
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	assetURL := n.URL + assetURI + n.Repository
-	url := assetURL
+	constructDownloadURL := assetURL
 	if !(token == "null") {
-		url = assetURL + "&continuationToken=" + token
+		constructDownloadURL = assetURL + "&continuationToken=" + token
 	}
-	log.Info("DownloadURL: ", url)
-
-	req, err := http.NewRequest("GET", url, nil)
+	u, err := url.Parse(constructDownloadURL)
+	if err != nil {
+		return nil, err
+	}
+	log.Info("DownloadURL: ", u)
+	urlString := u.String()
+	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +59,7 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 
 	if resp.StatusCode != http.StatusOK {
 		log.Info(resp.StatusCode)
-		return nil, errors.New("HTTP response not 200. Does the URL: " + url + " exist?")
+		return nil, errors.New("HTTP response not 200. Does the URL: " + urlString + " exist?")
 	}
 
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
