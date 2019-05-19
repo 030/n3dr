@@ -39,6 +39,21 @@ all submitted artifacts will be downloaded.
 
 ## How to use this tool?
 
+### Password
+
+Define the password in `~/.n3dr.yaml`:
+
+```
+---
+n3drPass: admin123
+```
+
+and set the permissions to 400 by issuing:
+
+```
+chmod 400 ~/.n3dr.yaml
+```
+
 ### Help
 
 In order to read the help menu, one has to run:
@@ -116,7 +131,8 @@ go run main.go repositories --download --n3drURL http://localhost:9999
 
 ```
 docker run --rm -e HTTPS_PROXY=some-proxy \
-           -v ${PWD}/nexus3backup:/download utrecht/n3dr:2.1.0 \
+           -v ~/.n3dr.yaml:/home/n3dr/.n3dr.yaml \
+           -v ${PWD}/nexus3backup:/download utrecht/n3dr:2.2.0 \
            download -p pass -r maven-releases \
            -n https://some-nexus-repo -u admin
 ```
