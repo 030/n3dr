@@ -19,14 +19,10 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
-var (
-	n3drURL  string
-	n3drPass string
-	n3drRepo string
-	n3drUser string
-)
+var n3drRepo string
 
 // downloadCmd represents the download command
 var downloadCmd = &cobra.Command{
@@ -34,8 +30,11 @@ var downloadCmd = &cobra.Command{
 	Short: "Download all artifacts from a Nexus3 repository",
 	Long: `Use this command in order to download all artifacts that
 reside in a certain Nexus3 repository`,
+	PreRun: func(cmd *cobra.Command, args []string) {
+		viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
+	},
 	Run: func(cmd *cobra.Command, args []string) {
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: n3drRepo}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo}
 		err := n.StoreArtifactsOnDisk()
 		if err != nil {
 			log.Fatal(err)
@@ -45,8 +44,6 @@ reside in a certain Nexus3 repository`,
 
 func init() {
 	rootCmd.AddCommand(downloadCmd)
-	downloadCmd.Flags().StringVarP(&n3drURL, "n3drURL", "n", "http://localhost:8081", "The Nexus3 URL")
-	downloadCmd.Flags().StringVarP(&n3drPass, "n3drPass", "p", "admin123", "The Nexus3 password")
-	downloadCmd.Flags().StringVarP(&n3drRepo, "n3drRepo", "r", "maven-releases", "The Nexus3 repository")
-	downloadCmd.Flags().StringVarP(&n3drUser, "n3drUser", "u", "admin", "The Nexus3 user")
+	downloadCmd.Flags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
+	downloadCmd.MarkFlagRequired("n3drRepo")
 }
