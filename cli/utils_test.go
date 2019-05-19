@@ -90,7 +90,7 @@ func (n Nexus3) pong() bool {
 
 func (n Nexus3) submitArtifact(d string, f string) {
 	path := filepath.Join(d, f)
-	cmd := exec.Command("bash", "-c", "curl -u "+n.User+":"+n.Pass+" -X POST \""+n.URL+"/service/rest/v1/components?repository=maven-releases\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@"+path+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@"+path+".jar\" -F \"maven2.asset2.extension=jar\"")
+	cmd := exec.Command("bash", "-c", "curl -u "+n.User+":"+n.Pass+" -X POST \""+n.URL+"/service/rest/v1/components?repository="+n.Repository+"\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@"+path+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@"+path+".jar\" -F \"maven2.asset2.extension=jar\"")
 	stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))

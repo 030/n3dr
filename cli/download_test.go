@@ -1,6 +1,7 @@
 package cli
 
 import (
+	// "os"
 	"os"
 	"reflect"
 	"testing"
@@ -76,33 +77,33 @@ func TestStoreArtifactsOnDisk(t *testing.T) {
 
 	expectedDownloads := []string{
 		"download/.gitkeep",
-		"download/file1/file1/1.0.0/file1-1.0.0.jar",
-		"download/file1/file1/1.0.0/file1-1.0.0.jar.md5",
-		"download/file1/file1/1.0.0/file1-1.0.0.jar.sha1",
-		"download/file1/file1/1.0.0/file1-1.0.0.pom",
-		"download/file1/file1/1.0.0/file1-1.0.0.pom.md5",
-		"download/file1/file1/1.0.0/file1-1.0.0.pom.sha1",
-		"download/file1/file1/maven-metadata.xml",
-		"download/file1/file1/maven-metadata.xml.md5",
-		"download/file1/file1/maven-metadata.xml.sha1",
-		"download/file2/file2/1.0.0/file2-1.0.0.jar",
-		"download/file2/file2/1.0.0/file2-1.0.0.jar.md5",
-		"download/file2/file2/1.0.0/file2-1.0.0.jar.sha1",
-		"download/file2/file2/1.0.0/file2-1.0.0.pom",
-		"download/file2/file2/1.0.0/file2-1.0.0.pom.md5",
-		"download/file2/file2/1.0.0/file2-1.0.0.pom.sha1",
-		"download/file2/file2/maven-metadata.xml",
-		"download/file2/file2/maven-metadata.xml.md5",
-		"download/file2/file2/maven-metadata.xml.sha1",
-		"download/file3/file3/1.0.0/file3-1.0.0.jar",
-		"download/file3/file3/1.0.0/file3-1.0.0.jar.md5",
-		"download/file3/file3/1.0.0/file3-1.0.0.jar.sha1",
-		"download/file3/file3/1.0.0/file3-1.0.0.pom",
-		"download/file3/file3/1.0.0/file3-1.0.0.pom.md5",
-		"download/file3/file3/1.0.0/file3-1.0.0.pom.sha1",
-		"download/file3/file3/maven-metadata.xml",
-		"download/file3/file3/maven-metadata.xml.md5",
-		"download/file3/file3/maven-metadata.xml.sha1",
+		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar",
+		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar.md5",
+		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar.sha1",
+		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom",
+		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom.md5",
+		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom.sha1",
+		"download/maven-releases/file1/file1/maven-metadata.xml",
+		"download/maven-releases/file1/file1/maven-metadata.xml.md5",
+		"download/maven-releases/file1/file1/maven-metadata.xml.sha1",
+		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar",
+		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar.md5",
+		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar.sha1",
+		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.pom",
+		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.pom.md5",
+		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.pom.sha1",
+		"download/maven-releases/file2/file2/maven-metadata.xml",
+		"download/maven-releases/file2/file2/maven-metadata.xml.md5",
+		"download/maven-releases/file2/file2/maven-metadata.xml.sha1",
+		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.jar",
+		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.jar.md5",
+		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.jar.sha1",
+		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.pom",
+		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.pom.md5",
+		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.pom.sha1",
+		"download/maven-releases/file3/file3/maven-metadata.xml",
+		"download/maven-releases/file3/file3/maven-metadata.xml.md5",
+		"download/maven-releases/file3/file3/maven-metadata.xml.sha1",
 	}
 	for _, f := range expectedDownloads {
 		if !utils.FileExists(f) {
