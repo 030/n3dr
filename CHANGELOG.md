@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2019-05-21
+### Added
+- Enable debug logging.
+- Progress bar as suggested by [@jorianvo](https://github.com/jorianvo).
+
+### Changed
+- Download command changed to backup.
+- Majority of info logging changed to debug.
+
 ## [2.3.0] - 2019-05-20
 ### Added
 - docker-compose example.
