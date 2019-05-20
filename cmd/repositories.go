@@ -52,7 +52,6 @@ download artifacts from all repositories`,
 			n.CountRepositories()
 		}
 		if download {
-			n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw}
 			err := n.Downloads()
 			if err != nil {
 				log.Fatal(err)
