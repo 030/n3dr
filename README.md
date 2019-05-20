@@ -39,6 +39,15 @@ all submitted artifacts will be downloaded.
 
 ## How to use this tool?
 
+### Docker-compose
+
+One could use [this docker-compose.yml](docker-compose.yml) and start a backup
+of all repositories, after modifying it, and issue:
+
+```
+docker-compose up
+```
+
 ### Password
 
 Define the password in `~/.n3dr.yaml`:

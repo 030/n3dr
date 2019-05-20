@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  n3dr:
+    image: utrecht/n3dr:2.2.1
+    volumes:
+      - ~/.n3dr.yaml:/home/n3dr/.n3dr.yaml
+      - ~/2019-05-20-nexus-fqdn:/download
+    environment:
+      - HTTPS_PROXY=some-proxy
+    command: repositories -n some-nexus -u admin -d
