@@ -24,9 +24,9 @@ import (
 )
 
 var (
-	names    bool
-	count    bool
-	download bool
+	names  bool
+	count  bool
+	backup bool
 )
 
 // repositoriesCmd represents the repositories command
@@ -37,9 +37,10 @@ var repositoriesCmd = &cobra.Command{
 download artifacts from all repositories`,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
+		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		if !(names || count || download) {
+		if !(names || count || backup) {
 			cmd.Help()
 			os.Exit(0)
 		}
@@ -51,7 +52,7 @@ download artifacts from all repositories`,
 		if count {
 			n.CountRepositories()
 		}
-		if download {
+		if backup {
 			err := n.Downloads()
 			if err != nil {
 				log.Fatal(err)
@@ -62,8 +63,7 @@ download artifacts from all repositories`,
 
 func init() {
 	rootCmd.AddCommand(repositoriesCmd)
-
 	repositoriesCmd.Flags().BoolVarP(&names, "names", "a", false, "Print all repository names")
 	repositoriesCmd.Flags().BoolVarP(&count, "count", "c", false, "Count the number of repositories")
-	repositoriesCmd.Flags().BoolVarP(&download, "download", "d", false, "Download artifacts from all repositories")
+	repositoriesCmd.Flags().BoolVarP(&backup, "backup", "b", false, "Backup artifacts from all repositories")
 }
