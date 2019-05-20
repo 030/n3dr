@@ -11,11 +11,13 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/asaskevich/govalidator"
 	log "github.com/sirupsen/logrus"
 	"github.com/svenfuchs/jq"
 	"github.com/thedevsaddam/gojsonq"
+	"gopkg.in/cheggaaa/pb.v1"
 )
 
 const (
@@ -42,7 +44,7 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Info("DownloadURL: ", u)
+	log.Debug("DownloadURL: ", u)
 	urlString := u.String()
 	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
@@ -58,7 +60,7 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		log.Info(resp.StatusCode)
+		log.Debug(resp.StatusCode)
 		return nil, errors.New("HTTP response not 200. Does the URL: " + urlString + " exist?")
 	}
 
@@ -128,7 +130,7 @@ func createArtifact(d string, f string, content string) error {
 }
 
 func (n Nexus3) artifactName(url string) (string, string, error) {
-	log.Info("Validate whether: '" + url + "' is an URL")
+	log.Debug("Validate whether: '" + url + "' is an URL")
 	if !govalidator.IsURL(url) {
 		return "", "", errors.New(url + " is not an URL")
 	}
@@ -140,10 +142,10 @@ func (n Nexus3) artifactName(url string) (string, string, error) {
 	}
 
 	d := match[1]
-	log.Info("ArtifactName directory: " + d)
+	log.Debug("ArtifactName directory: " + d)
 
 	f := match[2]
-	log.Info("ArtifactName file: " + f)
+	log.Debug("ArtifactName file: " + f)
 
 	return d, f, nil
 }
@@ -179,34 +181,51 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 		return nil, err
 	}
 
-	for tokenNumber, token := range continuationTokenMap {
-		tokenNumberString := strconv.Itoa(tokenNumber)
-		log.Info("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
-		bytes, err := n.downloadURL(token)
-		if err != nil {
-			return nil, err
+	count := len(continuationTokenMap)
+	if count > 1 {
+		log.Info("Assembling downloadURLs '" + n.Repository + "'")
+		bar := pb.StartNew(count)
+		for tokenNumber, token := range continuationTokenMap {
+			tokenNumberString := strconv.Itoa(tokenNumber)
+			log.Debug("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
+			bytes, err := n.downloadURL(token)
+			if err != nil {
+				return nil, err
+			}
+			json := string(bytes)
+
+			jq := gojsonq.New().JSONString(json)
+			downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
+
+			downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
+			downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
+			bar.Increment()
+			time.Sleep(time.Millisecond)
 		}
-		json := string(bytes)
-
-		jq := gojsonq.New().JSONString(json)
-		downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
-
-		downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
-		downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
+		bar.FinishPrint("Done")
 	}
-
 	return downloadURLsInterfaceArrayAll, nil
 }
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
 func (n Nexus3) StoreArtifactsOnDisk() error {
-	log.SetReportCaller(true)
 	urls, err := n.downloadURLs()
 	if err != nil {
 		return err
 	}
-	for _, downloadURL := range urls {
-		n.downloadArtifact(fmt.Sprint(downloadURL))
+
+	countURLs := len(urls)
+	if countURLs > 0 {
+		log.Info("Backing up artifacts '" + n.Repository + "'")
+		bar := pb.StartNew(len(urls))
+		for _, downloadURL := range urls {
+			n.downloadArtifact(fmt.Sprint(downloadURL))
+			bar.Increment()
+		}
+		bar.FinishPrint("Done")
+	} else {
+		log.Info("No artifacts found in '" + n.Repository + "'")
 	}
+
 	return nil
 }
