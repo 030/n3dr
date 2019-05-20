@@ -28,6 +28,7 @@ var (
 	cfgFile  string
 	n3drURL  string
 	n3drUser string
+	debug    bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -53,9 +54,8 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
+	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug logging")
+
 	rootCmd.PersistentFlags().StringP("n3drPass", "p", "", "The Nexus3 password")
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "The Nexus3 URL")
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "The Nexus3 user")
@@ -84,8 +84,14 @@ func initConfig() {
 
 	viper.AutomaticEnv() // read in environment variables that match
 
-	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatal("~/.n3dr.yaml does not exist or yaml is invalid")
+	}
+}
+
+func enableDebug() {
+	if debug {
+		log.SetLevel(log.DebugLevel)
+		log.SetReportCaller(true)
 	}
 }
