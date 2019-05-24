@@ -20,10 +20,11 @@ addons:
 script:
   - diff -u <(echo -n) <(gofmt -d ./)
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then go test -short -cover -v -coverprofile=coverage.out -covermode=atomic ./...; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
   - go build -o $DELIVERABLE
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_n3dr -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=cmd/**,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.out"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_n3dr -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=cmd/**,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.txt"; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then bash <(curl -s https://codecov.io/bash); fi
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
