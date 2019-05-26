@@ -67,7 +67,7 @@ func (n Nexus3) Upload() error {
 					s.WriteString("maven2.asset2.extension=jar,")
 				}
 
-				if filepath.Ext(path) == "sources.jar" {
+				if filepath.Ext(path) == ".sources-jar" {
 					s.WriteString("maven2.asset3=@" + path + ",")
 					s.WriteString("maven2.asset3.extension=sources-jar,")
 				}
@@ -78,8 +78,15 @@ func (n Nexus3) Upload() error {
 		if err != nil {
 			return err
 		}
-		fmt.Println(strings.TrimSuffix(s.String(), ","))
-	}
 
+		multipartString := strings.TrimSuffix(s.String(), ",")
+		fmt.Println(multipartString)
+		// url := n.URL + "/service/rest/v1/components?repository=" + n.Repository
+		// u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
+		// err2 := u.MultipartUpload(multipartString)
+		// if err2 != nil {
+		// 	return err
+		// }
+	}
 	return nil
 }
