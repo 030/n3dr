@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"testing"
 	"time"
 
 	"github.com/030/go-utils"
@@ -15,6 +16,14 @@ import (
 
 	mp "github.com/030/go-curl/utils"
 )
+
+// See https://stackoverflow.com/a/34102842/2777965
+func TestMain(m *testing.M) {
+	setup()
+	code := m.Run()
+	shutdown()
+	os.Exit(code)
+}
 
 const (
 	testFilesDir = "testFiles"
