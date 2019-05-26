@@ -7,33 +7,12 @@ import (
 	"strings"
 )
 
-var s strings.Builder
+var foldersWithPOM strings.Builder
 
-func (n Nexus3) multipart(path string, f os.FileInfo, err error) error {
-	if !f.IsDir() {
-		if filepath.Ext(path) == ".pom" {
-			s.WriteString("maven2.asset1=@" + path + ",")
-			s.WriteString("maven2.asset1.extension=pom,")
-		}
-
-		if filepath.Ext(path) == ".jar" {
-			s.WriteString("maven2.asset2=@" + path + ",")
-			s.WriteString("maven2.asset2.extension=jar,")
-		}
-
-		if filepath.Ext(path) == "sources.jar" {
-			s.WriteString("maven2.asset3=@" + path + ",")
-			s.WriteString("maven2.asset3.extension=sources-jar,")
-		}
+func (n Nexus3) detectFoldersWithPOM(path string, f os.FileInfo, err error) error {
+	if !f.IsDir() && filepath.Ext(path) == ".pom" {
+		foldersWithPOM.WriteString(filepath.Dir(path) + ",")
 	}
-
-	// url := n.URL + "/service/rest/v1/components?repository=" + n.Repository
-	// u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
-	// err2 := u.MultipartUpload("maven2.asset1=@" + path + ".pom,maven2.asset1.extension=pom,maven2.asset2=@" + path + ".jar,maven2.asset2.extension=jar")
-	// if err2 != nil {
-	// 	return err2
-	// }
-
 	return nil
 }
 
@@ -56,12 +35,51 @@ func (n Nexus3) Upload() error {
 	// 	fmt.Println(f)
 	// }
 
-	err := filepath.Walk(n.Repository, n.multipart)
-	if err != nil {
-		return err
+	// err := filepath.Walk(n.Repository, n.multipart)
+	// if err != nil {
+	// 	return err
+	// }
+
+	// fmt.Println(strings.TrimSuffix(s.String(), ","))
+
+	err2 := filepath.Walk(n.Repository, n.detectFoldersWithPOM)
+	if err2 != nil {
+		return err2
 	}
 
-	fmt.Println(strings.TrimSuffix(s.String(), ","))
+	foldersWithPOMString := strings.TrimSuffix(foldersWithPOM.String(), ",")
+	foldersWithPOMStringSlice := strings.Split(foldersWithPOMString, ",")
+
+	for _, v := range foldersWithPOMStringSlice {
+		var s strings.Builder
+		err := filepath.Walk(v, func(path string, f os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if !f.IsDir() {
+				if filepath.Ext(path) == ".pom" {
+					s.WriteString("maven2.asset1=@" + path + ",")
+					s.WriteString("maven2.asset1.extension=pom,")
+				}
+
+				if filepath.Ext(path) == ".jar" {
+					s.WriteString("maven2.asset2=@" + path + ",")
+					s.WriteString("maven2.asset2.extension=jar,")
+				}
+
+				if filepath.Ext(path) == "sources.jar" {
+					s.WriteString("maven2.asset3=@" + path + ",")
+					s.WriteString("maven2.asset3.extension=sources-jar,")
+				}
+			}
+			return nil
+		})
+
+		if err != nil {
+			return err
+		}
+		fmt.Println(strings.TrimSuffix(s.String(), ","))
+	}
 
 	return nil
 }
