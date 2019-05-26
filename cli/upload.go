@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	mp "github.com/030/go-curl/utils"
 )
 
 var foldersWithPOM strings.Builder
@@ -81,12 +83,12 @@ func (n Nexus3) Upload() error {
 
 		multipartString := strings.TrimSuffix(s.String(), ",")
 		fmt.Println(multipartString)
-		// url := n.URL + "/service/rest/v1/components?repository=" + n.Repository
-		// u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
-		// err2 := u.MultipartUpload(multipartString)
-		// if err2 != nil {
-		// 	return err
-		// }
+		url := n.URL + "/service/rest/v1/components?repository=" + n.Repository
+		u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
+		err2 := u.MultipartUpload(multipartString)
+		if err2 != nil {
+			return err2
+		}
 	}
 	return nil
 }
