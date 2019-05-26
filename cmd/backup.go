@@ -22,8 +22,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var n3drRepo string
-
 // backupCmd represents the backup command
 var backupCmd = &cobra.Command{
 	Use:   "backup",
@@ -45,6 +43,5 @@ reside in a certain Nexus3 repository`,
 
 func init() {
 	rootCmd.AddCommand(backupCmd)
-	backupCmd.Flags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
 	backupCmd.MarkFlagRequired("n3drRepo")
 }

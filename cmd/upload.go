@@ -22,8 +22,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var n3drRepo string
-
 // uploadCmd represents the upload command
 var uploadCmd = &cobra.Command{
 	Use:   "upload",
@@ -45,6 +43,5 @@ a specific Nexus3 repository, e.g. maven-releases`,
 
 func init() {
 	rootCmd.AddCommand(uploadCmd)
-	uploadCmd.Flags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
 	uploadCmd.MarkFlagRequired("n3drRepo")
 }

@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"os"
 	"reflect"
 	"testing"
 
@@ -18,14 +17,6 @@ var n = Nexus3{
 	User:       "admin",
 	Pass:       "admin123",
 	Repository: "maven-releases",
-}
-
-// See https://stackoverflow.com/a/34102842/2777965
-func TestMain(m *testing.M) {
-	setup()
-	code := m.Run()
-	shutdown()
-	os.Exit(code)
 }
 
 func TestContinuationTokenHash(t *testing.T) {
