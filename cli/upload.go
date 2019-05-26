@@ -9,22 +9,21 @@ import (
 
 var s strings.Builder
 
-// https://stackoverflow.com/a/6612243/2777965
 func (n Nexus3) multipart(path string, f os.FileInfo, err error) error {
 	if !f.IsDir() {
 		if filepath.Ext(path) == ".pom" {
-			s.WriteString(f.Name() + ",")
+			s.WriteString("maven2.asset1=@" + path + ",")
 			s.WriteString("maven2.asset1.extension=pom,")
 		}
 
 		if filepath.Ext(path) == ".jar" {
-			s.WriteString(f.Name() + ",")
+			s.WriteString("maven2.asset2=@" + path + ",")
 			s.WriteString("maven2.asset2.extension=jar,")
 		}
 
 		if filepath.Ext(path) == "sources.jar" {
-			s.WriteString(f.Name())
-			s.WriteString("maven2.asset2.extension=sources-jar,")
+			s.WriteString("maven2.asset3=@" + path + ",")
+			s.WriteString("maven2.asset3.extension=sources-jar,")
 		}
 	}
 
@@ -62,7 +61,7 @@ func (n Nexus3) Upload() error {
 		return err
 	}
 
-	fmt.Println(s.String())
+	fmt.Println(strings.TrimSuffix(s.String(), ","))
 
 	return nil
 }
