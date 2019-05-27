@@ -7,22 +7,33 @@ import (
 	"strings"
 
 	mp "github.com/030/go-curl/utils"
+	log "github.com/sirupsen/logrus"
 )
 
 var foldersWithPOM strings.Builder
 
-func (n Nexus3) detectFoldersWithPOM(path string, f os.FileInfo, err error) error {
-	if !f.IsDir() && filepath.Ext(path) == ".pom" {
-		foldersWithPOM.WriteString(filepath.Dir(path) + ",")
+func (n Nexus3) detectFoldersWithPOM(d string) error {
+	err := filepath.Walk(d, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !f.IsDir() && filepath.Ext(path) == ".pom" {
+			fmt.Println(path)
+			foldersWithPOM.WriteString(filepath.Dir(path) + ",")
+		}
+		return nil
+	})
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
 func (n Nexus3) Upload() error {
-	err2 := filepath.Walk(n.Repository, n.detectFoldersWithPOM)
-	if err2 != nil {
-		return err2
+	err3 := n.detectFoldersWithPOM(n.Repository)
+	if err3 != nil {
+		return err3
 	}
 
 	foldersWithPOMString := strings.TrimSuffix(foldersWithPOM.String(), ",")
@@ -34,20 +45,24 @@ func (n Nexus3) Upload() error {
 			if err != nil {
 				return err
 			}
+
 			if !f.IsDir() {
 				if filepath.Ext(path) == ".pom" {
+					log.Debug("POM found " + path)
 					s.WriteString("maven2.asset1=@" + path + ",")
 					s.WriteString("maven2.asset1.extension=pom,")
 				}
 
 				if filepath.Ext(path) == ".jar" {
+					log.Debug("JAR found " + path)
 					s.WriteString("maven2.asset2=@" + path + ",")
 					s.WriteString("maven2.asset2.extension=jar,")
 				}
 
-				if filepath.Ext(path) == ".sources-jar" {
+				if filepath.Ext(path) == ".war" {
+					log.Debug("WAR found " + path)
 					s.WriteString("maven2.asset3=@" + path + ",")
-					s.WriteString("maven2.asset3.extension=sources-jar,")
+					s.WriteString("maven2.asset3.extension=war,")
 				}
 			}
 			return nil
