@@ -12,13 +12,6 @@ const (
 	errMsgTxt = "Error incorrect. Expected: %v. Actual: %v"
 )
 
-var n = Nexus3{
-	URL:        "http://localhost:9999",
-	User:       "admin",
-	Pass:       "admin123",
-	Repository: "maven-releases",
-}
-
 func TestContinuationTokenHash(t *testing.T) {
 	actual, _ := n.continuationTokenRecursion("null")
 	actualSize := len(actual)
