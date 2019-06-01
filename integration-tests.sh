@@ -32,8 +32,13 @@ readiness(){
 }
 
 artifacts(){
+    echo "Testing upload..."
     $TOOL upload -u admin -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
+    echo
+    echo "Testing backup..."
     $TOOL backup -n http://localhost:9999 -u admin -r maven-releases -v ${NEXUS_API_VERSION}
+    echo
+    echo "Testing repositories..."
     $TOOL repositories -n http://localhost:9999 -u admin -v ${NEXUS_API_VERSION} -b
 }
 

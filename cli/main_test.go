@@ -29,6 +29,13 @@ const (
 	testFilesDir = "testFiles"
 )
 
+var n = Nexus3{
+	URL:        "http://localhost:9999",
+	User:       "admin",
+	Pass:       "admin123",
+	Repository: "maven-releases",
+}
+
 func setup() {
 	// Start docker nexus
 	cmd := exec.Command("bash", "-c", "docker run -d -p 9999:8081 --name nexus sonatype/nexus3:3.16.1")
