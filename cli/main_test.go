@@ -34,6 +34,7 @@ var n = Nexus3{
 	User:       "admin",
 	Pass:       "admin123",
 	Repository: "maven-releases",
+	APIVersion: "v1",
 }
 
 func setup() {
