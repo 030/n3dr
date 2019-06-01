@@ -73,8 +73,12 @@ func (n Nexus3) Upload() error {
 		}
 
 		multipartString := strings.TrimSuffix(s.String(), ",")
-		fmt.Println(multipartString)
 		url := n.URL + "/service/rest/" + n.APIVersion + "/components?repository=" + n.Repository
+		log.WithFields(log.Fields{
+			"multipart": multipartString,
+			"url":       url,
+		}).Debug("URL")
+
 		u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
 		err2 := u.MultipartUpload(multipartString)
 		if err2 != nil {
