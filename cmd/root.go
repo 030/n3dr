@@ -25,11 +25,12 @@ import (
 )
 
 var (
-	cfgFile  string
-	n3drURL  string
-	n3drUser string
-	n3drRepo string
-	debug    bool
+	cfgFile    string
+	n3drURL    string
+	n3drUser   string
+	n3drRepo   string
+	debug      bool
+	apiVersion string
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -61,6 +62,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "The Nexus3 URL")
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "The Nexus3 user")
 	rootCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
+	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "The Nexus3 APIVersion, e.g. v1 or beta")
 
 	rootCmd.MarkPersistentFlagRequired("n3drURL")
 	rootCmd.MarkPersistentFlagRequired("n3drUser")

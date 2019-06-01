@@ -33,7 +33,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion}
 		err := n.Upload()
 		if err != nil {
 			log.Fatal(err)

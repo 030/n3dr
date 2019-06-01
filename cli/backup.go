@@ -32,6 +32,7 @@ type Nexus3 struct {
 	User       string
 	Pass       string
 	Repository string
+	APIVersion string
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
