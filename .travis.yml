@@ -36,9 +36,8 @@ addons:
     token:
       secure: $SONAR_TOKEN
 before_script:
-  - echo $HOME
-  - echo "n3drPass: admin123" > $HOME/.n3dr.yaml
-  - cat $HOME/.n3dr.yaml
+  - |
+    echo 'n3drPass: admin123' > ${HOME}/.n3dr.yaml
 script:
   - diff -u <(echo -n) <(gofmt -d ./)
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
