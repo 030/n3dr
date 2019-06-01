@@ -64,7 +64,7 @@ func (n Nexus3) CountRepositories() {
 // Downloads retrieves artifacts from all repositories
 func (n Nexus3) Downloads() error {
 	for _, name := range n.repositoriesSlice() {
-		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name.(string)}
+		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name.(string), APIVersion: n.APIVersion}
 		err := n.StoreArtifactsOnDisk()
 		if err != nil {
 			return err
