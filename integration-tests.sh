@@ -32,7 +32,7 @@ readiness(){
 }
 
 artifacts(){
-    $TOOL upload -u admin -r maven-releases -n http://localhost:9999 -v beta
+    $TOOL upload -u admin -r maven-releases -p admin123 -n http://localhost:9999 -v beta
 }
 
 cleanup(){
