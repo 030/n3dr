@@ -42,6 +42,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 }
 
 func init() {
+	uploadCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
+	uploadCmd.MarkPersistentFlagRequired("n3drRepo")
 	rootCmd.AddCommand(uploadCmd)
-	uploadCmd.MarkFlagRequired("n3drRepo")
 }
