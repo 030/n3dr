@@ -35,6 +35,10 @@ artifacts(){
     $TOOL upload -u admin -r maven-releases -p admin123 -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
 }
 
+docker(){
+    docker-compose up --build
+}
+
 cleanup(){
     docker stop nexus
     docker rm nexus
@@ -45,7 +49,8 @@ main(){
     nexus
     readiness
     artifacts
-    cleanup
+    docker
+    trap cleanup
 }
 
 main

@@ -7,4 +7,4 @@ services:
       - ~/2019-05-20-nexus-fqdn:/download
     environment:
       - HTTPS_PROXY=some-proxy
-    command: repositories -n some-nexus -u admin -d
+    command: repositories -n http://localhost:9999 -u admin -v ${NEXUS_API_VERSION} -d
