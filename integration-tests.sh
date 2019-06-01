@@ -47,7 +47,7 @@ main(){
     nexus
     readiness
     artifacts
-    trap cleanup
+    cleanup
 }
 
 main
