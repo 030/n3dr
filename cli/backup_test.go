@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"os"
 	"reflect"
 	"testing"
 
@@ -12,21 +11,6 @@ const (
 	errMsg    = "Not equal. Expected: %d. Actual: %d."
 	errMsgTxt = "Error incorrect. Expected: %v. Actual: %v"
 )
-
-var n = Nexus3{
-	URL:        "http://localhost:9999",
-	User:       "admin",
-	Pass:       "admin123",
-	Repository: "maven-releases",
-}
-
-// See https://stackoverflow.com/a/34102842/2777965
-func TestMain(m *testing.M) {
-	setup()
-	code := m.Run()
-	shutdown()
-	os.Exit(code)
-}
 
 func TestContinuationTokenHash(t *testing.T) {
 	actual, _ := n.continuationTokenRecursion("null")

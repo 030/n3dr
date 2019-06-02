@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2019-06-02
+### Added
+- Upload artifacts to a specific Nexus3 repository.
+
 ## [3.0.0] - 2019-05-21
 ### Added
 - Enable debug logging.
@@ -82,7 +86,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/2.3.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/3.1.0...HEAD
+[3.1.0]: https://github.com/030/n3dr/compare/3.0.0...3.1.0
+[3.0.0]: https://github.com/030/n3dr/compare/2.3.0...3.0.0
 [2.3.0]: https://github.com/030/n3dr/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/030/n3dr/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/030/n3dr/compare/2.1.1...2.2.0

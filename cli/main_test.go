@@ -8,15 +8,34 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"testing"
 	"time"
 
 	"github.com/030/go-utils"
 	log "github.com/sirupsen/logrus"
+
+	mp "github.com/030/go-curl/utils"
 )
+
+// See https://stackoverflow.com/a/34102842/2777965
+func TestMain(m *testing.M) {
+	setup()
+	code := m.Run()
+	shutdown()
+	os.Exit(code)
+}
 
 const (
 	testFilesDir = "testFiles"
 )
+
+var n = Nexus3{
+	URL:        "http://localhost:9999",
+	User:       "admin",
+	Pass:       "admin123",
+	Repository: "maven-releases",
+	APIVersion: "v1",
+}
 
 func setup() {
 	// Start docker nexus
@@ -96,10 +115,11 @@ func (n Nexus3) pong() bool {
 
 func (n Nexus3) submitArtifact(d string, f string) {
 	path := filepath.Join(d, f)
-	cmd := exec.Command("bash", "-c", "curl -u "+n.User+":"+n.Pass+" -X POST \""+n.URL+"/service/rest/v1/components?repository="+n.Repository+"\" -H  \"accept: application/json\" -H  \"Content-Type: multipart/form-data\" -F \"maven2.asset1=@"+path+".pom\" -F \"maven2.asset1.extension=pom\" -F \"maven2.asset2=@"+path+".jar\" -F \"maven2.asset2.extension=jar\"")
-	stdoutStderr, err := cmd.CombinedOutput()
+	url := n.URL + "/service/rest/v1/components?repository=" + n.Repository
+	u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
+	err := u.MultipartUpload("maven2.asset1=@" + path + ".pom,maven2.asset1.extension=pom,maven2.asset2=@" + path + ".jar,maven2.asset2.extension=jar")
 	if err != nil {
-		log.Fatal(err, string(stdoutStderr))
+		log.Fatal(err)
 	}
 }
 
