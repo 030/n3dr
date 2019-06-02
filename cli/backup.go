@@ -22,7 +22,8 @@ import (
 
 const (
 	pingURI     = "/service/metrics/ping"
-	assetURI    = "/service/rest/v1/assets?repository="
+	assetURI1   = "/service/rest/"
+	assetURI2   = "/assets?repository="
 	tokenErrMsg = "Token should be either a hexadecimal or \"null\" and not: "
 )
 
@@ -32,10 +33,11 @@ type Nexus3 struct {
 	User       string
 	Pass       string
 	Repository string
+	APIVersion string
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
-	assetURL := n.URL + assetURI + n.Repository
+	assetURL := n.URL + assetURI1 + n.APIVersion + assetURI2 + n.Repository
 	constructDownloadURL := assetURL
 	if !(token == "null") {
 		constructDownloadURL = assetURL + "&continuationToken=" + token

@@ -1,5 +1,6 @@
 # n3dr
 
+[![GoDoc Widget]][GoDoc]
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
 ![DevOps SE Questions](https://img.shields.io/stackexchange/devops/t/n3dr.svg)
@@ -158,3 +159,6 @@ There is a number of equivalent tools:
 
 The difference is that n3dr is able to download artifacts from all Nexus3
 repositories.
+
+[GoDoc]: https://godoc.org/github.com/030/n3dr
+[GoDoc Widget]: https://godoc.org/github.com/030/n3dr?status.svg
