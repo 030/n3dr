@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.1.1] - 2019-07-03
 ### Added
 - Upload instructions.
+- Option that ensures that tool does not exit if artifact already exists while uploading.
 
 ## [3.1.0] - 2019-06-02
 ### Added
