@@ -30,7 +30,7 @@ func (n Nexus3) detectFoldersWithPOM(d string) error {
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
-func (n Nexus3) Upload() error {
+func (n Nexus3) Upload(c bool) error {
 	err3 := n.detectFoldersWithPOM(n.Repository)
 	if err3 != nil {
 		return err3
@@ -82,7 +82,14 @@ func (n Nexus3) Upload() error {
 		u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
 		err2 := u.MultipartUpload(multipartString)
 		if err2 != nil {
-			return err2
+			if c {
+				log.WithFields(log.Fields{
+					"continueOnDoesNotAllowUpdatingArtifacts": c,
+					"error": err2,
+				}).Info("Ensure that the tool will not stop if an artifact does not exist")
+			} else {
+				return err2
+			}
 		}
 	}
 	return nil

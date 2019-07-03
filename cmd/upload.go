@@ -22,6 +22,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var continueOnDoesNotAllowUpdatingArtifacts bool
+
 // uploadCmd represents the upload command
 var uploadCmd = &cobra.Command{
 	Use:   "upload",
@@ -34,7 +36,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion}
-		err := n.Upload()
+		err := n.Upload(continueOnDoesNotAllowUpdatingArtifacts)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -44,5 +46,6 @@ a specific Nexus3 repository, e.g. maven-releases`,
 func init() {
 	uploadCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
 	uploadCmd.MarkPersistentFlagRequired("n3drRepo")
+	uploadCmd.Flags().BoolVarP(&continueOnDoesNotAllowUpdatingArtifacts, "continueOnDoesNotAllowUpdatingArtifacts", "c", false, "Prevent that tool stops if artifact already exists")
 	rootCmd.AddCommand(uploadCmd)
 }
