@@ -42,6 +42,21 @@ all submitted artifacts will be downloaded.
 
 ## How to use this tool?
 
+### Uploads
+
+```
+./n3dr upload -r repositoryName -n nexusFQDN -u someUserName
+```
+
+#### ContinueOnDoesNotAllowUpdatingArtifacts
+
+Use the following subcommand to prevent that the n3dr tool exits 1 if an
+artifact has already been uploaded to Nexus:
+
+```
+./n3dr upload -r repositoryName -n nexusFQDN -u someUserName -c
+```
+
 ### Docker-compose
 
 One could use [this docker-compose.yml](docker-compose.yml) and start a backup
