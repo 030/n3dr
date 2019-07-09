@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	mp "github.com/030/go-curl/utils"
@@ -63,6 +64,18 @@ func (n Nexus3) Upload(c bool) error {
 					log.Debug("WAR found " + path)
 					s.WriteString("maven2.asset3=@" + path + ",")
 					s.WriteString("maven2.asset3.extension=war,")
+				}
+
+				sourcesJAR, err := regexp.MatchString(`sources`, path)
+				if err != nil {
+					return err
+				}
+
+				if filepath.Ext(path) == ".jar" && sourcesJAR {
+					log.Debug("Sources JAR found " + path)
+					s.WriteString("maven2.asset4=@" + path + ",")
+					s.WriteString("maven2.asset4.classifier=sources,")
+					s.WriteString("maven2.asset4.extension=jar,")
 				}
 			}
 			return nil
