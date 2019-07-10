@@ -70,12 +70,44 @@ func (n Nexus3) Upload(c bool) error {
 				if err != nil {
 					return err
 				}
-
 				if filepath.Ext(path) == ".jar" && sourcesJAR {
 					log.Debug("Sources JAR found " + path)
 					s.WriteString("maven2.asset4=@" + path + ",")
 					s.WriteString("maven2.asset4.classifier=sources,")
 					s.WriteString("maven2.asset4.extension=jar,")
+				}
+
+				bundeldPdfsJAR, err := regexp.MatchString(`bundledPdfs`, path)
+				if err != nil {
+					return err
+				}
+				if filepath.Ext(path) == ".jar" && bundeldPdfsJAR {
+					log.Debug("bundledPdfs JAR found " + path)
+					s.WriteString("maven2.asset5=@" + path + ",")
+					s.WriteString("maven2.asset5.classifier=bundledPdfs,")
+					s.WriteString("maven2.asset5.extension=jar,")
+				}
+
+				testexpJAR, err := regexp.MatchString(`testexp`, path)
+				if err != nil {
+					return err
+				}
+				if filepath.Ext(path) == ".jar" && testexpJAR {
+					log.Debug("testexp JAR found " + path)
+					s.WriteString("maven2.asset6=@" + path + ",")
+					s.WriteString("maven2.asset6.classifier=testexp,")
+					s.WriteString("maven2.asset6.extension=jar,")
+				}
+
+				standaloneJAR, err := regexp.MatchString(`standalone`, path)
+				if err != nil {
+					return err
+				}
+				if filepath.Ext(path) == ".jar" && standaloneJAR {
+					log.Debug("standalone JAR found " + path)
+					s.WriteString("maven2.asset7=@" + path + ",")
+					s.WriteString("maven2.asset7.classifier=standalone,")
+					s.WriteString("maven2.asset7.extension=jar,")
 				}
 			}
 			return nil
