@@ -109,6 +109,23 @@ func (n Nexus3) Upload(c bool) error {
 					s.WriteString("maven2.asset7.classifier=standalone,")
 					s.WriteString("maven2.asset7.extension=jar,")
 				}
+
+				testResourcesJAR, err := regexp.MatchString(`test-resources`, path)
+				if err != nil {
+					return err
+				}
+				if filepath.Ext(path) == ".jar" && testResourcesJAR {
+					log.Debug("testResources JAR found " + path)
+					s.WriteString("maven2.asset8=@" + path + ",")
+					s.WriteString("maven2.asset8.classifier=test-resources,")
+					s.WriteString("maven2.asset8.extension=jar,")
+				}
+
+				if filepath.Ext(path) == ".zip" {
+					log.Debug("ZIP found " + path)
+					s.WriteString("maven2.asset9=@" + path + ",")
+					s.WriteString("maven2.asset9.extension=zip,")
+				}
 			}
 			return nil
 		})
