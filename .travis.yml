@@ -10,12 +10,6 @@ matrix:
   - os: linux
     dist: bionic
     env:
-      - ARTIFACT_PUBLICATION=false
-      - NEXUS_VERSION=latest
-      - NEXUS_API_VERSION=v1
-  - os: linux
-    dist: bionic
-    env:
       - ARTIFACT_PUBLICATION=true
       - NEXUS_VERSION=3.16.2
       - NEXUS_API_VERSION=v1
