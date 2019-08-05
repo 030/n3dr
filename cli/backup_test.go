@@ -124,6 +124,23 @@ func TestArtifactName(t *testing.T) {
 	}
 }
 
+func TestArtifactNameContainingRepositoryName(t *testing.T) {
+	actualDir, actualFile, _ := n.artifactName("http://localhost:9999/repository/maven-releases/com/maven-releases/tools/1.0.0/tools-1.0.0.jar")
+	expectedDir := "com/maven-releases/tools/1.0.0"
+	expectedFile := "tools-1.0.0.jar"
+
+	if expectedDir != actualDir || expectedFile != actualFile {
+		t.Errorf("Dir and file incorrect. Expected: %v & %v. Actual: %v & %v", expectedDir, expectedFile, actualDir, actualFile)
+	}
+
+	_, _, actualError := n.artifactName("some-url")
+	expectedError := "some-url is not an URL"
+
+	if actualError.Error() != expectedError {
+		t.Errorf(errMsgTxt, expectedError, actualError)
+	}
+}
+
 func TestCreateArtifact(t *testing.T) {
 	actualErrorFile := createArtifact("testFiles", "file100/file100", "some-content")
 	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
