@@ -1,3 +1,6 @@
+# ARTIFACT_PUBLICATION use this constant only once per OS to ensure that
+# the artifacts are only published once per OS, e.g. linux, osx and
+# windows.
 language: go
 go:
   - 1.12.5
