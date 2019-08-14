@@ -49,7 +49,13 @@ upload(){
 backup(){
     echo "Testing backup..."
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION}
-    count_downloads 63
+
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 15
+    else
+        count_downloads 63
+    fi
+
     cleanup_downloads
 }
 
@@ -58,7 +64,13 @@ repositories(){
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a | grep maven-releases
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c | grep 7
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b
-    count_downloads 126
+
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 30
+    else
+        count_downloads 126
+    fi
+
     cleanup_downloads
 }
 
