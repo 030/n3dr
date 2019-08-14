@@ -40,14 +40,24 @@ password(){
     fi
 }
 
-artifacts(){
+upload(){
     echo "Testing upload..."
     $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
+    #$TOOL upload -u admin -p $PASSWORD -r 3rdparty-palantir -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
     echo
+}
+
+backup(){
     echo "Testing backup..."
+    rm -r maven-releases
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION}
     echo
+}
+
+repositories(){
     echo "Testing repositories..."
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b
 }
 
@@ -61,7 +71,9 @@ main(){
     nexus
     readiness
     password
-    artifacts
+    upload
+    backup
+    #repositories
     cleanup
 }
 
