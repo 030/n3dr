@@ -71,7 +71,7 @@ Flags:
 Use "n3dr [command] --help" for more information about a command.
 ```
 
-### Store the password in a read-only file
+## Store the password in a read-only file
 
 Define the password in `~/.n3dr.yaml`:
 
@@ -118,7 +118,7 @@ running the following command:
 ./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
-### Rationale for N3DR
+## Rationale for N3DR
 
 Although there is a number of equivalent tools:
 
