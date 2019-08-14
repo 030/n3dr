@@ -25,7 +25,7 @@ readiness(){
     until docker logs nexus | grep 'Started Sonatype Nexus OSS'
     do
         echo "Nexus unavailable"
-        sleep 2
+        sleep 10
     done
 }
 
@@ -63,6 +63,7 @@ repositories(){
 }
 
 cleanup(){
+    cleanup_downloads
     docker stop nexus
     docker rm nexus
 }
@@ -72,7 +73,7 @@ count_downloads(){
 }
 
 cleanup_downloads(){
-    rm -r download
+    rm -rf download
 }
 
 main(){
