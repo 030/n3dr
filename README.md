@@ -34,6 +34,77 @@ The aims of the n3dr tool are:
  * to backup all artifacts from a certain Nexus maven repository.
  * to migrate all artifacts from NexusA to NexusB.
 
+## Download and verify n3dr
+
+```
+curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux -o n3dr-linux
+curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux.sha512.txt -o n3dr-linux.sha512.txt
+sha512sum --check n3dr-linux.sha512.txt
+chmod +x n3dr-linux
+./n3dr-linux
+```
+
+## Check the help menu
+
+```
+user@computer:~/dev$ ./n3dr-linux -h
+N3DR is a tool that is able to download all artifacts from
+a certain Nexus3 repository.
+
+Usage:
+  n3dr [command]
+
+Available Commands:
+  backup       Backup all artifacts from a Nexus3 repository
+  help         Help about any command
+  repositories Count the number of repositories or return their names
+  upload       Upload all artifacts to a specific Nexus3 repository
+
+Flags:
+  -v, --apiVersion string   The Nexus3 APIVersion, e.g. v1 or beta (default "v1")
+  -d, --debug               Enable debug logging
+  -h, --help                help for n3dr
+  -p, --n3drPass string     The Nexus3 password
+  -n, --n3drURL string      The Nexus3 URL
+  -u, --n3drUser string     The Nexus3 user
+
+Use "n3dr [command] --help" for more information about a command.
+```
+
+## Backup artifacts from a certain repository
+
+All artifacts from a repository will be stored in a download folder when
+the following command is run:
+
+```
+./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases
+```
+
+## Backup all repositories
+
+All artifacts from various repositories will be stored in a download
+folder when the following command is issued:
+
+```
+./n3dr-linux repositories -u admin -n http://localhost:8081 -b
+```
+
+Note: a new folder will be created for every repository:
+
+* download/maven-public
+* download/maven-releases
+
+## Upload all artifacts to a certain repository
+
+It is possible to upload all JARs that reside in a folder by
+running the following command:
+
+```
+./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
+```
+
+------------------------------------------------------------------------------------
+
 ## How do the tests look like?
 
 The tests start a nexus docker container. The tests will be started once
