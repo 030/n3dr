@@ -42,23 +42,24 @@ password(){
 
 upload(){
     echo "Testing upload..."
-    $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
-    #$TOOL upload -u admin -p $PASSWORD -r 3rdparty-palantir -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
+    $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION}
     echo
 }
 
 backup(){
     echo "Testing backup..."
-    rm -r maven-releases
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION}
-    echo
+    count_downloads 63
+    cleanup_downloads
 }
 
 repositories(){
     echo "Testing repositories..."
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a | grep maven-releases
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c | grep 7
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b
+    count_downloads 126
+    cleanup_downloads
 }
 
 cleanup(){
@@ -66,15 +67,23 @@ cleanup(){
     docker rm nexus
 }
 
+count_downloads(){
+    find download -type f | wc -l | grep $1
+}
+
+cleanup_downloads(){
+    rm -r download
+}
+
 main(){
+    trap cleanup EXIT
     validate
     nexus
     readiness
     password
     upload
     backup
-    #repositories
-    cleanup
+    repositories
 }
 
 main
