@@ -4,7 +4,6 @@
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
 ![DevOps SE Questions](https://img.shields.io/stackexchange/devops/t/n3dr.svg)
-![Docker Pulls](https://img.shields.io/docker/pulls/utrecht/n3dr.svg)
 ![Issues](https://img.shields.io/github/issues-raw/030/n3dr.svg)
 ![Pull requests](https://img.shields.io/github/issues-pr-raw/030/n3dr.svg)
 ![Total downloads](https://img.shields.io/github/downloads/030/n3dr/total.svg)
