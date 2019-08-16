@@ -66,6 +66,7 @@ Flags:
   -p, --n3drPass string     The Nexus3 password
   -n, --n3drURL string      The Nexus3 URL
   -u, --n3drUser string     The Nexus3 user
+  -z, --zip                 Add downloaded artifacts to a ZIP archive
 
 Use "n3dr [command] --help" for more information about a command.
 ```
@@ -107,6 +108,10 @@ Note: a new folder will be created for every repository:
 
 * download/maven-public
 * download/maven-releases
+
+## Add all downloaded archives to a ZIP archive
+
+In order to add all archives to a zip archive, one has to use the --zip or -z flag.
 
 ## Upload all artifacts to a certain repository
 

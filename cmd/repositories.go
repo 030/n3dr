@@ -45,7 +45,7 @@ download artifacts from all repositories`,
 			os.Exit(0)
 		}
 		pw := viper.GetString("n3drPass")
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw, APIVersion: apiVersion}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw, APIVersion: apiVersion, ZIP: zip}
 		if names {
 			n.RepositoryNames()
 		}

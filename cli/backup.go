@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/asaskevich/govalidator"
+	"github.com/mholt/archiver"
 	log "github.com/sirupsen/logrus"
 	"github.com/svenfuchs/jq"
 	"github.com/thedevsaddam/gojsonq"
@@ -21,6 +22,7 @@ import (
 )
 
 const (
+	downloadDir = "download"
 	pingURI     = "/service/metrics/ping"
 	assetURI1   = "/service/rest/"
 	assetURI2   = "/assets?repository="
@@ -34,6 +36,7 @@ type Nexus3 struct {
 	Pass       string
 	Repository string
 	APIVersion string
+	ZIP        bool
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
@@ -172,7 +175,7 @@ func (n Nexus3) downloadArtifact(url string) error {
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
-	createArtifact(filepath.Join("download", n.Repository, d), f, string(body))
+	createArtifact(filepath.Join(downloadDir, n.Repository, d), f, string(body))
 	return nil
 }
 
@@ -229,5 +232,16 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 		log.Info("No artifacts found in '" + n.Repository + "'")
 	}
 
+	return nil
+}
+
+// CreateZip adds all artifacts to a ZIP archive
+func (n Nexus3) CreateZip() error {
+	if n.ZIP {
+		err := archiver.Archive([]string{downloadDir}, "test-"+time.Now().Format("01-02-2006")+".zip")
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
