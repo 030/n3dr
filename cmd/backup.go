@@ -33,10 +33,15 @@ reside in a certain Nexus3 repository`,
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip}
 		err := n.StoreArtifactsOnDisk()
 		if err != nil {
 			log.Fatal(err)
+		}
+
+		err2 := n.CreateZip()
+		if err2 != nil {
+			log.Fatal(err2)
 		}
 	},
 }
