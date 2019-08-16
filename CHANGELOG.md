@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.2.0] - 2019-08-16
 ### Added
 - Possibility to create a ZIP of downloaded artifacts
+- Described in README how to add artifacts to a ZIP archive
 
 ### Changed
 - Instructions how to use n3dr updated in README.md
