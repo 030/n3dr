@@ -31,6 +31,7 @@ var (
 	n3drRepo   string
 	debug      bool
 	apiVersion string
+	zip        bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -57,6 +58,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug logging")
+	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "Add downloaded artifacts to a ZIP archive")
 
 	rootCmd.PersistentFlags().StringP("n3drPass", "p", "", "The Nexus3 password")
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "The Nexus3 URL")
