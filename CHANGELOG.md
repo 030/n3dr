@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Instructions how to use n3dr updated in README.md
 
+### Removed
+- Docker
+
 ## [3.1.1] - 2019-08-06
 ### Fixed
 - Fix 'incorrect folder name if artifact path contains repository name' by [@dbevacqua](https://github.com/dbevacqua).
