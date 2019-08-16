@@ -50,7 +50,7 @@ func TestDownloadURLs(t *testing.T) {
 func TestStoreArtifactsOnDisk(t *testing.T) {
 	n.StoreArtifactsOnDisk()
 
-	actual, _ := allFiles("download")
+	actual, _ := allFiles(downloadDir)
 
 	actualFileNumber := len(actual)
 	expected := 28 // +1 due to .gitkeep
