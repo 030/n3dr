@@ -25,7 +25,7 @@ readiness(){
     until docker logs nexus | grep 'Started Sonatype Nexus OSS'
     do
         echo "Nexus unavailable"
-        sleep 2
+        sleep 10
     done
 }
 
@@ -40,29 +40,63 @@ password(){
     fi
 }
 
-artifacts(){
+upload(){
     echo "Testing upload..."
-    $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION} -d
+    $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION}
     echo
+}
+
+backup(){
     echo "Testing backup..."
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION}
-    echo
+
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 15
+    else
+        count_downloads 63
+    fi
+
+    cleanup_downloads
+}
+
+repositories(){
     echo "Testing repositories..."
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a | grep maven-releases
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c | grep 7
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b
+
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 30
+    else
+        count_downloads 126
+    fi
+
+    cleanup_downloads
 }
 
 cleanup(){
+    cleanup_downloads
     docker stop nexus
     docker rm nexus
 }
 
+count_downloads(){
+    find download -type f | wc -l | grep $1
+}
+
+cleanup_downloads(){
+    rm -rf download
+}
+
 main(){
+    trap cleanup EXIT
     validate
     nexus
     readiness
     password
-    artifacts
-    cleanup
+    upload
+    backup
+    repositories
 }
 
 main
