@@ -1,0 +1,6 @@
+<!-- https://mvnrepository.com/artifact/com.palantir.docker.compose/docker-compose-rule-core -->
+<dependency>
+    <groupId>com.palantir.docker.compose</groupId>
+    <artifactId>docker-compose-rule-core</artifactId>
+    <version>0.32.0</version>
+</dependency>
