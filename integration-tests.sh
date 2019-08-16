@@ -56,6 +56,9 @@ backup(){
         count_downloads 63
     fi
 
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} -z
+    test_zip 24
+
     cleanup_downloads
 }
 
@@ -71,6 +74,9 @@ repositories(){
         count_downloads 126
     fi
 
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b -z
+    test_zip 48
+
     cleanup_downloads
 }
 
@@ -84,7 +90,12 @@ count_downloads(){
     find download -type f | wc -l | grep $1
 }
 
+test_zip(){
+    du -h test*zip | grep ${1}K
+}
+
 cleanup_downloads(){
+    rm -f test*zip
     rm -rf download
 }
 
