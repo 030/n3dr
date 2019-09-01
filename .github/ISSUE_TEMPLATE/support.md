@@ -1,6 +1,6 @@
 ---
 name: Support Request
-about: Support request or question relating to Kubernetes
+about: Support request or question relating to n3dr
 labels: triage/support
 
 ---
@@ -10,9 +10,7 @@ STOP -- PLEASE READ!
 
 GitHub is not the right place for support requests.
 
-If you're looking for help, check [Stack Overflow](https://stackoverflow.com/questions/tagged/kubernetes) and the [troubleshooting guide](https://kubernetes.io/docs/tasks/debug-application-cluster/troubleshooting/).
+If you're looking for help, check [DevOps StackExchange](https://devops.stackexchange.com/questions/tagged/n3dr).
 
-You can also post your question on the [Kubernetes Slack](http://slack.k8s.io/) or the [Discuss Kubernetes](https://discuss.kubernetes.io/) forum.
-
-If the matter is security related, please disclose it privately via https://kubernetes.io/security/.
+If the matter is security related, please disclose it privately by sending an email to chocolatey030@gmail.com
 -->
