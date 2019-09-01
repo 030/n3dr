@@ -1,11 +1,11 @@
 ---
 name: Failing Test
-about: Report test failures in Kubernetes CI jobs
+about: Report test failures in n3dr CI jobs
 labels: kind/failing-test
 
 ---
 
-<!-- Please only use this template for submitting reports about failing tests in Kubernetes CI jobs -->
+<!-- Please only use this template for submitting reports about failing tests in n3dr CI jobs -->
 
 **Which jobs are failing**:
 
