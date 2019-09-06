@@ -68,7 +68,7 @@ script:
   - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
   - chmod +x $DELIVERABLE
   - zip -j ${DELIVERABLE}.zip $DELIVERABLE
-  - if [ $TRAVIS_OS_NAME == linux ]; then ./integration-tests.sh $NEXUS_VERSION $NEXUS_API_VERSION ./${DELIVERABLE}; fi
+  - if [ $TRAVIS_OS_NAME == linux ]; then apt install bats -y && ./integration-tests.sh $NEXUS_VERSION $NEXUS_API_VERSION ./${DELIVERABLE}; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_n3dr -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=cmd/**,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.txt"; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then bash <(curl -s https://codecov.io/bash); fi
 deploy:
