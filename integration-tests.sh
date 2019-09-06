@@ -1,8 +1,8 @@
 #!/bin/bash -ex
 
-NEXUS_VERSION=$1
-NEXUS_API_VERSION=$2
-TOOL=$3
+NEXUS_VERSION="${1:-3.16.2}"
+NEXUS_API_VERSION="${2:-v1}"
+TOOL="${3:-./n3dr}"
 
 validate(){
     if [ -z "$TOOL" ]; then
@@ -91,16 +91,15 @@ count_downloads(){
 }
 
 test_zip(){
-    du -h test*zip | grep ${1}K
+    du -h n3dr-backup-*zip | grep ${1}K
 }
 
 cleanup_downloads(){
-    rm -f test*zip
+    rm -f n3dr-backup-*zip
     rm -rf download
 }
 
 main(){
-    trap cleanup EXIT
     validate
     nexus
     readiness
@@ -108,6 +107,8 @@ main(){
     upload
     backup
     repositories
+    bats --tap tests.bats
 }
 
+trap cleanup EXIT
 main
