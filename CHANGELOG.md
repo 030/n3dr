@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.1] - 2019-09-06
+### Fixed
+- No error handling if password is omitted or incorrect. Issue reported by [@jorianvo](https://github.com/jorianvo).
+
+## [3.3.0] - 2019-09-02
+### Added
+- Lambda support
+
 ## [3.2.0] - 2019-08-16
 ### Added
 - Possibility to create a ZIP of downloaded artifacts
