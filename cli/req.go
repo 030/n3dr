@@ -18,7 +18,10 @@ func (n Nexus3) validatePassword() error {
 }
 
 func (n Nexus3) request(url string) ([]byte, string, error) {
-	n.validatePassword()
+	err := n.validatePassword()
+	if err != nil {
+		return nil, "", err
+	}
 	log.WithFields(log.Fields{"URL": url, "User": n.User}).Debug("URL Request")
 
 	req, err := http.NewRequest("GET", url, nil)

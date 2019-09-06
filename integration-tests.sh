@@ -107,6 +107,7 @@ main(){
     upload
     backup
     repositories
+    bats --tap tests.bats
 }
 
 trap cleanup EXIT
