@@ -59,7 +59,6 @@ addons:
 before_script:
   - |
     echo 'n3drPass: admin123' > ${HOME}/.n3dr.yaml
-    echo "NEXUS_API_VERSION=${NEXUS_API_VERSION}" > .env
 script:
   - diff -u <(echo -n) <(gofmt -d ./)
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
