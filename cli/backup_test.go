@@ -100,7 +100,7 @@ func TestStoreArtifactsOnDisk(t *testing.T) {
 }
 func TestDownloadURL(t *testing.T) {
 	_, actualError := n.downloadURL("some-token")
-	expectedError := "HTTP response not 200. Does the URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token exist?"
+	expectedError := "ResponseCode: '406' and Message '406 Not Acceptable' for URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token"
 
 	if actualError.Error() != expectedError {
 		t.Errorf(errMsgTxt, expectedError, actualError)

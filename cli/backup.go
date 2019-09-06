@@ -3,8 +3,6 @@ package cli
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -51,25 +49,8 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	}
 	log.Debug("DownloadURL: ", u)
 	urlString := u.String()
-	req, err := http.NewRequest("GET", urlString, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.SetBasicAuth(n.User, n.Pass)
-	req.Header.Set("Accept", "application/json")
 
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		log.Debug(resp.StatusCode)
-		return nil, errors.New("HTTP response not 200. Does the URL: " + urlString + " exist?")
-	}
-
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, _, err := n.request(urlString)
 	if err != nil {
 		return nil, err
 	}
@@ -161,21 +142,15 @@ func (n Nexus3) downloadArtifact(url string) error {
 		return err
 	}
 
-	req, err := http.NewRequest("GET", url, nil)
+	_, bodyString, err := n.request(url)
 	if err != nil {
 		return err
 	}
-	req.SetBasicAuth(n.User, n.Pass)
-	req.Header.Set("Accept", "application/json")
 
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
+	err2 := createArtifact(filepath.Join(downloadDir, n.Repository, d), f, bodyString)
+	if err2 != nil {
 		return err
 	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	createArtifact(filepath.Join(downloadDir, n.Repository, d), f, string(body))
 	return nil
 }
 
@@ -238,7 +213,7 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 // CreateZip adds all artifacts to a ZIP archive
 func (n Nexus3) CreateZip() error {
 	if n.ZIP {
-		err := archiver.Archive([]string{downloadDir}, "test-"+time.Now().Format("01-02-2006")+".zip")
+		err := archiver.Archive([]string{downloadDir}, "n3dr-backup-"+time.Now().Format("01-02-2006")+".zip")
 		if err != nil {
 			return err
 		}
