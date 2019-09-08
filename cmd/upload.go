@@ -39,6 +39,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 			log.Fatal(err)
 		}
 	},
+	Version: rootCmd.Version,
 }
 
 func init() {
