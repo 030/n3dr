@@ -44,6 +44,7 @@ reside in a certain Nexus3 repository`,
 			log.Fatal(err2)
 		}
 	},
+	Version: rootCmd.Version,
 }
 
 func init() {
