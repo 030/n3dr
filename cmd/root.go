@@ -68,18 +68,15 @@ func init() {
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
+		viper.SetConfigFile(cfgFile) // Use config file from the flag.
 	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
+		home, err := homedir.Dir() // Find home directory.
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
 
-		// Search config in home directory with name ".n3dr" (without extension).
-		viper.AddConfigPath(home)
+		viper.AddConfigPath(home) // Search config in home directory with name ".n3dr" (without extension).
 		viper.SetConfigName(".n3dr")
 	}
 
