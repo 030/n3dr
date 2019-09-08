@@ -128,10 +128,8 @@ func (n Nexus3) artifactName(url string) (string, string, error) {
 	}
 
 	d := match[1]
-	log.Debug("ArtifactName directory: " + d)
-
 	f := match[2]
-	log.Debug("ArtifactName file: " + f)
+	log.Debug("ArtifactName directory: " + d + " and file: " + f)
 
 	return d, f, nil
 }
