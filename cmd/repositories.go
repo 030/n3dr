@@ -59,6 +59,7 @@ download artifacts from all repositories`,
 			}
 		}
 	},
+	Version: rootCmd.Version,
 }
 
 func init() {

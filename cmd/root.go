@@ -25,13 +25,8 @@ import (
 )
 
 var (
-	cfgFile    string
-	n3drURL    string
-	n3drUser   string
-	n3drRepo   string
-	debug      bool
-	apiVersion string
-	zip        bool
+	apiVersion, cfgFile, n3drRepo, n3drURL, n3drUser, Version string
+	debug, zip                                                bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -40,6 +35,7 @@ var rootCmd = &cobra.Command{
 	Short: "Nexus3 Disaster Recovery (N3DR)",
 	Long: `N3DR is a tool that is able to download all artifacts from
 a certain Nexus3 repository.`,
+	Version: Version,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
