@@ -36,17 +36,19 @@ The aims of the n3dr tool are:
 ## Download and verify n3dr
 
 ```
-curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux -o n3dr-linux
-curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux.sha512.txt -o n3dr-linux.sha512.txt
+N3DR_VERSION=3.3.2
+curl -L https://github.com/030/n3dr/releases/download/${N3DR_VERSION}/n3dr-linux -o n3dr-linux
+curl -L https://github.com/030/n3dr/releases/download/${N3DR_VERSION}/n3dr-linux.sha512.txt -o n3dr-linux.sha512.txt
 sha512sum --check n3dr-linux.sha512.txt
 chmod +x n3dr-linux
-./n3dr-linux
+sudo mv n3dr-linux /usr/local/bin/n3dr
+n3dr
 ```
 
 ## Check the help menu
 
 ```
-user@computer:~/dev$ ./n3dr-linux -h
+user@computer:~/dev$ n3dr -h
 N3DR is a tool that is able to download all artifacts from
 a certain Nexus3 repository.
 
@@ -66,6 +68,7 @@ Flags:
   -p, --n3drPass string     The Nexus3 password
   -n, --n3drURL string      The Nexus3 URL
   -u, --n3drUser string     The Nexus3 user
+      --version             version for n3dr
   -z, --zip                 Add downloaded artifacts to a ZIP archive
 
 Use "n3dr [command] --help" for more information about a command.
@@ -92,7 +95,15 @@ All artifacts from a repository will be stored in a download folder when
 the following command is run:
 
 ```
-./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases
+n3dr backup -u admin -n http://localhost:8081 -r maven-releases
+```
+
+## Check the number of libraries that reside in a repository
+
+In order to inspect the amount of libraries in a repository, one could issue:
+
+```
+n3dr backup -u admin -n http://localhost:8081 -r repository-name -l
 ```
 
 ## Backup all repositories
@@ -101,7 +112,7 @@ All artifacts from various repositories will be stored in a download
 folder when the following command is issued:
 
 ```
-./n3dr-linux repositories -u admin -n http://localhost:8081 -b
+n3dr repositories -u admin -n http://localhost:8081 -b
 ```
 
 Note: a new folder will be created for every repository:
@@ -119,7 +130,7 @@ It is possible to upload all JARs that reside in a folder by
 running the following command:
 
 ```
-./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
+n3dr upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
 ## Rationale for N3DR

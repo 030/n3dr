@@ -152,7 +152,16 @@ func (n Nexus3) downloadArtifact(url string) error {
 	return nil
 }
 
-func (n Nexus3) downloadURLs() ([]interface{}, error) {
+//NumberOfLibraries returns the number of libraries in a repository
+func (n Nexus3) NumberOfLibraries() (int, error) {
+	l, err := n.downloadURLs(true)
+	if err != nil {
+		return 0, err
+	}
+	return len(l), nil
+}
+
+func (n Nexus3) downloadURLs(disableProgressBar bool) ([]interface{}, error) {
 	var downloadURLsInterfaceArrayAll []interface{}
 	continuationTokenMap, err := n.continuationTokenRecursion("null")
 	if err != nil {
@@ -161,8 +170,14 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 
 	count := len(continuationTokenMap)
 	if count > 1 {
-		log.Info("Assembling downloadURLs '" + n.Repository + "'")
-		bar := pb.StartNew(count)
+
+		var bar *pb.ProgressBar
+
+		if !disableProgressBar {
+			log.Info("Assembling downloadURLs '" + n.Repository + "'")
+			bar = pb.StartNew(count)
+		}
+
 		for tokenNumber, token := range continuationTokenMap {
 			tokenNumberString := strconv.Itoa(tokenNumber)
 			log.Debug("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
@@ -177,17 +192,24 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 
 			downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
 			downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
-			bar.Increment()
+
+			if !disableProgressBar {
+				bar.Increment()
+			}
+
 			time.Sleep(time.Millisecond)
 		}
-		bar.FinishPrint("Done")
+
+		if !disableProgressBar {
+			bar.FinishPrint("Done")
+		}
 	}
 	return downloadURLsInterfaceArrayAll, nil
 }
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
 func (n Nexus3) StoreArtifactsOnDisk() error {
-	urls, err := n.downloadURLs()
+	urls, err := n.downloadURLs(false)
 	if err != nil {
 		return err
 	}

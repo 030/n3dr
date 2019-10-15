@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -eux
 
 NEXUS_VERSION="${1:-3.16.2}"
 NEXUS_API_VERSION="${2:-v1}"
@@ -46,10 +46,14 @@ upload(){
     echo
 }
 
+helper_backup(){
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} $1
+}
+
 backup(){
     echo "Testing backup..."
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION}
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} -z
+    helper_backup ""
+    helper_backup "-z"
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 15
@@ -59,15 +63,21 @@ backup(){
         test_zip 24
     fi
 
-    cleanup_downloads
+    helper_backup "-l" | grep 63
+
+    # cleanup_downloads
+}
+
+helper_repositories(){
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} $1
 }
 
 repositories(){
     echo "Testing repositories..."
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a | grep maven-releases
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c | grep 7
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b -z
+    helper_repositories "-a | grep maven-releases"
+    helper_repositories "-c | grep 7"
+    helper_repositories "-b"
+    helper_repositories "-b -z"
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 30
@@ -110,5 +120,5 @@ main(){
     bats --tap tests.bats
 }
 
-trap cleanup EXIT
+# trap cleanup EXIT
 main

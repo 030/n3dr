@@ -47,6 +47,14 @@ func TestDownloadURLs(t *testing.T) {
 	}
 }
 
+func TestNumberOfLibraries(t *testing.T) {
+	actual, _ := n.NumberOfLibraries()
+	expected := 27 // 3files*9
+	if expected != actual {
+		t.Errorf(errMsg, expected, actual)
+	}
+}
+
 func TestStoreArtifactsOnDisk(t *testing.T) {
 	n.StoreArtifactsOnDisk()
 
