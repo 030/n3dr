@@ -42,47 +42,44 @@ func jarClassifier(a string) string {
 	return match[1]
 }
 
-var sb strings.Builder
-
-func sbJAR(p string, c string, artifactNumber string) {
+func sbJAR(p string, c string, artifactNumber string) string {
 	log.Debug(c + " found " + p)
-	sb.WriteString("maven2.asset" + artifactNumber + "=@" + p + ",")
-	sb.WriteString("maven2.asset" + artifactNumber + ".extension=" + c + ",")
+	return "maven2.asset" + artifactNumber + "=@" + p + ",maven2.asset" + artifactNumber + ".extension=" + c + ","
 }
 
-func sbClassifierJAR(p string, c string, artifactNumber string) {
-	sbJAR(p, "jar", artifactNumber)
-	sb.WriteString("maven2.asset" + artifactNumber + ".classifier=" + c + ",")
+func sbClassifierJAR(p string, c string, artifactNumber string) string {
+	return sbJAR(p, "jar", artifactNumber) + "maven2.asset" + artifactNumber + ".classifier=" + c + ","
 }
 
-func multipartContent(path string) (string, error) {
+func multipartContent(path string) string {
+	var sb strings.Builder
 	switch ext := filepath.Ext(path); ext {
 	case ".pom":
-		sbJAR(path, "pom", "1")
+		sb.WriteString(sbJAR(path, "pom", "1"))
 	case ".war":
-		sbJAR(path, "war", "2")
+		sb.WriteString(sbJAR(path, "war", "2"))
 	case ".zip":
-		sbJAR(path, "zip", "3")
+		sb.WriteString(sbJAR(path, "zip", "3"))
 	case ".jar":
 		switch c := jarClassifier(path); c {
 		case "sources":
-			sbClassifierJAR(path, c, "5")
+			sb.WriteString(sbClassifierJAR(path, c, "5"))
 		case "bundledPdfs":
-			sbClassifierJAR(path, c, "6")
+			sb.WriteString(sbClassifierJAR(path, c, "6"))
 		case "testexp":
-			sbClassifierJAR(path, c, "7")
+			sb.WriteString(sbClassifierJAR(path, c, "7"))
 		case "standalone":
-			sbClassifierJAR(path, c, "8")
+			sb.WriteString(sbClassifierJAR(path, c, "8"))
 		case "test-resources":
-			sbClassifierJAR(path, c, "9")
+			sb.WriteString(sbClassifierJAR(path, c, "9"))
 		default:
-			sbJAR(path, "jar", "4")
+			sb.WriteString(sbJAR(path, "jar", "4"))
 		}
 	default:
 		log.Debug(path + " not an artifact")
 	}
 
-	return strings.TrimSuffix(sb.String(), ","), nil
+	return strings.TrimSuffix(sb.String(), ",")
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
@@ -101,10 +98,7 @@ func (n Nexus3) Upload() error {
 			}
 
 			if !f.IsDir() {
-				multipartString, err = multipartContent(path)
-				if err != nil {
-					return err
-				}
+				multipartString = multipartContent(path)
 			}
 			return nil
 		})

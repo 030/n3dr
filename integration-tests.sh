@@ -18,7 +18,7 @@ should be run."
 }
 
 nexus(){
-    docker run -d -p 9999:8081 --name nexus sonatype/nexus3:${NEXUS_VERSION}
+    docker run --rm -d -p 9999:8081 --name nexus sonatype/nexus3:${NEXUS_VERSION}
 }
 
 readiness(){
@@ -65,7 +65,7 @@ backup(){
 
     helper_backup "-l" | grep 63
 
-    # cleanup_downloads
+    cleanup_downloads
 }
 
 helper_repositories(){
@@ -93,7 +93,6 @@ repositories(){
 cleanup(){
     cleanup_downloads
     docker stop nexus
-    docker rm nexus
 }
 
 count_downloads(){
@@ -120,5 +119,5 @@ main(){
     bats --tap tests.bats
 }
 
-# trap cleanup EXIT
+trap cleanup EXIT
 main

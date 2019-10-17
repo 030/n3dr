@@ -49,16 +49,16 @@ func TestMultipartContent(t *testing.T) {
 		"../maven-releases/file22/file22/1.0.0/file22-1.0.0.war":                                                            "maven2.asset2=@../maven-releases/file22/file22/1.0.0/file22-1.0.0.war,maven2.asset2.extension=war",
 		"../maven-releases/file22/file22/1.0.0/file22-1.0.0.zip":                                                            "maven2.asset3=@../maven-releases/file22/file22/1.0.0/file22-1.0.0.zip,maven2.asset3.extension=zip",
 		"../maven-releases/com/palantir/docker/compose/docker-compose-rule-core/0.35.0/docker-compose-rule-core-0.35.0.jar": "maven2.asset4=@../maven-releases/com/palantir/docker/compose/docker-compose-rule-core/0.35.0/docker-compose-rule-core-0.35.0.jar,maven2.asset4.extension=jar",
-		// "../maven-releases/file22/file22/1.0.0/file22-1.0.0-sources.jar":                                                    "maven2.asset2=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-sources.jar,maven2.asset2.extension=jar",
-		// "../maven-releases/file22/file22/1.0.0/file22-1.0.0-test-resources.jar":                                             "maven2.asset2=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-test-resources.jar,maven2.asset2.extension=jar",
+		"../maven-releases/file22/file22/1.0.0/file22-1.0.0-sources.jar":                                                    "maven2.asset5=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-sources.jar,maven2.asset5.extension=jar,maven2.asset5.classifier=sources",
+		"../maven-releases/file22/file22/1.0.0/file22-1.0.0-bundledPdfs.jar":                                                "maven2.asset6=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-bundledPdfs.jar,maven2.asset6.extension=jar,maven2.asset6.classifier=bundledPdfs",
+		"../maven-releases/file22/file22/1.0.0/file22-1.0.0-testexp.jar":                                                    "maven2.asset7=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-testexp.jar,maven2.asset7.extension=jar,maven2.asset7.classifier=testexp",
+		"../maven-releases/file22/file22/1.0.0/file22-1.0.0-standalone.jar":                                                 "maven2.asset8=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-standalone.jar,maven2.asset8.extension=jar,maven2.asset8.classifier=standalone",
+		"../maven-releases/file22/file22/1.0.0/file22-1.0.0-test-resources.jar":                                             "maven2.asset9=@../maven-releases/file22/file22/1.0.0/file22-1.0.0-test-resources.jar,maven2.asset9.extension=jar,maven2.asset9.classifier=test-resources",
 		"not/an/artifact": "",
 	}
 
 	for k, want := range artifacts {
-		got, _ := multipartContent(k)
-		// if err.Error() != want {
-		// 	t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
-		// }
+		got := multipartContent(k)
 		if got != want {
 			t.Errorf("Mismatch. Got '%v', Want '%v'", got, want)
 		}
