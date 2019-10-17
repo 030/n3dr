@@ -39,7 +39,7 @@ func TestContinuationTokenHash(t *testing.T) {
 }
 
 func TestDownloadURLs(t *testing.T) {
-	url, _ := n.downloadURLs()
+	url, _ := n.downloadURLs(false)
 	actual := len(url)
 	expected := 27 // 3files*9
 	if expected != actual {
