@@ -59,11 +59,11 @@ backup(){
         count_downloads 15
         test_zip 12
     else
-        count_downloads 63
-        test_zip 24
+        count_downloads 84
+        test_zip 32
     fi
 
-    helper_backup "-l" | grep 63
+    helper_backup "-l" | grep 84
 
     cleanup_downloads
 }
@@ -83,8 +83,8 @@ repositories(){
         count_downloads 30
         test_zip 20
     else
-        count_downloads 126
-        test_zip 48
+        count_downloads 168
+        test_zip 60
     fi
 
     cleanup_downloads
@@ -100,7 +100,10 @@ count_downloads(){
 }
 
 test_zip(){
-    du -h n3dr-backup-*zip | grep ${1}K
+    got=$(du -h n3dr-backup-*zip)
+    want="${1}K"
+    echo "Test whether '${got}' equals '${want}'"
+    echo $got | grep $want
 }
 
 cleanup_downloads(){

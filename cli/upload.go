@@ -79,7 +79,7 @@ func multipartContent(path string) string {
 		log.Debug(path + " not an artifact")
 	}
 
-	return strings.TrimSuffix(sb.String(), ",")
+	return sb.String()
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
@@ -89,16 +89,15 @@ func (n Nexus3) Upload() error {
 		return err
 	}
 
+	var sb strings.Builder
 	for _, v := range pomDirectories() {
-		var multipartString string
-
 		err := filepath.Walk(v, func(path string, f os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
 
 			if !f.IsDir() {
-				multipartString = multipartContent(path)
+				sb.WriteString(multipartContent(path))
 			}
 			return nil
 		})
@@ -107,6 +106,7 @@ func (n Nexus3) Upload() error {
 			return err
 		}
 
+		multipartString := strings.TrimSuffix(sb.String(), ",")
 		url := n.URL + "/service/rest/" + n.APIVersion + "/components?repository=" + n.Repository
 		log.WithFields(log.Fields{
 			"multipart": multipartString,
