@@ -39,7 +39,7 @@ var n = Nexus3{
 
 func setup() {
 	// Start docker nexus
-	cmd := exec.Command("bash", "-c", "docker run -d -p 9999:8081 --name nexus sonatype/nexus3:3.16.1")
+	cmd := exec.Command("bash", "-c", "docker run --rm -d -p 9999:8081 --name nexus sonatype/nexus3:3.16.1")
 	stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
@@ -66,7 +66,7 @@ func setup() {
 }
 
 func shutdown() {
-	cmd := exec.Command("bash", "-c", "docker stop nexus && docker rm nexus")
+	cmd := exec.Command("bash", "-c", "docker stop nexus")
 	stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Fatal(err, string(stdoutStderr))
