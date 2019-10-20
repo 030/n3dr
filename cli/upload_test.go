@@ -5,14 +5,6 @@ import (
 	"testing"
 )
 
-// func TestUploads(t *testing.T) {
-// 	err := n.Upload()
-// 	want := "HTTPStatusCode: '400'; ResponseMessage: 'Repository does not allow updating assets: maven-releases'; ErrorMessage: '<nil>'"
-// 	if err.Error() != want {
-// 		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
-// 	}
-// }
-
 func TestDetectFoldersWithPOM(t *testing.T) {
 	err := n.detectFoldersWithPOM("../maven-releases")
 	if err != nil {
@@ -81,5 +73,19 @@ func TestOtherJAR(t *testing.T) {
 		if got != want {
 			t.Errorf("Mismatch. Got '%v', Want '%v'", got, want)
 		}
+	}
+}
+
+func TestMultipartUpload(t *testing.T) {
+	err := n.multipartUpload("maven2.asset1=@../maven-releases/file2/file2/1.0.0/file2-1.0.0.pom,maven2.asset1.extension=pom")
+	want := "HTTPStatusCode: '400'; ResponseMessage: 'Repository does not allow updating assets: maven-releases'; ErrorMessage: '<nil>'"
+	if err.Error() != want {
+		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+	}
+
+	err = n.multipartUpload("maven2.asset1=@../maven-releases")
+	want = "read ../maven-releases: is a directory"
+	if err.Error() != want {
+		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
 	}
 }

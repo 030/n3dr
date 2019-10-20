@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	mp "github.com/030/go-curl/utils"
+	mp "github.com/030/go-multipart/utils"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -82,6 +82,21 @@ func multipartContent(path string) string {
 	return sb.String()
 }
 
+func (n Nexus3) multipartUpload(s string) error {
+	url := n.URL + "/service/rest/" + n.APIVersion + "/components?repository=" + n.Repository
+	log.WithFields(log.Fields{
+		"multipart": s,
+		"url":       url,
+	}).Debug("URL")
+
+	u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
+	err := u.MultipartUpload(s)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Upload posts an artifact as a multipart to a specific nexus3 repository
 func (n Nexus3) Upload() error {
 	err := n.detectFoldersWithPOM(n.Repository)
@@ -95,7 +110,6 @@ func (n Nexus3) Upload() error {
 			if err != nil {
 				return err
 			}
-
 			if !f.IsDir() {
 				sb.WriteString(multipartContent(path))
 			}
@@ -105,16 +119,9 @@ func (n Nexus3) Upload() error {
 		if err != nil {
 			return err
 		}
-
 		multipartString := strings.TrimSuffix(sb.String(), ",")
-		url := n.URL + "/service/rest/" + n.APIVersion + "/components?repository=" + n.Repository
-		log.WithFields(log.Fields{
-			"multipart": multipartString,
-			"url":       url,
-		}).Debug("URL")
-
-		u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
-		err = u.MultipartUpload(multipartString)
+		log.Debug("MultipartString: " + multipartString)
+		err = n.multipartUpload(multipartString)
 		if err != nil {
 			return err
 		}
