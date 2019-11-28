@@ -56,11 +56,8 @@ addons:
     organization: 030-github
     token:
       secure: $SONAR_TOKEN
-before_script:
-  - |
-    echo 'n3drPass: admin123' > ${HOME}/.n3dr.yaml
 script:
-  - diff -u <(echo -n) <(gofmt -d ./)
+  - docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.21.0 golangci-lint run -v
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
   - go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o $DELIVERABLE
