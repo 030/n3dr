@@ -6,7 +6,7 @@ import (
 )
 
 func TestRepositoryNamesJSON(t *testing.T) {
-	expected := []string{"maven-central", "maven-public", "maven-releases", "maven-snapshots", "nuget-group", "nuget-hosted", "nuget.org-proxy"}
+	expected := []interface{}{"maven-central", "maven-public", "maven-releases", "maven-snapshots", "nuget-group", "nuget-hosted", "nuget.org-proxy"}
 	actual, _ := n.repositoriesSlice()
 
 	if !reflect.DeepEqual(expected, actual) {

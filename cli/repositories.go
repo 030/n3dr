@@ -6,19 +6,19 @@ import (
 	"github.com/thedevsaddam/gojsonq"
 )
 
-func repositoryNamesJSON(json string) []string {
+func repositoryNamesJSON(json string) interface{} {
 	jq := gojsonq.New().JSONString(json)
 	jq.SortBy("name", "asc")
 	name := jq.Pluck("name")
-	return name.([]string)
+	return name
 }
 
-func (n Nexus3) repositoriesSlice() ([]string, error) {
+func (n Nexus3) repositoriesSlice() ([]interface{}, error) {
 	_, repos, err := n.request(n.URL + "/service/rest/" + n.APIVersion + "/repositories")
 	if err != nil {
 		return nil, err
 	}
-	return repositoryNamesJSON(repos), nil
+	return repositoryNamesJSON(repos).([]interface{}), nil
 }
 
 func (n Nexus3) RepositoryNames() error {
@@ -45,14 +45,14 @@ func (n Nexus3) CountRepositories() error {
 // Downloads retrieves artifacts from all repositories
 func (n Nexus3) Downloads() error {
 	var err error
-	var repos []string
+	var repos []interface{}
 
 	if repos, err = n.repositoriesSlice(); err != nil {
 		return err
 	}
 
 	for _, name := range repos {
-		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name, APIVersion: n.APIVersion, ZIP: n.ZIP}
+		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name.(string), APIVersion: n.APIVersion, ZIP: n.ZIP}
 		if err = n.StoreArtifactsOnDisk(); err != nil {
 			return err
 		}
