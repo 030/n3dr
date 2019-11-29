@@ -61,8 +61,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "The Nexus3 user")
 	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "The Nexus3 APIVersion, e.g. v1 or beta")
 
-	rootCmd.MarkPersistentFlagRequired("n3drURL")
-	rootCmd.MarkPersistentFlagRequired("n3drUser")
+	_ = rootCmd.MarkPersistentFlagRequired("n3drURL")
+	_ = rootCmd.MarkPersistentFlagRequired("n3drUser")
 }
 
 // initConfig reads in config file and ENV variables if set.

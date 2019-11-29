@@ -89,13 +89,13 @@ func (n Nexus3) pong() bool {
 
 	req, err := http.NewRequest("GET", n.URL+"/service/metrics/ping", nil)
 	if err != nil {
-		// handle err
+		log.Fatal("Unable to create GET request to nexus's ping endpoint")
 	}
 	req.SetBasicAuth(n.User, n.Pass)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		// handle err
+		log.Warn("Request to nexus's ping endpoint failed")
 	}
 	defer resp.Body.Close()
 
@@ -124,11 +124,11 @@ func (n Nexus3) submitArtifact(d string, f string) {
 }
 
 func createPOM(d string, f string, number string) {
-	createArtifact(d, f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+number+"</groupId>\n<artifactId>file"+number+"</artifactId>\n<version>1.0.0</version>\n</project>")
+	_ = createArtifact(d, f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+number+"</groupId>\n<artifactId>file"+number+"</artifactId>\n<version>1.0.0</version>\n</project>")
 }
 
 func createJAR(d string, f string) {
-	createArtifact(d, f+".jar", "some-content")
+	_ = createArtifact(d, f+".jar", "some-content")
 }
 
 func (n Nexus3) createArtifactsAndSubmit(i int) {

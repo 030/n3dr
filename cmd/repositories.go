@@ -36,25 +36,24 @@ var repositoriesCmd = &cobra.Command{
 	Long: `Count the number of repositories, count the total or
 download artifacts from all repositories`,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
+		_ = viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		if !(names || count || backup) {
-			cmd.Help()
+			_ = cmd.Help()
 			os.Exit(0)
 		}
 		pw := viper.GetString("n3drPass")
 		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw, APIVersion: apiVersion, ZIP: zip}
 		if names {
-			n.RepositoryNames()
+			_ = n.RepositoryNames()
 		}
 		if count {
-			n.CountRepositories()
+			_ = n.CountRepositories()
 		}
 		if backup {
-			err := n.Downloads()
-			if err != nil {
+			if err := n.Downloads(); err != nil {
 				log.Fatal(err)
 			}
 		}

@@ -48,7 +48,7 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	n.StoreArtifactsOnDisk()
+	_ = n.StoreArtifactsOnDisk()
 
 	actual, _ := allFiles(downloadDir)
 

@@ -29,19 +29,18 @@ var backupCmd = &cobra.Command{
 	Long: `Use this command in order to backup all artifacts that
 reside in a certain Nexus3 repository`,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
+		_ = viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
+		var err error
 		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip}
-		err := n.StoreArtifactsOnDisk()
-		if err != nil {
+		if err = n.StoreArtifactsOnDisk(); err != nil {
 			log.Fatal(err)
 		}
 
-		err2 := n.CreateZip()
-		if err2 != nil {
-			log.Fatal(err2)
+		if err = n.CreateZip(); err != nil {
+			log.Fatal(err)
 		}
 	},
 	Version: rootCmd.Version,
@@ -49,6 +48,6 @@ reside in a certain Nexus3 repository`,
 
 func init() {
 	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
-	backupCmd.MarkPersistentFlagRequired("n3drRepo")
+	_ = backupCmd.MarkPersistentFlagRequired("n3drRepo")
 	rootCmd.AddCommand(backupCmd)
 }

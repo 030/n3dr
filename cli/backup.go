@@ -38,20 +38,23 @@ type Nexus3 struct {
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
+	var err error
+	var constructDownloadURL string
+
 	assetURL := n.URL + assetURI1 + n.APIVersion + assetURI2 + n.Repository
-	constructDownloadURL := assetURL
 	if !(token == "null") {
 		constructDownloadURL = assetURL + "&continuationToken=" + token
 	}
-	u, err := url.Parse(constructDownloadURL)
-	if err != nil {
+
+	var u *url.URL
+	if u, err = url.Parse(constructDownloadURL); err != nil {
 		return nil, err
 	}
-	log.Debug("DownloadURL: ", u)
-	urlString := u.String()
 
-	bodyBytes, _, err := n.request(urlString)
-	if err != nil {
+	log.Debug("DownloadURL: ", u)
+
+	var bodyBytes []byte
+	if bodyBytes, _, err = n.request(u.String()); err != nil {
 		return nil, err
 	}
 
@@ -59,59 +62,68 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 }
 
 func (n Nexus3) continuationToken(token string) (string, error) {
+	var err error
 	// The continuationToken should consists of 32 characters and should be a hexadecimal or "null"
 	if !((govalidator.IsHexadecimal(token) && govalidator.StringLength(token, "32", "32")) || token == "null") {
 		return "", errors.New(tokenErrMsg + token)
 	}
 
-	bodyBytes, err := n.downloadURL(token)
-	if err != nil {
+	var bodyBytes []byte
+	if bodyBytes, err = n.downloadURL(token); err != nil {
 		return "", err
 	}
 
-	op, err := jq.Parse(".continuationToken")
-	if err != nil {
+	var op jq.Op
+	if op, err = jq.Parse(".continuationToken"); err != nil {
 		return "", err
 	}
 
-	value, err := op.Apply(bodyBytes)
-	if err != nil {
+	var value []byte
+	if value, err = op.Apply(bodyBytes); err != nil {
 		return "", err
 	}
-	var tokenWithoutQuotes string
-	tokenWithoutQuotes = strings.Trim(string(value), "\"")
+
+	tokenWithoutQuotes := strings.Trim(string(value), "\"")
 
 	return tokenWithoutQuotes, nil
 }
 
 func (n Nexus3) continuationTokenRecursion(t string) ([]string, error) {
-	token, err := n.continuationToken(t)
-	if err != nil {
+	var err error
+
+	var token string
+	if token, err = n.continuationToken(t); err != nil {
 		return nil, err
 	}
+
 	if token == "null" {
 		return []string{token}, nil
 	}
-	tokenSlice, err := n.continuationTokenRecursion(token)
-	if err != nil {
+
+	var tokenSlice []string
+	if tokenSlice, err = n.continuationTokenRecursion(token); err != nil {
 		return nil, err
 	}
 	return append(tokenSlice, token), nil
 }
 
 func createArtifact(d string, f string, content string) error {
-	err := os.MkdirAll(d, os.ModePerm)
-	if err != nil {
+	var err error
+
+	if err = os.MkdirAll(d, os.ModePerm); err != nil {
 		return err
 	}
 
-	file, err := os.Create(filepath.Join(d, f))
-	if err != nil {
+	var file *os.File
+	if file, err = os.Create(filepath.Join(d, f)); err != nil {
 		return err
 	}
-
-	file.WriteString(content)
 	defer file.Close()
+
+	if _, err = file.WriteString(content); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -145,8 +157,7 @@ func (n Nexus3) downloadArtifact(url string) error {
 		return err
 	}
 
-	err2 := createArtifact(filepath.Join(downloadDir, n.Repository, d), f, bodyString)
-	if err2 != nil {
+	if err = createArtifact(filepath.Join(downloadDir, n.Repository, d), f, bodyString); err != nil {
 		return err
 	}
 	return nil
@@ -197,7 +208,7 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 		log.Info("Backing up artifacts '" + n.Repository + "'")
 		bar := pb.StartNew(len(urls))
 		for _, downloadURL := range urls {
-			n.downloadArtifact(fmt.Sprint(downloadURL))
+			_ = n.downloadArtifact(fmt.Sprint(downloadURL))
 			bar.Increment()
 		}
 		bar.FinishPrint("Done")
@@ -211,8 +222,9 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 // CreateZip adds all artifacts to a ZIP archive
 func (n Nexus3) CreateZip() error {
 	if n.ZIP {
-		err := archiver.Archive([]string{downloadDir}, "n3dr-backup-"+time.Now().Format("01-02-2006")+".zip")
-		if err != nil {
+		today := time.Now().Format("01-02-2006")
+		archiveName := fmt.Sprintf("n3dr-backup-%s.zip", today)
+		if err := archiver.Archive([]string{downloadDir}, archiveName); err != nil {
 			return err
 		}
 	}
