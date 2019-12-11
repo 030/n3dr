@@ -48,7 +48,7 @@ reside in a certain Nexus3 repository`,
 }
 
 func init() {
-	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "The Nexus3 repository")
+	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repository")
 	backupCmd.MarkPersistentFlagRequired("n3drRepo")
 	rootCmd.AddCommand(backupCmd)
 }
