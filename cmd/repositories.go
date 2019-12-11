@@ -64,7 +64,7 @@ download artifacts from all repositories`,
 
 func init() {
 	rootCmd.AddCommand(repositoriesCmd)
-	repositoriesCmd.Flags().BoolVarP(&names, "names", "a", false, "Print all repository names")
-	repositoriesCmd.Flags().BoolVarP(&count, "count", "c", false, "Count the number of repositories")
-	repositoriesCmd.Flags().BoolVarP(&backup, "backup", "b", false, "Backup artifacts from all repositories")
+	repositoriesCmd.Flags().BoolVarP(&names, "names", "a", false, "print all repository names")
+	repositoriesCmd.Flags().BoolVarP(&count, "count", "c", false, "count the number of repositories")
+	repositoriesCmd.Flags().BoolVarP(&backup, "backup", "b", false, "backup artifacts from all repositories")
 }
