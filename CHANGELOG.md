@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GolangCI Badge and scan
 - Debian installation package
 
+### Fixed
+- Consistent help menu
+
 ### Changed
 - Refactored artifactName and initConfig functions to solve 'write shorter
-  units of code' issues.
+  units of code' issues
 
 ## [3.3.2] - 2019-09-08
 ### Added
