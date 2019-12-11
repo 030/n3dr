@@ -34,7 +34,7 @@ The aims of the n3dr tool are:
  * to backup all artifacts from a certain Nexus maven repository.
  * to migrate all artifacts from NexusA to NexusB.
 
-## Download and verify n3dr
+## Installation
 
 ```
 curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux -o n3dr-linux
@@ -42,6 +42,14 @@ curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux.sha512.tx
 sha512sum --check n3dr-linux.sha512.txt
 chmod +x n3dr-linux
 ./n3dr-linux
+```
+
+### Debian
+
+```
+VERSION=3.3.3 && \
+curl -L https://github.com/030/n3dr/releases/download/${VERSION}/n3dr_${VERSION}-0.deb -o n3dr.deb && \
+sudo apt -y install ./n3dr.deb
 ```
 
 ## Check the help menu
