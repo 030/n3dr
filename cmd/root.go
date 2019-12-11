@@ -32,8 +32,8 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "n3dr",
-	Short: "Nexus3 Disaster Recovery (N3DR)",
-	Long: `N3DR is a tool that is able to download all artifacts from
+	Short: "nexus3 Disaster Recovery (N3DR)",
+	Long: `n3dr is a tool that is able to download all artifacts from
 a certain Nexus3 repository.`,
 	Version: Version,
 	// Uncomment the following line if your bare application
@@ -53,13 +53,13 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug logging")
-	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "Add downloaded artifacts to a ZIP archive")
+	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "enable debug logging")
+	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
 
-	rootCmd.PersistentFlags().StringP("n3drPass", "p", "", "The Nexus3 password")
-	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "The Nexus3 URL")
-	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "The Nexus3 user")
-	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "The Nexus3 APIVersion, e.g. v1 or beta")
+	rootCmd.PersistentFlags().StringP("n3drPass", "p", "", "nexus3 password")
+	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
+	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
+	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
 
 	rootCmd.MarkPersistentFlagRequired("n3drURL")
 	rootCmd.MarkPersistentFlagRequired("n3drUser")
