@@ -87,7 +87,7 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatal("~/.n3dr.yaml does not exist or yaml is invalid")
+		log.Warn("~/.n3dr.yaml does not exist or yaml is invalid")
 	}
 }
 
