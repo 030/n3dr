@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Consistent help menu
 - Multiple ignored errors
 - Broken integration tests
+- Allow `-p` in CI by preventing that omission of `~/.n3dr` returns an exit 1
+  as suggested by [@jorianvo](https://github.com/jorianvo)
 
 ### Changed
 - Refactored artifactName and initConfig functions to solve 'write shorter
