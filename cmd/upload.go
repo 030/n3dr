@@ -29,7 +29,10 @@ var uploadCmd = &cobra.Command{
 	Long: `Use this command in order to upload all artifacts to
 a specific Nexus3 repository, e.g. maven-releases`,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass"))
+		if err := viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass")); err != nil {
+			log.Fatal(err)
+		}
+
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
@@ -44,6 +47,10 @@ a specific Nexus3 repository, e.g. maven-releases`,
 
 func init() {
 	uploadCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repository")
-	uploadCmd.MarkPersistentFlagRequired("n3drRepo")
+
+	if err := uploadCmd.MarkPersistentFlagRequired("n3drRepo"); err != nil {
+		log.Fatal(err)
+	}
+
 	rootCmd.AddCommand(uploadCmd)
 }
