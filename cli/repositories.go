@@ -51,14 +51,14 @@ func (n Nexus3) Downloads() error {
 
 	for _, name := range repos {
 		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name.(string), APIVersion: n.APIVersion, ZIP: n.ZIP}
-		err := n.StoreArtifactsOnDisk()
-		if err != nil {
+		if err := n.StoreArtifactsOnDisk(); err != nil {
 			return err
 		}
 	}
 
-	// Add all download artifacts to a ZIP file
-	n.CreateZip()
+	if err := n.CreateZip(); err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/030/go-utils"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -48,7 +49,9 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	n.StoreArtifactsOnDisk()
+	if err := n.StoreArtifactsOnDisk(); err != nil {
+		log.Fatal(err)
+	}
 
 	actual, _ := allFiles(downloadDir)
 
