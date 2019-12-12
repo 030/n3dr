@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Consistent help menu
 - Multiple ignored errors
+- Broken integration tests
 
 ### Changed
 - Refactored artifactName and initConfig functions to solve 'write shorter
