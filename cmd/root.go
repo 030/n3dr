@@ -61,8 +61,12 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
 	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
 
-	rootCmd.MarkPersistentFlagRequired("n3drURL")
-	rootCmd.MarkPersistentFlagRequired("n3drUser")
+	if err := rootCmd.MarkPersistentFlagRequired("n3drURL"); err != nil {
+		log.Fatal(err)
+	}
+	if err := rootCmd.MarkPersistentFlagRequired("n3drUser"); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // initConfig reads in config file and ENV variables if set.

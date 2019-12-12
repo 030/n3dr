@@ -78,8 +78,8 @@ func (n Nexus3) continuationToken(token string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	var tokenWithoutQuotes string
-	tokenWithoutQuotes = strings.Trim(string(value), "\"")
+
+	tokenWithoutQuotes := strings.Trim(string(value), "\"")
 
 	return tokenWithoutQuotes, nil
 }
@@ -110,8 +110,12 @@ func createArtifact(d string, f string, content string) error {
 		return err
 	}
 
-	file.WriteString(content)
+	_, err = file.WriteString(content)
 	defer file.Close()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -197,7 +201,10 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 		log.Info("Backing up artifacts '" + n.Repository + "'")
 		bar := pb.StartNew(len(urls))
 		for _, downloadURL := range urls {
-			n.downloadArtifact(fmt.Sprint(downloadURL))
+			if err := n.downloadArtifact(fmt.Sprint(downloadURL)); err != nil {
+				return err
+			}
+
 			bar.Increment()
 		}
 		bar.FinishPrint("Done")
