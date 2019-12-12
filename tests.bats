@@ -7,6 +7,7 @@
 }
 
 @test "invoking n3dr without password specification prints an error" {
+  echo 'n3drPass: admin123' > ${HOME}/.n3dr.yaml
   sed -i "s|n3drPass|nhihidrPass|" ~/.n3dr.yaml
   run go run main.go repositories -n http://localhost:9999 -u admin -b
   [ "$status" -eq 1 ]
