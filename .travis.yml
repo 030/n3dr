@@ -57,8 +57,6 @@ addons:
     token:
       secure: $SONAR_TOKEN
 before_script:
-  - |
-    echo 'n3drPass: admin123' > ${HOME}/.n3dr.yaml
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt-get -y install ./a2deb.deb; fi
 script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.21.0 golangci-lint run -v; fi
