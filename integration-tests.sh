@@ -91,6 +91,19 @@ repositories(){
     cleanup_downloads
 }
 
+csv(){
+    echo "Testing csv option..."
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} -o
+
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        wc -l helloworld.txt | grep 20
+    else
+        wc -l helloworld.txt | grep 30
+    fi
+
+    cleanup_downloads
+}
+
 cleanup(){
     cleanup_downloads
     docker stop nexus
@@ -114,6 +127,7 @@ cleanup_downloads(){
     rm -rf maven-releases
     rm -f n3dr-backup-*zip
     rm -rf download
+    rm -f helloworld.txt
 }
 
 main(){
@@ -125,6 +139,7 @@ main(){
     upload
     backup
     repositories
+    csv
     bats --tap tests.bats
 }
 

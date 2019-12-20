@@ -35,7 +35,7 @@ reside in a certain Nexus3 repository`,
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip, CSV: csv}
 		if err := n.StoreArtifactsOnDisk(); err != nil {
 			log.Fatal(err)
 		}
@@ -49,10 +49,10 @@ reside in a certain Nexus3 repository`,
 
 func init() {
 	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repository")
-
 	if err := backupCmd.MarkPersistentFlagRequired("n3drRepo"); err != nil {
 		log.Fatal(err)
 	}
 
 	rootCmd.AddCommand(backupCmd)
+	backupCmd.Flags().BoolVarP(&csv, "csv", "o", false, "create a CSV that contains an overview of all artifacts")
 }

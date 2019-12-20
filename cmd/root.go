@@ -26,7 +26,7 @@ import (
 
 var (
 	apiVersion, cfgFile, n3drRepo, n3drURL, n3drUser, Version string
-	debug, zip                                                bool
+	csv, debug, zip                                           bool
 )
 
 // rootCmd represents the base command when called without any subcommands

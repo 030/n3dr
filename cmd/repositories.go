@@ -49,7 +49,7 @@ download artifacts from all repositories`,
 			os.Exit(0)
 		}
 		pw := viper.GetString("n3drPass")
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw, APIVersion: apiVersion, ZIP: zip}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw, APIVersion: apiVersion, ZIP: zip, CSV: csv}
 		if names {
 			if err := n.RepositoryNames(); err != nil {
 				log.Fatal(err)
@@ -75,4 +75,5 @@ func init() {
 	repositoriesCmd.Flags().BoolVarP(&names, "names", "a", false, "print all repository names")
 	repositoriesCmd.Flags().BoolVarP(&count, "count", "c", false, "count the number of repositories")
 	repositoriesCmd.Flags().BoolVarP(&backup, "backup", "b", false, "backup artifacts from all repositories")
+	repositoriesCmd.Flags().BoolVarP(&csv, "csv", "o", false, "create a CSV that contains an overview of all artifacts")
 }

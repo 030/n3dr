@@ -35,6 +35,7 @@ type Nexus3 struct {
 	Repository string
 	APIVersion string
 	ZIP        bool
+	CSV        bool
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
@@ -205,8 +206,23 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 			// Exclude download of md5 and sha1 files as these are unavailable
 			// unless the metadata.xml is opened first
 			if !(filepath.Ext(u) == ".md5" || filepath.Ext(u) == ".sha1") {
-				if err := n.downloadArtifact(fmt.Sprint(downloadURL)); err != nil {
-					return err
+				d := fmt.Sprint(downloadURL)
+				if n.CSV {
+					// https://stackoverflow.com/a/12876022/2777965
+					f, err := os.OpenFile("helloworld.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+					if err != nil {
+						panic(err)
+					}
+
+					defer f.Close()
+
+					if _, err = f.WriteString(d + "\n"); err != nil {
+						panic(err)
+					}
+				} else {
+					if err := n.downloadArtifact(d); err != nil {
+						return err
+					}
 				}
 			}
 
