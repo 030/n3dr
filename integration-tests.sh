@@ -41,6 +41,16 @@ password(){
     fi
 }
 
+artifact(){
+    mkdir -p maven-releases/file${1}/file${1}/1.0.0
+    echo someContent > maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.jar
+    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.pom   
+}
+
+files(){
+    for a in $(seq 10); do artifact ${a}; done
+}
+
 upload(){
     echo "Testing upload..."
     $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION}
@@ -53,11 +63,11 @@ backup(){
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 15
+        count_downloads 20
         test_zip 12
     else
-        count_downloads 21
-        test_zip 12
+        count_downloads 30
+        test_zip 16
     fi
 
     cleanup_downloads
@@ -71,11 +81,11 @@ repositories(){
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 30
-        test_zip 20
-    else
-        count_downloads 42
+        count_downloads 40
         test_zip 24
+    else
+        count_downloads 60
+        test_zip 32
     fi
 
     cleanup_downloads
@@ -94,13 +104,14 @@ count_downloads(){
 }
 
 test_zip(){
-    local size=$(du -h n3dr-backup-*zip)
+    local size=$(du n3dr-backup-*zip)
     echo "Actual: ${size}"
     echo "Expected: ${1}"
-    echo $size | grep ${1}K
+    echo $size | grep "^${1}"
 }
 
 cleanup_downloads(){
+    rm -rf maven-releases
     rm -f n3dr-backup-*zip
     rm -rf download
 }
@@ -110,6 +121,7 @@ main(){
     nexus
     readiness
     password
+    files
     upload
     backup
     repositories
