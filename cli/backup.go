@@ -209,14 +209,14 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 				d := fmt.Sprint(downloadURL)
 				if n.CSV {
 					// https://stackoverflow.com/a/12876022/2777965
-					f, err := os.OpenFile("helloworld.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+					f, err := os.OpenFile("nexus3-artifacts-overview.csv", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 					if err != nil {
 						panic(err)
 					}
 
 					defer f.Close()
 
-					if _, err = f.WriteString(d + "\n"); err != nil {
+					if _, err = f.WriteString(d + ",\n"); err != nil {
 						panic(err)
 					}
 				} else {

@@ -6,3 +6,4 @@ maven-metadata*
 download
 n3dr*
 maven-releases
+*.csv

@@ -4,6 +4,8 @@ NEXUS_VERSION="${1:-3.16.2}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
 
+readonly NEXUS3_OVERVIEW="nexus3-artifacts-overview.csv"
+
 validate(){
     if [ -z "$TOOL" ]; then
         echo "No deliverable defined. Assuming that 'go run main.go' 
@@ -91,14 +93,21 @@ repositories(){
     cleanup_downloads
 }
 
+helper_csv(){
+    local actual=$(wc -l ${NEXUS3_OVERVIEW})
+    echo "Expected: ${1}"
+    echo "Actual: ${actual}"
+    echo $actual | grep $1
+}
+
 csv(){
     echo "Testing csv option..."
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} -o
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        wc -l helloworld.txt | grep 20
+        helper_csv 20
     else
-        wc -l helloworld.txt | grep 30
+        helper_csv 30
     fi
 
     cleanup_downloads
@@ -127,7 +136,7 @@ cleanup_downloads(){
     rm -rf maven-releases
     rm -f n3dr-backup-*zip
     rm -rf download
-    rm -f helloworld.txt
+    rm -f $NEXUS3_OVERVIEW
 }
 
 main(){
