@@ -17,6 +17,8 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"net/http"
+	"crypto/tls"
 
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
@@ -26,7 +28,7 @@ import (
 
 var (
 	apiVersion, cfgFile, n3drRepo, n3drURL, n3drUser, Version string
-	debug, zip                                                bool
+	debug, zip, insecureSkipVerify                            bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -55,6 +57,7 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "enable debug logging")
 	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
+	rootCmd.PersistentFlags().BoolVar(&insecureSkipVerify, "insecureSkipVerify", false, "Skip repository certificate check")
 
 	rootCmd.PersistentFlags().StringP("n3drPass", "p", "", "nexus3 password")
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
@@ -89,6 +92,12 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Warn("~/.n3dr.yaml does not exist or yaml is invalid")
 	}
+
+	if insecureSkipVerify {
+		log.Warn("Certificate validity check is disabled!")
+		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	}
+
 }
 
 func enableDebug() {
