@@ -72,6 +72,7 @@ Flags:
   -v, --apiVersion string   The Nexus3 APIVersion, e.g. v1 or beta (default "v1")
   -d, --debug               Enable debug logging
   -h, --help                help for n3dr
+      --insecureSkipVerify  Skip repository certificate check
   -p, --n3drPass string     The Nexus3 password
   -n, --n3drURL string      The Nexus3 URL
   -u, --n3drUser string     The Nexus3 user
@@ -129,6 +130,17 @@ running the following command:
 
 ```
 ./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
+```
+
+## "Clone" the content of a repository in a different Nexus 3 server in a different repository 
+
+This is the basic steps to "clone" and eventually rename the content of a repository from one nexus3 server to another server in a different repository name
+
+```
+./n3dr-linux backup -u <source nexus3 user> -n <source nexus3 server url> -r <repo-source-name>
+cd download
+mv <repo-source-name> <repo-target-name>
+./n3dr-linux upload -u <target nexus3 user> -n <target nexus3 server url> -r <repo-target-name>
 ```
 
 ## Rationale for N3DR
