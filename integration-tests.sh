@@ -1,8 +1,10 @@
 #!/bin/bash -ex
 
-NEXUS_VERSION="${1:-3.16.2}"
+NEXUS_VERSION="${1:-3.21.1}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
+TRAVIS_TAG="${TRAVIS_TAG:-local}"
+SHA512_CMD="${SHA512_CMD:-sha512sum}"
 
 validate(){
     if [ -z "$TOOL" ]; then
@@ -15,6 +17,13 @@ should be run."
         echo "NEXUS_VERSION and NEXUS_API_VERSION should be specified."
         exit 1
     fi
+}
+
+build(){
+  echo "TRAVIS_TAG: '$TRAVIS_TAG' DELIVERABLE: '$TOOL'"
+  go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o $TOOL
+  $SHA512_CMD $TOOL > ${TOOL}.sha512.txt
+  chmod +x $TOOL
 }
 
 nexus(){
@@ -118,6 +127,7 @@ cleanup_downloads(){
 
 main(){
     validate
+    build
     nexus
     readiness
     password
