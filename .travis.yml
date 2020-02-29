@@ -6,34 +6,16 @@ go:
   - 1.14
 env:
   global:
+    - ARTIFACT_PUBLICATION=true
     - SHA512_CMD=sha512sum
     - GO111MODULE=on
+    - NEXUS_API_VERSION=v1
+    - NEXUS_VERSION=3.21.1
+    - SHA512_CMD=sha512sum
 matrix:
   include:
   - os: linux
     dist: bionic
-    env:
-      - ARTIFACT_PUBLICATION=true
-      - NEXUS_VERSION=latest
-      - NEXUS_API_VERSION=v1
-  - os: linux
-    dist: bionic
-    env:
-      - ARTIFACT_PUBLICATION=false
-      - NEXUS_VERSION=3.18.1
-      - NEXUS_API_VERSION=v1
-  - os: linux
-    dist: bionic
-    env:
-      - ARTIFACT_PUBLICATION=false
-      - NEXUS_VERSION=3.17.0
-      - NEXUS_API_VERSION=v1
-  - os: linux
-    dist: bionic
-    env:
-      - ARTIFACT_PUBLICATION=false
-      - NEXUS_VERSION=3.16.2
-      - NEXUS_API_VERSION=v1
   - os: linux
     dist: bionic
     env:
@@ -42,15 +24,8 @@ matrix:
       - NEXUS_API_VERSION=beta
   - os: osx
     env:
-      - ARTIFACT_PUBLICATION=true
       - SHA512_CMD="shasum -a 512"
-      - NEXUS_VERSION=3.16.2
-      - NEXUS_API_VERSION=v1
   - os: windows
-    env:
-      - ARTIFACT_PUBLICATION=true
-      - NEXUS_VERSION=3.16.2
-      - NEXUS_API_VERSION=v1
 addons:
   sonarcloud:
     organization: 030-github
@@ -59,12 +34,9 @@ addons:
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt update -y && sudo apt-get -y install ./a2deb.deb bats; fi
 script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.21.0 golangci-lint run -v; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v; fi
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
-  - go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o $DELIVERABLE
-  - $SHA512_CMD $DELIVERABLE > ${DELIVERABLE}.sha512.txt
-  - chmod +x $DELIVERABLE
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install zip -y; fi
   - if [ $TRAVIS_OS_NAME == linux ]; then ./integration-tests.sh $NEXUS_VERSION $NEXUS_API_VERSION ./${DELIVERABLE}; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.projectKey=030_n3dr -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=cmd/**,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.txt"; fi
