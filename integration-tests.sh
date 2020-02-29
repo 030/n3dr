@@ -43,12 +43,13 @@ readiness(){
 # is unavailable, the default 'admin123' is returned.
 password(){
     local pw="docker exec -it nexus cat /nexus-data/admin.password"
-    export PASSWORD
     if $pw; then
         PASSWORD=$(exec "${pw}")
     else
         PASSWORD="admin123"
     fi
+    
+    export PASSWORD="${PASSWORD}"
 }
 
 artifact(){
