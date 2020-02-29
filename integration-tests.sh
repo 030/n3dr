@@ -13,7 +13,7 @@ should be run."
         TOOL="go run main.go"
     fi
 
-    if [ -z "$NEXUS_VERSION" ] || [ -z "$NEXUS_API_VERSION" ]; then
+    if [ -z "${NEXUS_VERSION}" ] || [ -z "${NEXUS_API_VERSION}" ]; then
         echo "NEXUS_VERSION and NEXUS_API_VERSION should be specified."
         exit 1
     fi
@@ -21,13 +21,13 @@ should be run."
 
 build(){
   echo "TRAVIS_TAG: '$TRAVIS_TAG' DELIVERABLE: '$TOOL'"
-  go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o $TOOL
-  $SHA512_CMD $TOOL > ${TOOL}.sha512.txt
-  chmod +x $TOOL
+  go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o "${TOOL}"
+  $SHA512_CMD "${TOOL}" > "${TOOL}.sha512.txt"
+  chmod +x "${TOOL}"
 }
 
 nexus(){
-    docker run --rm -d -p 9999:8081 --name nexus sonatype/nexus3:${NEXUS_VERSION}
+    docker run --rm -d -p 9999:8081 --name nexus "sonatype/nexus3:${NEXUS_VERSION}"
 }
 
 readiness(){
@@ -43,33 +43,34 @@ readiness(){
 # is unavailable, the default 'admin123' is returned.
 password(){
     local pw="docker exec -it nexus cat /nexus-data/admin.password"
+    export PASSWORD
     if $pw; then
-        export PASSWORD=$(exec ${pw})
+        PASSWORD=$(exec "${pw}")
     else
-        export PASSWORD="admin123"
+        PASSWORD="admin123"
     fi
 }
 
 artifact(){
-    mkdir -p maven-releases/file${1}/file${1}/1.0.0
-    echo someContent > maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.jar
-    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.pom   
+    mkdir -p "maven-releases/file${1}/file${1}/1.0.0"
+    echo someContent > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.jar"
+    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.pom"   
 }
 
 files(){
-    for a in $(seq 10); do artifact ${a}; done
+    for a in $(seq 10); do artifact "${a}"; done
 }
 
 upload(){
     echo "Testing upload..."
-    $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v ${NEXUS_API_VERSION}
+    $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v "${NEXUS_API_VERSION}"
     echo
 }
 
 backup(){
     echo "Testing backup..."
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION}
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v ${NEXUS_API_VERSION} -z
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}"
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 20
@@ -82,12 +83,16 @@ backup(){
     cleanup_downloads
 }
 
+helper_respositories(){
+  $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" "${1}"
+}
+
 repositories(){
     echo "Testing repositories..."
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -a | grep maven-releases
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -c | grep 7
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b -z
+    helper_respositories "-a | grep maven-releases"
+    helper_respositories "-c | grep 7"
+    helper_respositories "-b"
+    helper_respositories "-b -z"
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 40
@@ -106,17 +111,19 @@ cleanup(){
 }
 
 count_downloads(){
-    local actual=$(find download -type f | wc -l)
+    local actual
+    actual=$(find download -type f | wc -l)
     echo "Expected: ${1}"
     echo "Actual: ${actual}"
-    echo $actual | grep $1
+    echo "${actual}" | grep "${1}"
 }
 
 test_zip(){
-    local size=$(du n3dr-backup-*zip)
+    local size
+    size=$(du n3dr-backup-*zip)
     echo "Actual: ${size}"
     echo "Expected: ${1}"
-    echo $size | grep "^${1}"
+    echo "${size}" | grep "^${1}"
 }
 
 cleanup_downloads(){
