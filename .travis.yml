@@ -3,7 +3,7 @@
 # windows.
 language: go
 go:
-  - 1.13.8
+  - 1.14
 env:
   global:
     - SHA512_CMD=sha512sum
