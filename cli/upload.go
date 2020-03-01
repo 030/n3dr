@@ -11,14 +11,17 @@ import (
 )
 
 var foldersWithPOM strings.Builder
+var foldersWithPOMStringSlice []string
 
+// detectFoldersWithPOM checks whether there are folders with .pom files.
+// Without them, maven artifacts cannout be published to nexus3.
 func (n Nexus3) detectFoldersWithPOM(d string) error {
 	err := filepath.Walk(d, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if !f.IsDir() && filepath.Ext(path) == ".pom" {
-			fmt.Println(path)
+			log.Debug(path)
 			foldersWithPOM.WriteString(filepath.Dir(path) + ",")
 		}
 		return nil
@@ -26,18 +29,21 @@ func (n Nexus3) detectFoldersWithPOM(d string) error {
 	if err != nil {
 		return err
 	}
+
+	foldersWithPOMString := strings.TrimSuffix(foldersWithPOM.String(), ",")
+	if foldersWithPOMString == "" {
+		return fmt.Errorf("no folders with .pom files detected. Please check whether the '%s' directory contains .pom files", d)
+	}
+
+	foldersWithPOMStringSlice = strings.Split(foldersWithPOMString, ",")
 	return nil
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
 func (n Nexus3) Upload() error {
-	err3 := n.detectFoldersWithPOM(n.Repository)
-	if err3 != nil {
-		return err3
+	if err := n.detectFoldersWithPOM(n.Repository); err != nil {
+		return err
 	}
-
-	foldersWithPOMString := strings.TrimSuffix(foldersWithPOM.String(), ",")
-	foldersWithPOMStringSlice := strings.Split(foldersWithPOMString, ",")
 
 	for _, v := range foldersWithPOMStringSlice {
 		var s strings.Builder
@@ -80,9 +86,8 @@ func (n Nexus3) Upload() error {
 		}).Debug("URL")
 
 		u := mp.Upload{URL: url, Username: n.User, Password: n.Pass}
-		err2 := u.MultipartUpload(multipartString)
-		if err2 != nil {
-			return err2
+		if err := u.MultipartUpload(multipartString); err != nil {
+			return err
 		}
 	}
 	return nil
