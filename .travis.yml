@@ -34,12 +34,12 @@ addons:
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt update -y && sudo apt-get -y install ./a2deb.deb bats; fi
 script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v; fi
-  - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install zip -y; fi
-  - if [ $TRAVIS_OS_NAME == linux ]; then ./integration-tests.sh $NEXUS_VERSION $NEXUS_API_VERSION ./${DELIVERABLE}; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=030_n3dr -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=cmd/**,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.txt"; fi
+  # - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v; fi
+  # - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
+  # - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
+  # - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install zip -y; fi
+  # - if [ $TRAVIS_OS_NAME == linux ]; then ./integration-tests.sh $NEXUS_VERSION $NEXUS_API_VERSION ./${DELIVERABLE}; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then sonar-scanner -Dsonar.token=$SONAR_TOKEN -Dsonar.projectKey=030_n3dr -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.coverage.exclusions=cmd/**,**/*_test.go -Dsonar.go.coverage.reportPaths="coverage.txt"; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then bash <(curl -s https://codecov.io/bash); fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ -n "${TRAVIS_TAG}" ]; then cp $DELIVERABLE n3dr && a2deb -app n3dr -version ${TRAVIS_TAG} -maintainer "030 <chocolatey030@gmail.com>" -description "Nexus3 backup and recovery tool"; fi
 deploy:
