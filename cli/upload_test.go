@@ -30,7 +30,10 @@ func TestUploads(t *testing.T) {
 	}
 
 	// happy
-	ioutil.WriteFile(d+"/hello.pom", nil, os.ModePerm)
+	err = ioutil.WriteFile(d+"/hello.pom", nil, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
 	err = n.detectFoldersWithPOM(d)
 	if err != nil {
 		t.Errorf("No error expected. Got '%v'. Want 'nil", err)
