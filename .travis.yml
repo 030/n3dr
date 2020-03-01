@@ -26,6 +26,11 @@ matrix:
     env:
       - SHA512_CMD="shasum -a 512"
   - os: windows
+addons:
+  sonarcloud:
+    organization: 030-github
+    token:
+      secure: $SONAR_TOKEN
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt update -y && sudo apt-get -y install ./a2deb.deb bats; fi
 script:
