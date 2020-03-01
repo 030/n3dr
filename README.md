@@ -37,8 +37,8 @@ The aims of the n3dr tool are:
 ## Installation
 
 ```
-curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux -o n3dr-linux
-curl -L https://github.com/030/n3dr/releases/download/3.1.1/n3dr-linux.sha512.txt -o n3dr-linux.sha512.txt
+curl -L https://github.com/030/n3dr/releases/download/z.y.z/n3dr-linux -o n3dr-linux
+curl -L https://github.com/030/n3dr/releases/download/z.y.z/n3dr-linux.sha512.txt -o n3dr-linux.sha512.txt
 sha512sum --check n3dr-linux.sha512.txt
 chmod +x n3dr-linux
 ./n3dr-linux
@@ -47,7 +47,7 @@ chmod +x n3dr-linux
 ### Debian
 
 ```
-VERSION=3.3.3 && \
+VERSION=z.y.z && \
 curl -L https://github.com/030/n3dr/releases/download/${VERSION}/n3dr_${VERSION}-0.deb -o n3dr.deb && \
 sudo apt -y install ./n3dr.deb
 ```
@@ -134,13 +134,14 @@ running the following command:
 
 ## "Clone" the content of a repository in a different Nexus 3 server in a different repository 
 
-This is the basic steps to "clone" and eventually rename the content of a repository from one nexus3 server to another server in a different repository name
+These are the basic steps to "clone" and eventually rename the content of a
+repository from one nexus3 server to another one:
 
 ```
-./n3dr-linux backup -u <source nexus3 user> -n <source nexus3 server url> -r <repo-source-name>
+n3dr backup -u <source-nexus3-user> -n <source-nexus3-server-url> -r <repo-source-name>
 cd download
 mv <repo-source-name> <repo-target-name>
-./n3dr-linux upload -u <target nexus3 user> -n <target nexus3 server url> -r <repo-target-name>
+n3dr upload -u <target-nexus3-user> -n <target-nexus3-server-url> -r <repo-target-name>
 ```
 
 ## Rationale for N3DR
