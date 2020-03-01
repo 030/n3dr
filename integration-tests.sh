@@ -20,10 +20,10 @@ should be run."
 }
 
 build(){
-  echo "TRAVIS_TAG: '$TRAVIS_TAG' DELIVERABLE: '$TOOL'"
-  go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o "${TOOL}"
-  $SHA512_CMD "${TOOL}" > "${TOOL}.sha512.txt"
-  chmod +x "${TOOL}"
+  echo "TRAVIS_TAG: '$TRAVIS_TAG' DELIVERABLE: '$DELIVERABLE'"
+  go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o "${DELIVERABLE}"
+  $SHA512_CMD "${TOOL}" > "${DELIVERABLE}.sha512.txt"
+  chmod +x "${DELIVERABLE}"
 }
 
 nexus(){
