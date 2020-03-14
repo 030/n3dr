@@ -1,7 +1,7 @@
 ---
 name: Failing Test
 about: Report test failures in n3dr CI jobs
-labels: kind/failing-test
+labels: test
 
 ---
 
