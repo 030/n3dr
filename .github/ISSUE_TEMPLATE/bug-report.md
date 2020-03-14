@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Report a bug encountered while operating n3dr
-labels: kind/bug
+labels: bug
 
 ---
 
