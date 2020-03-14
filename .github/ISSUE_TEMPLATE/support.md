@@ -1,7 +1,7 @@
 ---
 name: Support Request
 about: Support request or question relating to n3dr
-labels: triage/support
+labels: help wanted
 
 ---
 
