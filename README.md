@@ -30,6 +30,8 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/030/n3dr?branch=master)](https://bettercodehub.com/results/030/n3dr)
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-web.svg)](https://golangci.com/r/github.com/030/n3dr)
 
+<a href="https://n3dr.releasesoftwaremoreoften.com"><img src="https://github.com/030/n3dr/raw/master/logo/logo.png" width="100"></a>
+
 The aims of the n3dr tool are:
  * to backup all artifacts from a certain Nexus maven repository.
  * to migrate all artifacts from NexusA to NexusB.
