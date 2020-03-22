@@ -3,7 +3,7 @@
 # windows.
 language: go
 go:
-  - 1.14
+  - 1.14.1
 env:
   global:
     - ARTIFACT_PUBLICATION=true
