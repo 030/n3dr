@@ -20,6 +20,7 @@ If the matter is security related, please disclose it privately by sending an em
 **Anything else we need to know?**:
 
 **Environment**:
+- nexus version:
 - n3dr version (use `n3dr -v`):
 - OS (e.g: `cat /etc/os-release`):
 - Kernel (e.g. `uname -a`):
