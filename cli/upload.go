@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	mp "github.com/030/go-curl/utils"
+	mp "github.com/030/go-multipart/utils"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -69,6 +69,12 @@ func (n Nexus3) Upload() error {
 					log.Debug("WAR found " + path)
 					s.WriteString("maven2.asset3=@" + path + ",")
 					s.WriteString("maven2.asset3.extension=war,")
+				}
+
+				if filepath.Ext(path) == ".zip" {
+					log.Debug("ZIP found " + path)
+					s.WriteString("maven2.asset42=@" + path + ",")
+					s.WriteString("maven2.asset42.extension=zip,")
 				}
 			}
 			return nil

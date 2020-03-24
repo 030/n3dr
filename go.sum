@@ -1,5 +1,5 @@
-github.com/030/go-curl v1.0.0 h1:xvRH71ShK4rsLJZZbBm3QcZIDbgA8pp++SdP89RdGyU=
-github.com/030/go-curl v1.0.0/go.mod h1:Os6VaotEeJnnPA/4VWNr2ou3rx5gUj822VMr9jtnmoc=
+github.com/030/go-multipart v1.0.2 h1:0TQEVo/26lxzUv4F10I5g2EpRCqoKUzLGNqxix8sKEA=
+github.com/030/go-multipart v1.0.2/go.mod h1:2FgmvRHQPTXWsP1JXG2X0S04yLepJusX8G6vuWTzxkE=
 github.com/030/go-utils v0.0.0-20190427204242-b7d6df265912 h1:MdgRWx8epGSKbQYxR/kEzmQkUHQCiB8gNlM+QDwiivM=
 github.com/030/go-utils v0.0.0-20190427204242-b7d6df265912/go.mod h1:HQbQNpJnmYGDC3WTdKeB5cslJFbZ78Cr+KTEZcJTi4o=
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
