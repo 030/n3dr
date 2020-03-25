@@ -1,13 +1,14 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 NEXUS_VERSION="${1:-3.21.1}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
 TRAVIS_TAG="${TRAVIS_TAG:-local}"
 SHA512_CMD="${SHA512_CMD:-sha512sum}"
+DELIVERABLE="${DELIVERABLE:-n3dr}"
 
 validate(){
-    if [ -z "$TOOL" ]; then
+    if [ -z "${TOOL}" ]; then
         echo "No deliverable defined. Assuming that 'go run main.go' 
 should be run."
         TOOL="go run main.go"
@@ -53,7 +54,8 @@ password(){
 artifact(){
     mkdir -p "maven-releases/file${1}/file${1}/1.0.0"
     echo someContent > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.jar"
-    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.pom"   
+    echo someContentZIP > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.zip"
+    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.pom"
 }
 
 files(){
@@ -72,11 +74,11 @@ backup(){
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 20
-        test_zip 12
-    else
         count_downloads 30
         test_zip 16
+    else
+        count_downloads 40
+        test_zip 20
     fi
 
     cleanup_downloads
@@ -92,11 +94,11 @@ repositories(){
     $cmd -b -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 40
-        test_zip 24
-    else
         count_downloads 60
-        test_zip 32
+        test_zip 28
+    else
+        count_downloads 80
+        test_zip 36
     fi
 
     cleanup_downloads

@@ -14,7 +14,7 @@ import (
 	"github.com/030/go-utils"
 	log "github.com/sirupsen/logrus"
 
-	mp "github.com/030/go-curl/utils"
+	mp "github.com/030/go-multipart/utils"
 )
 
 // See https://stackoverflow.com/a/34102842/2777965
