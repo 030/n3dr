@@ -8,6 +8,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const errExpMsg = "Error expected. Got '%v'. Want '%v'"
+
 func TestUploads(t *testing.T) {
 	d := "maven-releases"
 
@@ -15,7 +17,7 @@ func TestUploads(t *testing.T) {
 	err := n.detectFoldersWithPOM(d)
 	want := "lstat " + d + ": no such file or directory"
 	if err.Error() != want {
-		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+		t.Errorf(errExpMsg, err, want)
 	}
 
 	// if upload repository exists, without .pom files
@@ -26,7 +28,7 @@ func TestUploads(t *testing.T) {
 	err = n.detectFoldersWithPOM(d)
 	want = "no folders with .pom files detected. Please check whether the '" + d + "' directory contains .pom files"
 	if err.Error() != want {
-		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+		t.Errorf(errExpMsg, err, want)
 	}
 
 	// happy
@@ -44,7 +46,7 @@ func TestUploads(t *testing.T) {
 	err = n.Upload()
 	want = "HTTPStatusCode: '400'; ResponseMessage: 'Repository does not allow updating assets: maven-releases'; ErrorMessage: '<nil>'"
 	if err.Error() != want {
-		t.Errorf("Error expected. Got '%v'. Want '%v'", err, want)
+		t.Errorf(errExpMsg, err, want)
 	}
 
 	// cleanup
