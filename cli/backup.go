@@ -40,7 +40,7 @@ type Nexus3 struct {
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	assetURL := n.URL + assetURI1 + n.APIVersion + assetURI2 + n.Repository
 	constructDownloadURL := assetURL
-	if !(token == "null") {
+	if token != "null" {
 		constructDownloadURL = assetURL + "&continuationToken=" + token
 	}
 	u, err := url.Parse(constructDownloadURL)

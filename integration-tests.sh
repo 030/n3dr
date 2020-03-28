@@ -59,7 +59,7 @@ artifact(){
 }
 
 files(){
-    for a in $(seq 10); do artifact "${a}"; done
+    for a in $(seq 100); do artifact "${a}"; done
 }
 
 upload(){
@@ -74,11 +74,11 @@ backup(){
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 30
-        test_zip 16
+        count_downloads 300
+        test_zip 132
     else
-        count_downloads 40
-        test_zip 20
+        count_downloads 400
+        test_zip 168
     fi
 
     cleanup_downloads
@@ -94,11 +94,11 @@ repositories(){
     $cmd -b -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 60
-        test_zip 28
+        count_downloads 600
+        test_zip 256
     else
-        count_downloads 80
-        test_zip 36
+        count_downloads 800
+        test_zip 336
     fi
 
     cleanup_downloads
