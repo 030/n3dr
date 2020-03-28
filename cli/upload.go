@@ -99,12 +99,12 @@ func (n Nexus3) Upload() error {
 		return err
 	}
 	for i, path := range foldersWithPOMStringSlice {
-		log.Debug(strconv.Itoa(i) + " Detecting artifacts in folder '" + path + "'")
+		log.Info(strconv.Itoa(i) + " Detecting artifacts in folder '" + path + "'")
 		sb, err := pomDirs(path)
 		if err != nil {
 			return err
 		}
-		log.Debug(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
+		log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
 		if err := n.multipartUpload(sb); err != nil {
 			return err
 		}
