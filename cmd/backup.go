@@ -22,6 +22,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var regex string
+
 // backupCmd represents the backup command
 var backupCmd = &cobra.Command{
 	Use:   "backup",
@@ -36,7 +38,7 @@ reside in a certain Nexus3 repository`,
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip}
-		if err := n.StoreArtifactsOnDisk(); err != nil {
+		if err := n.StoreArtifactsOnDisk(regex); err != nil {
 			log.Fatal(err)
 		}
 
@@ -55,4 +57,5 @@ func init() {
 	}
 
 	rootCmd.AddCommand(backupCmd)
+	backupCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 }

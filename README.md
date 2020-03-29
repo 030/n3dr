@@ -107,6 +107,16 @@ the following command is run:
 ./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases
 ```
 
+## Backup only certain artifacts
+
+It is possible to only download artifacts that match a regular expression. If
+one would like to download all artifacts from 'some/group42' then one could do
+that as follows:
+
+```
+./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases -x 'some/group42'
+```
+
 ## Backup all repositories
 
 All artifacts from various repositories will be stored in a download
