@@ -35,7 +35,7 @@ readiness(){
     until docker logs nexus | grep 'Started Sonatype Nexus OSS'
     do
         echo "Nexus unavailable"
-        sleep 10
+        sleep 3
     done
 }
 
@@ -52,10 +52,10 @@ password(){
 }
 
 artifact(){
-    mkdir -p "maven-releases/file${1}/file${1}/1.0.0"
-    echo someContent > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.jar"
-    echo someContentZIP > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.zip"
-    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/file${1}/file${1}/1.0.0/file${1}-1.0.0.pom"
+    mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0"
+    echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.jar"
+    echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.zip"
+    echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.pom"
 }
 
 files(){
@@ -75,12 +75,39 @@ backup(){
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 300
-        test_zip 132
+        test_zip 140
     else
         count_downloads 400
-        test_zip 168
+        test_zip 180
     fi
 
+    cleanup_downloads
+}
+
+regex(){
+    echo "Testing backup regex..."
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42'
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 3
+        test_zip 4
+    else
+        count_downloads 4
+        test_zip 4
+    fi
+    cleanup_downloads
+
+
+    echo -e "\nTesting repositories regex..."
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42'
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 6
+        test_zip 4
+    else
+        count_downloads 8
+        test_zip 8
+    fi
     cleanup_downloads
 }
 
@@ -95,10 +122,10 @@ repositories(){
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 600
-        test_zip 256
+        test_zip 272
     else
         count_downloads 800
-        test_zip 336
+        test_zip 356
     fi
 
     cleanup_downloads
@@ -141,6 +168,7 @@ main(){
     upload
     backup
     repositories
+    regex
     bats --tap tests.bats
 }
 

@@ -5,7 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Changed
+None
+
+## [3.5.0] - 2020-03-29
+### Added
+- Download of specific artifacts using a regex
+- Instructions added to README how to use this new feature
+
+### Improved
+- Section about how to clone an old Nexus3 repository
+
+### Fixed
+- Three code smells that were reported by SonarCloud
+
+## [3.4.0] - 2020-03-25
+### Added
+- Upload of zip artifacts
+
+## Changed
 - Create files for testing rather than storing them in git
 
 ## [3.3.3] - 2019-12-12
@@ -142,7 +159,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/3.3.3...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/3.5.0...HEAD
+[3.5.0]: https://github.com/030/n3dr/compare/3.4.0...3.5.0
+[3.4.0]: https://github.com/030/n3dr/compare/3.3.3...3.4.0
 [3.3.3]: https://github.com/030/n3dr/compare/3.3.2...3.3.3
 [3.3.2]: https://github.com/030/n3dr/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/030/n3dr/compare/3.3.0...3.3.1

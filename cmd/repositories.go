@@ -61,7 +61,7 @@ download artifacts from all repositories`,
 			}
 		}
 		if backup {
-			err := n.Downloads()
+			err := n.Downloads(regex)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -75,4 +75,5 @@ func init() {
 	repositoriesCmd.Flags().BoolVarP(&names, "names", "a", false, "print all repository names")
 	repositoriesCmd.Flags().BoolVarP(&count, "count", "c", false, "count the number of repositories")
 	repositoriesCmd.Flags().BoolVarP(&backup, "backup", "b", false, "backup artifacts from all repositories")
+	repositoriesCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 }
