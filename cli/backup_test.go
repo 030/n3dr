@@ -49,7 +49,7 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	if err := n.StoreArtifactsOnDisk(); err != nil {
+	if err := n.StoreArtifactsOnDisk(".*"); err != nil {
 		log.Fatal(err)
 	}
 

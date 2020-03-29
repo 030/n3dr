@@ -100,6 +100,7 @@ func (n Nexus3) continuationTokenRecursion(t string) ([]string, error) {
 }
 
 func createArtifact(d string, f string, content string) error {
+	log.Debug("Create artifact: '" + d + "/" + f + "'")
 	err := os.MkdirAll(d, os.ModePerm)
 	if err != nil {
 		return err
@@ -177,6 +178,7 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 
 			jq := gojsonq.New().JSONString(json)
 			downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
+			log.Debug("DownloadURLs: " + fmt.Sprintf("%v", downloadURLsInterface))
 
 			downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
 			downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
@@ -189,7 +191,7 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 }
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
-func (n Nexus3) StoreArtifactsOnDisk() error {
+func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
 	urls, err := n.downloadURLs()
 	if err != nil {
 		return err
@@ -200,13 +202,20 @@ func (n Nexus3) StoreArtifactsOnDisk() error {
 		log.Info("Backing up artifacts '" + n.Repository + "'")
 		bar := pb.StartNew(len(urls))
 		for _, downloadURL := range urls {
-			u := fmt.Sprint(downloadURL)
+			url := fmt.Sprint(downloadURL)
 
-			// Exclude download of md5 and sha1 files as these are unavailable
-			// unless the metadata.xml is opened first
-			if !(filepath.Ext(u) == ".md5" || filepath.Ext(u) == ".sha1") {
-				if err := n.downloadArtifact(fmt.Sprint(downloadURL)); err != nil {
-					return err
+			log.Debug("Only download artifacts that match the regex: '" + regex + "'")
+			r, err := regexp.Compile(regex)
+			if err != nil {
+				return err
+			}
+			if r.MatchString(url) {
+				// Exclude download of md5 and sha1 files as these are unavailable
+				// unless the metadata.xml is opened first
+				if !(filepath.Ext(url) == ".md5" || filepath.Ext(url) == ".sha1") {
+					if err := n.downloadArtifact(fmt.Sprint(downloadURL)); err != nil {
+						return err
+					}
 				}
 			}
 
