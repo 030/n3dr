@@ -12,7 +12,7 @@ None
 - Download of specific artifacts using a regex
 - Instructions added to README how to use this new feature
 
-## Improved
+### Improved
 - Section about how to clone an old Nexus3 repository
 
 ### Fixed
