@@ -1,7 +1,7 @@
 # n3dr
 
 [![GoDoc Widget]][GoDoc]
-[![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
+[![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master&logo=travis)](https://travis-ci.org/030/n3dr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
 [![StackOverflow SE Questions](https://img.shields.io/stackexchange/stackoverflow/t/n3dr.svg?logo=stackoverflow)](https://stackoverflow.com/tags/n3dr)
 [![DevOps SE Questions](https://img.shields.io/stackexchange/devops/t/n3dr.svg?logo=stackexchange)](https://devops.stackexchange.com/tags/n3dr)
@@ -180,4 +180,4 @@ None of them seems to be able to backup all repositories by running
 a single command.
 
 [GoDoc]: https://godoc.org/github.com/030/n3dr
-[GoDoc Widget]: https://godoc.org/github.com/030/n3dr?status.svg
+[GoDoc Widget]: https://godoc.org/github.com/030/n3dr?status.svg&logo=go
