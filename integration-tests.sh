@@ -88,7 +88,6 @@ regex(){
     echo "Testing backup regex..."
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42'
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
-
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 3
         test_zip 4
@@ -96,7 +95,19 @@ regex(){
         count_downloads 4
         test_zip 4
     fi
+    cleanup_downloads
 
+
+    echo -e "\nTesting repositories regex..."
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42'
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
+    if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+        count_downloads 6
+        test_zip 4
+    else
+        count_downloads 8
+        test_zip 8
+    fi
     cleanup_downloads
 }
 
@@ -143,6 +154,7 @@ test_zip(){
 
 cleanup_downloads(){
     rm -rf maven-releases
+    cp n3dr-backup-*zip ~/Desktop/bladiblablabla.zip
     rm -f n3dr-backup-*zip
     rm -rf download
 }

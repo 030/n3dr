@@ -107,16 +107,6 @@ the following command is run:
 ./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases
 ```
 
-## Backup only certain artifacts
-
-It is possible to only download artifacts that match a regular expression. If
-one would like to download all artifacts from 'some/group42' then one could do
-that as follows:
-
-```
-./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases -x 'some/group42'
-```
-
 ## Backup all repositories
 
 All artifacts from various repositories will be stored in a download
@@ -131,6 +121,23 @@ Note: a new folder will be created for every repository:
 * download/maven-public
 * download/maven-releases
 
+## Backup only certain artifacts
+
+It is possible to only download artifacts that match a regular expression. If
+one would like to download all artifacts from 'some/group42' then one could do
+that as follows:
+
+```
+./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases -x 'some/group42'
+```
+
+If one would like to deploy is while download from all repositories then use
+the `-x` option as well:
+
+```
+./n3dr-linux repositories -u admin -n http://localhost:8081 -b -x 'some/group42'
+```
+
 ## Add all downloaded archives to a ZIP archive
 
 In order to add all archives to a zip archive, one has to use the --zip or -z flag.
@@ -144,16 +151,19 @@ running the following command:
 ./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
-## "Clone" the content of a repository in a different Nexus 3 server in a different repository 
+## "Clone" a Nexus3 repository
 
-These are the basic steps to "clone" and eventually rename the content of a
-repository from one nexus3 server to another one:
+Suppose that one has created a new Nexus3 repository, e.g. NexusNEW and that
+one would like to copy the content of the old repository, e.g. NexusOLD, then
+these basic steps could be issued to "clone" NexusOLD:
 
 ```
-n3dr backup -u <source-nexus3-user> -n <source-nexus3-server-url> -r <repo-source-name>
+n3dr backup -u <old-nexus3-user> -n <old-nexus3-server-url> \
+-r <old-repo-source-name>
 cd download
-mv <repo-source-name> <repo-target-name>
-n3dr upload -u <target-nexus3-user> -n <target-nexus3-server-url> -r <repo-target-name>
+mv <old-repo-source-name> <new-repo-target-name>
+n3dr upload -u <new-target-nexus3-user> -n <new-target-nexus3-server-url> \
+-r <new-repo-target-name>
 ```
 
 ## Rationale for N3DR
