@@ -43,7 +43,7 @@ func (n Nexus3) CountRepositories() error {
 }
 
 // Downloads retrieves artifacts from all repositories
-func (n Nexus3) Downloads() error {
+func (n Nexus3) Downloads(regex string) error {
 	repos, err := n.repositoriesSlice()
 	if err != nil {
 		return err
@@ -51,7 +51,7 @@ func (n Nexus3) Downloads() error {
 
 	for _, name := range repos {
 		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name.(string), APIVersion: n.APIVersion, ZIP: n.ZIP}
-		if err := n.StoreArtifactsOnDisk(); err != nil {
+		if err := n.StoreArtifactsOnDisk(regex); err != nil {
 			return err
 		}
 	}
