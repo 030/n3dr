@@ -154,7 +154,6 @@ test_zip(){
 
 cleanup_downloads(){
     rm -rf maven-releases
-    cp n3dr-backup-*zip ~/Desktop/bladiblablabla.zip
     rm -f n3dr-backup-*zip
     rm -rf download
 }
