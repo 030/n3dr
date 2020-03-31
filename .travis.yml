@@ -16,6 +16,13 @@ matrix:
   include:
   - os: linux
     dist: bionic
+    env:
+      - NEXUS_VERSION=latest
+  - os: linux
+    dist: bionic
+    env:
+      - ARTIFACT_PUBLICATION=false
+      - NEXUS_VERSION=3.21.1
   - os: linux
     dist: bionic
     env:
