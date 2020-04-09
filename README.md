@@ -181,3 +181,7 @@ a single command.
 
 [GoDoc]: https://godoc.org/github.com/030/n3dr
 [GoDoc Widget]: https://godoc.org/github.com/030/n3dr?status.svg
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/030/n3dr.svg)](https://starchart.cc/030/n3dr)
