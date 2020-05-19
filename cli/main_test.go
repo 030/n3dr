@@ -124,13 +124,13 @@ func (n Nexus3) submitArtifact(d string, f string) {
 }
 
 func createPOM(d string, f string, number string) {
-	if err := createArtifact(d, f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+number+"</groupId>\n<artifactId>file"+number+"</artifactId>\n<version>1.0.0</version>\n</project>"); err != nil {
+	if err := createArtifact(d, f+".pom", "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>file"+number+"</groupId>\n<artifactId>file"+number+"</artifactId>\n<version>1.0.0</version>\n</project>", "ba1f2511fc30423bdbb183fe33f3dd0f"); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func createJAR(d string, f string) {
-	if err := createArtifact(d, f+".jar", "some-content"); err != nil {
+	if err := createArtifact(d, f+".jar", "some-content", "eae7286512c52715673c3878c10d2d55"); err != nil {
 		log.Fatal(err)
 	}
 }
