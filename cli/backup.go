@@ -1,8 +1,12 @@
 package cli
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
 	"fmt"
+	"github.com/spf13/viper"
+	"io"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -99,24 +103,63 @@ func (n Nexus3) continuationTokenRecursion(t string) ([]string, error) {
 	return append(tokenSlice, token), nil
 }
 
-func createArtifact(d string, f string, content string) error {
+func createArtifact(d string, f string, content string, md5sum string) error {
+	ociBucketname := viper.GetString("ociBucket")
+	Filename := d + "/" + f
+
+	// Check if object exists
+	objectExists := false
+	if ociBucketname != "" {
+		objectExists, err := findObject(ociBucketname, Filename, md5sum)
+
+		if err != nil {
+			return err
+		}
+
+		if objectExists && viper.GetBool("removeLocalFile") {
+			log.Debug("Object " + Filename + " already exist")
+			return nil
+		}
+	}
+
 	log.Debug("Create artifact: '" + d + "/" + f + "'")
 	err := os.MkdirAll(d, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	file, err := os.Create(filepath.Join(d, f))
-	if err != nil {
-		return err
+	filename := filepath.Join(d, f)
+
+	md5sumLocal := ""
+	if fileExists(filename) {
+		md5sumLocal, err = HashFileMD5(filename)
+		if err != nil {
+			return err
+		}
 	}
 
-	_, err = file.WriteString(content)
-	defer file.Close()
-	if err != nil {
-		return err
+	if md5sumLocal == md5sum {
+		log.Debug("Skipping as file already exists.")
+	} else {
+		log.Debug("Creating ", filename)
+		file, err := os.Create(filename)
+		if err != nil {
+			return err
+		}
+
+		_, err = file.WriteString(content)
+		defer file.Close()
+		if err != nil {
+			return err
+		}
 	}
 
+	if ociBucketname != "" && !objectExists {
+		err := ociBackup(ociBucketname, Filename)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -139,7 +182,9 @@ func (n Nexus3) artifactName(url string) (string, string, error) {
 	return d, f, nil
 }
 
-func (n Nexus3) downloadArtifact(url string) error {
+func (n Nexus3) downloadArtifact(downloadURL interface{}) error {
+	url := fmt.Sprint(downloadURL.(map[string]interface{})["downloadUrl"])
+	md5sum := fmt.Sprint(downloadURL.(map[string]interface{})["md5"])
 	d, f, err := n.artifactName(url)
 	if err != nil {
 		return err
@@ -150,7 +195,7 @@ func (n Nexus3) downloadArtifact(url string) error {
 		return err
 	}
 
-	if err := createArtifact(filepath.Join(downloadDir, n.Repository, d), f, bodyString); err != nil {
+	if err := createArtifact(filepath.Join(downloadDir, n.Repository, d), f, bodyString, md5sum); err != nil {
 		return err
 	}
 	return nil
@@ -177,7 +222,7 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 			json := string(bytes)
 
 			jq := gojsonq.New().JSONString(json)
-			downloadURLsInterface := jq.From("items").Pluck("downloadUrl")
+			downloadURLsInterface := jq.From("items").Only("downloadUrl", "checksum.md5")
 			log.Debug("DownloadURLs: " + fmt.Sprintf("%v", downloadURLsInterface))
 
 			downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
@@ -202,7 +247,7 @@ func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
 		log.Info("Backing up artifacts '" + n.Repository + "'")
 		bar := pb.StartNew(len(urls))
 		for _, downloadURL := range urls {
-			url := fmt.Sprint(downloadURL)
+			url := fmt.Sprint(downloadURL.(map[string]interface{})["downloadUrl"])
 
 			log.Debug("Only download artifacts that match the regex: '" + regex + "'")
 			r, err := regexp.Compile(regex)
@@ -213,7 +258,7 @@ func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
 				// Exclude download of md5 and sha1 files as these are unavailable
 				// unless the metadata.xml is opened first
 				if !(filepath.Ext(url) == ".md5" || filepath.Ext(url) == ".sha1") {
-					if err := n.downloadArtifact(fmt.Sprint(downloadURL)); err != nil {
+					if err := n.downloadArtifact(downloadURL); err != nil {
 						return err
 					}
 				}
@@ -238,4 +283,30 @@ func (n Nexus3) CreateZip() error {
 		}
 	}
 	return nil
+}
+
+// HashFileMD5 returns MD5 checksum of a file
+func HashFileMD5(filePath string) (string, error) {
+	var returnMD5String string
+	file, err := os.Open(filePath)
+	if err != nil {
+		return returnMD5String, err
+	}
+	defer file.Close()
+	hash := md5.New()
+	if _, err := io.Copy(hash, file); err != nil {
+		return returnMD5String, err
+	}
+	hashInBytes := hash.Sum(nil)[:16]
+	returnMD5String = hex.EncodeToString(hashInBytes)
+	return returnMD5String, nil
+
+}
+
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }
