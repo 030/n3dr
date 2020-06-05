@@ -1,4 +1,6 @@
 # n3dr
+## Backup or Migrate your entire Nexus Artifact Server
+Download all artifacts at once or migrate automatically from Nexus to Nexus.
 
 [![GoDoc Widget]][GoDoc]
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
