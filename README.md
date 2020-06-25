@@ -1,4 +1,9 @@
 # n3dr
+## Backup or Migrate your entire Nexus Artifact Server
+Download all artifacts at once or migrate automatically from Nexus to Nexus.
+
+Without n3dr it is not possible to download all artifacts from Nexus at once.
+n3dr makes it possible to easily migrate a Nexus server from AWS to Azure or Google Cloud.
 
 [![GoDoc Widget]][GoDoc]
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
