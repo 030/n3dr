@@ -18,7 +18,7 @@ should be run."
 }
 
 build(){
-  source ./build.sh "${TOOL}"
+  source ./build.sh
 }
 
 nexus(){
