@@ -3,9 +3,6 @@
 NEXUS_VERSION="${1:-3.21.1}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
-TRAVIS_TAG="${TRAVIS_TAG:-local}"
-SHA512_CMD="${SHA512_CMD:-sha512sum}"
-DELIVERABLE="${DELIVERABLE:-n3dr}"
 
 validate(){
     if [ -z "${TOOL}" ]; then
@@ -21,10 +18,7 @@ should be run."
 }
 
 build(){
-  echo "TRAVIS_TAG: '$TRAVIS_TAG' DELIVERABLE: '$DELIVERABLE'"
-  go build -ldflags "-X n3dr/cmd.Version=${TRAVIS_TAG}" -o "${DELIVERABLE}"
-  $SHA512_CMD "${TOOL}" > "${DELIVERABLE}.sha512.txt"
-  chmod +x "${DELIVERABLE}"
+  source ./build.sh
 }
 
 nexus(){
