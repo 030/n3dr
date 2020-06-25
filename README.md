@@ -176,6 +176,20 @@ n3dr upload -u <new-target-nexus3-user> -n <new-target-nexus3-server-url> \
 -r <new-repo-target-name>
 ```
 
+## Backup to OCI Object Storage
+`n3dr` supports backing up to [OCI Object Storage](https://www.oracle.com/cloud/storage/object-storage.html).
+To enable this option you need to
+- Configure OCI environment and secrets locally: https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm
+- Add following options to `~/.n3dr.yaml`:
+```
+ociBucket: nexus_dev_archives
+```
+
+If you want to remove local copies (after object has been uploaded) add following to `~/.n3dr.yaml`:
+```
+removeLocalFile: true
+```
+
 ## Rationale for N3DR
 
 Although there is a number of equivalent tools:

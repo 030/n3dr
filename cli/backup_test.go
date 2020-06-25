@@ -127,7 +127,7 @@ func TestArtifactNameContainingRepositoryName(t *testing.T) {
 }
 
 func TestCreateArtifact(t *testing.T) {
-	actualErrorFile := createArtifact("testFiles", "file100/file100", "some-content")
+	actualErrorFile := createArtifact("testFiles", "file100/file100", "some-content", "ba1f2511fc30423bdbb183fe33f3dd0f")
 	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
 
 	if actualErrorFile.Error() != expectedErrorFile {
@@ -136,10 +136,49 @@ func TestCreateArtifact(t *testing.T) {
 }
 
 func TestDownloadArtifact(t *testing.T) {
-	actualError := n.downloadArtifact("http://releasesoftwaremoreoften.com")
+	url := make(map[string]interface{})
+	url["downloadUrl"] = "http://releasesoftwaremoreoften.com"
+	actualError := n.downloadArtifact(url)
 	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
 
 	if actualError.Error() != expectedError {
 		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
 	}
+}
+
+func TestHashFileMD5(t *testing.T) {
+	file := "file1/file1/1.0.0/file1-1.0.0.jar"
+	_, actualError := HashFileMD5(file)
+	expectedError := "open file1/file1/1.0.0/file1-1.0.0.jar: no such file or directory"
+
+	if actualError.Error() != expectedError {
+		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+	}
+
+	file = "download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
+	expectedResult := "ad60407c083b4ecc372614b8fcd9f305"
+	result, _ := HashFileMD5(file)
+
+	if result != expectedResult {
+		t.Errorf("Output incorrect. Expected: %v. Actual: %v", expectedResult, result)
+	}
+}
+
+func TestFileExists(t *testing.T) {
+	file := "file1/file1/1.0.0/file1-1.0.0.jar"
+	result := fileExists(file)
+	expectedResult := false
+
+	if result != expectedResult {
+		t.Errorf("Output incorrect. Expected: %v. Actual: %v", expectedResult, result)
+	}
+
+	file = "download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
+	result = fileExists(file)
+	expectedResult = true
+
+	if result != expectedResult {
+		t.Errorf("Output incorrect. Expected: %v. Actual: %v", expectedResult, result)
+	}
+
 }
