@@ -40,6 +40,7 @@ n3dr makes it possible to easily migrate a Nexus server from AWS to Azure or Goo
 [![BCH compliance](https://bettercodehub.com/edge/badge/030/n3dr?branch=master)](https://bettercodehub.com/results/030/n3dr)
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-web.svg)](https://golangci.com/r/github.com/030/n3dr)
 [![Chocolatey](https://img.shields.io/chocolatey/dt/n3dr)](https://chocolatey.org/packages/n3dr)
+[![n3dr](https://snapcraft.io//n3dr/badge.svg)](https://snapcraft.io/n3dr)
 
 <a href="https://n3dr.releasesoftwaremoreoften.com"><img src="https://github.com/030/n3dr/raw/master/logo/logo.png" width="100"></a>
 
