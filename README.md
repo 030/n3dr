@@ -50,21 +50,23 @@ The aims of the n3dr tool are:
 
 ## Installation
 
-```
-curl -L https://github.com/030/n3dr/releases/download/z.y.z/n3dr-linux -o n3dr-linux
-curl -L https://github.com/030/n3dr/releases/download/z.y.z/n3dr-linux.sha512.txt -o n3dr-linux.sha512.txt
-sha512sum --check n3dr-linux.sha512.txt
-chmod +x n3dr-linux
-./n3dr-linux
+### Linux
+
+```bash
+snap install n3dr
 ```
 
-### Debian
+### MaxOS
 
+```bash
+brew install n3dr
 ```
-VERSION=z.y.z && \
-curl -L https://github.com/030/n3dr/releases/download/${VERSION}/n3dr_${VERSION}-0.deb -o n3dr.deb && \
-sudo apt -y install ./n3dr.deb
-```
+
+### Windows
+
+```bash
+choco install n3dr
+````
 
 ## Check the help menu
 
