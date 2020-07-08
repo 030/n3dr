@@ -5,20 +5,20 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"github.com/oracle/oci-go-sdk/common"
-	"github.com/oracle/oci-go-sdk/objectstorage"
-	log "github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/oracle/oci-go-sdk/common"
+	"github.com/oracle/oci-go-sdk/objectstorage"
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 func ociBackup(Bucketname string, Filename string) error {
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
-		log.Error("Error:", err)
 		return err
 	}
 
@@ -26,7 +26,6 @@ func ociBackup(Bucketname string, Filename string) error {
 	namespace, err := getNamespace(ctx, o)
 
 	if err != nil {
-		log.Error("Error:", err)
 		return err
 	}
 
@@ -37,25 +36,21 @@ func ociBackup(Bucketname string, Filename string) error {
 	}
 
 	if err != nil {
-		log.Error("Error:", err)
 		return err
 	}
 	for _, f := range filename {
 		file, err := os.Open(f)
 		if err != nil {
-			log.Error("Error:", err)
 			return err
 		}
 		defer file.Close()
 		fi, err := file.Stat()
 		if err != nil {
-			log.Error("Error:", err)
 			return err
 		}
 
 		err = putObject(ctx, o, namespace, Bucketname, f, fi.Size(), file, nil)
 		if err != nil {
-			log.Error("Error:", err)
 			return err
 		}
 
@@ -65,7 +60,6 @@ func ociBackup(Bucketname string, Filename string) error {
 		}
 
 		if err != nil {
-			log.Error(err)
 			return err
 		}
 	}
@@ -76,7 +70,6 @@ func getNamespace(ctx context.Context, c objectstorage.ObjectStorageClient) (str
 	request := objectstorage.GetNamespaceRequest{}
 	r, err := c.GetNamespace(ctx, request)
 	if err != nil {
-		log.Error("Error:", err)
 		return "Error", err
 	}
 	return *r.Value, nil
@@ -93,7 +86,6 @@ func putObject(ctx context.Context, c objectstorage.ObjectStorageClient, namespa
 	}
 	_, err := c.PutObject(ctx, request)
 	if err != nil {
-		log.Error("Error:", err)
 		return err
 	}
 	log.Debug("You have uploaded file " + objectname + " in bucket " + bucketname + "\n")
@@ -103,7 +95,6 @@ func putObject(ctx context.Context, c objectstorage.ObjectStorageClient, namespa
 func findObject(bucketname, objectname string, md5sum string) (bool, error) {
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
-		log.Error("Error:", err)
 		return false, err
 	}
 
@@ -111,7 +102,6 @@ func findObject(bucketname, objectname string, md5sum string) (bool, error) {
 	namespace, err := getNamespace(ctx, o)
 
 	if err != nil {
-		log.Error("Error:", err)
 		return false, err
 	}
 
@@ -126,7 +116,6 @@ func findObject(bucketname, objectname string, md5sum string) (bool, error) {
 		if strings.Contains(err.Error(), "ObjectNotFound") {
 			return false, nil
 		}
-		log.Error("Error:", err)
 		return false, err
 	}
 
