@@ -5,8 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## Changed
+None
+
+## [3.6.2] - 2020-07-08
+### Added
+- Asciicast
+- Configuration instructions minimal permissions n3dr user
+
+### Changed
 - Installation instructions
+
+### Fixed
+- Couple of code smells reported by sonar cloud
+
+### Removed
+- Superfluous go modules
 
 ## [3.6.1] - 2020-06-26
 ### Fixed
