@@ -15,10 +15,10 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-	"net/http"
 	"crypto/tls"
+	"fmt"
+	"net/http"
+	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
@@ -82,6 +82,7 @@ func initConfig() {
 			fmt.Println(err)
 			os.Exit(1)
 		}
+		log.Infof("HomeDir: '%v'", home)
 
 		viper.AddConfigPath(home) // Search config in home directory with name ".n3dr" (without extension).
 		viper.SetConfigName(".n3dr")

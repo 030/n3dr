@@ -27,3 +27,8 @@ parts:
     plugin: go
     source: .
     go-importpath: github.com/030/n3dr
+    override-build: |
+      GO111MODULE=on CGO_ENABLED=0 go build -ldflags "-X n3dr/cmd.Version=3.6.2" -o $SNAPCRAFT_PART_INSTALL/n3dr
+      $SNAPCRAFT_PART_INSTALL/n3dr --version
+    stage:
+    - "n3dr"
