@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	errMsg    = "Not equal. Expected: %d. Actual: %d."
-	errMsgTxt = "Error incorrect. Expected: %v. Actual: %v"
+	errMsg         = "Not equal. Expected: %d. Actual: %d."
+	errMsgTxt      = "Incorrect. Expected: %v. Actual: %v"
+	testFileJar100 = "download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
 )
 
 func TestContinuationTokenHash(t *testing.T) {
@@ -63,7 +64,7 @@ func TestStoreArtifactsOnDisk(t *testing.T) {
 
 	expectedDownloads := []string{
 		"download/.gitkeep",
-		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar",
+		testFileJar100,
 		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom",
 		"download/maven-releases/file1/file1/maven-metadata.xml",
 		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar",
@@ -142,7 +143,7 @@ func TestDownloadArtifact(t *testing.T) {
 	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
 
 	if actualError.Error() != expectedError {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+		t.Errorf(errMsgTxt, expectedError, actualError)
 	}
 }
 
@@ -152,15 +153,15 @@ func TestHashFileMD5(t *testing.T) {
 	expectedError := "open file1/file1/1.0.0/file1-1.0.0.jar: no such file or directory"
 
 	if actualError.Error() != expectedError {
-		t.Errorf("Error incorrect. Expected: %v. Actual: %v", expectedError, actualError)
+		t.Errorf(errMsgTxt, expectedError, actualError)
 	}
 
-	file = "download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
+	file = testFileJar100
 	expectedResult := "ad60407c083b4ecc372614b8fcd9f305"
 	result, _ := HashFileMD5(file)
 
 	if result != expectedResult {
-		t.Errorf("Output incorrect. Expected: %v. Actual: %v", expectedResult, result)
+		t.Errorf(errMsgTxt, expectedResult, result)
 	}
 }
 
@@ -170,15 +171,15 @@ func TestFileExists(t *testing.T) {
 	expectedResult := false
 
 	if result != expectedResult {
-		t.Errorf("Output incorrect. Expected: %v. Actual: %v", expectedResult, result)
+		t.Errorf(errMsgTxt, expectedResult, result)
 	}
 
-	file = "download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
+	file = testFileJar100
 	result = fileExists(file)
 	expectedResult = true
 
 	if result != expectedResult {
-		t.Errorf("Output incorrect. Expected: %v. Actual: %v", expectedResult, result)
+		t.Errorf(errMsgTxt, expectedResult, result)
 	}
 
 }
