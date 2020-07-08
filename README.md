@@ -87,7 +87,7 @@ In order to upload artifacts, additional privileges are required:
 
 ## Usage
 
-[![asciicast](https://asciinema.org/a/346048.svg)](https://asciinema.org/a/346048)
+<a href="https://asciinema.org/a/346048?autoplay=1"><img src="https://asciinema.org/a/346048.png" width="836"/></a>
 
 ### Check the help menu
 
