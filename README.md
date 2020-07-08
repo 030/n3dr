@@ -68,7 +68,28 @@ brew install n3dr
 choco install n3dr
 ````
 
-## Check the help menu
+## Configuration
+
+### N3DR download user
+
+Create a user, e.g. n3dr-download in Nexus3, create a role, e.g. n3dr-download
+and assign the following roles:
+
+* nx-repository-view-*-*-browse
+* nx-repository-view-*-*-read
+
+### N3DR upload user
+
+In order to upload artifacts, additional privileges are required:
+
+* nx-repository-view-*-*-add
+* nx-repository-view-*-*-edit
+
+## Usage
+
+<a href="https://asciinema.org/a/346048?autoplay=1"><img src="https://asciinema.org/a/346048.png" width="836"/></a>
+
+### Check the help menu
 
 ```
 user@computer:~/dev$ ./n3dr-linux -h
@@ -112,7 +133,7 @@ and set the permissions to 400 by issuing:
 chmod 400 ~/.n3dr.yaml
 ```
 
-## Backup artifacts from a certain repository
+### Backup artifacts from a certain repository
 
 All artifacts from a repository will be stored in a download folder when
 the following command is run:
@@ -121,7 +142,7 @@ the following command is run:
 ./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases
 ```
 
-## Backup all repositories
+### Backup all repositories
 
 All artifacts from various repositories will be stored in a download
 folder when the following command is issued:
@@ -135,7 +156,7 @@ Note: a new folder will be created for every repository:
 * download/maven-public
 * download/maven-releases
 
-## Backup only certain artifacts
+### Backup only certain artifacts
 
 It is possible to only download artifacts that match a regular expression. If
 one would like to download all artifacts from 'some/group42' then one could do
@@ -156,7 +177,7 @@ the `-x` option as well:
 
 In order to add all archives to a zip archive, one has to use the --zip or -z flag.
 
-## Upload all artifacts to a certain repository
+### Upload all artifacts to a certain repository
 
 It is possible to upload all JARs that reside in a folder by
 running the following command:
@@ -165,7 +186,7 @@ running the following command:
 ./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
-## "Clone" a Nexus3 repository
+### "Clone" a Nexus3 repository
 
 Suppose that one has created a new Nexus3 repository, e.g. NexusNEW and that
 one would like to copy the content of the old repository, e.g. NexusOLD, then
@@ -180,7 +201,7 @@ n3dr upload -u <new-target-nexus3-user> -n <new-target-nexus3-server-url> \
 -r <new-repo-target-name>
 ```
 
-## Backup to OCI Object Storage
+### Backup to OCI Object Storage
 `n3dr` supports backing up to [OCI Object Storage](https://www.oracle.com/cloud/storage/object-storage.html).
 To enable this option you need to
 - Configure OCI environment and secrets locally: https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm
