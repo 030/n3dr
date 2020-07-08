@@ -75,15 +75,15 @@ choco install n3dr
 Create a user, e.g. n3dr-download in Nexus3, create a role, e.g. n3dr-download
 and assign the following roles:
 
-* nx-repository-view-*-*-browse
-* nx-repository-view-*-*-read
+* `nx-repository-view-*-*-browse`
+* `nx-repository-view-*-*-read`
 
 ### N3DR upload user
 
 In order to upload artifacts, additional privileges are required:
 
-* nx-repository-view-*-*-add
-* nx-repository-view-*-*-edit
+* `nx-repository-view-*-*-add`
+* `nx-repository-view-*-*-edit`
 
 ## Usage
 
