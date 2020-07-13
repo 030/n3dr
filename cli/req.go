@@ -3,6 +3,7 @@ package cli
 import (
 	"errors"
 	"fmt"
+	"github.com/hashicorp/go-retryablehttp"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -40,7 +41,11 @@ func (n Nexus3) request(url string) ([]byte, string, error) {
 }
 
 func (n Nexus3) response(req *http.Request) ([]byte, string, error) {
-	resp, err := http.DefaultClient.Do(req)
+	retryClient := retryablehttp.NewClient()
+	retryClient.RetryMax = 5
+	retryClient.Logger = nil
+	standardClient := retryClient.StandardClient()
+	resp, err := standardClient.Do(req)
 	if err != nil {
 		return nil, "", err
 	}
