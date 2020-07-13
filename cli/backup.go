@@ -259,7 +259,7 @@ func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
 				// unless the metadata.xml is opened first
 				if !(filepath.Ext(url) == ".md5" || filepath.Ext(url) == ".sha1") {
 					if err := n.downloadArtifact(downloadURL); err != nil {
-						return err
+						log.Error(err)
 					}
 				}
 			}
