@@ -11,6 +11,7 @@ require (
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/frankban/quicktest v1.4.1 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
+	github.com/hashicorp/go-retryablehttp v0.6.6
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
@@ -22,6 +23,7 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/viper v1.3.2
+	github.com/stretchr/testify v1.2.2
 	github.com/svenfuchs/jq v0.0.0-20180603193138-b038733a5990
 	github.com/thedevsaddam/gojsonq v2.2.0+incompatible
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
