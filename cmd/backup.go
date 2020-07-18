@@ -37,12 +37,17 @@ reside in a certain Nexus3 repository`,
 		enableDebug()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip}
-		if err := n.StoreArtifactsOnDisk(regex); err != nil {
+		dir, err := cli.TempDownloadDir()
+		if err != nil {
 			log.Fatal(err)
 		}
 
-		if err := n.CreateZip(); err != nil {
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip}
+		if err := n.StoreArtifactsOnDisk(dir, regex); err != nil {
+			log.Fatal(err)
+		}
+
+		if err := n.CreateZip(dir); err != nil {
 			log.Fatal(err)
 		}
 	},
