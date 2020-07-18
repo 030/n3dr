@@ -201,8 +201,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/3.6.4...HEAD
-[3.6.4]: https://github.com/030/n3dr/compare/3.6.3...3.6.4
+[Unreleased]: https://github.com/030/n3dr/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/030/n3dr/compare/3.6.3...4.0.0
 [3.6.3]: https://github.com/030/n3dr/compare/3.6.2...3.6.3
 [3.6.2]: https://github.com/030/n3dr/compare/3.6.1...3.6.2
 [3.6.1]: https://github.com/030/n3dr/compare/3.6.0...3.6.1
