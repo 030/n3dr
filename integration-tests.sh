@@ -70,11 +70,11 @@ backup(){
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 300
-        test_zip 144
+        test_zip 148
     else
     ls $DOWNLOAD_LOCATION
         count_downloads 400
-        test_zip 188
+        test_zip 192
     fi
 
     cleanup_downloads
@@ -114,10 +114,10 @@ repositories(){
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 600
-        test_zip 284
+        test_zip 292
     else
         count_downloads 800
-        test_zip 368
+        test_zip 380
     fi
 
     cleanup_downloads

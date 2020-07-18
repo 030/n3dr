@@ -30,6 +30,7 @@ const (
 	assetURI1   = "/service/rest/"
 	assetURI2   = "/assets?repository="
 	tokenErrMsg = "Token should be either a hexadecimal or \"null\" and not: "
+	tmpDir      = "/tmp/n3dr"
 )
 
 // Nexus3 contains the attributes that are used by several functions
@@ -43,7 +44,10 @@ type Nexus3 struct {
 }
 
 func TempDownloadDir() (string, error) {
-	dname, err := ioutil.TempDir("", "n3dr")
+	if err := os.MkdirAll(tmpDir, os.ModePerm); err != nil {
+		return "", nil
+	}
+	dname, err := ioutil.TempDir(tmpDir, "download")
 	if err != nil {
 		return "", err
 	}

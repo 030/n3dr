@@ -93,6 +93,13 @@ func shutdown() {
 			log.Fatal(err)
 		}
 	}
+
+	cleanupDirsSlice := []string{tmpDir, testDirHome}
+	for _, d := range cleanupDirsSlice {
+		if err := os.RemoveAll(d); err != nil {
+			log.Fatal(err)
+		}
+	}
 }
 
 func (n Nexus3) pong() bool {
