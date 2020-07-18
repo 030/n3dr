@@ -6,12 +6,10 @@
   [[ "$output" =~ $regex ]]
 }
 
-@test "invoking n3dr without password specification prints an error" {
-  echo 'n3drPass: admin123' > ${HOME}/.n3dr.yaml
-  sed -i "s|n3drPass|nhihidrPass|" ~/.n3dr.yaml
-  run go run main.go repositories -n http://localhost:9999 -u admin -b
+@test "invoking n3dr with unreachable URL exists after 6 attempts" {
+  run go run main.go repositories -n http://localhost:99999 -u admin -p INCORRECT_PASSWORD -b
   [ "$status" -eq 1 ]
   echo $output
-  regex='.*Empty password. Verify whether the .n3drPass..*has been defined in ~/.n3dr.yaml'
+  regex='.*http://localhost:99999/service/rest/v1/repositories giving up after 6 attempts'
   [[ "$output" =~ $regex ]]
 }
