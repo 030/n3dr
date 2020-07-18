@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/spf13/viper"
 	"io"
+	"io/ioutil"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -14,6 +14,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/spf13/viper"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/mholt/archiver"
@@ -24,11 +26,11 @@ import (
 )
 
 const (
-	downloadDir = "download"
 	pingURI     = "/service/metrics/ping"
 	assetURI1   = "/service/rest/"
 	assetURI2   = "/assets?repository="
 	tokenErrMsg = "Token should be either a hexadecimal or \"null\" and not: "
+	tmpDir      = "/tmp/n3dr"
 )
 
 // Nexus3 contains the attributes that are used by several functions
@@ -39,6 +41,18 @@ type Nexus3 struct {
 	Repository string
 	APIVersion string
 	ZIP        bool
+}
+
+func TempDownloadDir() (string, error) {
+	if err := os.MkdirAll(tmpDir, os.ModePerm); err != nil {
+		return "", nil
+	}
+	dname, err := ioutil.TempDir(tmpDir, "download")
+	if err != nil {
+		return "", err
+	}
+	log.Infof("Temp download dir name: '%v'", dname)
+	return dname, nil
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
@@ -123,6 +137,7 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 	}
 
 	log.Debug("Create artifact: '" + d + "/" + f + "'")
+
 	err := os.MkdirAll(d, os.ModePerm)
 	if err != nil {
 		return err
@@ -182,7 +197,7 @@ func (n Nexus3) artifactName(url string) (string, string, error) {
 	return d, f, nil
 }
 
-func (n Nexus3) downloadArtifact(downloadURL interface{}) error {
+func (n Nexus3) downloadArtifact(dir string, downloadURL interface{}) error {
 	url := fmt.Sprint(downloadURL.(map[string]interface{})["downloadUrl"])
 	md5sum := fmt.Sprint(downloadURL.(map[string]interface{})["md5"])
 	d, f, err := n.artifactName(url)
@@ -195,7 +210,7 @@ func (n Nexus3) downloadArtifact(downloadURL interface{}) error {
 		return err
 	}
 
-	if err := createArtifact(filepath.Join(downloadDir, n.Repository, d), f, bodyString, md5sum); err != nil {
+	if err := createArtifact(filepath.Join(dir, n.Repository, d), f, bodyString, md5sum); err != nil {
 		return err
 	}
 	return nil
@@ -236,7 +251,8 @@ func (n Nexus3) downloadURLs() ([]interface{}, error) {
 }
 
 // StoreArtifactsOnDisk downloads all artifacts from nexus and saves them on disk
-func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
+func (n Nexus3) StoreArtifactsOnDisk(dir, regex string) error {
+
 	urls, err := n.downloadURLs()
 	if err != nil {
 		return err
@@ -258,7 +274,7 @@ func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
 				// Exclude download of md5 and sha1 files as these are unavailable
 				// unless the metadata.xml is opened first
 				if !(filepath.Ext(url) == ".md5" || filepath.Ext(url) == ".sha1") {
-					if err := n.downloadArtifact(downloadURL); err != nil {
+					if err := n.downloadArtifact(dir, downloadURL); err != nil {
 						log.Error(err)
 					}
 				}
@@ -275,13 +291,15 @@ func (n Nexus3) StoreArtifactsOnDisk(regex string) error {
 }
 
 // CreateZip adds all artifacts to a ZIP archive
-func (n Nexus3) CreateZip() error {
+func (n Nexus3) CreateZip(dir string) error {
+	name := "n3dr-backup-" + time.Now().Format("01-02-2006T15:04:05") + ".zip"
 	if n.ZIP {
-		err := archiver.Archive([]string{downloadDir}, "n3dr-backup-"+time.Now().Format("01-02-2006")+".zip")
+		err := archiver.Archive([]string{dir}, name)
 		if err != nil {
 			return err
 		}
 	}
+	log.Infof("Zipfile: '%v' created", name)
 	return nil
 }
 
