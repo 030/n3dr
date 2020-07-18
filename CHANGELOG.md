@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-None
+### Fixed
+- Old n3dr references updated in README
+- Download folder should be cleaned to prevent pollution in backups of consecutive days
+
+## [3.6.3] - 2020-07-13
+### Fixed
+- Backup of repositories failed due to HTTP timeout of a single artifact
 
 ## [3.6.2] - 2020-07-08
 ### Added
@@ -185,7 +191,9 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/3.6.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/3.6.3...HEAD
+[3.6.3]: https://github.com/030/n3dr/compare/3.6.1...3.6.3
+[3.6.2]: https://github.com/030/n3dr/compare/3.6.1...3.6.2
 [3.6.1]: https://github.com/030/n3dr/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/030/n3dr/compare/3.5.1...3.6.0
 [3.5.1]: https://github.com/030/n3dr/compare/3.5.0...3.5.1
