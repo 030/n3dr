@@ -56,11 +56,9 @@ The aims of the n3dr tool are:
 snap install n3dr
 ```
 
-### MaxOS
+### MacOSX
 
-```bash
-brew install n3dr
-```
+Get the darwin artifact from the releases tab.
 
 ### Windows
 
@@ -92,7 +90,7 @@ In order to upload artifacts, additional privileges are required:
 ### Check the help menu
 
 ```
-user@computer:~/dev$ ./n3dr-linux -h
+user@computer:~/dev$ n3dr -h
 N3DR is a tool that is able to download all artifacts from
 a certain Nexus3 repository.
 
@@ -139,7 +137,7 @@ All artifacts from a repository will be stored in a download folder when
 the following command is run:
 
 ```
-./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases
+n3dr backup -u admin -n http://localhost:8081 -r maven-releases
 ```
 
 ### Backup all repositories
@@ -148,7 +146,7 @@ All artifacts from various repositories will be stored in a download
 folder when the following command is issued:
 
 ```
-./n3dr-linux repositories -u admin -n http://localhost:8081 -b
+n3dr repositories -u admin -n http://localhost:8081 -b
 ```
 
 Note: a new folder will be created for every repository:
@@ -163,14 +161,14 @@ one would like to download all artifacts from 'some/group42' then one could do
 that as follows:
 
 ```
-./n3dr-linux backup -u admin -n http://localhost:8081 -r maven-releases -x 'some/group42'
+n3dr backup -u admin -n http://localhost:8081 -r maven-releases -x 'some/group42'
 ```
 
 If one would like to deploy is while download from all repositories then use
 the `-x` option as well:
 
 ```
-./n3dr-linux repositories -u admin -n http://localhost:8081 -b -x 'some/group42'
+n3dr repositories -u admin -n http://localhost:8081 -b -x 'some/group42'
 ```
 
 ## Add all downloaded archives to a ZIP archive
@@ -183,7 +181,7 @@ It is possible to upload all JARs that reside in a folder by
 running the following command:
 
 ```
-./n3dr-linux upload -u admin -n http://localhost:8081 -r maven-public
+n3dr upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
 ### "Clone" a Nexus3 repository
