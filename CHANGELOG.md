@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [4.1.0] - 2020-07-19
+### Added
+- Backup by anonymous users
+
+### Fixed
+- Incorrect version in snapcraft
+
 ## [4.0.0] - 2020-07-18
 ### Added
 - Log the name of the n3dr backup zip
