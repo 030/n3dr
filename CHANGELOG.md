@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
-## [3.6.4] - 2020-07-18
+## [4.0.0] - 2020-07-18
 ### Added
 - Log the name of the n3dr backup zip
 
 ### Changed
 - Added hour, minute and second to backup zip to prevent collision with previous backup zip
+- Increased code coverage
 
 ### Fixed
 - Old n3dr references updated in README
