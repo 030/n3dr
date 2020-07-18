@@ -13,10 +13,10 @@ import (
 
 func (n Nexus3) validate() {
 	if n.User == "" {
-		log.Warn("Empty user. Verify whether the the subcommand is specified or anonymous mode is used")
+		log.Debug("Empty user. Verify whether the the subcommand is specified or anonymous mode is used")
 	}
 	if n.Pass == "" {
-		log.Warn("Empty password. Verify whether the 'n3drPass' has been defined in ~/.n3dr.yaml, the subcommand is specified or anonymous mode is used")
+		log.Debug("Empty password. Verify whether the 'n3drPass' has been defined in ~/.n3dr.yaml, the subcommand is specified or anonymous mode is used")
 	}
 }
 
