@@ -67,9 +67,6 @@ func init() {
 	if err := rootCmd.MarkPersistentFlagRequired("n3drURL"); err != nil {
 		log.Fatal(err)
 	}
-	if err := rootCmd.MarkPersistentFlagRequired("n3drUser"); err != nil {
-		log.Fatal(err)
-	}
 }
 
 // initConfig reads in config file and ENV variables if set.

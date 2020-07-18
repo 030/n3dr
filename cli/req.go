@@ -1,28 +1,28 @@
 package cli
 
 import (
-	"errors"
 	"fmt"
-	"github.com/hashicorp/go-retryablehttp"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 
+	"github.com/hashicorp/go-retryablehttp"
+
 	log "github.com/sirupsen/logrus"
 )
 
-func (n Nexus3) validatePassword() error {
-	if n.Pass == "" {
-		return errors.New("Empty password. Verify whether the 'n3drPass' has been defined in ~/.n3dr.yaml")
+func (n Nexus3) validate() {
+	if n.User == "" {
+		log.Debug("Empty user. Verify whether the the subcommand is specified or anonymous mode is used")
 	}
-	return nil
+	if n.Pass == "" {
+		log.Debug("Empty password. Verify whether the 'n3drPass' has been defined in ~/.n3dr.yaml, the subcommand is specified or anonymous mode is used")
+	}
 }
 
 func (n Nexus3) request(url string) ([]byte, string, error) {
-	err := n.validatePassword()
-	if err != nil {
-		return nil, "", err
-	}
+	n.validate()
+
 	log.WithFields(log.Fields{"URL": url, "User": n.User}).Debug("URL Request")
 
 	req, err := http.NewRequest("GET", url, nil)

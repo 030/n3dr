@@ -1,6 +1,6 @@
 name: n3dr # you probably want to 'snapcraft register <name>'
 base: core18 # the base snap is the execution environment for this snap
-version: '3.6.3' # just for humans, typically '1.2+git' or '1.3.2'
+version: '4.1.0' # just for humans, typically '1.2+git' or '1.3.2'
 summary: Nexus3 Disaster Recovery # 79 char long summary
 description: |
   Download all artifacts at once or migrate automatically from Nexus to Nexus.
@@ -28,7 +28,7 @@ parts:
     source: .
     go-importpath: github.com/030/n3dr
     override-build: |
-      GO111MODULE=on CGO_ENABLED=0 go build -ldflags "-X n3dr/cmd.Version=3.6.2" -o $SNAPCRAFT_PART_INSTALL/n3dr
+      GO111MODULE=on CGO_ENABLED=0 go build -ldflags "-X n3dr/cmd.Version=${SNAPCRAFT_PROJECT_VERSION}" -o $SNAPCRAFT_PART_INSTALL/n3dr
       $SNAPCRAFT_PART_INSTALL/n3dr --version
     stage:
     - "n3dr"
