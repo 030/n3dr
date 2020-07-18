@@ -64,10 +64,7 @@ upload(){
     echo
 }
 
-backup(){
-    echo "Testing backup..."
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
-
+backupHelper(){
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 300
         test_zip 148
@@ -78,6 +75,18 @@ backup(){
     fi
 
     cleanup_downloads
+}
+
+anonymous(){
+    echo "Testing backup by anonymous user..."
+    $TOOL backup -n http://localhost:9999 -r maven-releases -v "${NEXUS_API_VERSION}" -z
+    backupHelper
+}
+
+backup(){
+    echo "Testing backup..."
+    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
+    backupHelper
 }
 
 regex(){
@@ -158,6 +167,7 @@ main(){
     password
     files
     upload
+    anonymous
     backup
     repositories
     regex
