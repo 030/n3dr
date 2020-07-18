@@ -79,7 +79,7 @@ backupHelper(){
 
 anonymous(){
     echo "Testing backup by anonymous user..."
-    $TOOL backup -n http://localhost:9999 -r maven-releases -v "${NEXUS_API_VERSION}" -z
+    $TOOL backup -n http://localhost:9999 -r maven-releases -v "${NEXUS_API_VERSION}" -z -d
     backupHelper
 }
 
