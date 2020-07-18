@@ -116,6 +116,11 @@ Flags:
 Use "n3dr [command] --help" for more information about a command.
 ```
 
+## Anonymous
+
+In order to download as a anonymous user, one has to omit the `n3drUser` and
+`n3drPass` subcommands.
+
 ## Store the password in a read-only file
 
 Define the password in `~/.n3dr.yaml`:
