@@ -17,6 +17,12 @@ import (
 	mp "github.com/030/go-multipart/utils"
 )
 
+const (
+	testDirHome     = "/tmp/n3drtest"
+	testDirDownload = "/download"
+	testDirUpload   = "/testFiles"
+)
+
 // See https://stackoverflow.com/a/34102842/2777965
 func TestMain(m *testing.M) {
 	setup()
@@ -24,10 +30,6 @@ func TestMain(m *testing.M) {
 	shutdown()
 	os.Exit(code)
 }
-
-const (
-	testFilesDir = "testFiles"
-)
 
 var n = Nexus3{
 	URL:        "http://localhost:9999",
@@ -72,9 +74,9 @@ func shutdown() {
 		log.Fatal(err, string(stdoutStderr))
 	}
 
-	testFiles := filepath.Join(testFilesDir, "/file*")
-	testDownloads := filepath.Join("download", n.Repository, "file*", "file*", "*", "file*")
-	testDownloadsMetadata := filepath.Join("download", n.Repository, "file*", "file*", "maven-metadata*")
+	testFiles := filepath.Join(testDirHome, testDirUpload, "/file*")
+	testDownloads := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "*", "file*")
+	testDownloadsMetadata := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "maven-metadata*")
 	cleanupFilesSlice := []string{testFiles, testDownloads, testDownloadsMetadata}
 	for _, f := range cleanupFilesSlice {
 		err := cleanupFiles(f)
@@ -138,9 +140,9 @@ func createJAR(d string, f string) {
 func (n Nexus3) createArtifactsAndSubmit(i int) {
 	number := strconv.Itoa(i)
 	f := "file" + number
-	createPOM(testFilesDir, f, number)
-	createJAR(testFilesDir, f)
-	n.submitArtifact(testFilesDir, f)
+	createPOM(testDirHome+"/"+testDirUpload, f, number)
+	createJAR(testDirHome+"/"+testDirUpload, f)
+	n.submitArtifact(testDirHome+"/"+testDirUpload, f)
 }
 
 func cleanupFiles(re string) error {

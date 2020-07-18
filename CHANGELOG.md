@@ -5,9 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+None
+
+## [3.6.4] - 2020-07-18
 ### Fixed
 - Old n3dr references updated in README
-- Download folder should be cleaned to prevent pollution in backups of consecutive days
+- Download folder should be cleaned to prevent pollution in consecutive backups
 
 ## [3.6.3] - 2020-07-13
 ### Fixed
