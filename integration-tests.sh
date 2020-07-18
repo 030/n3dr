@@ -4,6 +4,8 @@ NEXUS_VERSION="${1:-3.21.1}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
 
+readonly DOWNLOAD_LOCATION=/tmp/n3dr*
+
 validate(){
     if [ -z "${TOOL}" ]; then
         echo "No deliverable defined. Assuming that 'go run main.go' 
@@ -64,15 +66,15 @@ upload(){
 
 backup(){
     echo "Testing backup..."
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}"
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 300
-        test_zip 140
+        test_zip 148
     else
+    ls $DOWNLOAD_LOCATION
         count_downloads 400
-        test_zip 180
+        test_zip 192
     fi
 
     cleanup_downloads
@@ -80,7 +82,6 @@ backup(){
 
 regex(){
     echo "Testing backup regex..."
-    $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42'
     $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 3
@@ -91,9 +92,7 @@ regex(){
     fi
     cleanup_downloads
 
-
     echo -e "\nTesting repositories regex..."
-    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42'
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 6
@@ -111,15 +110,14 @@ repositories(){
     echo "Testing repositories..."
     $cmd -a | grep maven-releases
     $cmd -c | grep 7
-    $cmd -b
     $cmd -b -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
         count_downloads 600
-        test_zip 272
+        test_zip 292
     else
         count_downloads 800
-        test_zip 356
+        test_zip 380
     fi
 
     cleanup_downloads
@@ -132,7 +130,7 @@ cleanup(){
 
 count_downloads(){
     local actual
-    actual=$(find download -type f | wc -l)
+    actual=$(find $DOWNLOAD_LOCATION -type f | wc -l)
     echo "Expected: ${1}"
     echo "Actual: ${actual}"
     echo "${actual}" | grep "${1}"
@@ -148,8 +146,8 @@ test_zip(){
 
 cleanup_downloads(){
     rm -rf maven-releases
+    rm -rf $DOWNLOAD_LOCATION
     rm -f n3dr-backup-*zip
-    rm -rf download
 }
 
 main(){
