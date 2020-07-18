@@ -11,7 +11,7 @@ import (
 const (
 	errMsg         = "Not equal. Expected: %d. Actual: %d."
 	errMsgTxt      = "Incorrect. Expected: %v. Actual: %v"
-	testFileJar100 = "download/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
+	testFileJar100 = testDirHome + testDirDownload + "/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
 )
 
 func TestContinuationTokenHash(t *testing.T) {
@@ -50,29 +50,28 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	if err := n.StoreArtifactsOnDisk(".*"); err != nil {
+	if err := n.StoreArtifactsOnDisk(testDirHome+testDirDownload, ".*"); err != nil {
 		log.Fatal(err)
 	}
 
-	actual, _ := allFiles(downloadDir)
+	actual, _ := allFiles(testDirHome + testDirDownload)
 
 	actualFileNumber := len(actual)
-	expected := 10 // +1 due to .gitkeep
+	expected := 9
 	if expected != actualFileNumber {
 		t.Errorf(errMsg, expected, actualFileNumber)
 	}
 
 	expectedDownloads := []string{
-		"download/.gitkeep",
 		testFileJar100,
-		"download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom",
-		"download/maven-releases/file1/file1/maven-metadata.xml",
-		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar",
-		"download/maven-releases/file2/file2/1.0.0/file2-1.0.0.pom",
-		"download/maven-releases/file2/file2/maven-metadata.xml",
-		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.jar",
-		"download/maven-releases/file3/file3/1.0.0/file3-1.0.0.pom",
-		"download/maven-releases/file3/file3/maven-metadata.xml",
+		"/tmp/n3drtest/download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom",
+		"/tmp/n3drtest/download/maven-releases/file1/file1/maven-metadata.xml",
+		"/tmp/n3drtest/download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar",
+		"/tmp/n3drtest/download/maven-releases/file2/file2/1.0.0/file2-1.0.0.pom",
+		"/tmp/n3drtest/download/maven-releases/file2/file2/maven-metadata.xml",
+		"/tmp/n3drtest/download/maven-releases/file3/file3/1.0.0/file3-1.0.0.jar",
+		"/tmp/n3drtest/download/maven-releases/file3/file3/1.0.0/file3-1.0.0.pom",
+		"/tmp/n3drtest/download/maven-releases/file3/file3/maven-metadata.xml",
 	}
 	for _, f := range expectedDownloads {
 		if !utils.FileExists(f) {
@@ -84,6 +83,7 @@ func TestStoreArtifactsOnDisk(t *testing.T) {
 		t.Errorf("Slice not identical. Expected %s, but was %s.", expectedDownloads, actual)
 	}
 }
+
 func TestDownloadURL(t *testing.T) {
 	_, actualError := n.downloadURL("some-token")
 	expectedError := "ResponseCode: '406' and Message '406 Not Acceptable' for URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token"
@@ -128,8 +128,8 @@ func TestArtifactNameContainingRepositoryName(t *testing.T) {
 }
 
 func TestCreateArtifact(t *testing.T) {
-	actualErrorFile := createArtifact("testFiles", "file100/file100", "some-content", "ba1f2511fc30423bdbb183fe33f3dd0f")
-	expectedErrorFile := "open testFiles/file100/file100: no such file or directory"
+	actualErrorFile := createArtifact(testDirHome+testDirUpload, "file100/file100", "some-content", "ba1f2511fc30423bdbb183fe33f3dd0f")
+	expectedErrorFile := "open " + testDirHome + testDirUpload + "/file100/file100: no such file or directory"
 
 	if actualErrorFile.Error() != expectedErrorFile {
 		t.Errorf(errMsgTxt, expectedErrorFile, actualErrorFile)
@@ -139,7 +139,7 @@ func TestCreateArtifact(t *testing.T) {
 func TestDownloadArtifact(t *testing.T) {
 	url := make(map[string]interface{})
 	url["downloadUrl"] = "http://releasesoftwaremoreoften.com"
-	actualError := n.downloadArtifact(url)
+	actualError := n.downloadArtifact(testDirDownload, url)
 	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
 
 	if actualError.Error() != expectedError {
@@ -148,9 +148,9 @@ func TestDownloadArtifact(t *testing.T) {
 }
 
 func TestHashFileMD5(t *testing.T) {
-	file := "file1/file1/1.0.0/file1-1.0.0.jar"
+	file := testDirHome + testDirDownload + "/file1/file1/1.0.0/file1-1.0.0.jar"
 	_, actualError := HashFileMD5(file)
-	expectedError := "open file1/file1/1.0.0/file1-1.0.0.jar: no such file or directory"
+	expectedError := "open " + testDirHome + testDirDownload + "/file1/file1/1.0.0/file1-1.0.0.jar: no such file or directory"
 
 	if actualError.Error() != expectedError {
 		t.Errorf(errMsgTxt, expectedError, actualError)
