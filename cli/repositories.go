@@ -7,7 +7,7 @@ import (
 )
 
 func repositoryNamesJSON(json string) interface{} {
-	jq := gojsonq.New().JSONString(json)
+	jq := gojsonq.New().JSONString(json).WhereNotEqual("type", "group")
 	jq.SortBy("name", "asc")
 	name := jq.Pluck("name")
 	return name
