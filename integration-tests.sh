@@ -104,11 +104,11 @@ regex(){
     echo -e "\nTesting repositories regex..."
     $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 6
+        count_downloads 3
         test_zip 4
     else
-        count_downloads 8
-        test_zip 8
+        count_downloads 4
+        test_zip 4
     fi
     cleanup_downloads
 }
@@ -118,15 +118,15 @@ repositories(){
 
     echo "Testing repositories..."
     $cmd -a | grep maven-releases
-    $cmd -c | grep 7
+    $cmd -c | grep 5
     $cmd -b -z
 
     if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-        count_downloads 600
-        test_zip 292
+        count_downloads 300
+        test_zip 148
     else
-        count_downloads 800
-        test_zip 380
+        count_downloads 400
+        test_zip 192
     fi
 
     cleanup_downloads
