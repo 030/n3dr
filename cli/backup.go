@@ -292,7 +292,7 @@ func (n Nexus3) StoreArtifactsOnDisk(dir, regex string) error {
 
 // CreateZip adds all artifacts to a ZIP archive
 func (n Nexus3) CreateZip(dir string) error {
-	name := "n3dr-backup-" + time.Now().Format("01-02-2006T15:04:05") + ".zip"
+	name := "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
 	if n.ZIP {
 		err := archiver.Archive([]string{dir}, name)
 		if err != nil {
