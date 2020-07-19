@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [4.1.1] - 2020-07-19
+### Fixed
+- Semi colons in zip file name not interpreted on some machines
+
 ## [4.1.0] - 2020-07-19
 ### Added
 - Backup by anonymous users
@@ -208,7 +212,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/4.1.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/4.1.1...HEAD
+[4.1.1]: https://github.com/030/n3dr/compare/4.1.0...4.1.1
 [4.1.0]: https://github.com/030/n3dr/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/030/n3dr/compare/3.6.3...4.0.0
 [3.6.3]: https://github.com/030/n3dr/compare/3.6.2...3.6.3
