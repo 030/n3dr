@@ -18,7 +18,6 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/mholt/archiver"
 	log "github.com/sirupsen/logrus"
 	"github.com/svenfuchs/jq"
 	"github.com/thedevsaddam/gojsonq"
@@ -32,16 +31,6 @@ const (
 	tokenErrMsg = "Token should be either a hexadecimal or \"null\" and not: "
 	tmpDir      = "/tmp/n3dr"
 )
-
-// Nexus3 contains the attributes that are used by several functions
-type Nexus3 struct {
-	URL        string
-	User       string
-	Pass       string
-	Repository string
-	APIVersion string
-	ZIP        bool
-}
 
 func TempDownloadDir() (string, error) {
 	if err := os.MkdirAll(tmpDir, os.ModePerm); err != nil {
@@ -147,7 +136,7 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 
 	md5sumLocal := ""
 	if fileExists(filename) {
-		md5sumLocal, err = HashFileMD5(filename)
+		md5sumLocal, err = hashFileMD5(filename)
 		if err != nil {
 			return err
 		}
@@ -290,21 +279,8 @@ func (n Nexus3) StoreArtifactsOnDisk(dir, regex string) error {
 	return nil
 }
 
-// CreateZip adds all artifacts to a ZIP archive
-func (n Nexus3) CreateZip(dir string) error {
-	name := "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
-	if n.ZIP {
-		err := archiver.Archive([]string{dir}, name)
-		if err != nil {
-			return err
-		}
-	}
-	log.Infof("Zipfile: '%v' created", name)
-	return nil
-}
-
 // HashFileMD5 returns MD5 checksum of a file
-func HashFileMD5(filePath string) (string, error) {
+func hashFileMD5(filePath string) (string, error) {
 	var returnMD5String string
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -318,7 +294,6 @@ func HashFileMD5(filePath string) (string, error) {
 	hashInBytes := hash.Sum(nil)[:16]
 	returnMD5String = hex.EncodeToString(hashInBytes)
 	return returnMD5String, nil
-
 }
 
 func fileExists(filename string) bool {

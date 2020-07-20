@@ -16,17 +16,15 @@ func TestRepositoryNamesJSON(t *testing.T) {
 	}
 }
 
-func TestCountRepositories(t *testing.T) {
+func TestHappyFlow(t *testing.T) {
 	assert.Nil(t, n.CountRepositories())
-	assert.EqualError(t, nErrAuth.CountRepositories(), testNexusAuthError)
-}
-
-func TestRepositoryNames(t *testing.T) {
 	assert.Nil(t, n.RepositoryNames())
-	assert.EqualError(t, nErrAuth.RepositoryNames(), testNexusAuthError)
-}
-
-func TestDownloads(t *testing.T) {
 	assert.Nil(t, n.Downloads(".*"))
-	assert.EqualError(t, nErrAuth.Downloads(".*"), testNexusAuthError)
+}
+func TestUnhappyFlow(t *testing.T) {
+	n.Pass = "incorrectPass"
+	assert.EqualError(t, n.CountRepositories(), testNexusAuthError)
+	assert.EqualError(t, n.RepositoryNames(), testNexusAuthError)
+	assert.EqualError(t, n.Downloads(".*"), testNexusAuthError)
+	n.Pass = "admin123"
 }

@@ -147,24 +147,6 @@ func TestDownloadArtifact(t *testing.T) {
 	}
 }
 
-func TestHashFileMD5(t *testing.T) {
-	file := testDirHome + testDirDownload + "/file1/file1/1.0.0/file1-1.0.0.jar"
-	_, actualError := HashFileMD5(file)
-	expectedError := "open " + testDirHome + testDirDownload + "/file1/file1/1.0.0/file1-1.0.0.jar: no such file or directory"
-
-	if actualError.Error() != expectedError {
-		t.Errorf(errMsgTxt, expectedError, actualError)
-	}
-
-	file = testFileJar100
-	expectedResult := "ad60407c083b4ecc372614b8fcd9f305"
-	result, _ := HashFileMD5(file)
-
-	if result != expectedResult {
-		t.Errorf(errMsgTxt, expectedResult, result)
-	}
-}
-
 func TestFileExists(t *testing.T) {
 	file := "file1/file1/1.0.0/file1-1.0.0.jar"
 	result := fileExists(file)
