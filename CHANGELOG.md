@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [4.1.3] - 2020-07-20
+### Added
+- Overwrite default zipFileName
+
 ## [4.1.2] - 2020-07-19
 ### Fixed
 - Duplicated downloads issue resolved by excluding backup of groups
@@ -216,7 +220,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/4.1.2...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/4.1.3...HEAD
+[4.1.3]: https://github.com/030/n3dr/compare/4.1.2...4.1.3
 [4.1.2]: https://github.com/030/n3dr/compare/4.1.1...4.1.2
 [4.1.1]: https://github.com/030/n3dr/compare/4.1.0...4.1.1
 [4.1.0]: https://github.com/030/n3dr/compare/4.0.0...4.1.0

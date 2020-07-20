@@ -176,9 +176,12 @@ the `-x` option as well:
 n3dr repositories -u admin -n http://localhost:8081 -b -x 'some/group42'
 ```
 
-## Add all downloaded archives to a ZIP archive
+### Add all downloaded archives to a ZIP archive
 
 In order to add all archives to a zip archive, one has to use the --zip or -z flag.
+
+If one would like to overwrite the default zip file name, then one has to use
+the `-i` option. Note: the extension '.zip' is obliged.
 
 ### Upload all artifacts to a certain repository
 
