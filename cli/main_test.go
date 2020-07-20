@@ -18,7 +18,6 @@ import (
 )
 
 const (
-	testDirHome        = "/tmp/n3drtest"
 	testDirDownload    = "/download"
 	testDirUpload      = "/testFiles"
 	testNexusAuthError = "ResponseCode: '401' and Message '401 Unauthorized' for URL: http://localhost:9999/service/rest/v1/repositories"
@@ -36,14 +35,6 @@ var n = Nexus3{
 	URL:        "http://localhost:9999",
 	User:       "admin",
 	Pass:       "admin123",
-	Repository: "maven-releases",
-	APIVersion: "v1",
-}
-
-var nErrAuth = Nexus3{
-	URL:        "http://localhost:9999",
-	User:       "admin",
-	Pass:       "incorrectPass",
 	Repository: "maven-releases",
 	APIVersion: "v1",
 }
