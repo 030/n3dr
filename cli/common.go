@@ -5,11 +5,24 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
+	"github.com/mholt/archiver"
 
 	log "github.com/sirupsen/logrus"
 )
+
+// Nexus3 contains the attributes that are used by several functions
+type Nexus3 struct {
+	URL        string
+	User       string
+	Pass       string
+	Repository string
+	APIVersion string
+	ZIP        bool
+	ZipName    string
+}
 
 func (n Nexus3) validate() {
 	if n.User == "" {
@@ -77,4 +90,19 @@ func (n Nexus3) responseBodyString(resp *http.Response) ([]byte, string, error) 
 	}
 
 	return bodyBytes, bodyString, nil
+}
+
+// CreateZip adds all artifacts to a ZIP archive
+func (n Nexus3) CreateZip(dir string) error {
+	if n.ZIP {
+		if n.ZipName == "" {
+			n.ZipName = "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
+		}
+		err := archiver.Archive([]string{dir}, n.ZipName)
+		if err != nil {
+			return err
+		}
+		log.Infof("Zipfile: '%v' created", n.ZipName)
+	}
+	return nil
 }
