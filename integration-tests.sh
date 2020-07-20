@@ -132,6 +132,13 @@ repositories(){
     cleanup_downloads
 }
 
+zipName(){
+    echo "Testing zipName..."
+    $TOOL backup -n=http://localhost:9999 -u=admin -p=$PASSWORD -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
+    $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b -z -i=helloZipRepositoriesFile.zip
+    ls helloZip* | wc -l | grep 2
+}
+
 cleanup(){
     cleanup_downloads
     docker stop nexus
@@ -157,6 +164,7 @@ cleanup_downloads(){
     rm -rf maven-releases
     rm -rf $DOWNLOAD_LOCATION
     rm -f n3dr-backup-*zip
+    rm -f helloZip*zip
 }
 
 main(){
@@ -171,6 +179,7 @@ main(){
     backup
     repositories
     regex
+    zipName
     bats --tap tests.bats
 }
 

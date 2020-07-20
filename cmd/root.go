@@ -1,17 +1,3 @@
-// Copyright © 2019 NAME HERE <EMAIL ADDRESS>
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package cmd
 
 import (
@@ -27,8 +13,8 @@ import (
 )
 
 var (
-	apiVersion, cfgFile, n3drRepo, n3drURL, n3drUser, Version string
-	debug, zip, insecureSkipVerify                            bool
+	apiVersion, cfgFile, n3drRepo, n3drURL, n3drUser, Version, zipName string
+	debug, zip, insecureSkipVerify                                     bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -57,6 +43,7 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "enable debug logging")
 	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
+	rootCmd.PersistentFlags().StringVarP(&zipName, "zipName", "i", "", "the name of the zip file")
 	rootCmd.PersistentFlags().BoolVar(&insecureSkipVerify, "insecureSkipVerify", false, "Skip repository certificate check")
 
 	rootCmd.PersistentFlags().StringP("n3drPass", "p", "", "nexus3 password")
