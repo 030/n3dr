@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -98,11 +99,16 @@ func (n Nexus3) CreateZip(dir string) error {
 		if n.ZipName == "" {
 			n.ZipName = "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
 		}
-		err := archiver.Archive([]string{dir}, n.ZipName)
+		cwd, err := os.Getwd()
 		if err != nil {
 			return err
 		}
-		log.Infof("Zipfile: '%v' created", n.ZipName)
+		log.Warnf("Trying to create a zip file in: '%v'. Note that this could result in a 'permission denied' issue if N3DR has been installed using snap and is run in a different directory than your own home folder.", cwd)
+		err = archiver.Archive([]string{dir}, n.ZipName)
+		if err != nil {
+			return err
+		}
+		log.Infof("Zipfile: '%v' created in '%v'", n.ZipName, cwd)
 	}
 	return nil
 }

@@ -56,6 +56,10 @@ The aims of the n3dr tool are:
 snap install n3dr
 ```
 
+Note: one has to run n3dr from the home folder if this installation mode is
+chosen. Otherwise a permission denied issue could occur, while creating the
+backup zip.
+
 ### MacOSX
 
 Get the darwin artifact from the releases tab.
