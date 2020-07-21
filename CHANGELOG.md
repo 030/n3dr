@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 None
 
 ## [4.1.4] - 2020-07-21
-### Fixed
-- Permission denied issue when creating backup zip in subdirectory
+### Added
+- Warning that explains permission denied issue when running N3DR that was installed using snap
 
 ## [4.1.3] - 2020-07-20
 ### Added
