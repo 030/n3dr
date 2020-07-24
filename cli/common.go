@@ -14,6 +14,18 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const projectName = "n3dr"
+
+const (
+	CfgFileExt     = "yml"
+	HiddenN3DR     = "." + projectName
+	DefaultCfgFile = "config"
+)
+
+const (
+	DefaultCfgFileWithExt = DefaultCfgFile + "." + CfgFileExt
+)
+
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
 	URL        string
