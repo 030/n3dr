@@ -122,23 +122,26 @@ Use "n3dr [command] --help" for more information about a command.
 
 ## Anonymous
 
-In order to download as a anonymous user, one has to omit the `n3drUser` and
-`n3drPass` subcommands.
+In order to download as a anonymous user, one has to use the `--anonymous`
+option.
 
 ## Store the password in a read-only file
 
-Define the password in `~/.n3dr.yaml`:
+Define the password in `~/.n3dr/config.yml`:
 
 ```
 ---
 n3drPass: admin123
 ```
 
-and set the permissions to 400 by issuing:
+and set the permissions to read-write by issuing:
 
 ```
-chmod 400 ~/.n3dr.yaml
+chmod 0600 ~/.n3dr/config.yml
 ```
+
+Note: other variables like `n3drURL` and `n3drUser` could also be added to the
+config file and one could use `--config` to overwrite the default config path.
 
 ### Backup artifacts from a certain repository
 
@@ -215,12 +218,12 @@ n3dr upload -u <new-target-nexus3-user> -n <new-target-nexus3-server-url> \
 `n3dr` supports backing up to [OCI Object Storage](https://www.oracle.com/cloud/storage/object-storage.html).
 To enable this option you need to
 - Configure OCI environment and secrets locally: https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm
-- Add following options to `~/.n3dr.yaml`:
+- Add following options to `~/.n3dr/config.yml`:
 ```
 ociBucket: nexus_dev_archives
 ```
 
-If you want to remove local copies (after object has been uploaded) add following to `~/.n3dr.yaml`:
+If you want to remove local copies (after object has been uploaded) add following to `~/.n3dr/config.yml`:
 ```
 removeLocalFile: true
 ```

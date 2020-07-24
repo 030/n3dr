@@ -22,6 +22,7 @@ require (
 	github.com/pierrec/lz4 v2.2.6+incompatible // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/cobra v0.0.3
+	github.com/spf13/jwalterweatherman v1.0.0
 	github.com/spf13/viper v1.3.2
 	github.com/stretchr/testify v1.2.2
 	github.com/svenfuchs/jq v0.0.0-20180603193138-b038733a5990
