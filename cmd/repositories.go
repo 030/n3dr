@@ -2,11 +2,9 @@ package cmd
 
 import (
 	"n3dr/cli"
-	"os"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var (
@@ -21,21 +19,14 @@ var repositoriesCmd = &cobra.Command{
 	Short: "Count the number of repositories or return their names",
 	Long: `Count the number of repositories, count the total or
 download artifacts from all repositories`,
-	PreRun: func(cmd *cobra.Command, args []string) {
-		if err := viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass")); err != nil {
-			log.Fatal(err)
-		}
-		enableDebug()
-	},
 	Run: func(cmd *cobra.Command, args []string) {
 		if !(names || count || backup) {
 			if err := cmd.Help(); err != nil {
 				log.Fatal(err)
 			}
-			os.Exit(0)
+			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		pw := viper.GetString("n3drPass")
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: pw, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
 		if names {
 			if err := n.RepositoryNames(); err != nil {
 				log.Fatal(err)
@@ -57,9 +48,10 @@ download artifacts from all repositories`,
 }
 
 func init() {
-	rootCmd.AddCommand(repositoriesCmd)
 	repositoriesCmd.Flags().BoolVarP(&names, "names", "a", false, "print all repository names")
 	repositoriesCmd.Flags().BoolVarP(&count, "count", "c", false, "count the number of repositories")
 	repositoriesCmd.Flags().BoolVarP(&backup, "backup", "b", false, "backup artifacts from all repositories")
 	repositoriesCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
+
+	rootCmd.AddCommand(repositoriesCmd)
 }
