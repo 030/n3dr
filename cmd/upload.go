@@ -5,7 +5,6 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // uploadCmd represents the upload command
@@ -14,15 +13,8 @@ var uploadCmd = &cobra.Command{
 	Short: "Upload all artifacts to a specific Nexus3 repository",
 	Long: `Use this command in order to upload all artifacts to
 a specific Nexus3 repository, e.g. maven-releases`,
-	PreRun: func(cmd *cobra.Command, args []string) {
-		if err := viper.BindPFlag("n3drPass", rootCmd.Flags().Lookup("n3drPass")); err != nil {
-			log.Fatal(err)
-		}
-
-		enableDebug()
-	},
 	Run: func(cmd *cobra.Command, args []string) {
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: viper.GetString("n3drPass"), Repository: n3drRepo, APIVersion: apiVersion}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: n3drRepo, APIVersion: apiVersion}
 		err := n.Upload()
 		if err != nil {
 			log.Fatal(err)

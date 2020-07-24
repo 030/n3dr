@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [5.0.0] - 2020-07-24
+### Added
+- `--config` option to override default config path
+- Lookup of `n3drUser` and `n3drURL` in config file. This means that these
+  subcommands could be omitted when running n3dr.
+
+### Changed
+- Default config changed from `~/.n3dr.yaml` to `~/.n3dr/config.yml`. Note that
+  the extension has been changed as well.
+- Use the `--anonymous` subcommand to backup artifacts anonymously
+
+### Deleted
+- Superfluous viper lookup var calls on each command level by looking it up
+  once on root level
+
+### Fixed
+- Unclarity regarding what subcommand should at least be used in conjunction
+  with `repositories`
+
 ## [4.1.4] - 2020-07-21
 ### Added
 - Warning that explains permission denied issue when running N3DR that was installed using snap
@@ -224,7 +243,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/4.1.4...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.0.0...HEAD
+[5.0.0]: https://github.com/030/n3dr/compare/4.1.4...5.0.0
 [4.1.4]: https://github.com/030/n3dr/compare/4.1.3...4.1.4
 [4.1.3]: https://github.com/030/n3dr/compare/4.1.2...4.1.3
 [4.1.2]: https://github.com/030/n3dr/compare/4.1.1...4.1.2
