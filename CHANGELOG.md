@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [5.0.1] - 2020-07-27
+### Added
+- Select multiple repositories for backup added by [@vsoloviov]
+
 ## [5.0.0] - 2020-07-24
 ### Added
 - `--config` option to override default config path
@@ -243,7 +247,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.0.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.0.1...HEAD
+[5.0.1]: https://github.com/030/n3dr/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/030/n3dr/compare/4.1.4...5.0.0
 [4.1.4]: https://github.com/030/n3dr/compare/4.1.3...4.1.4
 [4.1.3]: https://github.com/030/n3dr/compare/4.1.2...4.1.3
