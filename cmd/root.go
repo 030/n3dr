@@ -16,8 +16,8 @@ import (
 )
 
 var (
-	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName string
-	anonymous, debug, zip, insecureSkipVerify                                    bool
+	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName string
+	anonymous, debug, zip, insecureSkipVerify                                                     bool
 )
 
 var rootCmd = &cobra.Command{
@@ -46,6 +46,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&n3drPass, "n3drPass", "p", "", "nexus3 password")
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
+	rootCmd.PersistentFlags().StringVar(&downloadDirName, "directory-prefix", "", "directory to store downloaded artifacts")
 	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
 	rootCmd.PersistentFlags().BoolVar(&anonymous, "anonymous", false, "Skip authentication")
 }
