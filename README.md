@@ -152,6 +152,15 @@ the following command is run:
 n3dr backup -u admin -n http://localhost:8081 -r maven-releases
 ```
 
+### Backup artifacts from a repositories list
+
+All artifacts from a repositories list will be stored in a download folder when
+the following command is run:
+
+```
+n3dr backup -u admin -n http://localhost:8081 -r maven-releases,maven-private
+```
+
 ### Backup all repositories
 
 All artifacts from various repositories will be stored in a download
