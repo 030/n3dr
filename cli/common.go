@@ -28,13 +28,14 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL        string
-	User       string
-	Pass       string
-	Repository string
-	APIVersion string
-	ZIP        bool
-	ZipName    string
+	URL             string
+	User            string
+	Pass            string
+	Repository      string
+	APIVersion      string
+	ZIP             bool
+	ZipName         string
+	DownloadDirName string
 }
 
 func (n Nexus3) validate() {
