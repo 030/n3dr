@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"n3dr/cli"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -21,13 +22,16 @@ reside in a certain Nexus3 repository`,
 			log.Fatal(err)
 		}
 
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: n3drRepo, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
-		if err := n.StoreArtifactsOnDisk(dir, regex); err != nil {
-			log.Fatal(err)
-		}
-
-		if err := n.CreateZip(dir); err != nil {
-			log.Fatal(err)
+		selectedRepositories := strings.Split(n3drRepo, ",")
+		for _, repository := range selectedRepositories {
+			log.Info("Processing repository: ", repository)
+			n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: repository, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
+			if err := n.StoreArtifactsOnDisk(dir, regex); err != nil {
+				log.Fatal(err)
+			}
+			if err := n.CreateZip(dir); err != nil {
+				log.Fatal(err)
+			}
 		}
 	},
 	Version: rootCmd.Version,
