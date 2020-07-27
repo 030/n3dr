@@ -108,14 +108,15 @@ Available Commands:
   upload       Upload all artifacts to a specific Nexus3 repository
 
 Flags:
-  -v, --apiVersion string   The Nexus3 APIVersion, e.g. v1 or beta (default "v1")
-  -d, --debug               Enable debug logging
-  -h, --help                help for n3dr
-      --insecureSkipVerify  Skip repository certificate check
-  -p, --n3drPass string     The Nexus3 password
-  -n, --n3drURL string      The Nexus3 URL
-  -u, --n3drUser string     The Nexus3 user
-  -z, --zip                 Add downloaded artifacts to a ZIP archive
+  -v, --apiVersion string        The Nexus3 APIVersion, e.g. v1 or beta (default "v1")
+  -d, --debug                    Enable debug logging
+  -h, --help                     help for n3dr
+      --insecureSkipVerify       Skip repository certificate check
+  -p, --n3drPass string          The Nexus3 password
+  -n, --n3drURL string           The Nexus3 URL
+  -u, --n3drUser string          The Nexus3 user
+  -z, --zip                      Add downloaded artifacts to a ZIP archive
+      --directory-prefix string  The directory prefix is the directory where artifacts will be saved    
 
 Use "n3dr [command] --help" for more information about a command.
 ```

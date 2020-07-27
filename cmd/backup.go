@@ -17,7 +17,7 @@ var backupCmd = &cobra.Command{
 	Long: `Use this command in order to backup all artifacts that
 reside in a certain Nexus3 repository`,
 	Run: func(cmd *cobra.Command, args []string) {
-		dir, err := cli.TempDownloadDir()
+		dir, err := cli.TempDownloadDir(downloadDirName)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -38,7 +38,7 @@ reside in a certain Nexus3 repository`,
 }
 
 func init() {
-	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repository")
+	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repositories")
 	backupCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 
 	if err := backupCmd.MarkPersistentFlagRequired("n3drRepo"); err != nil {
