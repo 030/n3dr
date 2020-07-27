@@ -9,7 +9,7 @@ None
 
 ## [5.0.1] - 2020-07-27
 ### Added
-- Select multiple repositories for backup added by [@vsoloviov]
+- Select multiple repositories for backup added by [@vsoloviov](https://github.com/vsoloviov)
 
 ## [5.0.0] - 2020-07-24
 ### Added
