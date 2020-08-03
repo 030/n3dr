@@ -14,25 +14,25 @@ env:
     - SHA512_CMD=sha512sum
 matrix:
   include:
-  - os: linux
-    dist: bionic
-    env:
-      - NEXUS_VERSION=latest
-  - os: linux
-    dist: bionic
-    env:
-      - ARTIFACT_PUBLICATION=false
-      - NEXUS_VERSION=3.21.1
-  - os: linux
-    dist: bionic
-    env:
-      - ARTIFACT_PUBLICATION=false
-      - NEXUS_VERSION=3.9.0
-      - NEXUS_API_VERSION=beta
-  - os: osx
-    env:
-      - SHA512_CMD="shasum -a 512"
-  - os: windows
+    - os: linux
+      dist: bionic
+      env:
+        - NEXUS_VERSION=latest
+    - os: linux
+      dist: bionic
+      env:
+        - ARTIFACT_PUBLICATION=false
+        - NEXUS_VERSION=3.21.1
+    - os: linux
+      dist: bionic
+      env:
+        - ARTIFACT_PUBLICATION=false
+        - NEXUS_VERSION=3.9.0
+        - NEXUS_API_VERSION=beta
+    - os: osx
+      env:
+        - SHA512_CMD="shasum -a 512"
+    - os: windows
 addons:
   sonarcloud:
     organization: 030-github
@@ -40,6 +40,7 @@ addons:
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt update -y && sudo apt-get -y install ./a2deb.deb bats; fi
 script:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; docker run --rm -v $(pwd):/data cytopia/yamllint .; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v; fi
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
