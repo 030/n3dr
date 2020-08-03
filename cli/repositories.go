@@ -44,7 +44,7 @@ func (n Nexus3) CountRepositories() error {
 
 // Downloads retrieves artifacts from all repositories
 func (n Nexus3) Downloads(regex string) error {
-	dir, err := TempDownloadDir()
+	dir, err := TempDownloadDir(n.DownloadDirName)
 	if err != nil {
 		return err
 	}

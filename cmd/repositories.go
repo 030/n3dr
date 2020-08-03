@@ -26,7 +26,7 @@ download artifacts from all repositories`,
 			}
 			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
+		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, APIVersion: apiVersion, ZIP: zip, ZipName: zipName, DownloadDirName: downloadDirName}
 		if names {
 			if err := n.RepositoryNames(); err != nil {
 				log.Fatal(err)
