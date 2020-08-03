@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
@@ -36,6 +37,9 @@ type Nexus3 struct {
 	ZIP        bool
 	ZipName    string
 }
+
+// RetryLogAdaptor adapts the retryablehttp.Logger interface to the logrus logger.
+type RetryLogAdaptor struct{}
 
 func (n Nexus3) validate() {
 	if n.User == "" {
@@ -69,7 +73,7 @@ func (n Nexus3) request(url string) ([]byte, string, error) {
 func (n Nexus3) response(req *http.Request) ([]byte, string, error) {
 	retryClient := retryablehttp.NewClient()
 	retryClient.RetryMax = 5
-	retryClient.Logger = nil
+	retryClient.Logger = &RetryLogAdaptor{}
 	standardClient := retryClient.StandardClient()
 	resp, err := standardClient.Do(req)
 	if err != nil {
@@ -123,4 +127,22 @@ func (n Nexus3) CreateZip(dir string) error {
 		log.Infof("Zipfile: '%v' created in '%v'", n.ZipName, cwd)
 	}
 	return nil
+}
+
+// Printf implements the retryablehttp.Logger interface
+func (*RetryLogAdaptor) Printf(fmtStr string, vars ...interface{}) {
+	switch {
+	case strings.HasPrefix(fmtStr, "[DEBUG]"):
+		log.Debugf(strings.TrimSpace(fmtStr[7:]), vars...)
+	case strings.HasPrefix(fmtStr, "[ERR]"):
+		log.Errorf(strings.TrimSpace(fmtStr[5:]), vars...)
+	case strings.HasPrefix(fmtStr, "[ERROR]"):
+		log.Errorf(strings.TrimSpace(fmtStr[7:]), vars...)
+	case strings.HasPrefix(fmtStr, "[WARN]"):
+		log.Warnf(strings.TrimSpace(fmtStr[6:]), vars...)
+	case strings.HasPrefix(fmtStr, "[INFO]"):
+		log.Infof(strings.TrimSpace(fmtStr[6:]), vars...)
+	default:
+		log.Printf(fmtStr, vars...)
+	}
 }
