@@ -32,7 +32,14 @@ const (
 	tmpDir      = "/tmp/n3dr"
 )
 
-func TempDownloadDir() (string, error) {
+func TempDownloadDir(downloadDirName string) (string, error) {
+	if downloadDirName != "" {
+		if err := os.MkdirAll(downloadDirName, os.ModePerm); err != nil {
+			return "", nil
+		}
+		log.Infof("Download dir name: '%v'", downloadDirName)
+		return downloadDirName, nil
+	}
 	if err := os.MkdirAll(tmpDir, os.ModePerm); err != nil {
 		return "", nil
 	}
