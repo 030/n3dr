@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [5.1.0] - 2020-08-03
+### Added
+- Specify the directory where the backup should be stored
+  added by [@vsoloviov](https://github.com/vsoloviov)
+
 ## [5.0.2] - 2020-08-03
 ### Fixed
 - Retry HTTP logger was set to nil. Fixed by
@@ -252,7 +257,9 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.0.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.1.0...HEAD
+[5.1.0]: https://github.com/030/n3dr/compare/5.0.2...5.1.0
+[5.0.2]: https://github.com/030/n3dr/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/030/n3dr/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/030/n3dr/compare/4.1.4...5.0.0
 [4.1.4]: https://github.com/030/n3dr/compare/4.1.3...4.1.4
