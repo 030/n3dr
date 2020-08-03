@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [5.0.2] - 2020-08-03
+### Fixed
+- Retry HTTP logger was set to nil. Fixed by
+[@vsoloviov](https://github.com/vsoloviov)
+
 ## [5.0.1] - 2020-07-27
 ### Added
 - Select multiple repositories for backup added by [@vsoloviov](https://github.com/vsoloviov)
