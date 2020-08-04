@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var maven bool
+
 // uploadCmd represents the upload command
 var uploadCmd = &cobra.Command{
 	Use:   "upload",
@@ -24,6 +26,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 }
 
 func init() {
+	uploadCmd.Flags().BoolVarP(&maven, "maven", "m", true, "whether maven artifacts have to be uploaded")
 	uploadCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repository")
 
 	if err := uploadCmd.MarkPersistentFlagRequired("n3drRepo"); err != nil {
