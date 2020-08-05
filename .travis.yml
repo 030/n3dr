@@ -1,3 +1,4 @@
+---
 # ARTIFACT_PUBLICATION use this constant only once per OS to ensure that
 # the artifacts are only published once per OS, e.g. linux, osx and
 # windows.
@@ -59,6 +60,6 @@ deploy:
     - $DELIVERABLE
     - ${DELIVERABLE}.sha512.txt
   skip_cleanup: true
-  on:
+  on:  # yamllint disable rule:truthy
     tags: true
     condition: $ARTIFACT_PUBLICATION == true
