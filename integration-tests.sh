@@ -1,5 +1,16 @@
 #!/bin/bash -e
 
+if [ -z "${APT_GPG_SECRET}" ]; then
+  echo "APT_GPG_SECRET should not be empty"
+  echo "Create one by running:"
+  echo "docker run -v /tmp/gpg-output:/root/.gnupg -v $PWD/tests/gpg/:/tmp/ --rm -it vladgh/gpg --batch --generate-key /tmp/generate"
+  echo "docker run --rm -it -v /tmp/gpg-output:/root/.gnupg -v $PWD/tests/gpg/:/tmp/ vladgh/gpg --output /tmp/my_rsa_key --armor --export-secret-key joe@foo.bar"
+  echo "Enter 'abc' as a password, if the prompt appears"
+  echo "export APT_GPG_SECRET=\$(sudo cat tests/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
+  echo "sudo rm -r /tmp/gpg-output"
+  exit 1
+fi
+
 NEXUS_VERSION="${1:-3.21.1}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
@@ -62,6 +73,30 @@ upload(){
     echo "Testing upload..."
     $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v "${NEXUS_API_VERSION}"
     echo
+}
+
+uploadDeb(){
+  echo "Creating apt repo..."
+  curl -u admin:$PASSWORD \
+       -X POST "http://localhost:9999/service/rest/beta/repositories/apt/hosted" \
+       -H "accept: application/json" \
+       -H "Content-Type: application/json" \
+       --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
+
+  mkdir REPO_NAME_HOSTED_APT
+  cd REPO_NAME_HOSTED_APT
+  curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb
+  curl -L https://github.com/030/n3dr/releases/download/5.0.1/n3dr_5.0.1-0.deb -o n3dr.deb
+  curl -L https://github.com/030/informado/releases/download/1.4.0/informado_1.4.0-0.deb -o informado.deb
+  cd ..
+
+  echo "Testing deb upload..."
+  $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
+	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+	           -m=false
+  echo $PASSWORD
+  sleep 120
+  echo
 }
 
 backupHelper(){
@@ -161,6 +196,7 @@ test_zip(){
 }
 
 cleanup_downloads(){
+    rm -rf REPO_NAME_HOSTED_APT
     rm -rf maven-releases
     rm -rf $DOWNLOAD_LOCATION
     rm -f n3dr-backup-*zip
@@ -168,19 +204,20 @@ cleanup_downloads(){
 }
 
 main(){
-    validate
-    build
-    nexus
-    readiness
-    password
-    files
-    upload
-    anonymous
-    backup
-    repositories
-    regex
-    zipName
-    bats --tap tests.bats
+  validate
+  build
+  nexus
+  readiness
+  password
+  files
+  upload
+  anonymous
+  backup
+  repositories
+  regex
+  zipName
+  uploadDeb
+  bats --tap tests.bats
 }
 
 trap cleanup EXIT
