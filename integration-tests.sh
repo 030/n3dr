@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+echo $APT_GPG_SECRET
+
 if [ -z "${APT_GPG_SECRET}" ]; then
   echo "APT_GPG_SECRET should not be empty"
   echo "Create one by running:"
@@ -8,6 +10,7 @@ if [ -z "${APT_GPG_SECRET}" ]; then
   echo "Enter 'abc' as a password, if the prompt appears"
   echo "export APT_GPG_SECRET=\$(sudo cat tests/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
   echo "sudo rm -r /tmp/gpg-output"
+  echo "rm tests/gpg/my_rsa_key"
   exit 1
 fi
 
