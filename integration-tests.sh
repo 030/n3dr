@@ -2,6 +2,7 @@
 
 echo $APT_GPG_SECRET
 
+
 if [ -z "${APT_GPG_SECRET}" ]; then
   echo "APT_GPG_SECRET should not be empty"
   echo "Create one by running:"
