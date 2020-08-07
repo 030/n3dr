@@ -8,3 +8,5 @@ n3dr*
 maven-releases
 vendor
 .snapcraft
+tests/gpg/output/
+tests/gpg/my_rsa_key
