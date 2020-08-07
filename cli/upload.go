@@ -2,7 +2,6 @@ package cli
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -149,14 +148,9 @@ func (n Nexus3) Upload(maven bool) error {
 			if resp.StatusCode == http.StatusCreated {
 				log.Infof("Upload of %v Ok. StatusCode: %v.", name, resp.StatusCode)
 			} else {
+				log.Error(resp)
 				return fmt.Errorf("Upload of %v to %v failed. StatusCode: %v.", name, n.URL, resp.StatusCode)
 			}
-
-			bodyBytes, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				return err
-			}
-			log.Info(string(bodyBytes))
 		}
 	}
 	return nil
