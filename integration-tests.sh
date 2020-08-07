@@ -79,25 +79,29 @@ upload(){
 }
 
 uploadDeb(){
-  echo "Creating apt repo..."
-  curl -u admin:$PASSWORD \
-       -X POST "http://localhost:9999/service/rest/beta/repositories/apt/hosted" \
-       -H "accept: application/json" \
-       -H "Content-Type: application/json" \
-       --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
-
-  mkdir REPO_NAME_HOSTED_APT
-  cd REPO_NAME_HOSTED_APT
-  curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb
-  curl -L https://github.com/030/n3dr/releases/download/5.0.1/n3dr_5.0.1-0.deb -o n3dr.deb
-  curl -L https://github.com/030/informado/releases/download/1.4.0/informado_1.4.0-0.deb -o informado.deb
-  cd ..
-
-  echo "Testing deb upload..."
-  $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
-	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
-	           -m=false
-  echo
+  if [ "${NEXUS_API_VERSION}" != "beta"]; then
+    echo "Creating apt repo..."
+    curl -u admin:$PASSWORD \
+         -X POST "http://localhost:9999/service/rest/beta/repositories/apt/hosted" \
+         -H "accept: application/json" \
+         -H "Content-Type: application/json" \
+         --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
+  
+    mkdir REPO_NAME_HOSTED_APT
+    cd REPO_NAME_HOSTED_APT
+    curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb
+    curl -L https://github.com/030/n3dr/releases/download/5.0.1/n3dr_5.0.1-0.deb -o n3dr.deb
+    curl -L https://github.com/030/informado/releases/download/1.4.0/informado_1.4.0-0.deb -o informado.deb
+    cd ..
+  
+    echo "Testing deb upload..."
+    $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
+  	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+  	           -m=false
+    echo
+  else
+    echo "Deb upload not supported in beta API"
+  fi
 }
 
 backupHelper(){
