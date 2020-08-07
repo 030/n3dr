@@ -209,6 +209,12 @@ running the following command:
 n3dr upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
+#### Upload non maven files
+
+It s possible to upload non maven files like deb files as well by setting the
+maven option to false, e.g. `-m=false`. Note the the folder name that contains
+the files should match the repository name.
+
 ### "Clone" a Nexus3 repository
 
 Suppose that one has created a new Nexus3 repository, e.g. NexusNEW and that

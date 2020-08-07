@@ -1,6 +1,8 @@
+---
 # ARTIFACT_PUBLICATION use this constant only once per OS to ensure that
 # the artifacts are only published once per OS, e.g. linux, osx and
 # windows.
+# yamllint disable rule:line-length
 language: go
 go:
   - 1.14.4
@@ -40,7 +42,7 @@ addons:
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt update -y && sudo apt-get -y install ./a2deb.deb bats; fi
 script:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; docker run --rm -v $(pwd):/data cytopia/yamllint .; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/data cytopia/yamllint .; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v; fi
   - export DELIVERABLE="n3dr-${TRAVIS_OS_NAME}"
   - if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$ARTIFACT_PUBLICATION" ]; then go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...; fi
@@ -58,6 +60,6 @@ deploy:
     - $DELIVERABLE
     - ${DELIVERABLE}.sha512.txt
   skip_cleanup: true
-  on:
+  on:  # yamllint disable rule:truthy
     tags: true
     condition: $ARTIFACT_PUBLICATION == true

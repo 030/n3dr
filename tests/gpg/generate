@@ -1,0 +1,11 @@
+%echo Generating a default key
+Key-Type: default
+Subkey-Type: default
+Name-Real: Joe Tester
+Name-Comment: with stupid passphrase
+Name-Email: joe@foo.bar
+Expire-Date: 0
+Passphrase: abc
+# Do a commit here, so that we can later print "done" :-)
+%commit
+%echo done
