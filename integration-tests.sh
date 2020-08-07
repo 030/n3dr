@@ -79,7 +79,7 @@ upload(){
 }
 
 uploadDeb(){
-  if [ "${NEXUS_API_VERSION}" != "beta"]; then
+  if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     echo "Creating apt repo..."
     curl -u admin:$PASSWORD \
          -X POST "http://localhost:9999/service/rest/beta/repositories/apt/hosted" \
