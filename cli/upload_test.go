@@ -43,7 +43,7 @@ func TestUploads(t *testing.T) {
 
 	createPOM(d, "hello", "1")
 
-	err = n.Upload()
+	err = n.Upload(true)
 	want = "HTTPStatusCode: '400'; ResponseMessage: 'Repository does not allow updating assets: maven-releases'; ErrorMessage: '<nil>'"
 	if err.Error() != want {
 		t.Errorf(errExpMsg, err, want)
