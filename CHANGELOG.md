@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [5.1.1] - 2020-08-07
+### Fixed
+- Upload of debian files did not work
+
 ## [5.1.0] - 2020-08-03
 ### Added
 - Specify the directory where the backup should be stored
@@ -257,7 +261,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.1.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.1.1...HEAD
+[5.1.1]: https://github.com/030/n3dr/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/030/n3dr/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/030/n3dr/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/030/n3dr/compare/5.0.0...5.0.1
