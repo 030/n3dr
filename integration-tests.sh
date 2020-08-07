@@ -1,8 +1,5 @@
 #!/bin/bash -e
 
-echo $APT_GPG_SECRET
-
-
 if [ -z "${APT_GPG_SECRET}" ]; then
   echo "APT_GPG_SECRET should not be empty"
   echo "Create one by running:"
@@ -12,6 +9,8 @@ if [ -z "${APT_GPG_SECRET}" ]; then
   echo "export APT_GPG_SECRET=\$(sudo cat tests/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
   echo "sudo rm -r /tmp/gpg-output"
   echo "rm tests/gpg/my_rsa_key"
+  echo
+  echo "Note: Spaces and enters have to be escaped, i.e. '\n'->'\\n' and ' '->'\ ' if the token is used in travis."
   exit 1
 fi
 
