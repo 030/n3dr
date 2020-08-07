@@ -94,8 +94,6 @@ uploadDeb(){
   $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
 	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
 	           -m=false
-  echo $PASSWORD
-  sleep 120
   echo
 }
 
