@@ -137,9 +137,7 @@ func TestCreateArtifact(t *testing.T) {
 }
 
 func TestDownloadArtifact(t *testing.T) {
-	url := make(map[string]interface{})
-	url["downloadUrl"] = "http://releasesoftwaremoreoften.com"
-	actualError := n.downloadArtifact(testDirDownload, url)
+	actualError := n.downloadArtifact(testDirDownload, "", "")
 	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
 
 	if actualError.Error() != expectedError {
