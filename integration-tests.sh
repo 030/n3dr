@@ -158,7 +158,6 @@ zipName(){
 clean(){
   cleanup
   cleanup_downloads
-  docker stop nexus
 }
 
 count_downloads(){
