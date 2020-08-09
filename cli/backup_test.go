@@ -50,7 +50,7 @@ func TestDownloadURLs(t *testing.T) {
 }
 
 func TestStoreArtifactsOnDisk(t *testing.T) {
-	if err := n.StoreArtifactsOnDisk(testDirHome+testDirDownload, ".*"); err != nil {
+	if err := n.StoreArtifactsOnDiskChannel(testDirHome+testDirDownload, ".*"); err != nil {
 		log.Fatal(err)
 	}
 
@@ -137,7 +137,7 @@ func TestCreateArtifact(t *testing.T) {
 }
 
 func TestDownloadArtifact(t *testing.T) {
-	actualError := n.downloadArtifact(testDirDownload, "", "")
+	actualError := n.downloadArtifact(testDirDownload, "http://releasesoftwaremoreoften.com", "")
 	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
 
 	if actualError.Error() != expectedError {
