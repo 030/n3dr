@@ -11,9 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"strings"
-	"time"
 
 	"github.com/spf13/viper"
 
@@ -21,7 +19,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/svenfuchs/jq"
 	"github.com/thedevsaddam/gojsonq"
-	"gopkg.in/cheggaaa/pb.v1"
 )
 
 const (
@@ -208,40 +205,6 @@ func (n Nexus3) downloadArtifact(dir, url, md5 string) error {
 		return err
 	}
 	return nil
-}
-
-func (n Nexus3) downloadURLs() ([]interface{}, error) {
-	var downloadURLsInterfaceArrayAll []interface{}
-	continuationTokenMap, err := n.continuationTokenRecursion("null")
-	if err != nil {
-		return nil, err
-	}
-
-	count := len(continuationTokenMap)
-	if count > 1 {
-		log.Info("Assembling downloadURLs '" + n.Repository + "'")
-		bar := pb.StartNew(count)
-		for tokenNumber, token := range continuationTokenMap {
-			tokenNumberString := strconv.Itoa(tokenNumber)
-			log.Debug("ContinuationToken: " + token + "; ContinuationTokenNumber: " + tokenNumberString)
-			bytes, err := n.downloadURL(token)
-			if err != nil {
-				return nil, err
-			}
-			json := string(bytes)
-
-			jq := gojsonq.New().JSONString(json)
-			downloadURLsInterface := jq.From("items").Only("downloadUrl", "checksum.md5")
-			log.Debug("DownloadURLs: " + fmt.Sprintf("%v", downloadURLsInterface))
-
-			downloadURLsInterfaceArray := downloadURLsInterface.([]interface{})
-			downloadURLsInterfaceArrayAll = append(downloadURLsInterfaceArrayAll, downloadURLsInterfaceArray...)
-			bar.Increment()
-			time.Sleep(time.Millisecond)
-		}
-		bar.FinishPrint("Done")
-	}
-	return downloadURLsInterfaceArrayAll, nil
 }
 
 // HashFileMD5 returns MD5 checksum of a file

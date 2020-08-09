@@ -40,15 +40,6 @@ func TestContinuationTokenHash(t *testing.T) {
 	}
 }
 
-func TestDownloadURLs(t *testing.T) {
-	url, _ := n.downloadURLs()
-	actual := len(url)
-	expected := 27 // 3files*9
-	if expected != actual {
-		t.Errorf(errMsg, expected, actual)
-	}
-}
-
 func TestStoreArtifactsOnDisk(t *testing.T) {
 	if err := n.StoreArtifactsOnDiskChannel(testDirHome+testDirDownload, ".*"); err != nil {
 		log.Fatal(err)
