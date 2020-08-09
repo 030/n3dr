@@ -26,7 +26,7 @@ reside in a certain Nexus3 repository`,
 		for _, repository := range selectedRepositories {
 			log.Info("Processing repository: ", repository)
 			n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: repository, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
-			if err := n.StoreArtifactsOnDisk(dir, regex); err != nil {
+			if err := n.StoreArtifactsOnDiskChannel(dir, regex); err != nil {
 				log.Fatal(err)
 			}
 			if err := n.CreateZip(dir); err != nil {
