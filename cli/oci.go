@@ -16,7 +16,18 @@ import (
 	"github.com/spf13/viper"
 )
 
-func ociBackup(Bucketname string, Filename string) error {
+type ociObject struct {
+	ctx        context.Context
+	c          objectstorage.ObjectStorageClient
+	namespace  string
+	bucketname string
+	objectname string
+	contentLen int64
+	content    io.ReadCloser
+	metadata   map[string]string
+}
+
+func ociBackup(Bucketname, Filename string) error {
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
 		return err
@@ -49,7 +60,8 @@ func ociBackup(Bucketname string, Filename string) error {
 			return err
 		}
 
-		err = putObject(ctx, o, namespace, Bucketname, f, fi.Size(), file, nil)
+		o := ociObject{ctx, o, namespace, Bucketname, f, fi.Size(), file, nil}
+		err = o.putObject()
 		if err != nil {
 			return err
 		}
@@ -75,24 +87,24 @@ func getNamespace(ctx context.Context, c objectstorage.ObjectStorageClient) (str
 	return *r.Value, nil
 }
 
-func putObject(ctx context.Context, c objectstorage.ObjectStorageClient, namespace, bucketname, objectname string, contentLen int64, content io.ReadCloser, metadata map[string]string) error {
+func (o ociObject) putObject() error {
 	request := objectstorage.PutObjectRequest{
-		NamespaceName: &namespace,
-		BucketName:    &bucketname,
-		ObjectName:    &objectname,
-		ContentLength: &contentLen,
-		PutObjectBody: content,
-		OpcMeta:       metadata,
+		NamespaceName: &o.namespace,
+		BucketName:    &o.bucketname,
+		ObjectName:    &o.objectname,
+		ContentLength: &o.contentLen,
+		PutObjectBody: o.content,
+		OpcMeta:       o.metadata,
 	}
-	_, err := c.PutObject(ctx, request)
+	_, err := o.c.PutObject(o.ctx, request)
 	if err != nil {
 		return err
 	}
-	log.Debug("You have uploaded file " + objectname + " in bucket " + bucketname + "\n")
+	log.Debug("You have uploaded file " + o.objectname + " in bucket " + o.bucketname + "\n")
 	return err
 }
 
-func findObject(bucketname, objectname string, md5sum string) (bool, error) {
+func findObject(bucketname, objectname, md5sum string) (bool, error) {
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
 		return false, err
