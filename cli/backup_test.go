@@ -40,7 +40,7 @@ func TestContinuationTokenHash(t *testing.T) {
 	}
 }
 
-func TestStoreArtifactsOnDisk(t *testing.T) {
+func TestStoreArtifactsOnDiskChannel(t *testing.T) {
 	if err := n.StoreArtifactsOnDiskChannel(testDirHome+testDirDownload, ".*"); err != nil {
 		log.Fatal(err)
 	}
