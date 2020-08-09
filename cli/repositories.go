@@ -37,8 +37,35 @@ func (n Nexus3) CountRepositories() error {
 	if err != nil {
 		return err
 	}
-
 	fmt.Println(len(repos))
+	return nil
+}
+
+func (n Nexus3) repositoriesChannel(repos []interface{}, dir, regex string) error {
+	cerr := make(chan error)
+	defer close(cerr)
+	for _, name := range repos {
+		go func(name string) {
+			n.Repository = name
+			cerr <- n.StoreArtifactsOnDiskChannel(dir, regex)
+		}(name.(string))
+	}
+	for range repos {
+		if err := <-cerr; err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (n Nexus3) downloadAllArtifactsFromRepositories(dir, regex string) error {
+	repos, err := n.repositoriesSlice()
+	if err != nil {
+		return err
+	}
+	if err := n.repositoriesChannel(repos, dir, regex); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -48,22 +75,11 @@ func (n Nexus3) Downloads(regex string) error {
 	if err != nil {
 		return err
 	}
-
-	repos, err := n.repositoriesSlice()
-	if err != nil {
+	if err := n.downloadAllArtifactsFromRepositories(dir, regex); err != nil {
 		return err
 	}
-
-	for _, name := range repos {
-		n := Nexus3{URL: n.URL, User: n.User, Pass: n.Pass, Repository: name.(string), APIVersion: n.APIVersion, ZIP: n.ZIP}
-		if err := n.StoreArtifactsOnDisk(dir, regex); err != nil {
-			return err
-		}
-	}
-
 	if err := n.CreateZip(dir); err != nil {
 		return err
 	}
-
 	return nil
 }
