@@ -2,19 +2,15 @@ package cli
 
 import (
 	"errors"
-	"io/ioutil"
-	"net/http"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strconv"
 	"testing"
-	"time"
 
-	"github.com/030/go-utils"
 	log "github.com/sirupsen/logrus"
 
 	mp "github.com/030/go-multipart/utils"
+	"github.com/030/mij"
 )
 
 const (
@@ -22,14 +18,6 @@ const (
 	testDirUpload      = "/testFiles"
 	testNexusAuthError = "ResponseCode: '401' and Message '401 Unauthorized' for URL: http://localhost:9999/service/rest/v1/repositories"
 )
-
-// See https://stackoverflow.com/a/34102842/2777965
-func TestMain(m *testing.M) {
-	setup()
-	code := m.Run()
-	shutdown()
-	os.Exit(code)
-}
 
 var n = Nexus3{
 	URL:        "http://localhost:9999",
@@ -39,40 +27,34 @@ var n = Nexus3{
 	APIVersion: "v1",
 }
 
-func setup() {
-	// Start docker nexus
-	cmd := exec.Command("bash", "-c", "docker run -d -p 9999:8081 --name nexus sonatype/nexus3:3.16.1")
-	stdoutStderr, err := cmd.CombinedOutput()
-	if err != nil {
-		log.Fatal(err, string(stdoutStderr))
+func TestMain(m *testing.M) {
+	d := mij.DockerImage{
+		Name:                     "sonatype/nexus3",
+		PortExternal:             9999,
+		PortInternal:             8081,
+		Version:                  "3.16.1",
+		ContainerName:            "nexus",
+		LogFile:                  "/nexus-data/log/nexus.log",
+		LogFileStringHealthCheck: "Started Sonatype Nexus OSS",
 	}
 
-	pingURL := n.URL + pingURI
+	setup(&d)
+	code := m.Run()
+	shutdown(&d)
+	os.Exit(code)
+}
 
-	// Waitfor ping URL to become available
-	for !utils.URLExists(pingURL) {
-		log.Info("Nexus not available.")
-		time.Sleep(30 * time.Second)
-	}
+func setup(m *mij.DockerImage) {
+	m.Run()
 
-	// Waitfor ping endpoint to return pong
-	for !n.pong() {
-		log.Info("Nexus Pong not returned yet.")
-		time.Sleep(3 * time.Second)
-	}
-
-	// Send test artifacts to docker nexus
+	// Send test artifacts to docker nexus once it is healthy
 	for i := 1; i <= 3; i++ {
 		n.createArtifactsAndSubmit(i)
 	}
 }
 
-func shutdown() {
-	cmd := exec.Command("bash", "-c", "docker stop nexus && docker rm nexus")
-	stdoutStderr, err := cmd.CombinedOutput()
-	if err != nil {
-		log.Fatal(err, string(stdoutStderr))
-	}
+func shutdown(m *mij.DockerImage) {
+	m.Stop()
 
 	testFiles := filepath.Join(testDirHome, testDirUpload, "/file*")
 	testDownloads := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "*", "file*")
@@ -91,35 +73,6 @@ func shutdown() {
 			log.Fatal(err)
 		}
 	}
-}
-
-func (n Nexus3) pong() bool {
-	pongAvailable := false
-
-	req, err := http.NewRequest("GET", n.URL+"/service/metrics/ping", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	req.SetBasicAuth(n.User, n.Pass)
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode == http.StatusOK {
-		bodyBytes, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-		bodyString := string(bodyBytes)
-
-		if bodyString == "pong\n" {
-			pongAvailable = true
-		}
-	}
-	return pongAvailable
 }
 
 func (n Nexus3) submitArtifact(d string, f string) {
@@ -166,18 +119,4 @@ func cleanupFiles(re string) error {
 		}
 	}
 	return nil
-}
-
-func allFiles(dir string) ([]string, error) {
-	fileList := []string{}
-	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if f.Mode().IsRegular() {
-			fileList = append(fileList, path)
-		}
-		return nil
-	})
-	return fileList, err
 }
