@@ -22,7 +22,6 @@ import (
 )
 
 const (
-	pingURI     = "/service/metrics/ping"
 	assetURI1   = "/service/rest/"
 	assetURI2   = "/assets?repository="
 	tokenErrMsg = "Token should be either a hexadecimal or \"null\" and not: "
