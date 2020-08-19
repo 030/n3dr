@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/030/go-multipart v1.0.2
 	github.com/030/go-utils v0.0.0-20190427204242-b7d6df265912
-	github.com/030/mij v0.10.5
+	github.com/030/mij v0.12.1
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
 	github.com/dsnet/compress v0.0.1 // indirect
