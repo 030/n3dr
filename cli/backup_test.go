@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"os"
+	"path/filepath"
 	"reflect"
 	"testing"
 
@@ -38,6 +40,20 @@ func TestContinuationTokenHash(t *testing.T) {
 			t.Errorf(errMsgTxt, expectedError, actualError)
 		}
 	}
+}
+
+func allFiles(dir string) ([]string, error) {
+	fileList := []string{}
+	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if f.Mode().IsRegular() {
+			fileList = append(fileList, path)
+		}
+		return nil
+	})
+	return fileList, err
 }
 
 func TestStoreArtifactsOnDiskChannel(t *testing.T) {
