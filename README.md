@@ -1,9 +1,20 @@
 # n3dr
-## Backup or Migrate your entire Nexus Artifact Server
+
+## Backup or Migrate an entire Nexus Artifact Server
+
 Download all artifacts at once or migrate automatically from Nexus to Nexus.
 
-Without n3dr it is not possible to download all artifacts from Nexus at once.
-n3dr makes it possible to easily migrate a Nexus server from AWS to Azure or Google Cloud.
+Although the [Nexus backup and restore documentation](https://help.sonatype.com/repomanager3/backup-and-restore)
+indicates that one could backup and restore Nexus, the data seems not to be restored completely as 500 errors
+occur when an artifact is downloaded from the UI after restore. It could also be possible that some steps were
+not issued as they have should been. Apart from that, the restore is capable of restoring the Nexus
+configuration.
+
+N3DR makes it possible to backup all artifacts from Nexus at once and to migrate/restore them to a Nexus server
+in another cloud.
+
+Note: uploads to proxy and snapshot repositories is not supported by Nexus itself. As a workaround one
+could create a hosted repository in Nexus and upload the backed up proxy content to it.
 
 [![GoDoc Widget]][GoDoc]
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
