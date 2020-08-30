@@ -13,7 +13,7 @@ configuration.
 N3DR makes it possible to backup all artifacts from Nexus at once and to migrate/restore them to a Nexus server
 in another cloud.
 
-Note: uploads to proxy and snapshot repositories is not supported by Nexus itself. As a workaround one
+Note: uploads to proxy and snapshot repositories are not supported by Nexus itself. As a workaround one
 could create a hosted repository in Nexus and upload the backed up proxy content to it.
 
 [![GoDoc Widget]][GoDoc]
