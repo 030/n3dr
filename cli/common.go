@@ -29,7 +29,7 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL             string
+	URL             string `validate:"nonzero,regexp=^http(s)?://.*[a-z]+(:[0-9]+)?$"`
 	User            string
 	Pass            string
 	Repository      string
