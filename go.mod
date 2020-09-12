@@ -28,4 +28,5 @@ require (
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/sys v0.0.0-20200519105757-fe76b779f299 // indirect
 	golang.org/x/text v0.3.2 // indirect
+	gopkg.in/validator.v2 v2.0.0-20200605151824-2b28d334fa05
 )

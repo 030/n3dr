@@ -149,7 +149,7 @@ func (n Nexus3) Upload(maven bool) error {
 				log.Infof("Upload of %v Ok. StatusCode: %v.", name, resp.StatusCode)
 			} else {
 				log.Error(resp)
-				return fmt.Errorf("Upload of %v to %v failed. StatusCode: %v.", name, n.URL, resp.StatusCode)
+				return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", name, n.URL, resp.StatusCode)
 			}
 		}
 	}

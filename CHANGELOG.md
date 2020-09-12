@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 None
 
+## [5.2.1] - 2020-09-12
+### Fixed
+- Infinite loop in `continuationTokenRecursionChannel` recursion due to
+  omission of error checking reported by
+  [@jdonkervliet](https://github.com/jdonkervliet)
+- URL was not validated reported by
+  [@jdonkervliet](https://github.com/jdonkervliet)
+
 ## [5.2.0] - 2020-08-09
 ### Changed
 - Use channels to speed up backups
@@ -268,7 +276,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.2.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.2.1...HEAD
+[5.2.1]: https://github.com/030/n3dr/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/030/n3dr/compare/5.1.1...5.2.0
 [5.1.1]: https://github.com/030/n3dr/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/030/n3dr/compare/5.0.2...5.1.0
