@@ -17,6 +17,9 @@ var uploadCmd = &cobra.Command{
 a specific Nexus3 repository, e.g. maven-releases`,
 	Run: func(cmd *cobra.Command, args []string) {
 		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: n3drRepo, APIVersion: apiVersion}
+		if err := n.ValidateNexusURL(); err != nil {
+			log.Fatal(err)
+		}
 		err := n.Upload(maven)
 		if err != nil {
 			log.Fatal(err)
