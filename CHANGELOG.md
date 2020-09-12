@@ -276,7 +276,8 @@ None
 ### Added
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.2.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.2.1...HEAD
+[5.2.1]: https://github.com/030/n3dr/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/030/n3dr/compare/5.1.1...5.2.0
 [5.1.1]: https://github.com/030/n3dr/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/030/n3dr/compare/5.0.2...5.1.0
