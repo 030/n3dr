@@ -14,7 +14,6 @@ import (
 	"strings"
 
 	"github.com/spf13/viper"
-	"gopkg.in/validator.v2"
 
 	"github.com/asaskevich/govalidator"
 	log "github.com/sirupsen/logrus"
@@ -49,10 +48,6 @@ func TempDownloadDir(downloadDirName string) (string, error) {
 }
 
 func (n Nexus3) downloadURL(token string) ([]byte, error) {
-	if errs := validator.Validate(n); errs != nil {
-		return nil, errs
-	}
-
 	assetURL := n.URL + assetURI1 + n.APIVersion + assetURI2 + n.Repository
 	constructDownloadURL := assetURL
 	if token != "null" {
@@ -284,7 +279,9 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 	if token == "null" {
 		return nil
 	}
-	n.continuationTokenRecursionChannel(cerr, token, dir, regex)
+	if err := n.continuationTokenRecursionChannel(cerr, token, dir, regex); err != nil {
+		return err
+	}
 	return nil
 }
 
