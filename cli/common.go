@@ -11,6 +11,7 @@ import (
 
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/mholt/archiver"
+	"gopkg.in/validator.v2"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -29,7 +30,7 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL             string
+	URL             string `validate:"nonzero,regexp=^http(s)?://.*[a-z]+(:[0-9]+)?$"`
 	User            string
 	Pass            string
 	Repository      string
@@ -49,6 +50,13 @@ func (n Nexus3) validate() {
 	if n.Pass == "" {
 		log.Debug("Empty password. Verify whether the 'n3drPass' has been defined in ~/.n3dr.yaml, the subcommand is specified or anonymous mode is used")
 	}
+}
+
+func (n *Nexus3) ValidateNexusURL() error {
+	if errs := validator.Validate(n); errs != nil {
+		return fmt.Errorf("The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: '%v'", errs)
+	}
+	return nil
 }
 
 func (n Nexus3) request(url string) ([]byte, string, error) {

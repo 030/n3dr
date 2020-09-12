@@ -231,59 +231,66 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
-func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex string) {
+func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex string) error {
 	token, err := n.continuationToken(t)
 	if err != nil {
-		cerr <- err
+		return err
 	}
 
 	bytes, err := n.downloadURL(token)
 	if err != nil {
-		cerr <- err
+		return err
 	}
 	json := string(bytes)
 	jq := gojsonq.New().JSONString(json)
-	downloadUrlAndMd5s := jq.From("items").Only("downloadUrl", "checksum.md5")
+	downloadURLAndMd5s := jq.From("items").Only("downloadUrl", "checksum.md5")
 
-	for _, downloadUrlAndMd5 := range downloadUrlAndMd5s.([]interface{}) {
-		go func(downloadUrlAndMd5 interface{}) {
-			downloadUrl := fmt.Sprint(downloadUrlAndMd5.(map[string]interface{})["downloadUrl"])
-			md5 := fmt.Sprint(downloadUrlAndMd5.(map[string]interface{})["md5"])
+	for _, downloadURLAndMd5 := range downloadURLAndMd5s.([]interface{}) {
+		go func(downloadURLAndMd5 interface{}) {
+			downloadURL := fmt.Sprint(downloadURLAndMd5.(map[string]interface{})["downloadUrl"])
+			md5 := fmt.Sprint(downloadURLAndMd5.(map[string]interface{})["md5"])
 
 			log.Debug("Only download artifacts that match the regex: '" + regex + "'")
 			r, err := regexp.Compile(regex)
 			if err != nil {
-				fmt.Println(err)
+				cerr <- err
+				return
 			}
-			if r.MatchString(downloadUrl) {
+			if r.MatchString(downloadURL) {
 				// Exclude download of md5 and sha1 files as these are unavailable
 				// unless the metadata.xml is opened first
-				if !(filepath.Ext(downloadUrl) == ".md5" || filepath.Ext(downloadUrl) == ".sha1") {
-					if err := n.downloadArtifact(dir, downloadUrl, md5); err != nil {
-						log.Error(err)
+				if !(filepath.Ext(downloadURL) == ".md5" || filepath.Ext(downloadURL) == ".sha1") {
+					if err := n.downloadArtifact(dir, downloadURL, md5); err != nil {
+						cerr <- err
+						return
 					}
 					fmt.Print("+")
 				}
 			}
-			cerr <- err
-		}(downloadUrlAndMd5)
+			cerr <- nil
+		}(downloadURLAndMd5)
 	}
-	for range downloadUrlAndMd5s.([]interface{}) {
+	for range downloadURLAndMd5s.([]interface{}) {
 		if err := <-cerr; err != nil {
-			fmt.Println(err)
+			return err
 		}
 	}
 
 	if token == "null" {
-		return
+		return nil
 	}
-	n.continuationTokenRecursionChannel(cerr, token, dir, regex)
+	if err := n.continuationTokenRecursionChannel(cerr, token, dir, regex); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (n Nexus3) StoreArtifactsOnDiskChannel(dir, regex string) error {
 	fmt.Println("Backup: ", n.Repository)
 	cerr := make(chan error)
 	defer close(cerr)
-	n.continuationTokenRecursionChannel(cerr, "null", dir, regex)
+	if err := n.continuationTokenRecursionChannel(cerr, "null", dir, regex); err != nil {
+		return err
+	}
 	return nil
 }
