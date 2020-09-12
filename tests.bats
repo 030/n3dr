@@ -22,6 +22,14 @@
   [[ "$output" =~ $regex ]]
 }
 
+@test "invoking n3dr with backup subcommand and incorrect URL exits" {
+  go run main.go backup -u bla -n http://hihi/ -r bla -z
+  [ "$status" -eq 1 ]
+  echo $output
+  regex=".*The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: 'URL: regular expression mismatch'"
+  [[ "$output" =~ $regex ]]
+}
+
 @test "invoking n3dr with upload subcommand and incorrect URL exits" {
   go run main.go upload -u bla -n http://hihi/ -r bla
   [ "$status" -eq 1 ]
