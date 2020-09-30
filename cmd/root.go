@@ -71,7 +71,6 @@ func configFile() (string, error) {
 func initConfig() {
 	enableDebug()
 	insecureCerts()
-
 	if cfgFile != "" {
 		log.Infof("Reading configFile: '%v'", cfgFile)
 		viper.SetConfigFile(cfgFile)
