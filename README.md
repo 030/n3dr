@@ -101,7 +101,7 @@ In order to upload artifacts, additional privileges are required:
 
 ## Usage
 
-[![asciicast](https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH?autoplay=1)](https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH)
+<a href="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH?autoplay=1"><img src="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH" width="836"/></a>
 
 ### Check the help menu
 
