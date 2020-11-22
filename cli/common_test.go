@@ -42,7 +42,7 @@ func TestRequest(t *testing.T) {
 	n.Pass = ""
 	n.validate()
 	_, _, err := n.request("incorrectUrl")
-	assert.EqualError(t, err, "Get \"incorrectUrl\": Get \"incorrectUrl\": unsupported protocol scheme \"\"")
+	assert.EqualError(t, err, "Get \"incorrectUrl\": GET incorrectUrl giving up after 1 attempt(s): Get \"incorrectUrl\": unsupported protocol scheme \"\"")
 	n.User = "admin"
 	n.Pass = "admin123"
 }
