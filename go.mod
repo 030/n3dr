@@ -1,6 +1,6 @@
 module n3dr
 
-go 1.14
+go 1.15
 
 require (
 	github.com/030/go-multipart v1.0.2
@@ -11,8 +11,7 @@ require (
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/frankban/quicktest v1.4.1 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
-	github.com/hashicorp/go-retryablehttp v0.6.6
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/hashicorp/go-retryablehttp v0.6.8
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/nwaples/rardecode v1.0.0 // indirect

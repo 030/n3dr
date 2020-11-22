@@ -38,7 +38,7 @@ func Execute() {
 func init() {
 	enableDebug()
 	insecureCerts()
-	
+
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/"+cli.DefaultCfgFileWithExt+")")
