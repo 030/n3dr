@@ -201,5 +201,5 @@ main(){
   bats --tap tests.bats
 }
 
-trap clean EXIT
+#trap clean EXIT
 main
