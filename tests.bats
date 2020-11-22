@@ -10,7 +10,7 @@
   run go run main.go repositories -n http://localhost:99999 -u admin -p INCORRECT_PASSWORD -b
   [ "$status" -eq 1 ]
   echo $output
-  regex='.*http://localhost:99999/service/rest/v1/repositories giving up after 6 attempts'
+  regex='.*http://localhost:99999/service/rest/v1/repositories giving up after 6 attempt\(s\)'
   [[ "$output" =~ $regex ]]
 }
 
