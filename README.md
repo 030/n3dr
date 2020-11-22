@@ -101,7 +101,7 @@ In order to upload artifacts, additional privileges are required:
 
 ## Usage
 
-<a href="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH?autoplay=1" target="_blank"><img src="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH.svg" /></a>
+<a href="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH?autoplay=1"><img src="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH.svg" /></a>
 
 ### Check the help menu
 
