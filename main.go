@@ -1,7 +1,7 @@
 package main
 
 import (
-	"n3dr/cmd"
+	"github.com/030/n3dr/cmd"
 )
 
 func main() {

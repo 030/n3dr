@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"n3dr/cli"
+	"github.com/030/n3dr/cli"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"

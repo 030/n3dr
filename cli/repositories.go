@@ -3,14 +3,17 @@ package cli
 import (
 	"fmt"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/thedevsaddam/gojsonq"
 )
 
-func repositoryNamesJSON(json string) interface{} {
+func repositoryNamesAndFormatJSON(json string) interface{} {
 	jq := gojsonq.New().JSONString(json).WhereNotEqual("type", "group")
+	log.Debugf("JQ Output: '%v'", jq)
 	jq.SortBy("name", "asc")
-	name := jq.Pluck("name")
-	return name
+	nameAndFormat := jq.Only("name", "format")
+	log.Debugf("NameAndFormat: '%v'", nameAndFormat)
+	return nameAndFormat
 }
 
 func (n Nexus3) repositoriesSlice() ([]interface{}, error) {
@@ -18,7 +21,7 @@ func (n Nexus3) repositoriesSlice() ([]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return repositoryNamesJSON(repos).([]interface{}), nil
+	return repositoryNamesAndFormatJSON(repos).([]interface{}), nil
 }
 
 func (n Nexus3) RepositoryNames() error {
@@ -33,6 +36,7 @@ func (n Nexus3) RepositoryNames() error {
 }
 
 func (n Nexus3) CountRepositories() error {
+	log.Debug("Counting repositories...")
 	repos, err := n.repositoriesSlice()
 	if err != nil {
 		return err
