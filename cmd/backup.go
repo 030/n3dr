@@ -34,11 +34,9 @@ reside in a certain Nexus3 repository`,
 
 			if npm {
 				log.Info("Backing up an NPM repository...")
-				errs := make(chan error, 1)
-				if err := n.Bladibla(errs, n.URL+"/service/rest/repository/browse/"+repository); err != nil {
+				if err := n.BackupAllNPMArtifacts(repository); err != nil {
 					log.Fatal(err)
 				}
-				log.Debugf("Go Channel length (outside go routine): '%d'", len(errs))
 			} else {
 				if err := n.StoreArtifactsOnDiskChannel(dir, regex); err != nil {
 					log.Fatal(err)
