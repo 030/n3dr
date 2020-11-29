@@ -45,17 +45,39 @@ func (n Nexus3) CountRepositories() error {
 	return nil
 }
 
+type response2 struct {
+	Format string `json:"format"`
+	Name   string `json:"name"`
+}
+
 func (n Nexus3) repositoriesChannel(repos []interface{}, dir, regex string) error {
-	cerr := make(chan error)
-	defer close(cerr)
-	for _, name := range repos {
+	log.Debugf("Repos: '%v'", repos)
+	errs := make(chan error)
+	fmt.Println("----------------")
+	fmt.Println(repos)
+	for _, a := range repos {
+		fmt.Println(a)
+		if rec, ok := a.(map[string]interface{}); ok {
+			for key, val := range rec {
+				log.Printf(" [========>] %s = %s", key, val)
+			}
+		} else {
+			fmt.Printf("record not a map[string]interface{}: %v\n", a)
+		}
+	}
+	fmt.Println("----------------")
+
+	for format, name := range repos {
+		log.Debugf("Name: '%v'. Format: '%v'", name, format)
+
 		go func(name string) {
 			n.Repository = name
-			cerr <- n.StoreArtifactsOnDiskChannel(dir, regex)
+			log.Debugf("Repository: '%v'", n.Repository)
+			errs <- n.StoreArtifactsOnDiskChannel(dir, regex)
 		}(name.(string))
 	}
 	for range repos {
-		if err := <-cerr; err != nil {
+		if err := <-errs; err != nil {
 			return err
 		}
 	}
@@ -67,6 +89,7 @@ func (n Nexus3) downloadAllArtifactsFromRepositories(dir, regex string) error {
 	if err != nil {
 		return err
 	}
+	log.Debugf("Repositories: '%v'", repos)
 	if err := n.repositoriesChannel(repos, dir, regex); err != nil {
 		return err
 	}
