@@ -60,12 +60,12 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	log.Debug("DownloadURL: ", u)
 	urlString := u.String()
 
-	bodyBytes, _, err := n.request(urlString)
+	jsonResp := n.requestJSON(urlString)
 	if err != nil {
 		return nil, err
 	}
 
-	return bodyBytes, nil
+	return jsonResp.bytes, nil
 }
 
 func (n Nexus3) continuationToken(token string) (string, error) {
@@ -195,12 +195,12 @@ func (n Nexus3) downloadArtifact(dir, url, md5 string) error {
 		return err
 	}
 
-	_, bodyString, err := n.request(url)
+	jsonResp := n.requestJSON(url)
 	if err != nil {
 		return err
 	}
 
-	if err := createArtifact(filepath.Join(dir, n.Repository, d), f, bodyString, md5); err != nil {
+	if err := createArtifact(filepath.Join(dir, n.Repository, d), f, jsonResp.strings, md5); err != nil {
 		return err
 	}
 	return nil
