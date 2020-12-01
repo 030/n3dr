@@ -11,6 +11,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
 	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/frankban/quicktest v1.4.1 // indirect
+	github.com/go-playground/validator/v10 v10.4.1
 	github.com/gobuffalo/packr/v2 v2.8.1
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.6.8
