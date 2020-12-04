@@ -60,7 +60,7 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	log.Debug("DownloadURL: ", u)
 	urlString := u.String()
 
-	jsonResp := n.requestJSON(urlString)
+	jsonResp := n.request(urlString)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (n Nexus3) downloadArtifact(dir, url, md5 string) error {
 		return err
 	}
 
-	jsonResp := n.requestJSON(url)
+	jsonResp := n.request(url)
 	if err != nil {
 		return err
 	}

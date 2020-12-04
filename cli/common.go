@@ -65,7 +65,7 @@ type requestJSONResponse struct {
 	err     error
 }
 
-func (n Nexus3) requestJSON(url string) requestJSONResponse {
+func (n Nexus3) request(url string) requestJSONResponse {
 	n.validate()
 
 	log.WithFields(log.Fields{"URL": url, "User": n.User}).Debug("URL Request")
