@@ -3,6 +3,8 @@ package cli
 import (
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRepositoryNamesAndFormatsMap(t *testing.T) {
@@ -35,13 +37,13 @@ func TestRepositoryNamesAndFormatsMap(t *testing.T) {
 	"attributes" : { }
 	} ]
 `
-	testRepositoryNamesAndFormatsMap := map[string]string{
+	testRepositoryNamesAndFormatsMap := repositoriesNamesAndFormatsMap{
 		"3rdparty-maven": "maven2",
 		"3rdparty-npm":   "npm",
 		"releases":       "maven2",
 	}
 
-	err, act := repositoryNamesAndFormatsMap(testRepositoryNamesAndFormatsJSON)
+	act, err := repositoriesNamesAndFormatsJSONToMap(testRepositoryNamesAndFormatsJSON)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,10 +67,10 @@ func TestRepositoryNamesAndFormatsMap(t *testing.T) {
 // 	assert.Nil(t, n.RepositoryNames())
 // 	assert.Nil(t, n.Downloads(".*"))
 // }
-// func TestUnhappyFlow(t *testing.T) {
-// 	n.Pass = "incorrectPass"
-// 	assert.EqualError(t, n.CountRepositories(), testNexusAuthError)
-// 	assert.EqualError(t, n.RepositoryNames(), testNexusAuthError)
-// 	assert.EqualError(t, n.Downloads(".*"), testNexusAuthError)
-// 	n.Pass = "admin123"
-// }
+func TestUnhappyFlow(t *testing.T) {
+	n.Pass = "incorrectPass"
+	assert.EqualError(t, n.CountRepositories(), testNexusAuthError)
+	assert.EqualError(t, n.RepositoryNames(), testNexusAuthError)
+	assert.EqualError(t, n.Downloads(".*"), testNexusAuthError)
+	n.Pass = "admin123"
+}

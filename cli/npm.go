@@ -16,7 +16,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func (n *Nexus3) BackupAllNPMArtifacts(repository string) error {
+func (n *Nexus3) BackupAllNPMArtifacts(repository, dir string) error {
 	url := n.URL + "/service/rest/repository/browse/" + repository
 	npmRepoHTML, err := n.npmURL(url)
 	if err != nil {
@@ -30,7 +30,7 @@ func (n *Nexus3) BackupAllNPMArtifacts(repository string) error {
 	}
 	log.Debugf("npmArtifactDirectoriesHTMLNodes: '%v'", npmArtifactDirectoriesHTMLNodes)
 
-	n.boo(npmArtifactDirectoriesHTMLNodes, url)
+	n.boo(npmArtifactDirectoriesHTMLNodes, url, dir)
 
 	return nil
 }
@@ -60,12 +60,12 @@ func npmArtifactRepositories(s string) ([]*html.Node, error) {
 	return bodies, nil
 }
 
-func (n *Nexus3) boo(npmArtifactDirectoriesHTMLNodes []*html.Node, url string) {
+func (n *Nexus3) boo(npmArtifactDirectoriesHTMLNodes []*html.Node, url, dir string) {
 	errs := make(chan error)
 	for _, npmArtifactDirectoriesHTMLNode := range npmArtifactDirectoriesHTMLNodes {
 		npmArtifactDirectory := goquery.NewDocumentFromNode(npmArtifactDirectoriesHTMLNode).Text()
 		log.Debugf("npmArtifactDirectory: '%v'", npmArtifactDirectory)
-		n.wat(errs, npmArtifactDirectory, url)
+		n.wat(errs, npmArtifactDirectory, url, dir)
 	}
 }
 
@@ -74,7 +74,7 @@ func (n *Nexus3) boo(npmArtifactDirectoriesHTMLNodes []*html.Node, url string) {
 //
 //
 //
-func (n *Nexus3) Bladibla(url string) error {
+func (n *Nexus3) Bladibla(url, dir string) error {
 	resp, err := grequests.Get(url, &grequests.RequestOptions{Auth: []string{n.User, n.Pass}})
 	if err != nil {
 		return err
@@ -96,11 +96,11 @@ func (n *Nexus3) Bladibla(url string) error {
 		errs := make(chan error)
 		go func(n *Nexus3, body *html.Node, url string) {
 			log.Debugf("Go Channel length (inside go routine): '%d'", len(errs))
-			n.wat(errs, "", url)
+			n.wat(errs, "", url, dir)
 		}(n, body, url)
 		time.Sleep(100 * time.Millisecond)
 		d := <-errs
-		fmt.Println("Main goroutine received data:", d)
+		log.Debug("Main goroutine received data:", d)
 	}
 
 	// if err := <-errs; err != nil {
@@ -109,12 +109,12 @@ func (n *Nexus3) Bladibla(url string) error {
 	return nil
 }
 
-func (n *Nexus3) wat(errs chan error, s string, url string) error {
+func (n *Nexus3) wat(errs chan error, s, url, dir string) error {
 	if s != "Parent Directory" {
 		log.Debug(s)
 		url2 := url + "/" + s
-		fmt.Println("URL: ", url2)
-		fmt.Println("Extension: ", filepath.Ext(url2))
+		log.Debug("URL: ", url2)
+		log.Debug("Extension: ", filepath.Ext(url2))
 
 		if filepath.Ext(url2) == ".tgz" {
 			go func(errs chan error) {
@@ -130,18 +130,19 @@ func (n *Nexus3) wat(errs chan error, s string, url string) error {
 				group := re.FindStringSubmatch(url2)
 				url2 = group[1] + "/repository/" + group[2] + "/-/" + group[3]
 
-				fmt.Println("Download URL: " + url2)
+				log.Debug("Download URL: " + url2)
 				resp, err := grequests.Get(url2, &grequests.RequestOptions{Auth: []string{n.User, n.Pass}})
 				if err != nil {
 					// return err
 					log.Error("===============================")
 				}
-				fmt.Println("FILEPATH", filepath.Join("testi/", group[2], group[3]))
-				os.MkdirAll(filepath.Join("testi/", group[2]), os.ModePerm)
-				if err := resp.DownloadToFile(filepath.Join("./testi/", group[2], group[3])); err != nil {
+				log.Debug("FILEPATH", filepath.Join(dir, group[2], group[3]))
+				os.MkdirAll(filepath.Join(dir, group[2]), os.ModePerm)
+				if err := resp.DownloadToFile(filepath.Join(dir, group[2], group[3])); err != nil {
 					// return err
 					log.Error("===============================")
 				}
+				fmt.Print("+")
 				errs <- nil
 			}(errs)
 			if err := <-errs; err != nil {
@@ -162,7 +163,7 @@ func (n *Nexus3) wat(errs chan error, s string, url string) error {
 		for _, npmArtifactDirectoriesHTMLNode := range npmArtifactDirectoriesHTMLNodes {
 			npmArtifactDirectory := goquery.NewDocumentFromNode(npmArtifactDirectoriesHTMLNode).Text()
 			log.Debugf("npmArtifactDirectory: '%v'", npmArtifactDirectory)
-			n.wat(errs, npmArtifactDirectory, url2)
+			n.wat(errs, npmArtifactDirectory, url2, dir)
 		}
 	}
 
