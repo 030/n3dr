@@ -138,9 +138,9 @@ func insecureCerts() {
 }
 
 func enableDebug() {
+	log.SetReportCaller(true)
 	if debug {
 		log.SetLevel(log.DebugLevel)
-		log.SetReportCaller(true)
 
 		// Added to be able to debug viper (used to read the config file)
 		// Viper is using a different logger
