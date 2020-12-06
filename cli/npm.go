@@ -46,7 +46,7 @@ func (n *Nexus3) npmURL(url string) (string, error) {
 	statusCode := resp.StatusCode
 	log.Debugf("URL: '%v'. StatusCode: '%v'", url, statusCode)
 	if statusCode != http.StatusOK {
-		return "", fmt.Errorf("StatusCode URL: '%s' not OK, but: '%d'", url, statusCode)
+		log.Debugf("StatusCode URL: '%s' not OK, but: '%d'", url, statusCode)
 	}
 	return resp.String(), nil
 }
