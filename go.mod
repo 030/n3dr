@@ -4,8 +4,6 @@ go 1.15
 
 require (
 	github.com/030/go-multipart v1.0.2
-	github.com/030/go-utils v0.0.0-20190427204242-b7d6df265912
-	github.com/030/mij v0.12.1
 	github.com/PuerkitoBio/goquery v1.6.0
 	github.com/andybalholm/cascadia v1.2.0
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
@@ -31,6 +29,5 @@ require (
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b
 	golang.org/x/sys v0.0.0-20200519105757-fe76b779f299 // indirect
-	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/validator.v2 v2.0.0-20200605151824-2b28d334fa05
 )
