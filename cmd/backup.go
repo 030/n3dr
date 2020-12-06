@@ -1,14 +1,16 @@
 package cmd
 
 import (
-	"n3dr/cli"
 	"strings"
+
+	"github.com/030/n3dr/cli"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 var regex string
+var npm bool
 
 // backupCmd represents the backup command
 var backupCmd = &cobra.Command{
@@ -29,9 +31,18 @@ reside in a certain Nexus3 repository`,
 			if err := n.ValidateNexusURL(); err != nil {
 				log.Fatal(err)
 			}
-			if err := n.StoreArtifactsOnDiskChannel(dir, regex); err != nil {
-				log.Fatal(err)
+
+			if npm {
+				log.Info("Backing up an NPM repository...")
+				if err := n.BackupAllNPMArtifacts(repository, dir); err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				if err := n.StoreArtifactsOnDiskChannel(dir, regex); err != nil {
+					log.Fatal(err)
+				}
 			}
+
 			if err := n.CreateZip(dir); err != nil {
 				log.Fatal(err)
 			}
@@ -42,6 +53,7 @@ reside in a certain Nexus3 repository`,
 
 func init() {
 	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repositories")
+	backupCmd.Flags().BoolVarP(&npm, "npm", "", false, "backup an NPM repository")
 	backupCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 
 	if err := backupCmd.MarkPersistentFlagRequired("n3drRepo"); err != nil {
