@@ -30,7 +30,9 @@ func (n *Nexus3) BackupAllNPMArtifacts(repository, dir string) error {
 	}
 	log.Debugf("npmArtifactDirectoriesHTMLNodes: '%v'", npmArtifactDirectoriesHTMLNodes)
 
-	n.boo(npmArtifactDirectoriesHTMLNodes, url, dir)
+	if err := n.boo(npmArtifactDirectoriesHTMLNodes, url, dir); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -60,13 +62,16 @@ func npmArtifactRepositories(s string) ([]*html.Node, error) {
 	return bodies, nil
 }
 
-func (n *Nexus3) boo(npmArtifactDirectoriesHTMLNodes []*html.Node, url, dir string) {
+func (n *Nexus3) boo(npmArtifactDirectoriesHTMLNodes []*html.Node, url, dir string) error {
 	errs := make(chan error)
 	for _, npmArtifactDirectoriesHTMLNode := range npmArtifactDirectoriesHTMLNodes {
 		npmArtifactDirectory := goquery.NewDocumentFromNode(npmArtifactDirectoriesHTMLNode).Text()
 		log.Debugf("npmArtifactDirectory: '%v'", npmArtifactDirectory)
-		n.wat(errs, npmArtifactDirectory, url, dir)
+		if err := n.wat(errs, npmArtifactDirectory, url, dir); err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
 func (n *Nexus3) Bladibla(url, dir string) error {
@@ -91,7 +96,8 @@ func (n *Nexus3) Bladibla(url, dir string) error {
 		errs := make(chan error)
 		go func(n *Nexus3, body *html.Node, url string) {
 			log.Debugf("Go Channel length (inside go routine): '%d'", len(errs))
-			n.wat(errs, "", url, dir)
+			err := n.wat(errs, "", url, dir)
+			log.Errorf("Error wat function: '%v'", err)
 		}(n, body, url)
 		time.Sleep(100 * time.Millisecond)
 		d := <-errs
@@ -129,7 +135,9 @@ func (n *Nexus3) wat(errs chan error, s, url, dir string) error {
 		for _, npmArtifactDirectoriesHTMLNode := range npmArtifactDirectoriesHTMLNodes {
 			npmArtifactDirectory := goquery.NewDocumentFromNode(npmArtifactDirectoriesHTMLNode).Text()
 			log.Debugf("npmArtifactDirectory: '%v'", npmArtifactDirectory)
-			n.wat(errs, npmArtifactDirectory, url2, dir)
+			if err := n.wat(errs, npmArtifactDirectory, url2, dir); err != nil {
+				return err
+			}
 		}
 	}
 
@@ -137,7 +145,7 @@ func (n *Nexus3) wat(errs chan error, s, url, dir string) error {
 }
 
 func (n *Nexus3) foo(url, dir string) error {
-	re, err := regexp.Compile("^(.*)/service\\/rest\\/repository\\/browse\\/(.*)\\/(.*)$")
+	re, err := regexp.Compile("^(.*)/service/rest/repository/browse/(.*)/(.*)$")
 	if err != nil {
 		return err
 	}
@@ -153,7 +161,9 @@ func (n *Nexus3) foo(url, dir string) error {
 		return err
 	}
 	log.Debug("FILEPATH", filepath.Join(dir, group[2], group[3]))
-	os.MkdirAll(filepath.Join(dir, group[2]), os.ModePerm)
+	if err := os.MkdirAll(filepath.Join(dir, group[2]), os.ModePerm); err != nil {
+		return err
+	}
 	if err := resp.DownloadToFile(filepath.Join(dir, group[2], group[3])); err != nil {
 		return err
 	}
