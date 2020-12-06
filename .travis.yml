@@ -5,7 +5,7 @@
 # yamllint disable rule:line-length
 language: go
 go:
-  - 1.14.4
+  - 1.15.6
 env:
   global:
     - ARTIFACT_PUBLICATION=true
