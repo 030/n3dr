@@ -62,17 +62,16 @@ func (n *Nexus3) ValidateNexusURL() error {
 type requestJSONResponse struct {
 	bytes   []byte
 	strings string
-	err     error
 }
 
-func (n Nexus3) request(url string) requestJSONResponse {
+func (n Nexus3) request(url string) (requestJSONResponse, error) {
 	n.validate()
 
 	log.WithFields(log.Fields{"URL": url, "User": n.User}).Debug("URL Request")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return requestJSONResponse{}
+		return requestJSONResponse{}, err
 	}
 
 	req.Header.Set("Accept", "application/json")
@@ -80,9 +79,9 @@ func (n Nexus3) request(url string) requestJSONResponse {
 
 	bodyBytes, bodyString, err := n.response(req)
 	if err != nil {
-		return requestJSONResponse{}
+		return requestJSONResponse{}, err
 	}
-	return requestJSONResponse{bodyBytes, bodyString, err}
+	return requestJSONResponse{bodyBytes, bodyString}, nil
 }
 
 func (n Nexus3) response(req *http.Request) ([]byte, string, error) {
