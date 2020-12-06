@@ -21,7 +21,7 @@ func (n *Nexus3) repositoriesNamesAndFormatsJSON() (string, error) {
 
 	json := resp.strings
 	if err := validate.New().Var(json, "required,json"); err != nil {
-		return "", err
+		return "", fmt.Errorf("Response '%v' does not seem to be JSON. Error: '%v'", json, err)
 	}
 
 	return json, nil

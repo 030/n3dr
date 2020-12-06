@@ -5,11 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 None
+
+## [5.2.2] - 2020-12-06
 
 ### Fixed
 
 - Backup of NPM repositories
+
+### Removed
+
+- Several superfluous tests
 
 ## [5.2.1] - 2020-09-12
 
@@ -381,7 +388,8 @@ None
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.2.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.2.2...HEAD
+[5.2.2]: https://github.com/030/n3dr/compare/5.2.1...5.2.2
 [5.2.1]: https://github.com/030/n3dr/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/030/n3dr/compare/5.1.1...5.2.0
 [5.1.1]: https://github.com/030/n3dr/compare/5.1.0...5.1.1
