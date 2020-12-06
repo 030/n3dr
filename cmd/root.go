@@ -95,7 +95,9 @@ func asci() error {
 }
 
 func initConfig() {
-	asci()
+	if err := asci(); err != nil {
+		log.Fatal(err)
+	}
 	enableDebug()
 	insecureCerts()
 	parseConfig(configFilePath())
