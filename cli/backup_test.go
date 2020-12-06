@@ -145,7 +145,7 @@ func TestCreateArtifact(t *testing.T) {
 
 func TestDownloadArtifact(t *testing.T) {
 	actualError := n.downloadArtifact(testDirDownload, "http://releasesoftwaremoreoften.com", "")
-	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain an artifactName"
+	expectedError := "URL: 'http://releasesoftwaremoreoften.com' does not seem to contain a Maven artifact"
 
 	if actualError.Error() != expectedError {
 		t.Errorf(errMsgTxt, expectedError, actualError)

@@ -1,4 +1,4 @@
-# n3dr
+# N3DR
 
 [![GoDoc Widget]][GoDoc]
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
@@ -254,6 +254,14 @@ ociBucket: nexus_dev_archives
 If you want to remove local copies (after object has been uploaded) add following to `~/.n3dr/config.yml`:
 ```
 removeLocalFile: true
+```
+
+### Backup NPM repositories
+
+Use the `--npm` parameter to backup NPM artifacts.
+
+```bash
+go run main.go backup -npm -n some-url -r some-npm-repo -d --npm
 ```
 
 ## Rationale for N3DR
