@@ -53,24 +53,25 @@ func TestRepositoryNamesAndFormatsMap(t *testing.T) {
 	}
 }
 
-// func TestRepositoryNamesJSON(t *testing.T) {
-// 	var expected interface{} = []interface{}{"maven-central", "maven-releases", "maven-snapshots", "nuget-hosted", "nuget.org-proxy"}
-// 	actual, _ := n.repositoriesSlice()
+func TestRepositoryNamesJSON(t *testing.T) {
+	expected := repositoriesNamesAndFormatsMap{
+		"maven-central":   "maven2",
+		"maven-releases":  "maven2",
+		"maven-snapshots": "maven2",
+		"nuget-hosted":    "nuget",
+		"nuget.org-proxy": "nuget",
+	}
+	actual, _ := n.repositoriesNamesAndFormatsJSONToMapIncludingRequest()
 
-// 	if !reflect.DeepEqual(expected, actual) {
-// 		t.Errorf("Expected: '%v'. Actual: '%v'", expected, actual)
-// 	}
-// }
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("Expected: '%v'. Actual: '%v'", expected, actual)
+	}
+}
 
-// func TestHappyFlow(t *testing.T) {
-// 	assert.Nil(t, n.CountRepositories())
-// 	assert.Nil(t, n.RepositoryNames())
-// 	assert.Nil(t, n.Downloads(".*"))
-// }
+func TestHappyFlow(t *testing.T) {
+	assert.Nil(t, n.CountRepositories())
+	assert.Nil(t, n.RepositoryNames())
+}
 func TestUnhappyFlow(t *testing.T) {
-	n.Pass = "incorrectPass"
-	assert.EqualError(t, n.CountRepositories(), testNexusAuthError)
-	assert.EqualError(t, n.RepositoryNames(), testNexusAuthError)
-	assert.EqualError(t, n.Downloads(".*"), testNexusAuthError)
-	n.Pass = "admin123"
+	assert.EqualError(t, n.Downloads(".*"), "Nexus repository format: 'nuget' download not supported")
 }
