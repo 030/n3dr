@@ -73,5 +73,5 @@ func TestHappyFlow(t *testing.T) {
 	assert.Nil(t, n.RepositoryNames())
 }
 func TestUnhappyFlow(t *testing.T) {
-	assert.EqualError(t, n.Downloads(".*"), "Nexus repository format: 'nuget' download not supported")
+	assert.Nil(t, n.Downloads(".*"))
 }
