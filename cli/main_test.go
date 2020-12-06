@@ -14,9 +14,8 @@ import (
 )
 
 const (
-	testDirDownload    = "/download"
-	testDirUpload      = "/testFiles"
-	testNexusAuthError = "ResponseCode: '401' and Message '401 Unauthorized' for URL: http://localhost:9999/service/rest/v1/repositories"
+	testDirDownload = "/download"
+	testDirUpload   = "/testFiles"
 )
 
 var n = Nexus3{
@@ -57,12 +56,11 @@ func shutdown(m *mij.DockerImage) {
 	m.Stop()
 
 	testFiles := filepath.Join(testDirHome, testDirUpload, "/file*")
-	testDownloads := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "*", "file*")
-	testDownloadsMetadata := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "maven-metadata*")
+	testDownloads := filepath.Join(testDirHome, testDirDownload, "*", "file*", "file*", "*", "file*")
+	testDownloadsMetadata := filepath.Join(testDirHome, testDirDownload, "*", "file*", "file*", "maven-metadata*")
 	cleanupFilesSlice := []string{testFiles, testDownloads, testDownloadsMetadata}
 	for _, f := range cleanupFilesSlice {
-		err := cleanupFiles(f)
-		if err != nil {
+		if err := cleanupFiles(f); err != nil {
 			log.Fatal(err)
 		}
 	}

@@ -60,12 +60,12 @@ func (n Nexus3) downloadURL(token string) ([]byte, error) {
 	log.Debug("DownloadURL: ", u)
 	urlString := u.String()
 
-	bodyBytes, _, err := n.request(urlString)
+	jsonResp, err := n.request(urlString)
 	if err != nil {
 		return nil, err
 	}
 
-	return bodyBytes, nil
+	return jsonResp.bytes, nil
 }
 
 func (n Nexus3) continuationToken(token string) (string, error) {
@@ -177,14 +177,14 @@ func (n Nexus3) artifactName(url string) (string, string, error) {
 	}
 
 	re := regexp.MustCompile("^.*?/" + n.Repository + "/(.*)/(.+)$")
-	match := re.FindStringSubmatch(url)
-	if match == nil {
-		return "", "", errors.New("URL: '" + url + "' does not seem to contain an artifactName")
+	if !re.MatchString(url) {
+		return "", "", fmt.Errorf("URL: '%s' does not seem to contain a Maven artifact", url)
 	}
 
-	d := match[1]
-	f := match[2]
-	log.Debug("ArtifactName directory: " + d + " and file: " + f)
+	group := re.FindStringSubmatch(url)
+	d := group[1]
+	f := group[2]
+	log.Debugf("ArtifactName directory: '%s' and file: '%s'"+d, f)
 
 	return d, f, nil
 }
@@ -195,12 +195,12 @@ func (n Nexus3) downloadArtifact(dir, url, md5 string) error {
 		return err
 	}
 
-	_, bodyString, err := n.request(url)
+	jsonResp, err := n.request(url)
 	if err != nil {
 		return err
 	}
 
-	if err := createArtifact(filepath.Join(dir, n.Repository, d), f, bodyString, md5); err != nil {
+	if err := createArtifact(filepath.Join(dir, n.Repository, d), f, jsonResp.strings, md5); err != nil {
 		return err
 	}
 	return nil
@@ -243,14 +243,16 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 	}
 	json := string(bytes)
 	jq := gojsonq.New().JSONString(json)
+	log.Debugf("JQ: '%v'", jq)
 	downloadURLAndMd5s := jq.From("items").Only("downloadUrl", "checksum.md5")
 
 	for _, downloadURLAndMd5 := range downloadURLAndMd5s.([]interface{}) {
+		log.Debugf("downloadURLAndMd5: '%v'", downloadURLAndMd5)
 		go func(downloadURLAndMd5 interface{}) {
 			downloadURL := fmt.Sprint(downloadURLAndMd5.(map[string]interface{})["downloadUrl"])
 			md5 := fmt.Sprint(downloadURLAndMd5.(map[string]interface{})["md5"])
 
-			log.Debug("Only download artifacts that match the regex: '" + regex + "'")
+			log.Debugf("Only download artifacts that match the regex: '%s'. URL: '%s'", regex, downloadURL)
 			r, err := regexp.Compile(regex)
 			if err != nil {
 				cerr <- err
@@ -260,6 +262,7 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 				// Exclude download of md5 and sha1 files as these are unavailable
 				// unless the metadata.xml is opened first
 				if !(filepath.Ext(downloadURL) == ".md5" || filepath.Ext(downloadURL) == ".sha1") {
+					log.Debugf("DownloadURL: '%v'", downloadURL)
 					if err := n.downloadArtifact(dir, downloadURL, md5); err != nil {
 						cerr <- err
 						return
@@ -286,7 +289,7 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 }
 
 func (n Nexus3) StoreArtifactsOnDiskChannel(dir, regex string) error {
-	fmt.Println("Backup: ", n.Repository)
+	log.Infof("Backing up: '%v'", n.Repository)
 	cerr := make(chan error)
 	defer close(cerr)
 	if err := n.continuationTokenRecursionChannel(cerr, "null", dir, regex); err != nil {

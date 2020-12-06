@@ -3,11 +3,13 @@ package cmd
 import (
 	"crypto/tls"
 	"fmt"
-	"n3dr/cli"
 	"net/http"
 	"os"
 	"path/filepath"
 
+	"github.com/030/n3dr/cli"
+
+	"github.com/gobuffalo/packr/v2"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -21,10 +23,10 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "n3dr",
+	Use:   "nd3r",
 	Short: "nexus3 Disaster Recovery (N3DR)",
-	Long: `n3dr is a tool that is able to download all artifacts from
-a certain Nexus3 repository.`,
+	Long: `N3DR is a tool that is capable of backing up all artifacts from a certain
+Nexus3 repository and restoring them.`,
 	Version: Version,
 }
 
@@ -36,9 +38,6 @@ func Execute() {
 }
 
 func init() {
-	enableDebug()
-	insecureCerts()
-
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/"+cli.DefaultCfgFileWithExt+")")
@@ -71,7 +70,7 @@ func configFile() (string, error) {
 	return file, nil
 }
 
-func initConfig() {
+func configFilePath() string {
 	if cfgFile != "" {
 		log.Infof("Reading configFile: '%v'", cfgFile)
 		viper.SetConfigFile(cfgFile)
@@ -82,7 +81,26 @@ func initConfig() {
 		}
 		cfgFile = file
 	}
-	parseConfig(cfgFile)
+	return cfgFile
+}
+
+func asci() error {
+	box := packr.New("logo", "../logo")
+	s, err := box.FindString("text-image-com-n3dr.txt")
+	if err != nil {
+		return err
+	}
+	fmt.Println(s)
+	return nil
+}
+
+func initConfig() {
+	if err := asci(); err != nil {
+		log.Fatal(err)
+	}
+	enableDebug()
+	insecureCerts()
+	parseConfig(configFilePath())
 	viper.AutomaticEnv()
 }
 
@@ -122,9 +140,9 @@ func insecureCerts() {
 }
 
 func enableDebug() {
+	log.SetReportCaller(true)
 	if debug {
 		log.SetLevel(log.DebugLevel)
-		log.SetReportCaller(true)
 
 		// Added to be able to debug viper (used to read the config file)
 		// Viper is using a different logger
