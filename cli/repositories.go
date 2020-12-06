@@ -11,8 +11,7 @@ import (
 type repositoriesNamesAndFormatsMap map[string]string
 
 func (n *Nexus3) repositoriesNamesAndFormatsJSON() (string, error) {
-	resp := n.request(n.URL + "/service/rest/" + n.APIVersion + "/repositories")
-	err := resp.err
+	resp, err := n.request(n.URL + "/service/rest/" + n.APIVersion + "/repositories")
 	if err != nil {
 		return "", err
 	}
@@ -95,7 +94,8 @@ func (n *Nexus3) repositoriesChannel(m repositoriesNamesAndFormatsMap, dir, rege
 			case "npm":
 				errs <- n.BackupAllNPMArtifacts(name, dir)
 			default:
-				errs <- fmt.Errorf("Nexus repository format: '%v' download not supported", format)
+				log.Warnf("Nexus repository format: '%v' download not supported", format)
+				errs <- nil
 			}
 		}(dir, format, name)
 	}

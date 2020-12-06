@@ -56,12 +56,12 @@ func shutdown(m *mij.DockerImage) {
 	m.Stop()
 
 	testFiles := filepath.Join(testDirHome, testDirUpload, "/file*")
-	testDownloads := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "*", "file*")
-	testDownloadsMetadata := filepath.Join(testDirHome, testDirDownload, n.Repository, "file*", "file*", "maven-metadata*")
+	testDownloads := filepath.Join(testDirHome, testDirDownload, "*", "file*", "file*", "*", "file*")
+	testDownloadsMetadata := filepath.Join(testDirHome, testDirDownload, "*", "file*", "file*", "maven-metadata*")
 	cleanupFilesSlice := []string{testFiles, testDownloads, testDownloadsMetadata}
 	for _, f := range cleanupFilesSlice {
 		if err := cleanupFiles(f); err != nil {
-			log.Warn(err)
+			log.Fatal(err)
 		}
 	}
 
