@@ -14,9 +14,8 @@ import (
 )
 
 const (
-	testDirDownload              = "/download"
-	testDirUpload                = "/testFiles"
-	testNexusJSONValidationError = "Response '' does not seem to be JSON. Error: 'Key: '' Error:Field validation for '' failed on the 'required' tag'"
+	testDirDownload = "/download"
+	testDirUpload   = "/testFiles"
 )
 
 var n = Nexus3{
