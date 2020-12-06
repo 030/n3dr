@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/030/go-multipart v1.0.2
+	github.com/030/go-utils v0.0.0-20190427204242-b7d6df265912
 	github.com/030/mij v0.12.1
 	github.com/PuerkitoBio/goquery v1.6.0
 	github.com/andybalholm/cascadia v1.2.0
