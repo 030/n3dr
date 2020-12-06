@@ -12,19 +12,19 @@ env:
     - SHA512_CMD=sha512sum
     - GO111MODULE=on
     - NEXUS_API_VERSION=v1
-    - NEXUS_VERSION=3.21.1
+    - NEXUS_VERSION=3.28.0
     - SHA512_CMD=sha512sum
 matrix:
   include:
-    - os: linux
-      dist: bionic
-      env:
-        - NEXUS_VERSION=latest
+    # - os: linux
+    #   dist: bionic
+    #env:
+    # Number of files that is backupped increased since 3.29.0
+    # - NEXUS_VERSION=latest
     - os: linux
       dist: bionic
       env:
         - ARTIFACT_PUBLICATION=false
-        - NEXUS_VERSION=3.21.1
     - os: linux
       dist: bionic
       env:
