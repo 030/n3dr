@@ -1,7 +1,7 @@
 ---
 name: n3dr
 base: core18
-version: "5.2.1"
+version: "5.2.2"
 summary: Nexus3 Disaster Recovery
 description: |
   Download all artifacts at once or migrate automatically from Nexus to Nexus.
@@ -29,7 +29,7 @@ parts:
     go-importpath: github.com/030/n3dr
     override-build: |
       GO111MODULE=on CGO_ENABLED=0 go build \
-        -ldflags "-X n3dr/cmd.Version=${SNAPCRAFT_PROJECT_VERSION}" \
+        -ldflags "-X github.com/030/n3dr/cmd.Version=${SNAPCRAFT_PROJECT_VERSION}" \
         -o $SNAPCRAFT_PART_INSTALL/n3dr
       $SNAPCRAFT_PART_INSTALL/n3dr --version
     stage:
