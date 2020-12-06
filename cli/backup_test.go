@@ -91,14 +91,14 @@ func TestStoreArtifactsOnDiskChannel(t *testing.T) {
 	}
 }
 
-// func TestDownloadURL(t *testing.T) {
-// 	_, actualError := n.downloadURL("some-token")
-// 	expectedError := "ResponseCode: '406' and Message '406 Not Acceptable' for URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token"
+func TestDownloadURL(t *testing.T) {
+	_, actualError := n.downloadURL("some-token")
+	expectedError := "ResponseCode: '406' and Message '406 Not Acceptable' for URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token"
 
-// 	if actualError.Error() != expectedError {
-// 		t.Errorf(errMsgTxt, expectedError, actualError)
-// 	}
-// }
+	if actualError.Error() != expectedError {
+		t.Errorf(errMsgTxt, expectedError, actualError)
+	}
+}
 
 func TestArtifactName(t *testing.T) {
 	actualDir, actualFile, _ := n.artifactName("http://localhost:9999/repository/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar")
