@@ -264,6 +264,24 @@ Use the `--npm` parameter to backup NPM artifacts.
 go run main.go backup -npm -n some-url -r some-npm-repo -d --npm
 ```
 
+## logo
+
+```bash
+go get -u github.com/gobuffalo/packr/v2/packr2
+~/go/bin/packr2 clean
+~/go/bin/packr2
+```
+
+Change the `cmd/cmd-packr.go`:
+
+```bash
+import _ "github.com/030/n3dr/packrd"
+```
+
+```bash
+go build
+```
+
 ## Rationale for N3DR
 
 Although there is a number of equivalent tools:
