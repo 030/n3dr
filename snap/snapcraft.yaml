@@ -29,6 +29,7 @@ parts:
     go-importpath: github.com/030/n3dr
     override-build: |
       GO111MODULE=on CGO_ENABLED=0 go build \
-        -ldflags "-X github.com/030/n3dr/cmd.Version=${SNAPCRAFT_PROJECT_VERSION}" \
+        -ldflags \
+        "-X github.com/030/n3dr/cmd.Version=${SNAPCRAFT_PROJECT_VERSION}" \
         -o $SNAPCRAFT_PART_INSTALL/n3dr
       $SNAPCRAFT_PART_INSTALL/n3dr --version
