@@ -37,3 +37,11 @@
   regex=".*The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: 'URL: regular expression mismatch'"
   [[ "$output" =~ $regex ]]
 }
+
+@test "invoking n3dr with version subcommand should return version" {
+  run ./n3dr --version
+  [ "$status" -eq 0 ]
+  echo $output
+  regex=".*nd3r version.*"
+  [[ "$output" =~ $regex ]]
+}
