@@ -16,11 +16,11 @@ env:
     - SHA512_CMD=sha512sum
 matrix:
   include:
-    # - os: linux
-    #   dist: bionic
-    #env:
-    # Number of files that is backupped increased since 3.29.0
-    # - NEXUS_VERSION=latest
+    - os: linux
+      dist: bionic
+      env:
+        #Number of files that is backupped increased since 3.29.0
+        - NEXUS_VERSION=latest
     - os: linux
       dist: bionic
       env:
