@@ -184,6 +184,11 @@ cleanup_downloads(){
   rm -f helloZip*zip
 }
 
+version(){
+  echo "Check whether ./n3dr --version returns version"
+  ./n3dr --version
+}
+
 main(){
   validate
   build
@@ -198,6 +203,7 @@ main(){
   regex
   zipName
   uploadDeb
+  version
   bats --tap tests.bats
 }
 
