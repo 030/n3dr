@@ -13,5 +13,3 @@ tests/gpg/output/
 vendor
 .vscode
 *.zip
-cmd/cmd-packr.go
-packrd

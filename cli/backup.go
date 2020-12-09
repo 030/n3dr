@@ -261,7 +261,8 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 			if r.MatchString(downloadURL) {
 				// Exclude download of md5 and sha1 files as these are unavailable
 				// unless the metadata.xml is opened first
-				if !(filepath.Ext(downloadURL) == ".md5" || filepath.Ext(downloadURL) == ".sha1") {
+				regexSha, _ := regexp.Compile("^.sha(1|256|512)$")
+				if !(filepath.Ext(downloadURL) == ".md5" || regexSha.MatchString(filepath.Ext(downloadURL))) {
 					log.Debugf("DownloadURL: '%v'", downloadURL)
 					if err := n.downloadArtifact(dir, downloadURL, md5); err != nil {
 						cerr <- err
