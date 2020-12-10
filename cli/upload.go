@@ -14,6 +14,7 @@ import (
 
 var foldersWithPOM strings.Builder
 var foldersWithPOMStringSlice []string
+var artifactIndex int
 
 // detectFoldersWithPOM checks whether there are folders with .pom files.
 // Without them, maven artifacts cannout be published to nexus3.
@@ -41,25 +42,52 @@ func (n Nexus3) detectFoldersWithPOM(d string) error {
 	return nil
 }
 
-func sbArtifact(path string, ext string, number string) string {
+func sbArtifact(sb *strings.Builder, path string, ext string) error {
 	log.Debug(ext + " found " + path)
-	return "maven2.asset" + number + "=@" + path + ",maven2.asset" + number + ".extension=" + ext + ","
+
+	_, err := fmt.Fprintf(sb, "maven2.asset%d=@%s,maven2.asset%d.extension=%s,", artifactIndex, path, artifactIndex, ext)
+	if err != nil {
+		return err
+	}
+
+	var version = filepath.Base(filepath.Dir(path))
+	var fileName = filepath.Base(path)
+	var fileNameWithoutExt = fileName[:len(fileName)-len(filepath.Ext(path))]
+	var fileParts = strings.Split(fileNameWithoutExt, "-")
+
+	if fileParts[len(fileParts)-1] != version {
+		_, err := fmt.Fprintf(sb, "maven2.asset%d.classifier=%s,", artifactIndex, fileParts[len(fileParts)-1])
+		if err != nil {
+			return err
+		}
+	}
+
+	artifactIndex++
+	return nil
 }
 
-func artifactTypeDetector(path string, sb strings.Builder) strings.Builder {
+func artifactTypeDetector(sb *strings.Builder, path string) error {
+	var err error = nil
+
 	switch ext := filepath.Ext(path); ext {
 	case ".pom":
-		sb.WriteString(sbArtifact(path, "pom", "1"))
+		err = sbArtifact(sb, path, "pom")
 	case ".jar":
-		sb.WriteString(sbArtifact(path, "jar", "2"))
+		err = sbArtifact(sb, path, "jar")
 	case ".war":
-		sb.WriteString(sbArtifact(path, "war", "3"))
+		err = sbArtifact(sb, path, "war")
+	case ".aar":
+		err = sbArtifact(sb, path, "aar")
+	case ".module":
+		err = sbArtifact(sb, path, "module")
 	case ".zip":
-		sb.WriteString(sbArtifact(path, "zip", "42"))
+		err = sbArtifact(sb, path, "zip")
 	default:
 		log.Debug(path + " not an artifact")
+		return nil
 	}
-	return sb
+
+	return err
 }
 
 func (n Nexus3) multipartUpload(sb strings.Builder) error {
@@ -79,12 +107,17 @@ func (n Nexus3) multipartUpload(sb strings.Builder) error {
 
 func pomDirs(p string) (strings.Builder, error) {
 	var sb strings.Builder
+	artifactIndex = 1
+
 	err := filepath.Walk(p, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if !f.IsDir() {
-			sb = artifactTypeDetector(path, sb)
+			err = artifactTypeDetector(&sb, path)
+			if err != nil {
+				return err
+			}
 		}
 		return nil
 	})
