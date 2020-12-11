@@ -67,7 +67,7 @@ func sbArtifact(sb *strings.Builder, path string, ext string) error {
 }
 
 func artifactTypeDetector(sb *strings.Builder, path string) error {
-	var err error = nil
+	var err error
 
 	switch ext := filepath.Ext(path); ext {
 	case ".pom":
