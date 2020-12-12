@@ -298,8 +298,8 @@ a single command.
 
 ## Logging
 
-`+`: maven
-`*`: npm
+* `+`: maven
+* `*`: npm
 
 ## Stargazers over time
 
