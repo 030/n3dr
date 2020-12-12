@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 None
 
+## [5.2.5] - 2020-12-12
+
+### Added
+
+- Module extensions, aar and classifier support added by [@arcao](https://github.com/arcao)
+
+### Changed
+
+- NPM marked as `*` in logging
+
 ## [5.2.4] - 2020-12-08
 
 ### Fixed
@@ -402,7 +412,8 @@ None
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.2.4...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.2.5...HEAD
+[5.2.5]: https://github.com/030/n3dr/compare/5.2.4...5.2.5
 [5.2.4]: https://github.com/030/n3dr/compare/5.2.3...5.2.4
 [5.2.3]: https://github.com/030/n3dr/compare/5.2.2...5.2.3
 [5.2.2]: https://github.com/030/n3dr/compare/5.2.1...5.2.2
