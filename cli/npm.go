@@ -167,6 +167,6 @@ func (n *Nexus3) foo(url, dir string) error {
 	if err := resp.DownloadToFile(filepath.Join(dir, group[2], group[3])); err != nil {
 		return err
 	}
-	fmt.Print("+")
+	fmt.Print("*")
 	return nil
 }
