@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+None
+
+## [5.2.6] - 2020-12-13
+
 ### Added
 
 - markdownlint
+
+### Fixed
+
+- Allow any kind of maven artifacts fix by [@michenux](https://github.com/Michenux)
 
 ## [5.2.5] - 2020-12-12
 
@@ -415,7 +423,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/5.2.5...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/5.2.6...HEAD
+[5.2.6]: https://github.com/030/n3dr/compare/5.2.5...5.2.6
 [5.2.5]: https://github.com/030/n3dr/compare/5.2.4...5.2.5
 [5.2.4]: https://github.com/030/n3dr/compare/5.2.3...5.2.4
 [5.2.3]: https://github.com/030/n3dr/compare/5.2.2...5.2.3
