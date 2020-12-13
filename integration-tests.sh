@@ -39,6 +39,8 @@ build(){
 nexus(){
   curl -L https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/df8c3140bbfe5a737990b0f4e96594851171f491/nexus-docker.sh -o start.sh
   chmod +x start.sh
+
+  # shellcheck disable=SC1091
   source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}"
 }
 
