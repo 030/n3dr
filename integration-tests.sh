@@ -18,7 +18,7 @@ NEXUS_VERSION="${1:-3.21.1}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
 
-readonly DOWNLOAD_LOCATION=/tmp/n3dr*
+readonly DOWNLOAD_LOCATION=/tmp/n3dr
 
 validate(){
   if [ -z "${TOOL}" ]; then
@@ -179,7 +179,7 @@ test_zip(){
 cleanup_downloads(){
   rm -rf REPO_NAME_HOSTED_APT
   rm -rf maven-releases
-  rm -rf ${DOWNLOAD_LOCATION}
+  rm -rf "${DOWNLOAD_LOCATION}"
   rm -f n3dr-backup-*zip
   rm -f helloZip*zip
 }
