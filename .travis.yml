@@ -19,7 +19,7 @@ matrix:
     - os: linux
       dist: bionic
       env:
-        #Number of files that is backupped increased since 3.29.0
+        # Number of files that is backupped increased since 3.29.0
         - NEXUS_VERSION=latest
     - os: linux
       dist: bionic
@@ -42,6 +42,7 @@ addons:
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb && sudo apt update -y && sudo apt-get -y install ./a2deb.deb bats; fi
 script:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v ${PWD}:/data markdownlint/markdownlint:0.11.0 README.md -s /data/.markdownlint.rb; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/data cytopia/yamllint .; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then wget -O - -q https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s v2.5.0 && ./bin/gosec --help && ./bin/gosec -exclude=G304,G307,G401,G402,G501 ./...; fi
