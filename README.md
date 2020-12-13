@@ -38,27 +38,31 @@
 [![n3dr](https://snapcraft.io//n3dr/badge.svg)](https://snapcraft.io/n3dr)
 [![codebeat badge](https://codebeat.co/badges/6c33543d-d05b-44e4-8924-140382148de9)](https://codebeat.co/projects/github-com-030-n3dr-master)
 
-<a href="https://n3dr.releasesoftwaremoreoften.com"><img src="https://github.com/030/n3dr/raw/master/logo/logo.png" width="100"></a>
+<a href="https://n3dr.releasesoftwaremoreoften.com">\
+<img src="https://github.com/030/n3dr/raw/master/logo/logo.png" width="100"></a>
 
 ## Backup or Migrate an entire Nexus Artifact Server
 
 Download all artifacts at once or migrate automatically from Nexus to Nexus.
 
 Although the [Nexus backup and restore documentation](https://help.sonatype.com/repomanager3/backup-and-restore)
-indicates that one could backup and restore Nexus, the data seems not to be restored completely as 500 errors
-occur when an artifact is downloaded from the UI after restore. It could also be possible that some steps were
-not issued as they have should been. Apart from that, the restore is capable of restoring the Nexus
-configuration.
+indicates that one could backup and restore Nexus, the data seems not to be
+restored completely as 500 errors occur when an artifact is downloaded from the
+UI after restore. It could also be possible that some steps were not issued as
+they have should been. Apart from that, the restore is capable of restoring the
+Nexus configuration.
 
-N3DR makes it possible to backup all artifacts from Nexus at once and to migrate/restore them to a Nexus server
-in another cloud.
+N3DR makes it possible to backup all artifacts from Nexus at once and to
+migrate/restore them to a Nexus server in another cloud.
 
-Note: uploads to proxy and snapshot repositories are not supported by Nexus itself. As a workaround one
-could create a hosted repository in Nexus and upload the backed up proxy content to it.
+Note: uploads to proxy and snapshot repositories are not supported by Nexus
+itself. As a workaround one could create a hosted repository in Nexus and
+upload the backed up proxy content to it.
 
 The aims of the n3dr tool are:
- * to backup all artifacts from a certain Nexus maven repository.
- * to migrate all artifacts from NexusA to NexusB.
+
+* to backup all artifacts from a certain Nexus maven repository.
+* to migrate all artifacts from NexusA to NexusB.
 
 ## Installation
 
@@ -101,11 +105,12 @@ In order to upload artifacts, additional privileges are required:
 
 ## Usage
 
-<a href="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH?autoplay=1"><img src="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH.svg" /></a>
+<a href="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH?autoplay=1">\
+<img src="https://asciinema.org/a/Oqwg69HJV0hFnnxxLZR6vbBeH.svg" /></a>
 
 ### Check the help menu
 
-```
+```bash
 user@computer:~/dev$ n3dr -h
 N3DR is a tool that is able to download all artifacts from
 a certain Nexus3 repository.
@@ -120,7 +125,8 @@ Available Commands:
   upload       Upload all artifacts to a specific Nexus3 repository
 
 Flags:
-  -v, --apiVersion string        The Nexus3 APIVersion, e.g. v1 or beta (default "v1")
+  -v, --apiVersion string        The Nexus3 APIVersion, e.g. v1 or beta
+                                 (default "v1")
   -d, --debug                    Enable debug logging
   -h, --help                     help for n3dr
       --insecureSkipVerify       Skip repository certificate check
@@ -128,7 +134,8 @@ Flags:
   -n, --n3drURL string           The Nexus3 URL
   -u, --n3drUser string          The Nexus3 user
   -z, --zip                      Add downloaded artifacts to a ZIP archive
-      --directory-prefix string  The directory prefix is the directory where artifacts will be saved    
+      --directory-prefix string  The directory prefix is the directory where
+                                 artifacts will be saved
 
 Use "n3dr [command] --help" for more information about a command.
 ```
@@ -142,14 +149,14 @@ option.
 
 Define the password in `~/.n3dr/config.yml`:
 
-```
+```bash
 ---
 n3drPass: admin123
 ```
 
 and set the permissions to read-write by issuing:
 
-```
+```bash
 chmod 0600 ~/.n3dr/config.yml
 ```
 
@@ -161,7 +168,7 @@ config file and one could use `--config` to overwrite the default config path.
 All artifacts from a repository will be stored in a download folder when
 the following command is run:
 
-```
+```bash
 n3dr backup -u admin -n http://localhost:8081 -r maven-releases
 ```
 
@@ -170,7 +177,7 @@ n3dr backup -u admin -n http://localhost:8081 -r maven-releases
 All artifacts from a repositories list will be stored in a download folder when
 the following command is run:
 
-```
+```bash
 n3dr backup -u admin -n http://localhost:8081 -r maven-releases,maven-private
 ```
 
@@ -179,7 +186,7 @@ n3dr backup -u admin -n http://localhost:8081 -r maven-releases,maven-private
 All artifacts from various repositories will be stored in a download
 folder when the following command is issued:
 
-```
+```bash
 n3dr repositories -u admin -n http://localhost:8081 -b
 ```
 
@@ -194,14 +201,14 @@ It is possible to only download artifacts that match a regular expression. If
 one would like to download all artifacts from 'some/group42' then one could do
 that as follows:
 
-```
+```bash
 n3dr backup -u admin -n http://localhost:8081 -r maven-releases -x 'some/group42'
 ```
 
 If one would like to deploy is while download from all repositories then use
 the `-x` option as well:
 
-```
+```bash
 n3dr repositories -u admin -n http://localhost:8081 -b -x 'some/group42'
 ```
 
@@ -217,7 +224,7 @@ the `-i` option. Note: the extension '.zip' is obliged.
 It is possible to upload all JARs that reside in a folder by
 running the following command:
 
-```
+```bash
 n3dr upload -u admin -n http://localhost:8081 -r maven-public
 ```
 
@@ -233,7 +240,7 @@ Suppose that one has created a new Nexus3 repository, e.g. NexusNEW and that
 one would like to copy the content of the old repository, e.g. NexusOLD, then
 these basic steps could be issued to "clone" NexusOLD:
 
-```
+```bash
 n3dr backup -u <old-nexus3-user> -n <old-nexus3-server-url> \
 -r <old-repo-source-name>
 cd download
@@ -243,16 +250,21 @@ n3dr upload -u <new-target-nexus3-user> -n <new-target-nexus3-server-url> \
 ```
 
 ### Backup to OCI Object Storage
+
 `n3dr` supports backing up to [OCI Object Storage](https://www.oracle.com/cloud/storage/object-storage.html).
 To enable this option you need to
-- Configure OCI environment and secrets locally: https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm
-- Add following options to `~/.n3dr/config.yml`:
-```
+
+* Configure OCI environment and secrets locally: <https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm/>
+* Add following options to `~/.n3dr/config.yml`:
+
+```bash
 ociBucket: nexus_dev_archives
 ```
 
-If you want to remove local copies (after object has been uploaded) add following to `~/.n3dr/config.yml`:
-```
+If you want to remove local copies (after the object has been uploaded), add
+following to `~/.n3dr/config.yml`:
+
+```bash
 removeLocalFile: true
 ```
 
@@ -286,9 +298,9 @@ go build
 
 Although there is a number of equivalent tools:
 
-* https://github.com/RiotGamesMinions/nexus_cli
-* https://github.com/packagemgmt/repositorytools
-* https://github.com/thiagofigueiro/nexus3-cli
+* <https://github.com/RiotGamesMinions/nexus_cli/>
+* <https://github.com/packagemgmt/repositorytools/>
+* <https://github.com/thiagofigueiro/nexus3-cli/>
 
 None of them seems to be able to backup all repositories by running
 a single command.
