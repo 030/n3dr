@@ -10,7 +10,7 @@ if [ -z "${APT_GPG_SECRET}" ]; then
   echo "sudo rm -r /tmp/gpg-output"
   echo "rm tests/gpg/my_rsa_key"
   echo
-  echo "Note: Spaces and enters have to be escaped, i.e. '\n'->'\\n' and ' '->'\ ' if the token is used in travis."
+  printf "Note: Spaces and enters have to be escaped, i.e. '\\\n'->'\\\\\\\n' and ' '->'\ ' if the token is used in travis."
   exit 1
 fi
 
@@ -39,7 +39,7 @@ build(){
 nexus(){
   curl -L https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/df8c3140bbfe5a737990b0f4e96594851171f491/nexus-docker.sh -o start.sh
   chmod +x start.sh
-  source ./start.sh $NEXUS_VERSION $NEXUS_API_VERSION
+  source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}"
 }
 
 artifact(){
@@ -55,14 +55,14 @@ files(){
 
 upload(){
   echo "Testing upload..."
-  $TOOL upload -u admin -p $PASSWORD -r maven-releases -n http://localhost:9999 -v "${NEXUS_API_VERSION}"
+  $TOOL upload -u admin -p "${PASSWORD}" -r maven-releases -n http://localhost:9999 -v "${NEXUS_API_VERSION}"
   echo
 }
 
 uploadDeb(){
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     echo "Creating apt repo..."
-    curl -u admin:$PASSWORD \
+    curl -u "admin:${PASSWORD}" \
          -X POST "http://localhost:9999/service/rest/beta/repositories/apt/hosted" \
          -H "accept: application/json" \
          -H "Content-Type: application/json" \
@@ -104,13 +104,13 @@ anonymous(){
 
 backup(){
   echo "Testing backup..."
-  $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -z
+  $TOOL backup -n http://localhost:9999 -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
   backupHelper
 }
 
 regex(){
   echo "Testing backup regex..."
-  $TOOL backup -n http://localhost:9999 -u admin -p $PASSWORD -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
+  $TOOL backup -n http://localhost:9999 -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -120,7 +120,7 @@ regex(){
   fi
   cleanup_downloads
   echo -e "\nTesting repositories regex..."
-  $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
+  $TOOL repositories -n http://localhost:9999 -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -150,9 +150,9 @@ repositories(){
 
 zipName(){
   echo "Testing zipName..."
-  $TOOL backup -n=http://localhost:9999 -u=admin -p=$PASSWORD -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
-  $TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION} -b -z -i=helloZipRepositoriesFile.zip
-  ls helloZip* | wc -l | grep 2
+  $TOOL backup -n=http://localhost:9999 -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
+  $TOOL repositories -n http://localhost:9999 -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
+  find . -name "helloZip*" -type f | wc -l | grep 2
 }
 
 clean(){
@@ -162,31 +162,32 @@ clean(){
 
 count_downloads(){
   local actual
-  actual=$(find $DOWNLOAD_LOCATION -type f | wc -l)
-  echo "Expected: ${1}"
-  echo "Actual: ${actual}"
+  actual=$(find ${DOWNLOAD_LOCATION} -type f | wc -l)
+  echo "Expected number of artifacts: ${1}"
+  echo "Actual number of artifacts: ${actual}"
   echo "${actual}" | grep "${1}"
 }
 
 test_zip(){
   local size
   size=$(du n3dr-backup-*zip)
-  echo "Actual: ${size}"
-  echo "Expected: ${1}"
+  echo "Actual ZIP size: ${size}"
+  echo "Expected ZIP size: ${1}"
   echo "${size}" | grep "^${1}"
 }
 
 cleanup_downloads(){
   rm -rf REPO_NAME_HOSTED_APT
   rm -rf maven-releases
-  rm -rf $DOWNLOAD_LOCATION
+  rm -rf ${DOWNLOAD_LOCATION}
   rm -f n3dr-backup-*zip
   rm -f helloZip*zip
 }
 
 version(){
   echo "Check whether ./n3dr (DELIVERABLE: ${DELIVERABLE}) --version returns version"
-  ./${DELIVERABLE} --version
+  "./${DELIVERABLE}" --version
+  echo
 }
 
 main(){
