@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -42,7 +43,7 @@ func (n Nexus3) detectFoldersWithPOM(d string) error {
 	return nil
 }
 
-func sbArtifact(sb *strings.Builder, path string, ext string) error {
+func sbArtifact(sb *strings.Builder, path string, ext string, classifier string) error {
 	log.Debug(ext + " found " + path)
 
 	_, err := fmt.Fprintf(sb, "maven2.asset%d=@%s,maven2.asset%d.extension=%s,", artifactIndex, path, artifactIndex, ext)
@@ -50,13 +51,8 @@ func sbArtifact(sb *strings.Builder, path string, ext string) error {
 		return err
 	}
 
-	var version = filepath.Base(filepath.Dir(path))
-	var fileName = filepath.Base(path)
-	var fileNameWithoutExt = fileName[:len(fileName)-len(filepath.Ext(path))]
-	var fileParts = strings.Split(fileNameWithoutExt, "-")
-
-	if fileParts[len(fileParts)-1] != version {
-		_, err := fmt.Fprintf(sb, "maven2.asset%d.classifier=%s,", artifactIndex, fileParts[len(fileParts)-1])
+	if len(classifier) > 0 {
+		_, err := fmt.Fprintf(sb, "maven2.asset%d.classifier=%s,", artifactIndex, classifier)
 		if err != nil {
 			return err
 		}
@@ -69,20 +65,15 @@ func sbArtifact(sb *strings.Builder, path string, ext string) error {
 func artifactTypeDetector(sb *strings.Builder, path string) error {
 	var err error
 
-	switch ext := filepath.Ext(path); ext {
-	case ".pom":
-		err = sbArtifact(sb, path, "pom")
-	case ".jar":
-		err = sbArtifact(sb, path, "jar")
-	case ".war":
-		err = sbArtifact(sb, path, "war")
-	case ".aar":
-		err = sbArtifact(sb, path, "aar")
-	case ".module":
-		err = sbArtifact(sb, path, "module")
-	case ".zip":
-		err = sbArtifact(sb, path, "zip")
-	default:
+	re := regexp.MustCompile(`^.*\/([\w-]+)-([\d.]+)-?([\w-]+)?\.(\w+)$`)
+	if re.Match([]byte(path)) {
+		result := re.FindAllStringSubmatch(path, -1)
+		//artifact := result[0][1]
+		//version := result[0][2]
+		classifier := result[0][3]
+		ext := result[0][4]
+		err = sbArtifact(sb, path, ext, classifier)
+	} else {
 		log.Debug(path + " not an artifact")
 		return nil
 	}
