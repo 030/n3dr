@@ -30,6 +30,10 @@ ould be run."
     echo "NEXUS_VERSION and NEXUS_API_VERSION should be specified."
     exit 1
   fi
+  if [ -d "${DOWNLOAD_LOCATION}" ]; then
+    echo "Ensure that ${DOWNLOAD_LOCATION} does not exist"
+    exit 1
+  fi
 }
 
 build(){
@@ -56,6 +60,12 @@ files(){
 }
 
 upload(){
+  echo "#134 archetype-catalog download issue"
+  echo "URL:"
+  echo "http://localhost:9999/repository/maven-releases/archetype-catalog.xml"
+  echo "does not seem to contain a Maven artifact"
+  curl -f http://localhost:9999/repository/maven-releases/archetype-catalog.xml
+
   echo "Testing upload..."
   $TOOL upload -u admin -p "${PASSWORD}" -r maven-releases -n http://localhost:9999 -v "${NEXUS_API_VERSION}"
   echo

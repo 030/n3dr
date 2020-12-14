@@ -262,7 +262,10 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 				// Exclude download of md5 and sha1 files as these are unavailable
 				// unless the metadata.xml is opened first
 				regexSha, _ := regexp.Compile("^.sha(1|256|512)$")
-				if !(filepath.Ext(downloadURL) == ".md5" || regexSha.MatchString(filepath.Ext(downloadURL))) {
+
+				// GH-134: archetype-catalog.xml should be skipped to prevent 'archetype-catalog.xml' does not seem to contain a Maven artifact' issues
+				regexArchetypeCatalog := regexp.MustCompile("^.*?/" + n.Repository + "/archetype-catalog.xml$")
+				if !(filepath.Ext(downloadURL) == ".md5" || regexSha.MatchString(filepath.Ext(downloadURL)) || regexArchetypeCatalog.MatchString(downloadURL)) {
 					log.Debugf("DownloadURL: '%v'", downloadURL)
 					if err := n.downloadArtifact(dir, downloadURL, md5); err != nil {
 						cerr <- err
