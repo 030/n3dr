@@ -232,8 +232,8 @@ n3dr upload -u admin -n http://localhost:8081 -r maven-public
 #### Upload non maven files
 
 It is possible to upload non maven files like deb files as well by setting the
-maven option to false, e.g. `-m=false`. Note that the folder name that contains
-the files should match the repository name.
+artifactType option to the repository type, e.g. `-t=apt`. Note that the folder
+name that contains the files should match the repository name.
 
 ### "Clone" a Nexus3 repository
 
@@ -315,7 +315,8 @@ a single command.
 |--------|--------|--------|-------|
 | apt    |        | x      |       |
 | maven2 | x      | x      | `+`   |
-| npm    | x      |        | `*`   |
+| npm    | x      | x      | `*`   |
+| nuget  |        | x      |       |
 
 ## Stargazers over time
 

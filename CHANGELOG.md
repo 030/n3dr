@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- npm upload
+- nuget upload
+
+### Changed
+
+- maven parameter replaced by `--artifactType`
+
 ## [5.2.7] - 2020-12-14
 
 ### Added
