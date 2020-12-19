@@ -122,160 +122,166 @@ func pomDirs(p string) (strings.Builder, error) {
 	return sb, nil
 }
 
+func (n *Nexus3) readFiles() ([]string, error) {
+	file, err := os.Open(n.Repository)
+	if err != nil {
+		return nil, err
+	}
+	names, err := file.Readdirnames(0)
+	if err != nil {
+		return nil, err
+	}
+	return names, err
+}
+
+func (n *Nexus3) uploadFile(file string, req *http.Request) error {
+	req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
+	req.Header.Set("Content-Type", "multipart/form-data")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusCreated {
+		log.Infof("Upload of %v Ok. StatusCode: %v.", file, resp.StatusCode)
+	} else {
+		log.Error(resp)
+		return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
+	}
+	return nil
+}
+
+func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, req *http.Request, statusCreated int) error {
+	req.Header.Add("Content-Type", writer.FormDataContentType())
+	req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// For some reason a 200 instead of 201 is returned if an NPM has been uploaded
+	if resp.StatusCode == statusCreated {
+		log.Infof("Upload of %v Ok. StatusCode: %v.", file, resp.StatusCode)
+	} else {
+		log.Error(resp)
+		return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
+	}
+	return nil
+}
+
+func (n *Nexus3) openFileAndUpload(file string) error {
+	log.Infof("Uploading file %v to %v", file, n.URL)
+
+	f, err := os.Open("./" + n.Repository + "/" + file)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	req, err := http.NewRequest("POST", n.URL+"/repository/"+n.Repository+"/", f)
+	if err != nil {
+		return err
+	}
+	if err := n.uploadFile(file, req); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (n *Nexus3) openMultipartFileAndUpload(f, httpMethod, uri string, statusCreated int) error {
+	log.Infof("Uploading file %v to %v", f, n.URL)
+	fileDir, _ := os.Getwd()
+	fileName := f
+	filePath := path.Join(fileDir, n.Repository, fileName)
+
+	file, _ := os.Open(filePath)
+	defer file.Close()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, _ := writer.CreateFormFile("file", filepath.Base(file.Name()))
+	io.Copy(part, file)
+	writer.Close()
+	log.Infof("Upload Method: '%v', URL: '%v'", httpMethod, n.URL+uri)
+	req, err := http.NewRequest(httpMethod, n.URL+uri, body)
+	if err != nil {
+		return err
+	}
+
+	if err := n.uploadMultipartFile(file, writer, req, statusCreated); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (n *Nexus3) readMultipartFilesAndUpload(httpMethod, uri string, statusCreated int) error {
+	files, err := n.readFiles()
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		if err := n.openMultipartFileAndUpload(file, httpMethod, uri, statusCreated); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (n *Nexus3) readFilesAndUpload() error {
+	files, err := n.readFiles()
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		if err := n.openFileAndUpload(file); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (n *Nexus3) readMavenFilesAndUpload() error {
+	if err := n.detectFoldersWithPOM(n.Repository); err != nil {
+		return err
+	}
+	for i, path := range foldersWithPOMStringSlice {
+		log.Debug(strconv.Itoa(i) + " Detecting artifacts in folder '" + path + "'")
+		sb, err := pomDirs(path)
+		if err != nil {
+			return err
+		}
+		log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
+		if err := n.multipartUpload(sb); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // Upload posts an artifact as a multipart to a specific nexus3 repository
 func (n Nexus3) Upload() error {
 	log.Infof("Uploading '%s'", n.ArtifactType)
 	switch n.ArtifactType {
 	case "apt":
-		file, err := os.Open(n.Repository)
-		if err != nil {
+		if err := n.readFilesAndUpload(); err != nil {
 			return err
-		}
-		names, err := file.Readdirnames(0)
-		if err != nil {
-			return err
-		}
-
-		for _, name := range names {
-			log.Infof("Uploading file %v to %v", name, n.URL)
-
-			f, err := os.Open("./" + n.Repository + "/" + name)
-			if err != nil {
-				return err
-			}
-			defer f.Close()
-			req, err := http.NewRequest("POST", n.URL+"/repository/"+n.Repository+"/", f)
-			if err != nil {
-				return err
-			}
-			req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
-			req.Header.Set("Content-Type", "multipart/form-data")
-			resp, err := http.DefaultClient.Do(req)
-			if err != nil {
-				return err
-			}
-			defer resp.Body.Close()
-
-			if resp.StatusCode == http.StatusCreated {
-				log.Infof("Upload of %v Ok. StatusCode: %v.", name, resp.StatusCode)
-			} else {
-				log.Error(resp)
-				return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", name, n.URL, resp.StatusCode)
-			}
 		}
 	case "maven2":
-		if err := n.detectFoldersWithPOM(n.Repository); err != nil {
+		if err := n.readMavenFilesAndUpload(); err != nil {
 			return err
-		}
-		for i, path := range foldersWithPOMStringSlice {
-			log.Debug(strconv.Itoa(i) + " Detecting artifacts in folder '" + path + "'")
-			sb, err := pomDirs(path)
-			if err != nil {
-				return err
-			}
-			log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
-			if err := n.multipartUpload(sb); err != nil {
-				return err
-			}
 		}
 	case "npm":
-		file, err := os.Open(n.Repository)
-		if err != nil {
+		if err := n.readMultipartFilesAndUpload("POST", "/service/rest/internal/ui/upload/"+n.Repository, http.StatusOK); err != nil {
 			return err
-		}
-		names, err := file.Readdirnames(0)
-		if err != nil {
-			return err
-		}
-		fmt.Println(names)
-
-		for _, name := range names {
-			fmt.Println("./" + n.Repository + "/" + name)
-			fileDir, _ := os.Getwd()
-			fileName := name
-			filePath := path.Join(fileDir, n.Repository, fileName)
-
-			file, _ := os.Open(filePath)
-			defer file.Close()
-
-			body := &bytes.Buffer{}
-			writer := multipart.NewWriter(body)
-			part, _ := writer.CreateFormFile("file", filepath.Base(file.Name()))
-			io.Copy(part, file)
-			writer.Close()
-
-			fmt.Println(n.URL + "/service/rest/internal/ui/upload/" + n.Repository)
-			req, err := http.NewRequest("POST", n.URL+"/service/rest/internal/ui/upload/"+n.Repository, body)
-			if err != nil {
-				return err
-			}
-			req.Header.Add("Content-Type", writer.FormDataContentType())
-			req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
-
-			resp, err := http.DefaultClient.Do(req)
-			if err != nil {
-				return err
-			}
-			defer resp.Body.Close()
-
-			// For some reason a 200 instead of 201 is returned if an NPM has been uploaded
-			if resp.StatusCode == http.StatusOK {
-				log.Infof("Upload of %v Ok. StatusCode: %v.", name, resp.StatusCode)
-			} else {
-				log.Error(resp)
-				return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", name, n.URL, resp.StatusCode)
-			}
 		}
 	case "nuget":
-		file, err := os.Open(n.Repository)
-		if err != nil {
+		if err := n.readMultipartFilesAndUpload("PUT", "/repository/"+n.Repository+"/", http.StatusCreated); err != nil {
 			return err
-		}
-		names, err := file.Readdirnames(0)
-		if err != nil {
-			return err
-		}
-		fmt.Println(names)
-
-		for _, name := range names {
-			fmt.Println("./" + n.Repository + "/" + name)
-			fileDir, _ := os.Getwd()
-			fileName := name
-			filePath := path.Join(fileDir, n.Repository, fileName)
-
-			file, _ := os.Open(filePath)
-			defer file.Close()
-
-			body := &bytes.Buffer{}
-			writer := multipart.NewWriter(body)
-			part, _ := writer.CreateFormFile("file", filepath.Base(file.Name()))
-			io.Copy(part, file)
-			writer.Close()
-
-			fmt.Println(n.URL + "/repository/" + n.Repository + "/")
-			req, err := http.NewRequest("PUT", n.URL+"/repository/"+n.Repository+"/", body)
-			if err != nil {
-				return err
-			}
-			req.Header.Add("Content-Type", writer.FormDataContentType())
-			req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
-
-			resp, err := http.DefaultClient.Do(req)
-			if err != nil {
-				return err
-			}
-			defer resp.Body.Close()
-
-			if resp.StatusCode == http.StatusCreated {
-				log.Infof("Upload of %v Ok. StatusCode: %v.", name, resp.StatusCode)
-			} else {
-				log.Error(resp)
-				return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", name, n.URL, resp.StatusCode)
-			}
 		}
 	default:
 		return fmt.Errorf("Upload of '%s' is not supported", n.ArtifactType)
 	}
-
 	return nil
 }
