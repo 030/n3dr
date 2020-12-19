@@ -201,9 +201,19 @@ func (n *Nexus3) openMultipartFileAndUpload(f, httpMethod, uri string, statusCre
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
-	part, _ := writer.CreateFormFile("file", filepath.Base(file.Name()))
-	io.Copy(part, file)
-	writer.Close()
+	part, err := writer.CreateFormFile("file", filepath.Base(file.Name()))
+	if err != nil {
+		return err
+	}
+
+	if _, err := io.Copy(part, file); err != nil {
+		return err
+	}
+
+	if err := writer.Close(); err != nil {
+		return err
+	}
+
 	log.Infof("Upload Method: '%v', URL: '%v'", httpMethod, n.URL+uri)
 	req, err := http.NewRequest(httpMethod, n.URL+uri, body)
 	if err != nil {
