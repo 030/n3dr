@@ -194,7 +194,13 @@ repositories(){
   $cmd -a | grep maven-releases
 
   echo "> Counting number of repositories..."
-  $cmd -c | grep 7
+  expected_number=7
+  if [ "${NEXUS_API_VERSION}" == "beta" ]; then
+    expected_number=5
+  fi
+  actual_number="$($cmd -c | tail -n1)"
+  echo -n "Number of repositories. Expected: ${expected_number}. Actual: ${actual_number}"
+  [ "${actual_number}" == "${expected_number}" ]
 
   echo "> Testing zip functionality..."
   $cmd -b -z
