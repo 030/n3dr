@@ -38,6 +38,7 @@ type Nexus3 struct {
 	ZIP             bool
 	ZipName         string
 	DownloadDirName string
+	ArtifactType    string
 }
 
 // RetryLogAdaptor adapts the retryablehttp.Logger interface to the logrus logger.

@@ -52,8 +52,9 @@ UI after restore. It could also be possible that some steps were not issued as
 they have should been. Apart from that, the restore is capable of restoring the
 Nexus configuration.
 
-N3DR makes it possible to backup all artifacts from Nexus at once and to
-migrate/restore them to a Nexus server in another cloud.
+N3DR excludes the backup of group repositories and is able to backup all Maven2
+and NPM repositories and migrate and/or restore Maven2 artifacts to another
+Nexus server.
 
 Note: uploads to proxy and snapshot repositories are not supported by Nexus
 itself. As a workaround one could create a hosted repository in Nexus and
@@ -231,8 +232,8 @@ n3dr upload -u admin -n http://localhost:8081 -r maven-public
 #### Upload non maven files
 
 It is possible to upload non maven files like deb files as well by setting the
-maven option to false, e.g. `-m=false`. Note that the folder name that contains
-the files should match the repository name.
+artifactType option to the repository type, e.g. `-t=apt`. Note that the folder
+name that contains the files should match the repository name.
 
 ### "Clone" a Nexus3 repository
 
@@ -308,10 +309,14 @@ a single command.
 [GoDoc]: https://godoc.org/github.com/030/n3dr
 [GoDoc Widget]: https://godoc.org/github.com/030/n3dr?status.svg
 
-## Logging
+## Supported
 
-* `+`: maven
-* `*`: npm
+| type   | backup | upload | label |
+|--------|--------|--------|-------|
+| apt    |        | x      |       |
+| maven2 | x      | x      | `+`   |
+| npm    | x      | x      | `*`   |
+| nuget  |        | x      |       |
 
 ## Stargazers over time
 

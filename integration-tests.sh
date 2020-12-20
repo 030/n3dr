@@ -14,7 +14,7 @@ if [ -z "${APT_GPG_SECRET}" ]; then
   exit 1
 fi
 
-NEXUS_VERSION="${1:-3.21.1}"
+NEXUS_VERSION="${1:-3.28.0}"
 NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
 
@@ -45,6 +45,7 @@ nexus(){
   chmod +x start.sh
 
   # shellcheck disable=SC1091
+  # as nexus-docker.sh is retrieved remotely
   source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}"
 }
 
@@ -90,10 +91,53 @@ uploadDeb(){
     echo "Testing deb upload..."
     $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
   	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
-  	           -m=false
+  	           -t=apt
     echo
   else
     echo "Deb upload not supported in beta API"
+  fi
+}
+
+uploadNPM(){
+  if [ "${NEXUS_API_VERSION}" != "beta" ]; then
+    echo "Creating npm repo..."
+    curl -f \
+         -v \
+         -u "admin:${PASSWORD}" \
+         -X POST "http://localhost:9999/service/rest/v1/repositories/npm/hosted" \
+         -H "accept: application/json" \
+         -H "Content-Type: application/json" \
+         --data "{\"name\":\"REPO_NAME_HOSTED_NPM\",\"online\":true,\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"}}"
+
+    mkdir REPO_NAME_HOSTED_NPM
+    cd REPO_NAME_HOSTED_NPM
+    curl https://registry.npmjs.org/@babel/core/-/core-7.12.10.tgz -o babel-core.tgz
+    cd ..
+  
+    echo "Testing NPM upload..."
+    $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
+  	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+  	           -t=npm
+    echo
+  else
+    echo "Nuget upload not supported in beta API"
+  fi
+}
+
+uploadNuget(){
+  if [ "${NEXUS_API_VERSION}" != "beta" ]; then
+    mkdir nuget-hosted
+    cd nuget-hosted
+    curl -L https://chocolatey.org/api/v2/package/n3dr/5.2.6 -o n3dr.5.2.6.nupkg
+    cd ..
+  
+    echo "Testing nuget upload..."
+    $TOOL upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
+  	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+  	           -t=nuget
+    echo
+  else
+    echo "Nuget upload not supported in beta API"
   fi
 }
 
@@ -148,14 +192,24 @@ repositories(){
 
   echo "Testing repositories..."
   $cmd -a | grep maven-releases
-  $cmd -c | grep 5
+
+  echo "> Counting number of repositories..."
+  expected_number=7
+  if [ "${NEXUS_API_VERSION}" == "beta" ]; then
+    expected_number=5
+  fi
+  actual_number="$($cmd -c | tail -n1)"
+  echo -n "Number of repositories. Expected: ${expected_number}. Actual: ${actual_number}"
+  [ "${actual_number}" == "${expected_number}" ]
+
+  echo "> Testing zip functionality..."
   $cmd -b -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 300
     test_zip 148
   else
-    count_downloads 400
-    test_zip 192
+    count_downloads 401
+    test_zip 228
   fi
   cleanup_downloads
 }
@@ -189,7 +243,9 @@ test_zip(){
 }
 
 cleanup_downloads(){
+  rm -rf nuget-hosted
   rm -rf REPO_NAME_HOSTED_APT
+  rm -rf REPO_NAME_HOSTED_NPM
   rm -rf maven-releases
   rm -rf "${DOWNLOAD_LOCATION}"
   rm -f n3dr-backup-*zip
@@ -212,10 +268,12 @@ main(){
   upload
   anonymous
   backup
+  uploadDeb
+  uploadNPM
+  uploadNuget
   repositories
   regex
   zipName
-  uploadDeb
   version
   bats --tap tests.bats
 }
