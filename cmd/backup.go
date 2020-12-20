@@ -34,7 +34,7 @@ reside in a certain Nexus3 repository`,
 
 			if npm {
 				log.Info("Backing up an NPM repository...")
-				if err := n.BackupAllNPMArtifacts(repository, dir); err != nil {
+				if err := n.BackupAllNPMArtifacts(repository, dir, regex); err != nil {
 					log.Fatal(err)
 				}
 			} else {

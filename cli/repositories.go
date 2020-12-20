@@ -92,9 +92,9 @@ func (n *Nexus3) repositoriesChannel(m repositoriesNamesAndFormatsMap, dir, rege
 				log.Debugf("Repository: '%v'", n.Repository)
 				errs <- n.StoreArtifactsOnDiskChannel(dir, regex)
 			case "npm":
-				errs <- n.BackupAllNPMArtifacts(name, dir)
+				errs <- n.BackupAllNPMArtifacts(name, dir, regex)
 			default:
-				log.Warnf("Nexus repository format: '%v' download not supported", format)
+				log.Warnf("Nexus repository: '%s', format: '%v' download not supported", name, format)
 				errs <- nil
 			}
 		}(dir, format, name)
