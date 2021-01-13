@@ -19,6 +19,7 @@ NEXUS_API_VERSION="${2:-v1}"
 TOOL="${3:-./n3dr}"
 
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
+readonly NEXUS_URL=http://localhost:9999
 
 validate(){
   if [ -z "${TOOL}" ]; then
@@ -63,12 +64,12 @@ files(){
 upload(){
   echo "#134 archetype-catalog download issue"
   echo "URL:"
-  echo "http://localhost:9999/repository/maven-releases/archetype-catalog.xml"
+  echo "${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml"
   echo "does not seem to contain a Maven artifact"
-  curl -f http://localhost:9999/repository/maven-releases/archetype-catalog.xml
+  curl -f ${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml
 
   echo "Testing upload..."
-  $TOOL upload -u admin -p "${PASSWORD}" -r maven-releases -n http://localhost:9999 -v "${NEXUS_API_VERSION}"
+  $TOOL upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
   echo
 }
 
@@ -76,7 +77,7 @@ uploadDeb(){
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     echo "Creating apt repo..."
     curl -u "admin:${PASSWORD}" \
-         -X POST "http://localhost:9999/service/rest/beta/repositories/apt/hosted" \
+         -X POST "${NEXUS_URL}/service/rest/beta/repositories/apt/hosted" \
          -H "accept: application/json" \
          -H "Content-Type: application/json" \
          --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
@@ -90,7 +91,7 @@ uploadDeb(){
   
     echo "Testing deb upload..."
     $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
-  	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+  	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=apt
     echo
   else
@@ -104,7 +105,7 @@ uploadNPM(){
     curl -f \
          -v \
          -u "admin:${PASSWORD}" \
-         -X POST "http://localhost:9999/service/rest/v1/repositories/npm/hosted" \
+         -X POST "${NEXUS_URL}/service/rest/v1/repositories/npm/hosted" \
          -H "accept: application/json" \
          -H "Content-Type: application/json" \
          --data "{\"name\":\"REPO_NAME_HOSTED_NPM\",\"online\":true,\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"}}"
@@ -116,7 +117,7 @@ uploadNPM(){
   
     echo "Testing NPM upload..."
     $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
-  	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+  	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=npm
     echo
   else
@@ -133,7 +134,7 @@ uploadNuget(){
   
     echo "Testing nuget upload..."
     $TOOL upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
-  	           -n=http://localhost:9999 -v="${NEXUS_API_VERSION}" \
+  	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=nuget
     echo
   else
@@ -154,19 +155,19 @@ backupHelper(){
 
 anonymous(){
   echo "Testing backup by anonymous user..."
-  $TOOL backup -n http://localhost:9999 -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
+  $TOOL backup -n ${NEXUS_URL} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
   backupHelper
 }
 
 backup(){
   echo "Testing backup..."
-  $TOOL backup -n http://localhost:9999 -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
+  $TOOL backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
   backupHelper
 }
 
 regex(){
   echo "Testing backup regex..."
-  $TOOL backup -n http://localhost:9999 -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
+  $TOOL backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -176,7 +177,7 @@ regex(){
   fi
   cleanup_downloads
   echo -e "\nTesting repositories regex..."
-  $TOOL repositories -n http://localhost:9999 -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
+  $TOOL repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -188,7 +189,7 @@ regex(){
 }
 
 repositories(){
-  local cmd="$TOOL repositories -n http://localhost:9999 -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
+  local cmd="$TOOL repositories -n ${NEXUS_URL} -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
 
   echo "Testing repositories..."
   $cmd -a | grep maven-releases
@@ -216,8 +217,8 @@ repositories(){
 
 zipName(){
   echo "Testing zipName..."
-  $TOOL backup -n=http://localhost:9999 -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
-  $TOOL repositories -n http://localhost:9999 -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
+  $TOOL backup -n=${NEXUS_URL} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
+  $TOOL repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
   find . -name "helloZip*" -type f | wc -l | grep 2
 }
 
@@ -276,6 +277,7 @@ main(){
   zipName
   version
   bats --tap tests.bats
+  echo "In order to debug, comment out the 'trap clean EXIT', run this script again and login to http://localhost:9999 and login as admin and ${PASSWORD}"
 }
 
 trap clean EXIT
