@@ -1,5 +1,6 @@
 # N3DR
 
+[![CI](https://github.com/030/n3dr/workflows/CI/badge.svg?event=push)](https://github.com/030/n3dr/actions?query=workflow%3ACI)
 [![GoDoc Widget]][GoDoc]
 [![Build Status](https://travis-ci.org/030/n3dr.svg?branch=master)](https://travis-ci.org/030/n3dr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
