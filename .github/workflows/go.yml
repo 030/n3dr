@@ -18,6 +18,13 @@ jobs:
       with:
         go-version: 1.15
 
+    - name: Install bats
+      run: |
+          set -x
+          sudo add-apt-repository ppa:duggan/bats
+          sudo apt-get update
+          sudo apt-get install bats -y
+
     - name: Build
       run: ./build.sh
 
