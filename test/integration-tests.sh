@@ -38,7 +38,7 @@ ould be run."
 }
 
 build(){
-  source ./build.sh
+  source ./scripts/build.sh
 }
 
 nexus(){
