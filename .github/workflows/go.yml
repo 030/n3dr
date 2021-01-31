@@ -40,6 +40,9 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
+      - name: Use the value
+        run: |
+          echo "${{ env.n3dr-deliverable }}"
       - name: Build
         run: ./scripts/build.sh
         env:
