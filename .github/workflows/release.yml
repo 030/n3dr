@@ -6,14 +6,20 @@ on:
 jobs:
   release:
     name: Create Release
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-10.15
+          - ubuntu-20.04
+          - windows-2019
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
         run: ./scripts/build.sh
-        uses: actions/create-release@v1
         env:
+          N3DR_DELIVERABLE: n3dr-${{ matrix.os }}
           GITHUB_TAG: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -25,3 +31,8 @@ jobs:
             - Second Change
           draft: false
           prerelease: false
+      - name: Upload release
+        uses: actions/upload-artifact@v2
+        with:
+          name: noti.darwinrelease
+          path: release/noti.darwinrelease
