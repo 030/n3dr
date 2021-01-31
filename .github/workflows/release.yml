@@ -29,4 +29,5 @@ jobs:
       - name: Upload release
         uses: actions/upload-artifact@v2
         with:
-          asset_path: ${{ matrix.os }}
+          name: ${{ matrix.os }}
+          path: ${{ matrix.os }}
