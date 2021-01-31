@@ -24,34 +24,23 @@ jobs:
           go-version: 1.15.7
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
-      - name: Use the value
-        run: |
-          echo "${{ env.n3dr-deliverable }}"
-      # - name: Checkout code
-      #   uses: actions/checkout@v2
-      - name: Create Release
+      - name: Create release
         run: ./scripts/build.sh
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           GITHUB_TAG: ${{ github.ref }}
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHA512_CMD: ${{ matrix.shasum }}
-      # - name: Upload release
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: ${{ matrix.os }}
-      #     path: ${{ matrix.os }}
-
-      # - name: Create Draft Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   # env:
-      #   #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ github.ref }}
-      #     release_name: n3dr-${{ matrix.os }}
-      #     draft: false
-      #     prerelease: false
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
+      - name: Create release windows
+        run: |
+          go build -ldflags "-X github.com/030/n3dr/cmd.Version=${GITHUB_TAG}" -o "${N3DR_DELIVERABLE}"
+          $SHA512_CMD "${N3DR_DELIVERABLE}" > "${N3DR_DELIVERABLE}.sha512.txt"
+          chmod +x "${N3DR_DELIVERABLE}"
+        env:
+          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
+          GITHUB_TAG: ${{ github.ref }}
+          SHA512_CMD: ${{ matrix.shasum }}
+        if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -59,19 +48,10 @@ jobs:
           file: ./${{ env.n3dr-deliverable }}
           asset_name: ${{ env.n3dr-deliverable }}
           tag: ${{ github.ref }}
-          #      - uses: actions/upload-release-asset@v1.0.1
-          #        env:
-          #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #        with:
-          #          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}
-          #          asset_path: ./${{ env.n3dr-deliverable }}
-          #          asset_name: ${{ env.n3dr-deliverable }}
-          #          asset_content_type: application/octet-stream
-          #      - uses: actions/upload-release-asset@v1.0.1
-          #        env:
-          #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #        with:
-          #          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}.sha512.txt
-          #          asset_path: ./${{ env.n3dr-deliverable }}.sha512.txt
-          #          asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
-          #          asset_content_type: application/txt
+      - name: Upload checksums
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./${{ env.n3dr-deliverable }}.sha512.txt
+          asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
+          tag: ${{ github.ref }}
