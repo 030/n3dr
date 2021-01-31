@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-11.0
+          - os: macos-10.15
             nexus-version: 3.9.0
             nexus-api-version: beta
           - os: ubuntu-20.04
