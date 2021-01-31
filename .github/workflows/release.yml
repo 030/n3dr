@@ -17,6 +17,7 @@ jobs:
           - os: windows-2019
             shasum: sha512sum
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
