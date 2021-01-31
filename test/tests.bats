@@ -39,7 +39,7 @@
 }
 
 @test "invoking n3dr with version subcommand should return version" {
-  run ./${DELIVERABLE} --version
+  run ./${N3DR_DELIVERABLE} --version
   [ "$status" -eq 0 ]
   echo $output
   regex=".*nd3r version.*"
