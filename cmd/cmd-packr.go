@@ -5,4 +5,4 @@
 // and any other packr generated files.
 package cmd
 
-import _ "github.com/030/n3dr/packrd"
+import _ "github.com/030/n3dr/pkg/packrd"

@@ -7,8 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/030/n3dr/cli"
-
+	cli "github.com/030/n3dr/pkg/artifacts"
 	"github.com/gobuffalo/packr/v2"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
