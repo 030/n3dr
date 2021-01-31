@@ -19,20 +19,11 @@ jobs:
       - name: Create Release
         run: ./scripts/build.sh
         env:
-          N3DR_DELIVERABLE: n3dr-${{ matrix.os }}
+          N3DR_DELIVERABLE: ${{ matrix.os }}
           GITHUB_TAG: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
       - name: Upload release
         uses: actions/upload-artifact@v2
         with:
-          name: noti.darwinrelease
-          path: release/noti.darwinrelease
+          name: ${{ matrix.os }}
+          path: ${{ matrix.os }}
