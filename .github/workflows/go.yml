@@ -13,15 +13,19 @@ jobs:
           - os: macos-10.15
             nexus-version: 3.9.0
             nexus-api-version: beta
+            shasum: shasum -a 512
           - os: ubuntu-20.04
             nexus-version: 3.9.0
             nexus-api-version: beta
+            shasum: sha512sum
           - os: ubuntu-20.04
             nexus-version: 3.9.0
             nexus-api-version: beta
+            shasum: sha512sum
           - os: windows-2019
             nexus-version: 3.9.0
             nexus-api-version: beta
+            shasum: sha512sum
     steps:
       - uses: actions/checkout@v2
       - name: Set up Go
@@ -36,6 +40,8 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Build
         run: ./scripts/build.sh
+        env:
+          SHA512_CMD: ${{ matrix.shasum }}
       - name: Unit test
         run: go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...
       - name: Integration test
