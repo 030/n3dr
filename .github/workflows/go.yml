@@ -21,7 +21,7 @@ jobs:
     - name: Install bats
       run: |
           set -x
-          sudo add-apt-repository ppa:duggan/bats
+          #sudo add-apt-repository ppa:duggan/bats
           sudo apt-get update
           sudo apt-get install bats -y
 
