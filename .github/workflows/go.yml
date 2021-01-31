@@ -21,12 +21,11 @@ jobs:
     - name: Install bats
       run: |
           set -x
-          #sudo add-apt-repository ppa:duggan/bats
           sudo apt-get update
           sudo apt-get install bats -y
 
     - name: Build
-      run: ./build.sh
+      run: ./scripts/build.sh
 
     - name: Unit test
       run: go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...
