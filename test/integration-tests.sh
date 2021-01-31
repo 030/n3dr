@@ -1,12 +1,12 @@
 #!/bin/bash -e
 
-if [ -z "${APT_GPG_SECRET}" ]; then
-  echo "APT_GPG_SECRET should not be empty"
+if [ -z "${N3DR_APT_GPG_SECRET}" ]; then
+  echo "N3DR_APT_GPG_SECRET should not be empty"
   echo "Create one by running:"
-  echo "docker run -v /tmp/gpg-output:/root/.gnupg -v $PWD/tests/gpg/:/tmp/ --rm -it vladgh/gpg --batch --generate-key /tmp/generate"
-  echo "docker run --rm -it -v /tmp/gpg-output:/root/.gnupg -v $PWD/tests/gpg/:/tmp/ vladgh/gpg --output /tmp/my_rsa_key --armor --export-secret-key joe@foo.bar"
+  echo "docker run -v /tmp/gpg-output:/root/.gnupg -v ${PWD}/test/gpg/:/tmp/ --rm -it vladgh/gpg --batch --generate-key /tmp/generate"
+  echo "docker run --rm -it -v /tmp/gpg-output:/root/.gnupg -v ${PWD}/test/gpg/:/tmp/ vladgh/gpg --output /tmp/my_rsa_key --armor --export-secret-key joe@foo.bar"
   echo "Enter 'abc' as a password, if the prompt appears"
-  echo "export APT_GPG_SECRET=\$(sudo cat tests/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
+  echo "export N3DR_APT_GPG_SECRET=\$(sudo cat test/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
   echo "sudo rm -r /tmp/gpg-output"
   echo "rm tests/gpg/my_rsa_key"
   echo
@@ -80,7 +80,7 @@ uploadDeb(){
          -X POST "${NEXUS_URL}/service/rest/beta/repositories/apt/hosted" \
          -H "accept: application/json" \
          -H "Content-Type: application/json" \
-         --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
+         --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${N3DR_APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
   
     mkdir REPO_NAME_HOSTED_APT
     cd REPO_NAME_HOSTED_APT
