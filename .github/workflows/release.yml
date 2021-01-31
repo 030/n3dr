@@ -59,4 +59,12 @@ jobs:
           upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}
           asset_path: ./${{ env.n3dr-deliverable }}
           asset_name: ${{ env.n3dr-deliverable }}
-          # asset_content_type: application/zip
+          asset_content_type: application/octet-stream
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}.sha512.txt
+          asset_path: ./${{ env.n3dr-deliverable }}.sha512.txt
+          asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
+          asset_content_type: application/txt
