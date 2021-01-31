@@ -276,7 +276,7 @@ main(){
   regex
   zipName
   version
-  bats --tap tests.bats
+  bats --tap test/tests.bats
   echo "In order to debug, comment out the 'trap clean EXIT', run this script again and login to http://localhost:9999 and login as admin and ${PASSWORD}"
 }
 

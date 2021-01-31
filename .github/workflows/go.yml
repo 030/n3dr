@@ -1,34 +1,42 @@
 name: Go
-
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
-
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-11.0
+            nexus-version: 3.9.0
+            nexus-api-version: beta
+          - os: ubuntu-20.04
+            nexus-version: 3.9.0
+            nexus-api-version: beta
+          - os: ubuntu-20.04
+            nexus-version: 3.9.0
+            nexus-api-version: beta
+          - os: windows-2019
+            nexus-version: 3.9.0
+            nexus-api-version: beta
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.15.7
-
       - name: Install bats
         run: |
           set -x
           sudo apt-get update
           sudo apt-get install bats -y
-
       - name: Build
         run: ./scripts/build.sh
-
       - name: Unit test
         run: go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...
-
       - name: Integration test
         run: ./test/integration-tests.sh
         env:
