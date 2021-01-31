@@ -14,18 +14,31 @@ if [ -z "${N3DR_APT_GPG_SECRET}" ]; then
   exit 1
 fi
 
-NEXUS_VERSION="${1:-3.28.0}"
-NEXUS_API_VERSION="${2:-v1}"
-TOOL="${3:-./n3dr}"
+if [ -z "${NEXUS_VERSION}" ]; then
+  echo "NEXUS_VERSION empty, setting it to the default value"
+  NEXUS_VERSION=3.28.0
+  exit 1
+fi
+
+if [ -z "${NEXUS_API_VERSION}" ]; then
+  echo "NEXUS_API_VERSION empty, setting it to the default value"
+  NEXUS_API_VERSION=v1
+  exit 1
+fi
+
+if [ -z "${N3DR_TOOL}" ]; then
+  echo "N3DR_TOOL empty, setting it to the default value"
+  N3DR_TOOL=./n3dr
+  exit 1
+fi
 
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
 readonly NEXUS_URL=http://localhost:9999
 
 validate(){
-  if [ -z "${TOOL}" ]; then
-    echo "No deliverable defined. Assuming that 'go run main.go' 
-ould be run."
-    TOOL="go run main.go"
+  if [ -z "${N3DR_TOOL}" ]; then
+    echo "No deliverable defined. Assuming that 'go run main.go' should be run."
+    N3DR_TOOL="go run main.go"
   fi
   if [ -z "${NEXUS_VERSION}" ] || [ -z "${NEXUS_API_VERSION}" ]; then
     echo "NEXUS_VERSION and NEXUS_API_VERSION should be specified."
@@ -69,7 +82,7 @@ upload(){
   curl -f ${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml
 
   echo "Testing upload..."
-  $TOOL upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
+  $N3DR_TOOL upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
   echo
 }
 
@@ -90,7 +103,7 @@ uploadDeb(){
     cd ..
   
     echo "Testing deb upload..."
-    $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
+    $N3DR_TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
   	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=apt
     echo
@@ -116,7 +129,7 @@ uploadNPM(){
     cd ..
   
     echo "Testing NPM upload..."
-    $TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
+    $N3DR_TOOL upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
   	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=npm
     echo
@@ -133,7 +146,7 @@ uploadNuget(){
     cd ..
   
     echo "Testing nuget upload..."
-    $TOOL upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
+    $N3DR_TOOL upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
   	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=nuget
     echo
@@ -155,19 +168,19 @@ backupHelper(){
 
 anonymous(){
   echo "Testing backup by anonymous user..."
-  $TOOL backup -n ${NEXUS_URL} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
+  $N3DR_TOOL backup -n ${NEXUS_URL} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
   backupHelper
 }
 
 backup(){
   echo "Testing backup..."
-  $TOOL backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
+  $N3DR_TOOL backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
   backupHelper
 }
 
 regex(){
   echo "Testing backup regex..."
-  $TOOL backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
+  $N3DR_TOOL backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -177,7 +190,7 @@ regex(){
   fi
   cleanup_downloads
   echo -e "\nTesting repositories regex..."
-  $TOOL repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
+  $N3DR_TOOL repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -217,8 +230,8 @@ repositories(){
 
 zipName(){
   echo "Testing zipName..."
-  $TOOL backup -n=${NEXUS_URL} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
-  $TOOL repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
+  $N3DR_TOOL backup -n=${NEXUS_URL} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
+  $N3DR_TOOL repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
   find . -name "helloZip*" -type f | wc -l | grep 2
 }
 
