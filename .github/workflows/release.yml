@@ -18,11 +18,10 @@ jobs:
             shasum: sha512sum
     steps:
       - name: Set N3DR deliverable environment variable
-        run: echo ::set-env name=N3DR_DELIVERABLE::n3dr-${{ matrix.os }}
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
       - name: Use the value
         run: |
-            echo "${{ env.n3dr-deliverable }}"
+          echo "${{ env.n3dr-deliverable }}"
       # - name: Checkout code
       #   uses: actions/checkout@v2
       - name: Create Release

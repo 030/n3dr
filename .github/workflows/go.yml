@@ -38,9 +38,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install bats -y
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
+      - name: Set N3DR deliverable environment variable
+        run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
       - name: Build
         run: ./scripts/build.sh
         env:
+          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           SHA512_CMD: ${{ matrix.shasum }}
       - name: Unit test
         run: go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...
@@ -48,6 +51,7 @@ jobs:
       - name: Integration test
         run: ./test/integration-tests.sh
         env:
+          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           NEXUS_VERSION: ${{ matrix.nexus-version }}
           NEXUS_API_VERSION: ${{ matrix.nexus-api-version }}
           N3DR_APT_GPG_SECRET: ${{ secrets.N3DR_APT_GPG_SECRET }}
