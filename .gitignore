@@ -8,8 +8,8 @@ n3dr*
 REPO_NAME_HOSTED_APT/
 .snapcraft
 start.sh
-tests/gpg/my_rsa_key
-tests/gpg/output/
+test/gpg/my_rsa_key
+test/gpg/output/
 vendor
 .vscode
 *.zip
