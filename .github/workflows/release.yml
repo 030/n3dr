@@ -19,12 +19,16 @@ jobs:
     steps:
       - name: Set N3DR deliverable environment variable
         run: echo ::set-env name=N3DR_DELIVERABLE::n3dr-${{ matrix.os }}
+        run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
+      - name: Use the value
+        run: |
+            echo "${{ env.n3dr-deliverable }}"
       # - name: Checkout code
       #   uses: actions/checkout@v2
       - name: Create Release
         run: ./scripts/build.sh
         env:
-          N3DR_DELIVERABLE: ${{ env.N3DR_DELIVERABLE }}
+          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           GITHUB_TAG: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHA512_CMD: ${{ matrix.shasum }}
@@ -48,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.N3DR_DELIVERABLE }}
-          asset_path: ./${{ env.N3DR_DELIVERABLE }}
-          asset_name: ${{ env.N3DR_DELIVERABLE }}
+          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}
+          asset_path: ./${{ env.n3dr-deliverable }}
+          asset_name: ${{ env.n3dr-deliverable }}
           # asset_content_type: application/zip
