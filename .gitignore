@@ -4,6 +4,7 @@ maven-metadata*
 maven-releases
 n3dr*
 *.out*
+packrd
 *.pom*
 REPO_NAME_HOSTED_APT/
 .snapcraft

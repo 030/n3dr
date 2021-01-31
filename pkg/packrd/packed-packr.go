@@ -23,7 +23,7 @@ var _ = func() error {
 	g.DefaultResolver = hgr
 
 	func() {
-		b := packr.New("logo", "../logo")
+		b := packr.New("logo", "../assets/logo")
 		b.SetResolver("logo.png", packr.Pointer{ForwardBox: gk, ForwardPath: "b1da5c215540ca97e4fa8e903508f38c"})
 		b.SetResolver("text-image-com-n3dr.txt", packr.Pointer{ForwardBox: gk, ForwardPath: "04ff253d416e580e9036af5e470f1291"})
 	}()
