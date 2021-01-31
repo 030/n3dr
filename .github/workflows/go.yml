@@ -44,7 +44,10 @@ jobs:
           SHA512_CMD: ${{ matrix.shasum }}
       - name: Unit test
         run: go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Integration test
         run: ./test/integration-tests.sh
         env:
+          NEXUS_API_VERSION: ${{ matrix.nexus-api-version }}
           N3DR_APT_GPG_SECRET: ${{ secrets.N3DR_APT_GPG_SECRET }}
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
