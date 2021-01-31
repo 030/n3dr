@@ -199,7 +199,7 @@ regex(){
 }
 
 repositories(){
-  local cmd="$TOOL repositories -n ${NEXUS_URL} -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
+  local cmd="$N3DR_TOOL repositories -n ${NEXUS_URL} -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
 
   echo "Testing repositories..."
   $cmd -a | grep maven-releases
