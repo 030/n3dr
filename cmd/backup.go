@@ -3,7 +3,7 @@ package cmd
 import (
 	"strings"
 
-	"github.com/030/n3dr/cli"
+	"github.com/030/n3dr/pkg/artifacts"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -19,7 +19,7 @@ var backupCmd = &cobra.Command{
 	Long: `Use this command in order to backup all artifacts that
 reside in a certain Nexus3 repository`,
 	Run: func(cmd *cobra.Command, args []string) {
-		dir, err := cli.TempDownloadDir(downloadDirName)
+		dir, err := artifacts.TempDownloadDir(downloadDirName)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -27,7 +27,7 @@ reside in a certain Nexus3 repository`,
 		selectedRepositories := strings.Split(n3drRepo, ",")
 		for _, repository := range selectedRepositories {
 			log.Info("Processing repository: ", repository)
-			n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: repository, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
+			n := artifacts.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: repository, APIVersion: apiVersion, ZIP: zip, ZipName: zipName}
 			if err := n.ValidateNexusURL(); err != nil {
 				log.Fatal(err)
 			}
