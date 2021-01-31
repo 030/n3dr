@@ -17,19 +17,16 @@ fi
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
   NEXUS_VERSION=3.28.0
-  exit 1
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
   echo "NEXUS_API_VERSION empty, setting it to the default value"
   NEXUS_API_VERSION=v1
-  exit 1
 fi
 
 if [ -z "${N3DR_TOOL}" ]; then
   echo "N3DR_TOOL empty, setting it to the default value"
   N3DR_TOOL=./n3dr
-  exit 1
 fi
 
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
