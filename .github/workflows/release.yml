@@ -17,17 +17,38 @@ jobs:
           - os: windows-2019
             shasum: sha512sum
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Set N3DR deliverable environment variable
+        run: echo ::set-env name=N3DR_DELIVERABLE::n3dr-${{ matrix.os }}
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
       - name: Create Release
         run: ./scripts/build.sh
         env:
-          N3DR_DELIVERABLE: ${{ matrix.os }}
+          N3DR_DELIVERABLE: ${{ env.N3DR_DELIVERABLE }}
           GITHUB_TAG: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHA512_CMD: ${{ matrix.shasum }}
-      - name: Upload release
-        uses: actions/upload-artifact@v2
+      # - name: Upload release
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ matrix.os }}
+      #     path: ${{ matrix.os }}
+
+      # - name: Create Draft Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   # env:
+      #   #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: n3dr-${{ matrix.os }}
+      #     draft: false
+      #     prerelease: false
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ matrix.os }}
-          path: ${{ matrix.os }}
+          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.N3DR_DELIVERABLE }}
+          asset_path: ./${{ env.N3DR_DELIVERABLE }}
+          asset_name: ${{ env.N3DR_DELIVERABLE }}
+          # asset_content_type: application/zip

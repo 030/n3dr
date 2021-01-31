@@ -264,8 +264,8 @@ cleanup_downloads(){
 }
 
 version(){
-  echo "Check whether ./n3dr (DELIVERABLE: ${DELIVERABLE}) --version returns version"
-  "./${DELIVERABLE}" --version
+  echo "Check whether ./n3dr (N3DR_DELIVERABLE: ${N3DR_DELIVERABLE}) --version returns version"
+  "./${N3DR_DELIVERABLE}" --version
   echo
 }
 
