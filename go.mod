@@ -22,7 +22,7 @@ require (
 	github.com/nwaples/rardecode v1.0.0 // indirect
 	github.com/oracle/oci-go-sdk v19.2.0+incompatible
 	github.com/pierrec/lz4 v2.2.6+incompatible // indirect
-	github.com/rogpeppe/go-internal v1.6.2 // indirect
+	github.com/rogpeppe/go-internal v1.7.0 // indirect
 	github.com/sirupsen/logrus v1.7.0
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/jwalterweatherman v1.0.0
@@ -31,10 +31,11 @@ require (
 	github.com/svenfuchs/jq v0.0.0-20180603193138-b038733a5990
 	github.com/thedevsaddam/gojsonq v2.2.0+incompatible
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
-	golang.org/x/crypto v0.0.0-20201208171446-5f87f3452ae9 // indirect
+	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974
 	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a // indirect
-	golang.org/x/sys v0.0.0-20201207223542-d4d67f95c62d // indirect
-	golang.org/x/term v0.0.0-20201207232118-ee85cb95a76b // indirect
+	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
+	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf // indirect
+	golang.org/x/tools v0.1.0 // indirect
 	gopkg.in/validator.v2 v2.0.0-20200605151824-2b28d334fa05
 )
