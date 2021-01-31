@@ -24,6 +24,9 @@ jobs:
           go-version: 1.15.7
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
+      - name: Use the value
+        run: |
+          echo "${{ env.n3dr-deliverable }}"
       - name: Create release
         run: ./scripts/build.sh
         env:
@@ -35,12 +38,11 @@ jobs:
         shell: cmd
         run: |
           go build -ldflags "-X github.com/030/n3dr/cmd.Version=${GITHUB_TAG}" -o "${N3DR_DELIVERABLE}"
-          $SHA512_CMD "${N3DR_DELIVERABLE}" > "${N3DR_DELIVERABLE}.sha512.txt"
+          sha512sum "${N3DR_DELIVERABLE}" > "${N3DR_DELIVERABLE}.sha512.txt"
           chmod +x "${N3DR_DELIVERABLE}"
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           GITHUB_TAG: ${{ github.ref }}
-          SHA512_CMD: ${{ matrix.shasum }}
         if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
