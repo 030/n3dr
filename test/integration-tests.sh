@@ -26,7 +26,7 @@ fi
 
 if [ -z "${N3DR_DELIVERABLE}" ]; then
   echo "N3DR_DELIVERABLE empty, setting it to the default value"
-  N3DR_DELIVERABLE=./n3dr
+  N3DR_DELIVERABLE=n3dr
 fi
 
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
@@ -199,7 +199,7 @@ regex(){
 }
 
 repositories(){
-  local cmd="$N3DR_DELIVERABLE repositories -n ${NEXUS_URL} -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
+  local cmd="./$N3DR_DELIVERABLE repositories -n ${NEXUS_URL} -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
 
   echo "Testing repositories..."
   $cmd -a | grep maven-releases
