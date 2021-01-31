@@ -32,6 +32,7 @@ jobs:
           SHA512_CMD: ${{ matrix.shasum }}
         if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Create release windows
+        shell: cmd
         run: |
           go build -ldflags "-X github.com/030/n3dr/cmd.Version=${GITHUB_TAG}" -o "${N3DR_DELIVERABLE}"
           $SHA512_CMD "${N3DR_DELIVERABLE}" > "${N3DR_DELIVERABLE}.sha512.txt"
