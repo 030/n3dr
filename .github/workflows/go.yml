@@ -48,6 +48,7 @@ jobs:
       - name: Integration test
         run: ./test/integration-tests.sh
         env:
+          NEXUS_VERSION: ${{ matrix.nexus-version }}
           NEXUS_API_VERSION: ${{ matrix.nexus-api-version }}
           N3DR_APT_GPG_SECRET: ${{ secrets.N3DR_APT_GPG_SECRET }}
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
