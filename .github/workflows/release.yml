@@ -17,6 +17,10 @@ jobs:
           - os: windows-2019
             shasum: sha512sum
     steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.7
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
       - name: Use the value
