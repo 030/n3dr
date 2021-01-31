@@ -9,10 +9,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:
-          - macos-10.15
-          - ubuntu-20.04
-          - windows-2019
+        include:
+          - os: macos-10.15
+            shasum: shasum -a 512
+          - os: ubuntu-20.04
+            shasum: sha512sum
+          - os: windows-2019
+            shasum: sha512sum
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,8 +25,8 @@ jobs:
           N3DR_DELIVERABLE: ${{ matrix.os }}
           GITHUB_TAG: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA512_CMD: ${{ matrix.shasum }}
       - name: Upload release
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}
-          path: ${{ matrix.os }}
+          asset_path: ${{ matrix.os }}
