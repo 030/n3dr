@@ -34,7 +34,7 @@ jobs:
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           GITHUB_TAG: ${{ github.ref }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHA512_CMD: ${{ matrix.shasum }}
       # - name: Upload release
       #   uses: actions/upload-artifact@v2
@@ -52,19 +52,26 @@ jobs:
       #     release_name: n3dr-${{ matrix.os }}
       #     draft: false
       #     prerelease: false
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}
-          asset_path: ./${{ env.n3dr-deliverable }}
+          #repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./${{ env.n3dr-deliverable }}
           asset_name: ${{ env.n3dr-deliverable }}
-          asset_content_type: application/octet-stream
-      - uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}.sha512.txt
-          asset_path: ./${{ env.n3dr-deliverable }}.sha512.txt
-          asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
-          asset_content_type: application/txt
+          tag: ${{ github.ref }}
+          #      - uses: actions/upload-release-asset@v1.0.1
+          #        env:
+          #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #        with:
+          #          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}
+          #          asset_path: ./${{ env.n3dr-deliverable }}
+          #          asset_name: ${{ env.n3dr-deliverable }}
+          #          asset_content_type: application/octet-stream
+          #      - uses: actions/upload-release-asset@v1.0.1
+          #        env:
+          #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #        with:
+          #          upload_url: https://github.com/030/n3dr/releases/${{ github.ref }}/download/${{ env.n3dr-deliverable }}.sha512.txt
+          #          asset_path: ./${{ env.n3dr-deliverable }}.sha512.txt
+          #          asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
+          #          asset_content_type: application/txt
