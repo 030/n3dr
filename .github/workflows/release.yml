@@ -45,7 +45,9 @@ jobs:
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $env:GITHUB_ENV
         if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Use the value on windows
-        run: echo $env:n3dr-deliverable
+        run: |
+          echo $env:n3dr-deliverable
+          echo "${{ env.n3dr-deliverable }}"
         if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Create release windows
         shell: cmd
