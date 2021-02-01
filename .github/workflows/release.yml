@@ -7,6 +7,8 @@ jobs:
   release:
     name: Create Release
     runs-on: ${{ matrix.os }}
+    #env:
+    #define global envs here
     strategy:
       matrix:
         include:
@@ -24,9 +26,11 @@ jobs:
           go-version: 1.15.7
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Use the value
         run: |
           echo "${{ env.n3dr-deliverable }}"
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Create release
         run: ./scripts/build.sh
         env:
@@ -34,16 +38,31 @@ jobs:
           GITHUB_TAG: ${{ github.ref }}
           SHA512_CMD: ${{ matrix.shasum }}
         if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
+
+
+
+      - name: Set N3DR deliverable environment variable
+        run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $env:GITHUB_ENV
+        if: ${{ startsWith(matrix.os, 'windows') }}
+      - name: Use the value on windows
+        run: echo $env:n3dr-deliverable
+        if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Create release windows
         shell: cmd
         run: |
           go build -ldflags "-X github.com/030/n3dr/cmd.Version=${GITHUB_TAG}" -o "${N3DR_DELIVERABLE}"
           sha512sum "${N3DR_DELIVERABLE}" > "${N3DR_DELIVERABLE}.sha512.txt"
           chmod +x "${N3DR_DELIVERABLE}"
+          ls
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           GITHUB_TAG: ${{ github.ref }}
         if: ${{ startsWith(matrix.os, 'windows') }}
+
+
+
+
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -51,6 +70,7 @@ jobs:
           file: ./${{ env.n3dr-deliverable }}
           asset_name: ${{ env.n3dr-deliverable }}
           tag: ${{ github.ref }}
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Upload checksums
         uses: svenstaro/upload-release-action@v2
         with:
@@ -58,3 +78,8 @@ jobs:
           file: ./${{ env.n3dr-deliverable }}.sha512.txt
           asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
           tag: ${{ github.ref }}
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
+
+
+
+
