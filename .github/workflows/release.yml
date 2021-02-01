@@ -46,15 +46,12 @@ jobs:
       - name: Create release windows
         shell: cmd
         run: |
-          echo "GITHUB_TAG: '$env.GITHUB_TAG' N3DR_DELIVERABLE: '$env.N3DR_DELIVERABLE'"
-          go build -ldflags "-X github.com/030/n3dr/cmd.Version=${env.GITHUB_TAG}" -o "${env.N3DR_DELIVERABLE}"
-          sha512sum "${env.N3DR_DELIVERABLE}" > "${env.N3DR_DELIVERABLE}.sha512.txt"
-          chmod +x "${env.N3DR_DELIVERABLE}"
+          echo "GITHUB_TAG: '${{ github.ref }}' N3DR_DELIVERABLE: '${{ env.n3dr-deliverable }}'"
+          go build -ldflags "-X github.com/030/n3dr/cmd.Version=${{ github.ref }}" -o "${{ env.n3dr-deliverable }}"
+          sha512sum "${{ env.n3dr-deliverable }}" > "${{ env.n3dr-deliverable }}.sha512.txt"
+          chmod +x "${{ env.n3dr-deliverable }}"
           ls
           ls n3dr-windows-2019
-        env:
-          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
-          GITHUB_TAG: ${{ github.ref }}
         if: ${{ startsWith(matrix.os, 'windows') }}
 
 
