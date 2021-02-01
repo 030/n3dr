@@ -27,6 +27,9 @@ jobs:
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
         if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
+      - name: Set N3DR deliverable environment variable on Windows
+        run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $env:GITHUB_ENV
+        if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Use the value
         run: |
           echo "${{ env.n3dr-deliverable }}"
@@ -41,14 +44,6 @@ jobs:
 
 
 
-      - name: Set N3DR deliverable environment variable
-        run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $env:GITHUB_ENV
-        if: ${{ startsWith(matrix.os, 'windows') }}
-      - name: Use the value on windows
-        run: |
-          echo $env:n3dr-deliverable
-          echo "${{ env.n3dr-deliverable }}"
-        if: ${{ startsWith(matrix.os, 'windows') }}
       - name: Create release windows
         shell: cmd
         run: |
@@ -72,7 +67,6 @@ jobs:
           file: ./${{ env.n3dr-deliverable }}
           asset_name: ${{ env.n3dr-deliverable }}
           tag: ${{ github.ref }}
-        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Upload checksums
         uses: svenstaro/upload-release-action@v2
         with:
@@ -80,7 +74,6 @@ jobs:
           file: ./${{ env.n3dr-deliverable }}.sha512.txt
           asset_name: ${{ env.n3dr-deliverable }}.sha512.txt
           tag: ${{ github.ref }}
-        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
 
 
 
