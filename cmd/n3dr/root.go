@@ -84,7 +84,7 @@ func configFilePath() string {
 }
 
 func asci() error {
-	box := packr.New("logo", "../logo")
+	box := packr.New("logo", "../../assets/logo")
 	s, err := box.FindString("text-image-com-n3dr.txt")
 	if err != nil {
 		return err
