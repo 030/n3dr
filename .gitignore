@@ -2,7 +2,7 @@ download
 *.jar*
 maven-metadata*
 maven-releases
-n3dr*
+!/cmd/n3dr/*.go
 *.out*
 packrd
 *.pom*
@@ -14,3 +14,4 @@ test/gpg/output/
 vendor
 .vscode
 *.zip
+coverage.txt

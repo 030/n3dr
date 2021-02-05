@@ -1,9 +1,9 @@
-package cmd
+package main
 
 import (
 	"strings"
 
-	"github.com/030/n3dr/pkg/artifacts"
+	"github.com/030/n3dr/internal/artifacts"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"

@@ -1,7 +1,7 @@
-package cmd
+package main
 
 import (
-	cli "github.com/030/n3dr/pkg/artifacts"
+	cli "github.com/030/n3dr/internal/artifacts"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
