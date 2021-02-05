@@ -3,6 +3,6 @@
 
 // You can use the "packr clean" command to clean up this,
 // and any other packr generated files.
-package cmd
+package main
 
-import _ "github.com/030/n3dr/pkg/packrd"
+import _ "github.com/030/n3dr/internal/packrd"

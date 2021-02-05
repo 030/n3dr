@@ -8,7 +8,7 @@ if [ -z "${N3DR_APT_GPG_SECRET}" ]; then
   echo "Enter 'abc' as a password, if the prompt appears"
   echo "export N3DR_APT_GPG_SECRET=\$(sudo cat test/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
   echo "sudo rm -r /tmp/gpg-output"
-  echo "rm tests/gpg/my_rsa_key"
+  echo "rm test/gpg/my_rsa_key"
   echo
   printf "Note: Spaces and enters have to be escaped, i.e. '\\\n'->'\\\\\\\n' and ' '->'\ ' if the token is used in travis."
   exit 1

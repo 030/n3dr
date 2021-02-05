@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"crypto/tls"
@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	cli "github.com/030/n3dr/pkg/artifacts"
+	cli "github.com/030/n3dr/internal/artifacts"
 	"github.com/gobuffalo/packr/v2"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
@@ -29,7 +29,7 @@ Nexus3 repository and restoring them.`,
 	Version: Version,
 }
 
-func Execute() {
+func execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
