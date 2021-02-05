@@ -49,6 +49,7 @@ validate(){
 
 build(){
   source ./scripts/build.sh
+  cd cmd/n3dr
 }
 
 nexus(){
