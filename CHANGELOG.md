@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - some maven files were not uploaded if they contained a `.`.
 
+### Improved
+
+- project structure
+
 ## [6.0.0] - 2020-12-20
 
 ### Added
