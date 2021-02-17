@@ -63,7 +63,7 @@ nexus(){
 
 artifact(){
   mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0"
-  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.jar"
+  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0/f.i-l.e.${1}-1.0.0.jar"
   echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.zip"
   echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.pom"
 }
