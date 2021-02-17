@@ -47,8 +47,8 @@ func (n Nexus3) detectFoldersWithPOM(d string) error {
 	return nil
 }
 
-func sbArtifact(sb *strings.Builder, path string, ext string, classifier string) error {
-	log.Debug(ext + " found " + path)
+func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
+	log.Debugf("Path: '%s'. Ext: '%s'. Classifier: '%s'.", path, ext, classifier)
 
 	_, err := fmt.Fprintf(sb, "maven2.asset%d=@%s,maven2.asset%d.extension=%s,", artifactIndex, path, artifactIndex, ext)
 	if err != nil {
@@ -69,17 +69,18 @@ func sbArtifact(sb *strings.Builder, path string, ext string, classifier string)
 func artifactTypeDetector(sb *strings.Builder, path string) error {
 	var err error
 
-	re := regexp.MustCompile(`^.*\/([\w-]+)-([\d.]+)-?([\w-]+)?\.(\w+)$`)
+	re := regexp.MustCompile(`^.*\/([\w\.-]+)-([\d\.]+)-?([\w-]+)?\.(\w+)$`)
 	if re.Match([]byte(path)) {
 		result := re.FindAllStringSubmatch(path, -1)
-		//artifact := result[0][1]
-		//version := result[0][2]
+		log.Debugf("Artifact: '%v'", result[0][1])
+		log.Debugf("Version: '%v'", result[0][2])
 		classifier := result[0][3]
 		ext := result[0][4]
 		err = sbArtifact(sb, path, ext, classifier)
 	} else {
-		log.Debug(path + " not an artifact")
-		return nil
+		log.Warningf("'%v' not an artifact", path)
+		// return nil to continue-on-error to ensure that subsequent artifacts
+		// will be uploaded
 	}
 
 	return err
@@ -109,8 +110,7 @@ func pomDirs(p string) (strings.Builder, error) {
 			return err
 		}
 		if !f.IsDir() {
-			err = artifactTypeDetector(&sb, path)
-			if err != nil {
+			if err = artifactTypeDetector(&sb, path); err != nil {
 				return err
 			}
 		}
