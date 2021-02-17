@@ -1,13 +1,10 @@
 ---
 name: n3dr
-base: core18
+base: core
 version: 6.0.1
 summary: Nexus3 Disaster Recovery
 description: |
   Download all artifacts at once or migrate automatically from Nexus to Nexus.
-  Without N3DR it is not possible to download all artifacts from Nexus at once.
-  N3DR makes it possible to easily migrate a Nexus server from AWS to Azure or
-  Google Cloud.
 
 grade: stable
 confinement: strict
@@ -25,11 +22,31 @@ plugs:
 parts:
   n3dr:
     plugin: go
-    source: .
-    go-importpath: github.com/030/n3dr
+    go-packages:
+      - github.com/030/n3dr/cmd/n3dr
+    build-packages:
+      - git
+      - gcc
+    override-pull: |
+      snapcraftctl pull
+      snapcraftctl set-version $(git -C ../go/src/github.com/030/n3dr describe --tags | sed 's/n3dr\/v//')
+      snapcraftctl set-grade stable
     override-build: |
-      GO111MODULE=on CGO_ENABLED=0 go build \
+      ls
+      ls ../..
+      ls /root/parts/n3dr
+      ls $SNAPCRAFT_PART_SRC
+      ls $SNAPCRAFT_PART_BUILD
+      ls $SNAPCRAFT_PART_INSTALL
+      CGO_ENABLED=0 go build \
         -ldflags \
         "-X main.Version=${SNAPCRAFT_PROJECT_VERSION}" \
         -o $SNAPCRAFT_PART_INSTALL/n3dr
       $SNAPCRAFT_PART_INSTALL/n3dr --version
+
+  go:
+    plugin: nil
+    stage-snaps:
+      - go
+    stage-packages:
+      - libc6
