@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "GITHUB_TAG: '${{ github.ref }}' N3DR_DELIVERABLE: '${{ env.n3dr-deliverable }}'"
           cd cmd/n3dr
-          go build -ldflags -X main.Version=${{ github.ref }}" -o "${{ env.n3dr-deliverable }}"
+          go build -ldflags "-X main.Version=${{ github.ref }}" -o "${{ env.n3dr-deliverable }}"
           sha512sum "${{ env.n3dr-deliverable }}" > "${{ env.n3dr-deliverable }}.sha512.txt"
           chmod +x "${{ env.n3dr-deliverable }}"
           ls n3dr-windows-2019
