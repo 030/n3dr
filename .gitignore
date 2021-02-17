@@ -9,6 +9,7 @@ cmd/n3dr/n3dr.sha512.txt
 *.pom*
 REPO_NAME_HOSTED_APT/
 .snapcraft
+*.snap
 start.sh
 test/gpg/my_rsa_key
 test/gpg/output/

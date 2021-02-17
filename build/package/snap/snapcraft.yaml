@@ -21,32 +21,10 @@ plugs:
 
 parts:
   n3dr:
-    plugin: go
-    go-packages:
-      - github.com/030/n3dr/cmd/n3dr
-    build-packages:
-      - git
-      - gcc
-    override-pull: |
-      snapcraftctl pull
-      snapcraftctl set-version $(git -C ../go/src/github.com/030/n3dr describe --tags | sed 's/n3dr\/v//')
-      snapcraftctl set-grade stable
-    override-build: |
-      ls
-      ls ../..
-      ls /root/parts/n3dr
-      ls $SNAPCRAFT_PART_SRC
-      ls $SNAPCRAFT_PART_BUILD
-      ls $SNAPCRAFT_PART_INSTALL
-      CGO_ENABLED=0 go build \
-        -ldflags \
-        "-X main.Version=${SNAPCRAFT_PROJECT_VERSION}" \
-        -o $SNAPCRAFT_PART_INSTALL/n3dr
-      $SNAPCRAFT_PART_INSTALL/n3dr --version
-
-  go:
     plugin: nil
-    stage-snaps:
-      - go
-    stage-packages:
-      - libc6
+    override-build: |
+      cd $SNAPCRAFT_PART_INSTALL
+      curl -L https://github.com/030/n3dr/releases/download/${SNAPCRAFT_PROJECT_VERSION}/n3dr-linux \
+        -o n3dr
+      chmod +x ./n3dr
+      ./n3dr --version | grep "^nd3r version ${SNAPCRAFT_PROJECT_VERSION}$"
