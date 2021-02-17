@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.1] - 2020-02-18
+
+### Fixed
+
+- some maven files were not uploaded if they contained a `.`.
+
 ## [6.0.0] - 2020-12-20
 
 ### Added
@@ -442,7 +448,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.1...HEAD
+[6.0.1]: https://github.com/030/n3dr/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/030/n3dr/compare/5.2.7...6.0.0
 [5.2.7]: https://github.com/030/n3dr/compare/5.2.6...5.2.7
 [5.2.6]: https://github.com/030/n3dr/compare/5.2.5...5.2.6
