@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.0.1] - 2020-02-18
 
+### Changed
+
+- travis replaced by github actions.
+
 ### Fixed
 
 - some maven files were not uploaded if they contained a `.`.

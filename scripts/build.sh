@@ -8,3 +8,4 @@ cd cmd/n3dr
 go build -ldflags "-X main.Version=${GITHUB_TAG}" -o "${N3DR_DELIVERABLE}"
 $SHA512_CMD "${N3DR_DELIVERABLE}" > "${N3DR_DELIVERABLE}.sha512.txt"
 chmod +x "${N3DR_DELIVERABLE}"
+cd ../..
