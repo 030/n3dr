@@ -17,14 +17,15 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.6.8
 	github.com/karrick/godirwalk v1.16.1 // indirect
 	github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a
+	github.com/magefile/mage v1.11.0 // indirect
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/nwaples/rardecode v1.0.0 // indirect
 	github.com/oracle/oci-go-sdk v19.2.0+incompatible
 	github.com/pierrec/lz4 v2.2.6+incompatible // indirect
 	github.com/rogpeppe/go-internal v1.7.0 // indirect
-	github.com/sirupsen/logrus v1.7.0
-	github.com/spf13/cobra v1.1.1
+	github.com/sirupsen/logrus v1.8.0
+	github.com/spf13/cobra v1.1.3
 	github.com/spf13/jwalterweatherman v1.0.0
 	github.com/spf13/viper v1.7.0
 	github.com/stretchr/testify v1.5.1
@@ -34,7 +35,8 @@ require (
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974
 	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a // indirect
-	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
+	golang.org/x/sys v0.0.0-20210217105451-b926d437f341 // indirect
 	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf // indirect
+	golang.org/x/tools v0.1.0 // indirect
 	gopkg.in/validator.v2 v2.0.0-20200605151824-2b28d334fa05
 )
