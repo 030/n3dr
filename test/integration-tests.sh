@@ -62,10 +62,10 @@ nexus(){
 }
 
 artifact(){
-  mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0"
-  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0/f.i-l.e.${1}-1.0.0.jar"
-  echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.zip"
-  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0/file${1}-1.0.0.pom"
+  mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6"
+  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6/f.i-l.e.${1}-1.0.0-2-gcac5af6.jar"
+  echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6/file${1}-1.0.0-2-gcac5af6.zip"
+  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0-2-gcac5af6</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6/file${1}-1.0.0-2-gcac5af6.pom"
 }
 
 files(){
@@ -80,7 +80,7 @@ upload(){
   curl -f ${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml
 
   echo "Testing upload..."
-  ./$N3DR_DELIVERABLE upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
+  ./"${N3DR_DELIVERABLE}" upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
   echo
 }
 
@@ -101,7 +101,7 @@ uploadDeb(){
     cd ..
   
     echo "Testing deb upload..."
-    ./$N3DR_DELIVERABLE upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
+    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
   	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=apt
     echo
@@ -127,7 +127,7 @@ uploadNPM(){
     cd ..
   
     echo "Testing NPM upload..."
-    ./$N3DR_DELIVERABLE upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
+    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
   	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=npm
     echo
@@ -144,7 +144,7 @@ uploadNuget(){
     cd ..
   
     echo "Testing nuget upload..."
-    ./$N3DR_DELIVERABLE upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
+    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
   	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
   	           -t=nuget
     echo
@@ -156,29 +156,29 @@ uploadNuget(){
 backupHelper(){
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 300
-    test_zip 148
+    test_zip 164
   else
     count_downloads 400
-    test_zip 192
+    test_zip 208
   fi
   cleanup_downloads
 }
 
 anonymous(){
   echo "Testing backup by anonymous user..."
-  ./$N3DR_DELIVERABLE backup -n ${NEXUS_URL} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
+  ./"${N3DR_DELIVERABLE}" backup -n ${NEXUS_URL} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
   backupHelper
 }
 
 backup(){
   echo "Testing backup..."
-  ./$N3DR_DELIVERABLE backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
+  ./"${N3DR_DELIVERABLE}" backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
   backupHelper
 }
 
 regex(){
   echo "Testing backup regex..."
-  ./$N3DR_DELIVERABLE backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
+  ./"${N3DR_DELIVERABLE}" backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -188,7 +188,7 @@ regex(){
   fi
   cleanup_downloads
   echo -e "\nTesting repositories regex..."
-  ./$N3DR_DELIVERABLE repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
+  ./"${N3DR_DELIVERABLE}" repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 3
     test_zip 4
@@ -218,18 +218,18 @@ repositories(){
   $cmd -b -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 300
-    test_zip 148
+    test_zip 164
   else
     count_downloads 401
-    test_zip 228
+    test_zip 248
   fi
   cleanup_downloads
 }
 
 zipName(){
   echo "Testing zipName..."
-  ./$N3DR_DELIVERABLE backup -n=${NEXUS_URL} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
-  ./$N3DR_DELIVERABLE repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
+  ./"${N3DR_DELIVERABLE}" backup -n=${NEXUS_URL} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
+  ./"${N3DR_DELIVERABLE}" repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
   find . -name "helloZip*" -type f | wc -l | grep 2
 }
 
