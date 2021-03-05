@@ -17,3 +17,4 @@ vendor
 .vscode
 *.zip
 coverage.txt
+*.snap.xdelta3
