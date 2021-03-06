@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/030/go-utils"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -81,7 +80,7 @@ func TestStoreArtifactsOnDiskChannel(t *testing.T) {
 		"/tmp/n3drtest/download/maven-releases/file3/file3/maven-metadata.xml",
 	}
 	for _, f := range expectedDownloads {
-		if !utils.FileExists(f) {
+		if _, err := os.Stat(f); os.IsNotExist(err) {
 			t.Errorf("File %s should exist, but does not.", f)
 		}
 	}
