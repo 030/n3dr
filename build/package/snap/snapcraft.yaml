@@ -1,7 +1,7 @@
 ---
 name: n3dr
 base: core
-version: 6.0.1
+version: 6.0.2
 summary: Nexus3 Disaster Recovery
 description: |
   Download all artifacts at once or migrate automatically from Nexus to Nexus.

@@ -69,13 +69,13 @@ func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
 func artifactTypeDetector(sb *strings.Builder, path string) error {
 	var err error
 
-	re := regexp.MustCompile(`^.*\/([\w\.-]+)-([\d\.]+)-?([\w-]+)?\.(\w+)$`)
+	re := regexp.MustCompile(`^.*\/([\w\.-]+)-([\d\.]+)(-\d)?(-[0-9a-z]{8,40})?-?([a-z]+)?\.([a-z]+)$`)
 	if re.Match([]byte(path)) {
 		result := re.FindAllStringSubmatch(path, -1)
 		log.Debugf("Artifact: '%v'", result[0][1])
-		log.Debugf("Version: '%v'", result[0][2])
-		classifier := result[0][3]
-		ext := result[0][4]
+		log.Debugf("Version: '%v'", result[0][2]+result[0][3]+result[0][4])
+		classifier := result[0][5]
+		ext := result[0][6]
 		err = sbArtifact(sb, path, ext, classifier)
 	} else {
 		log.Warningf("'%v' not an artifact", path)
@@ -261,6 +261,9 @@ func (n *Nexus3) readMavenFilesAndUpload() error {
 		sb, err := pomDirs(path)
 		if err != nil {
 			return err
+		}
+		if sb.String() == "" {
+			return fmt.Errorf("The sb.String() should not be empty. Verify whether the path: '%s' contains artifacts", path)
 		}
 		log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
 		if err := n.multipartUpload(sb); err != nil {
