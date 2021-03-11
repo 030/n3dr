@@ -15,5 +15,5 @@ FROM alpine:3.13.2
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /n3dr /usr/local/bin/n3dr
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-USER $PROJECT
+USER n3dr
 ENTRYPOINT ["/usr/local/bin/n3dr"]

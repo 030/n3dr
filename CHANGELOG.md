@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.4] - 2020-03-11
+
+### Fixed
+
+- Do not run docker image as root.
+
 ## [6.0.3] - 2020-03-07
 
 ### Fixed
@@ -469,7 +475,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.3...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.4...HEAD
+[6.0.4]: https://github.com/030/n3dr/compare/6.0.3...6.0.4
 [6.0.3]: https://github.com/030/n3dr/compare/6.0.2...6.0.3
 [6.0.2]: https://github.com/030/n3dr/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/030/n3dr/compare/6.0.0...6.0.1
