@@ -69,18 +69,22 @@ func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
 func artifactTypeDetector(sb *strings.Builder, path string) error {
 	var err error
 
-	re := regexp.MustCompile(`^.*\/([a-z0-9\-]+)-([\w\.]+)-?([\w\.\-]+)?\.([a-z]+)$`)
+	re := regexp.MustCompile(`^.*\/([\w\-\.]+)\/(([a-z\d\-]+)|(([a-z\d\.]+)))(-(.*?(\-([\w.]+))?)?)?\.([a-z]+)$`)
+
+	classifier := ""
 	if re.Match([]byte(path)) {
 		result := re.FindAllStringSubmatch(path, -1)
-                log.Debugf("AAAAAAAA: ", result[0][0])
-                log.Debugf("AAAAAAAA: ", result[0][1])
-                log.Debugf("AAAAAAAA: ", result[0][2])
-                log.Debugf("AAAAAAAA: ", result[0][3])
-                log.Debugf("AAAAAAAA: ", result[0][4])
-		log.Debugf("Artifact: '%v'", result[0][1])
-		log.Debugf("Version: '%v'", result[0][2])
-		classifier := result[0][3]
-		ext := result[0][4]
+                //ADDED A CHECK IF THE 'VERSION' REPORTED IN THE ARTIFACT NAME IS DIFFERENT FROM THE 'REAL' VERSION
+		if result[0][7] != result[0][1] {
+			classifier = result[0][9]
+		} else {
+			classifier = ""
+		}
+		log.Debugf("Artifact: '%v'", result[0][3])
+		log.Debugf("Version: '%v'", result[0][1])
+		log.Debugf("Extension: '%v'", result[0][10])
+		log.Debugf("Classifier: '%v'", classifier)
+		ext := result[0][10]
 		err = sbArtifact(sb, path, ext, classifier)
 	} else {
 		log.Warningf("'%v' not an artifact", path)
@@ -166,11 +170,10 @@ func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, re
 		return err
 	}
 	defer resp.Body.Close()
-
 	// For some reason a 200 instead of 201 is returned if an NPM has been uploaded
 	if resp.StatusCode == statusCreated {
 		log.Infof("Upload of %v Ok. StatusCode: %v.", file, resp.StatusCode)
-	} else {
+ 	} else {
 		log.Error(resp)
 		return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
 	}
@@ -272,7 +275,7 @@ func (n *Nexus3) readMavenFilesAndUpload() error {
 		}
 		log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
 		if err := n.multipartUpload(sb); err != nil {
-			return err
+		return err
 		}
 	}
 	return nil
