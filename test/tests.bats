@@ -42,6 +42,6 @@
   run ./${N3DR_DELIVERABLE} --version
   [ "$status" -eq 0 ]
   echo $output
-  regex=".*nd3r version.*"
+  regex=".*n3dr version.*"
   [[ "$output" =~ $regex ]]
 }
