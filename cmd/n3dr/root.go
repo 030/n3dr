@@ -22,7 +22,7 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "nd3r",
+	Use:   "n3dr",
 	Short: "nexus3 Disaster Recovery (N3DR)",
 	Long: `N3DR is a tool that is capable of backing up all artifacts from a certain
 Nexus3 repository and restoring them.`,
