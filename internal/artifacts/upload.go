@@ -66,21 +66,45 @@ func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
 	return nil
 }
 
-func artifactTypeDetector(sb *strings.Builder, path string) error {
+func artifactTypeDetector(sb *strings.Builder, path string, skipErrors bool) error {
 	var err error
 
-	re := regexp.MustCompile(`^.*\/([\w\.-]+)-([\d\.]+)(-\d)?(-[0-9a-z]{8,40})?-?([a-z]+)?\.([a-z]+)$`)
+	regexVersion := `([\d\.-]+\d)`
+	if rv := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_VERSION"); rv != "" {
+		regexVersion = rv
+	}
+
+	regexClassifier := `([a-zA-Z]+)?`
+	if rc := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_CLASSIFIER"); rc != "" {
+		regexClassifier = rc
+	}
+
+	re := regexp.MustCompile(`^.*\/([\w\.-]+)-` + regexVersion + `-?` + regexClassifier + `\.([a-z]+)$`)
 	if re.Match([]byte(path)) {
 		result := re.FindAllStringSubmatch(path, -1)
-		log.Debugf("Artifact: '%v'", result[0][1])
-		log.Debugf("Version: '%v'", result[0][2]+result[0][3]+result[0][4])
-		classifier := result[0][5]
-		ext := result[0][6]
+		artifactElements := result[0]
+		log.Debugf("ArtifactElements: '%s'", artifactElements)
+		if len(result[0]) != 5 {
+			err := fmt.Errorf("Check whether the regex retrieves four elements from the artifact. Current: '%s'. Note that element 0 is the artifact itself.", artifactElements)
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return err
+			}
+		}
+		artifact := artifactElements[1]
+		version := artifactElements[2]
+		classifier := artifactElements[3]
+		ext := artifactElements[4]
+		log.Infof("Artifact: '%v', Version: '%v', Classifier: '%v', Extension: '%v'.", artifact, version, classifier, ext)
 		err = sbArtifact(sb, path, ext, classifier)
 	} else {
-		log.Warningf("'%v' not an artifact", path)
-		// return nil to continue-on-error to ensure that subsequent artifacts
-		// will be uploaded
+		err := fmt.Errorf("Check whether regexVersion: '%s' and regexClassifier: '%s' match the artifact: '%s'", regexVersion, regexClassifier, path)
+		if skipErrors {
+			log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+		} else {
+			return err
+		}
 	}
 
 	return err
@@ -101,22 +125,21 @@ func (n Nexus3) multipartUpload(sb strings.Builder) error {
 	return nil
 }
 
-func pomDirs(p string) (strings.Builder, error) {
+func pomDirs(p string, skipErrors bool) (strings.Builder, error) {
 	var sb strings.Builder
 	artifactIndex = 1
 
-	err := filepath.Walk(p, func(path string, f os.FileInfo, err error) error {
+	if err := filepath.Walk(p, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if !f.IsDir() {
-			if err = artifactTypeDetector(&sb, path); err != nil {
+			if err = artifactTypeDetector(&sb, path, skipErrors); err != nil {
 				return err
 			}
 		}
 		return nil
-	})
-	if err != nil {
+	}); err != nil {
 		return sb, err
 	}
 	return sb, nil
@@ -252,29 +275,38 @@ func (n *Nexus3) readFilesAndUpload() error {
 	return nil
 }
 
-func (n *Nexus3) readMavenFilesAndUpload() error {
+func (n *Nexus3) readMavenFilesAndUpload(skipErrors bool) error {
 	if err := n.detectFoldersWithPOM(n.Repository); err != nil {
 		return err
 	}
 	for i, path := range foldersWithPOMStringSlice {
 		log.Debug(strconv.Itoa(i) + " Detecting artifacts in folder '" + path + "'")
-		sb, err := pomDirs(path)
+		sb, err := pomDirs(path, skipErrors)
 		if err != nil {
 			return err
 		}
 		if sb.String() == "" {
-			return fmt.Errorf("The sb.String() should not be empty. Verify whether the path: '%s' contains artifacts", path)
+			err := fmt.Errorf("The sb.String() should not be empty. Verify whether the path: '%s' contains artifacts", path)
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return err
+			}
 		}
 		log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
 		if err := n.multipartUpload(sb); err != nil {
-			return err
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return err
+			}
 		}
 	}
 	return nil
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
-func (n Nexus3) Upload() error {
+func (n Nexus3) Upload(skipErrors bool) error {
 	log.Infof("Uploading '%s'", n.ArtifactType)
 	switch n.ArtifactType {
 	case "apt":
@@ -282,7 +314,7 @@ func (n Nexus3) Upload() error {
 			return err
 		}
 	case "maven2":
-		if err := n.readMavenFilesAndUpload(); err != nil {
+		if err := n.readMavenFilesAndUpload(skipErrors); err != nil {
 			return err
 		}
 	case "npm":

@@ -180,6 +180,18 @@ navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
 n3dr upload -r releases -n <url>
 ```
 
+#### skipErrors
+
+One could use `--skipErrors` or `-s` to continue-on-error:
+
+```bash
+N3DR_MAVEN_UPLOAD_REGEX_VERSION=boo \
+N3DR_MAVEN_UPLOAD_REGEX_CLASSIFIER=foo \
+n3dr upload -n some-nexus-url \
+            -r some-repository \
+            -s
+```
+
 ## Store the password in a read-only file
 
 Define the password in `~/.n3dr/config.yml`:
