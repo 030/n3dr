@@ -18,7 +18,7 @@ import (
 
 var (
 	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName string
-	anonymous, debug, zip, insecureSkipVerify                                                     bool
+	anonymous, debug, insecureSkipVerify, skipErrors, zip                                         bool
 )
 
 var rootCmd = &cobra.Command{
@@ -50,6 +50,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&downloadDirName, "directory-prefix", "", "directory to store downloaded artifacts")
 	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
 	rootCmd.PersistentFlags().BoolVar(&anonymous, "anonymous", false, "Skip authentication")
+	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
 }
 
 func configFile() (string, error) {
