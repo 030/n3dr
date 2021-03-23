@@ -19,7 +19,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 		if err := n.ValidateNexusURL(); err != nil {
 			log.Fatal(err)
 		}
-		if err := n.Upload(); err != nil {
+		if err := n.Upload(skipErrors); err != nil {
 			log.Fatal(err)
 		}
 	},

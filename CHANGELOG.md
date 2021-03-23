@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.6] - 2021-03-23
+
+### Fixed
+
+- Not possible to skip errors, reported by [@tunix](https://github.com/tunix)
+
 ## [6.0.5] - 2021-03-21
 
 ### Fixed
@@ -482,7 +488,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.5...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.6...HEAD
+[6.0.6]: https://github.com/030/n3dr/compare/6.0.5...6.0.6
 [6.0.5]: https://github.com/030/n3dr/compare/6.0.4...6.0.5
 [6.0.4]: https://github.com/030/n3dr/compare/6.0.3...6.0.4
 [6.0.3]: https://github.com/030/n3dr/compare/6.0.2...6.0.3
