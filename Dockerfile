@@ -5,7 +5,6 @@ RUN mkdir $PROJECT && \
 COPY cmd ./$PROJECT/cmd/
 COPY internal ./$PROJECT/internal/
 COPY go.mod go.sum ./$PROJECT/
-RUN ls $PROJECT
 WORKDIR $PROJECT/cmd/n3dr
 RUN apk add git && \
     CGO_ENABLED=0 go build && \
