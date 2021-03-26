@@ -58,11 +58,6 @@ jobs:
           docker run --rm -v $(pwd):/app -w /app \
             golangci/golangci-lint:v1.23.7-alpine golangci-lint run -v
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
-      - name: Unit test
-        run: |
-          go test -short -cover -v -coverprofile=coverage.txt \
-          -covermode=atomic ./...
-        if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Integration test
         run: ./test/integration-tests.sh
         env:
