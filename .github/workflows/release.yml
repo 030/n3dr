@@ -8,8 +8,6 @@ jobs:
   release:
     name: Create Release
     runs-on: ${{ matrix.os }}
-    # env:
-    # define global envs here
     strategy:
       matrix:
         include:
@@ -43,7 +41,6 @@ jobs:
           SHA512_CMD: ${{ matrix.shasum }}
         if: |
           ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
-
       - name: Create release windows
         shell: cmd
         run: |
@@ -57,7 +54,6 @@ jobs:
           chmod +x "${{ env.n3dr-deliverable }}"
           ls n3dr-windows-2019
         if: ${{ startsWith(matrix.os, 'windows') }}
-
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
