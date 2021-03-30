@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Scan waste in docker image using Dive
+- Security scanning using Trivy
+- Build and push docker image on new release
+- Nexus3 3.30.0
+
 ## [6.0.6] - 2021-03-23
 
 ### Fixed

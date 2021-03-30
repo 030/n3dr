@@ -16,7 +16,7 @@ jobs:
             nexus-api-version: beta
             shasum: shasum -a 512
           - os: ubuntu-20.04
-            nexus-version: 3.28.0
+            nexus-version: 3.30.0
             nexus-api-version: v1
             shasum: sha512sum
           - os: ubuntu-20.04
