@@ -17,11 +17,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: version
+        id: version
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: utrecht/n3dr:${{ github.event.release.tag_name }}
+          tags: utrecht/n3dr:${{ steps.version.outputs.version }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
