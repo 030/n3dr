@@ -30,7 +30,7 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL                                                                        string `validate:"nonzero,regexp=^http(s)?://[a-z0-9\\.]+(:[0-9]+)?$"`
+	URL                                                                        string `validate:"nonzero,regexp=^http(s)?://[a-z0-9\\.-]+(:[0-9]+)?$"`
 	APIVersion, ArtifactType, DownloadDirName, Pass, Repository, User, ZipName string
 	ZIP                                                                        bool
 }
