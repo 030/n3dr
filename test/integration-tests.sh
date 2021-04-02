@@ -80,7 +80,11 @@ upload(){
   curl -f ${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml
 
   echo "Testing upload..."
-  ./"${N3DR_DELIVERABLE}" upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
+  ./"${N3DR_DELIVERABLE}" upload -u admin \
+                                 -p "${PASSWORD}" \
+                                 -r maven-releases \
+                                 -n http://127.0.0.1:9999 \
+                                 -v "${NEXUS_API_VERSION}"
   echo
 }
 
