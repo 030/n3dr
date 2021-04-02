@@ -369,3 +369,11 @@ a single command.
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/030/n3dr.svg)](https://starchart.cc/030/n3dr)
+
+## Development
+
+### Unit Tests
+
+```bash
+go test internal/artifacts/common.go internal/artifacts/common_test.go
+```
