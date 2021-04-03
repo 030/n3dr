@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.8] - 2021-04-03
+
+### Added
+
+- Release snap by CI
+
+### Changed
+
+- Replace walk by walkDir as it is faster
+
 ## [6.0.7] - 2021-04-02
 
 ### Added
@@ -507,7 +517,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.7...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.8...HEAD
+[6.0.8]: https://github.com/030/n3dr/compare/6.0.7...6.0.8
 [6.0.7]: https://github.com/030/n3dr/compare/6.0.6...6.0.7
 [6.0.6]: https://github.com/030/n3dr/compare/6.0.5...6.0.6
 [6.0.5]: https://github.com/030/n3dr/compare/6.0.4...6.0.5
