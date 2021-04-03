@@ -74,9 +74,13 @@ The aims of the n3dr tool are:
 snap install n3dr
 ```
 
-Note: one has to run n3dr from the home folder if this installation mode is
-chosen. Otherwise a permission denied issue could occur, while creating the
-backup zip.
+Check the downloaded artifacts:
+
+```bash
+sudo ls /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764>
+sudo cp -r /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764> /home/${USER}/n3dr-backup
+sudo chown $USER:$USER -R /home/${USER}/n3dr-backup
+```
 
 ### MacOSX
 
