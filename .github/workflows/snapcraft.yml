@@ -1,0 +1,29 @@
+---
+name: Snapcraft
+on:
+  workflow_run:
+    workflows: ["Release"]
+    branches: [master]
+    types:
+      - completed
+jobs:
+  release:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: snapcore/action-build@v1
+        with:
+          path: build/package
+        id: snapcraft
+      - uses: snapcore/action-publish@v1
+        with:
+          store_login: ${{ secrets.SNAPCRAFT_LOGIN }}
+          snap: ${{ steps.snapcraft.outputs.snap }}
+      - run: |
+          sudo snap install --dangerous ${{ steps.snapcraft.outputs.snap }}
+          n3dr --version | grep "[0-9]\."
+      - uses: snapcore/action-publish@v1
+        with:
+          store_login: ${{ secrets.SNAPCRAFT_LOGIN }}
+          snap: ${{ steps.snapcraft.outputs.snap }}
+          release: stable
