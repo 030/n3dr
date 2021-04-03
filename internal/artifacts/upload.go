@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/fs"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -24,16 +25,17 @@ var artifactIndex int
 // detectFoldersWithPOM checks whether there are folders with .pom files.
 // Without them, maven artifacts cannout be published to nexus3.
 func (n Nexus3) detectFoldersWithPOM(d string) error {
-	err := filepath.Walk(d, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !f.IsDir() && filepath.Ext(path) == ".pom" {
-			log.Debug(path)
-			foldersWithPOM.WriteString(filepath.Dir(path) + ",")
-		}
-		return nil
-	})
+	err := filepath.WalkDir(d,
+		func(path string, info fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() && filepath.Ext(path) == ".pom" {
+				log.Debug(path)
+				foldersWithPOM.WriteString(filepath.Dir(path) + ",")
+			}
+			return nil
+		})
 	if err != nil {
 		return err
 	}
@@ -129,17 +131,18 @@ func pomDirs(p string, skipErrors bool) (strings.Builder, error) {
 	var sb strings.Builder
 	artifactIndex = 1
 
-	if err := filepath.Walk(p, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !f.IsDir() {
-			if err = artifactTypeDetector(&sb, path, skipErrors); err != nil {
+	if err := filepath.WalkDir(p,
+		func(path string, info fs.DirEntry, err error) error {
+			if err != nil {
 				return err
 			}
-		}
-		return nil
-	}); err != nil {
+			if !info.IsDir() {
+				if err = artifactTypeDetector(&sb, path, skipErrors); err != nil {
+					return err
+				}
+			}
+			return nil
+		}); err != nil {
 		return sb, err
 	}
 	return sb, nil

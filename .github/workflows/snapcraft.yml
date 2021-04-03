@@ -3,7 +3,9 @@ name: Snapcraft
 on:
   workflow_run:
     workflows: ["Release"]
-    branches: [master]
+    push:
+      tags:
+        - "*"
     types:
       - completed
 jobs:
