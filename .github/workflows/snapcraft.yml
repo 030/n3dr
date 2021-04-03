@@ -17,10 +17,6 @@ jobs:
         with:
           path: build/package
         id: snapcraft
-      - uses: snapcore/action-publish@v1
-        with:
-          store_login: ${{ secrets.SNAPCRAFT_LOGIN }}
-          snap: ${{ steps.snapcraft.outputs.snap }}
       - run: |
           sudo snap install --dangerous ${{ steps.snapcraft.outputs.snap }}
           n3dr --version | grep "[0-9]\."
