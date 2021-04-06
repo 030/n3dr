@@ -2,7 +2,9 @@ package main
 
 import (
 	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -53,13 +55,21 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
 }
 
-func configFile() (string, error) {
+func n3drHiddenHome() (string, error) {
 	home, err := homedir.Dir()
 	if err != nil {
 		return "", err
 	}
 	n3drHomeDir := filepath.Join(home, cli.HiddenN3DR)
 	log.Infof("n3drHomeDir: '%v'", n3drHomeDir)
+	return n3drHomeDir, nil
+}
+
+func configFile() (string, error) {
+	n3drHomeDir, err := n3drHiddenHome()
+	if err != nil {
+		return "", err
+	}
 
 	viper.AddConfigPath(n3drHomeDir)
 	viper.SetConfigName(cli.DefaultCfgFile)
@@ -99,7 +109,9 @@ func initConfig() {
 		log.Fatal(err)
 	}
 	enableDebug()
-	insecureCerts()
+	if err := insecureCerts(); err != nil {
+		log.Fatal(err)
+	}
 	parseConfig(configFilePath())
 	viper.AutomaticEnv()
 }
@@ -132,11 +144,23 @@ func parseConfig(cfgFile string) {
 	}
 }
 
-func insecureCerts() {
+func insecureCerts() error {
 	if insecureSkipVerify {
+		log.Infof("Loading CA in order to connect to Nexus3...")
+		n3drHomeDir, err := n3drHiddenHome()
+		if err != nil {
+			return err
+		}
+		caCert, err := ioutil.ReadFile(filepath.Clean(filepath.Join(n3drHomeDir, "ca.crt")))
+		if err != nil {
+			return err
+		}
+		caCertPool := x509.NewCertPool()
+		caCertPool.AppendCertsFromPEM(caCert)
 		log.Warn("Certificate validity check is disabled!")
-		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{MinVersion: tls.VersionTLS12, MaxVersion: tls.VersionTLS13, RootCAs: caCertPool}
 	}
+	return nil
 }
 
 func enableDebug() {

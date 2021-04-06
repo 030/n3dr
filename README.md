@@ -146,6 +146,17 @@ Flags:
 Use "n3dr [command] --help" for more information about a command.
 ```
 
+## insecureSkipVerify
+
+It is possible to load a custom CA to connect to Nexus3 if one created
+self-signed certificates, by using:
+
+```bash
+--insecureSkipVerify
+```
+
+Note: store the `ca.crt` in the `~/.n3dr` directory.
+
 ## Anonymous
 
 In order to download as a anonymous user, one has to use the `--anonymous`
