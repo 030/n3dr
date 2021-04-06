@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.9] - 2021-04-06
+
+### Fixed
+
+- G402 by ensuring that self-signed CA should be used, reported by
+[@titou10titou10](https://github.com/titou10titou10)
+
 ## [6.0.8] - 2021-04-03
 
 ### Added
@@ -517,7 +524,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.8...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.9...HEAD
+[6.0.9]: https://github.com/030/n3dr/compare/6.0.8...6.0.9
 [6.0.8]: https://github.com/030/n3dr/compare/6.0.7...6.0.8
 [6.0.7]: https://github.com/030/n3dr/compare/6.0.6...6.0.7
 [6.0.6]: https://github.com/030/n3dr/compare/6.0.5...6.0.6
