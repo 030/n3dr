@@ -30,15 +30,9 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL             string `validate:"nonzero,regexp=^http(s)?://.*[a-z]+(:[0-9]+)?$"`
-	User            string
-	Pass            string
-	Repository      string
-	APIVersion      string
-	ZIP             bool
-	ZipName         string
-	DownloadDirName string
-	ArtifactType    string
+	URL                                                                        string `validate:"nonzero,regexp=^http(s)?://[a-z0-9\\.-]+(:[0-9]+)?$"`
+	APIVersion, ArtifactType, DownloadDirName, Pass, Repository, User, ZipName string
+	ZIP                                                                        bool
 }
 
 // RetryLogAdaptor adapts the retryablehttp.Logger interface to the logrus logger.
@@ -55,7 +49,7 @@ func (n Nexus3) validate() {
 
 func (n *Nexus3) ValidateNexusURL() error {
 	if errs := validator.Validate(n); errs != nil {
-		return fmt.Errorf("The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: '%v'", errs)
+		return fmt.Errorf("the Nexus3 URL seems to be incorrect. Verify that it complies to the regex that is defined in the 'Nexus3 Struct' and that it does not end with a '/'. Error: '%v'", errs)
 	}
 	return nil
 }
@@ -115,7 +109,7 @@ func (n Nexus3) responseBodyString(resp *http.Response) ([]byte, string, error) 
 		}
 		bodyString = string(bodyBytes)
 		if bodyString == "[ ]" {
-			return nil, "", fmt.Errorf("Bodystring should not be empty. Did the authentication to '%s' succeed?", n.URL)
+			return nil, "", fmt.Errorf("bodystring should not be empty. Did the authentication to '%s' succeed?", n.URL)
 		}
 	} else {
 		return nil, "", fmt.Errorf("ResponseCode: '%s' and Message '%s' for URL: %s", strconv.Itoa(resp.StatusCode), resp.Status, resp.Request.URL)

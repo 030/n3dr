@@ -1,3 +1,4 @@
+---
 name: Go
 on:
   push:
@@ -15,7 +16,7 @@ jobs:
             nexus-api-version: beta
             shasum: shasum -a 512
           - os: ubuntu-20.04
-            nexus-version: 3.28.0
+            nexus-version: 3.30.0
             nexus-api-version: v1
             shasum: sha512sum
           - os: ubuntu-20.04
@@ -31,7 +32,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.15.7
+          go-version: 1.16.3
       - name: Install bats
         run: |
           set -x
@@ -48,8 +49,14 @@ jobs:
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           SHA512_CMD: ${{ matrix.shasum }}
-      - name: Unit test
-        run: go test -short -cover -v -coverprofile=coverage.txt -covermode=atomic ./...
+      - name: Quality
+        run: |
+          docker run --rm -v "$PWD:/mnt" koalaman/shellcheck:v0.7.1 */*.sh -x
+          docker run --rm -v ${PWD}:/data markdownlint/markdownlint:0.11.0 \
+            README.md -s /data/.markdownlint.rb
+          docker run --rm -v $(pwd):/data cytopia/yamllint:1.26-0.8 .
+          docker run --rm -v $(pwd):/app -w /app \
+            golangci/golangci-lint:v1.39.0-alpine golangci-lint run -v
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Integration test
         run: ./test/integration-tests.sh

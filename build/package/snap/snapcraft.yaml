@@ -1,34 +1,35 @@
 ---
 name: n3dr
 base: core
-version: 6.0.2
+version: 6.0.9
 summary: Nexus3 Disaster Recovery
 description: |
   Download all artifacts at once or migrate automatically from Nexus to Nexus.
-
 grade: stable
 confinement: strict
-
 apps:
   n3dr:
     command: n3dr
-
 plugs:
   n3dr-home:
     interface: home
   n3dr-network:
     interface: network
-
 parts:
   n3dr:
     plugin: nil
+    build-packages:
+      - curl
     override-build: |
       cd $SNAPCRAFT_PART_INSTALL
-      curl -fL https://github.com/030/n3dr/releases/download/${SNAPCRAFT_PROJECT_VERSION}/n3dr-ubuntu-20.04 \
+      export N3DR_URL=https://github.com/030/n3dr/releases/download
+      export N3DR_URL_VERSION=${N3DR_URL}/${SNAPCRAFT_PROJECT_VERSION}
+      curl -fL ${N3DR_URL_VERSION}/n3dr-ubuntu-20.04 \
         -o n3dr-ubuntu-20.04
-      curl -fL https://github.com/030/n3dr/releases/download/${SNAPCRAFT_PROJECT_VERSION}/n3dr-ubuntu-20.04.sha512.txt \
+      curl -fL ${N3DR_URL_VERSION}/n3dr-ubuntu-20.04.sha512.txt \
         -o n3dr-sha.txt
       sha512sum -c n3dr-sha.txt
       mv n3dr-ubuntu-20.04 n3dr
       chmod +x ./n3dr
-      ./n3dr --version | grep "^nd3r version refs/tags/${SNAPCRAFT_PROJECT_VERSION}$"
+      ./n3dr --version |\
+        grep "^n3dr version refs/tags/${SNAPCRAFT_PROJECT_VERSION}$"

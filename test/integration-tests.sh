@@ -62,10 +62,10 @@ nexus(){
 }
 
 artifact(){
-  mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6"
-  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6/f.i-l.e.${1}-1.0.0-2-gcac5af6.jar"
-  echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6/file${1}-1.0.0-2-gcac5af6.zip"
-  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0-2-gcac5af6</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0-2-gcac5af6/file${1}-1.0.0-2-gcac5af6.pom"
+  mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0-2"
+  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0-2/f.i-l.e.${1}-1.0.0-2.jar"
+  echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.zip"
+  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.pom"
 }
 
 files(){
@@ -80,7 +80,11 @@ upload(){
   curl -f ${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml
 
   echo "Testing upload..."
-  ./"${N3DR_DELIVERABLE}" upload -u admin -p "${PASSWORD}" -r maven-releases -n ${NEXUS_URL} -v "${NEXUS_API_VERSION}"
+  ./"${N3DR_DELIVERABLE}" upload -u admin \
+                                 -p "${PASSWORD}" \
+                                 -r maven-releases \
+                                 -n http://127.0.0.1:9999 \
+                                 -v "${NEXUS_API_VERSION}"
   echo
 }
 
@@ -156,10 +160,10 @@ uploadNuget(){
 backupHelper(){
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 300
-    test_zip 164
+    test_zip 152
   else
     count_downloads 400
-    test_zip 208
+    test_zip 196
   fi
   cleanup_downloads
 }
@@ -218,10 +222,10 @@ repositories(){
   $cmd -b -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 300
-    test_zip 164
+    test_zip 152
   else
     count_downloads 401
-    test_zip 248
+    test_zip 232
   fi
   cleanup_downloads
 }

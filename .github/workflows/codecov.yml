@@ -1,0 +1,26 @@
+---
+name: CodeCov
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.3
+      - name: Unit test
+        run: |
+          go test -short -cover -v -coverprofile=coverage.txt \
+          -covermode=atomic ./...
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./coverage.txt
+          flags: unittests
+          verbose: true

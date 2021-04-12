@@ -1,6 +1,7 @@
 package artifacts
 
 import (
+	"io/fs"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -43,15 +44,16 @@ func TestContinuationTokenHash(t *testing.T) {
 
 func allFiles(dir string) ([]string, error) {
 	fileList := []string{}
-	err := filepath.Walk(dir, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if f.Mode().IsRegular() {
-			fileList = append(fileList, path)
-		}
-		return nil
-	})
+	err := filepath.WalkDir(dir,
+		func(path string, info fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() {
+				fileList = append(fileList, path)
+			}
+			return nil
+		})
 	return fileList, err
 }
 
