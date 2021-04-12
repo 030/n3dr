@@ -74,9 +74,13 @@ The aims of the n3dr tool are:
 snap install n3dr
 ```
 
-Note: one has to run n3dr from the home folder if this installation mode is
-chosen. Otherwise a permission denied issue could occur, while creating the
-backup zip.
+Check the downloaded artifacts:
+
+```bash
+sudo ls /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764>
+sudo cp -r /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764> /home/${USER}/n3dr-backup
+sudo chown $USER:$USER -R /home/${USER}/n3dr-backup
+```
 
 ### MacOSX
 
@@ -142,6 +146,17 @@ Flags:
 Use "n3dr [command] --help" for more information about a command.
 ```
 
+## insecureSkipVerify
+
+It is possible to load a custom CA to connect to Nexus3 if one created
+self-signed certificates, by using:
+
+```bash
+--insecureSkipVerify
+```
+
+Note: store the `ca.crt` in the `~/.n3dr` directory.
+
 ## Anonymous
 
 In order to download as a anonymous user, one has to use the `--anonymous`
@@ -178,6 +193,18 @@ navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
 
 ```bash
 n3dr upload -r releases -n <url>
+```
+
+#### skipErrors
+
+One could use `--skipErrors` or `-s` to continue-on-error:
+
+```bash
+N3DR_MAVEN_UPLOAD_REGEX_VERSION=boo \
+N3DR_MAVEN_UPLOAD_REGEX_CLASSIFIER=foo \
+n3dr upload -n some-nexus-url \
+            -r some-repository \
+            -s
 ```
 
 ## Store the password in a read-only file
@@ -357,3 +384,11 @@ a single command.
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/030/n3dr.svg)](https://starchart.cc/030/n3dr)
+
+## Development
+
+### Unit Tests
+
+```bash
+go test internal/artifacts/common.go internal/artifacts/common_test.go
+```

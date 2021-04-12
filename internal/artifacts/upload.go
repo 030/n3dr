@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/fs"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -24,16 +25,17 @@ var artifactIndex int
 // detectFoldersWithPOM checks whether there are folders with .pom files.
 // Without them, maven artifacts cannout be published to nexus3.
 func (n Nexus3) detectFoldersWithPOM(d string) error {
-	err := filepath.Walk(d, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !f.IsDir() && filepath.Ext(path) == ".pom" {
-			log.Debug(path)
-			foldersWithPOM.WriteString(filepath.Dir(path) + ",")
-		}
-		return nil
-	})
+	err := filepath.WalkDir(d,
+		func(path string, info fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() && filepath.Ext(path) == ".pom" {
+				log.Debug(path)
+				foldersWithPOM.WriteString(filepath.Dir(path) + ",")
+			}
+			return nil
+		})
 	if err != nil {
 		return err
 	}
@@ -66,30 +68,53 @@ func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
 	return nil
 }
 
-func artifactTypeDetector(sb *strings.Builder, path string) error {
+func artifactTypeDetector(sb *strings.Builder, path string, skipErrors bool) error {
 	var err error
 
-	re := regexp.MustCompile(`^.*\/([\w\-\.]+)\/(([a-z\d\-]+)|(([a-z\d\.]+)))(-(.*?(\-([\w.]+))?)?)?\.([a-z]+)$`)
+	regexVersion := `(([a-z\d\-]+)|(([a-z\d\.]+)))`
+	if rv := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_VERSION"); rv != "" {
+		regexVersion = rv
+	}
+
+	regexClassifier := `(-(.*?(\-([\w.]+))?)?)?`
+	if rc := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_CLASSIFIER"); rc != "" {
+		regexClassifier = rc
+	}
+  
+	re := regexp.MustCompile(`^.*\/([\w\-\.]+)\/`+ regexVersion +regexClassifier` \.([a-z]+)$`)
 
 	classifier := ""
 	if re.Match([]byte(path)) {
 		result := re.FindAllStringSubmatch(path, -1)
-                //ADDED A CHECK IF THE 'VERSION' REPORTED IN THE ARTIFACT NAME IS DIFFERENT FROM THE 'REAL' VERSION
-		if result[0][7] != result[0][1] {
-			classifier = result[0][9]
-		} else {
-			classifier = ""
+		artifactElements := result[0]
+		log.Debugf("ArtifactElements: '%s'", artifactElements)
+ 		if len(result[0]) != 10 {
+			err := fmt.Errorf("Check whether the regex retrieves ten elements from the artifact. Current: '%s'. Note that element 3 is the artifact itself.", artifactElements)
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return err
+			}
 		}
-		log.Debugf("Artifact: '%v'", result[0][3])
-		log.Debugf("Version: '%v'", result[0][1])
-		log.Debugf("Extension: '%v'", result[0][10])
-		log.Debugf("Classifier: '%v'", classifier)
-		ext := result[0][10]
+    
+    artifact := artifactElements[3]
+		version := artifactElements[1]
+		classifier := classifier
+		ext := artifactElements[10]
+		log.Infof("Artifact: '%v', Version: '%v', Classifier: '%v', Extension: '%v'.", artifact, version, classifier, ext)
+    // Check if the 'version' reported in the artifact name is different from the 'real' version
+		if artifactElements[7] != artifactElements[1] {
+			classifier = artifactElements[9]
+		} 
+
 		err = sbArtifact(sb, path, ext, classifier)
 	} else {
-		log.Warningf("'%v' not an artifact", path)
-		// return nil to continue-on-error to ensure that subsequent artifacts
-		// will be uploaded
+		err := fmt.Errorf("Check whether regexVersion: '%s' and regexClassifier: '%s' match the artifact: '%s'", regexVersion, regexClassifier, path)
+		if skipErrors {
+			log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+		} else {
+			return err
+		}
 	}
 
 	return err
@@ -110,22 +135,22 @@ func (n Nexus3) multipartUpload(sb strings.Builder) error {
 	return nil
 }
 
-func pomDirs(p string) (strings.Builder, error) {
+func pomDirs(p string, skipErrors bool) (strings.Builder, error) {
 	var sb strings.Builder
 	artifactIndex = 1
 
-	err := filepath.Walk(p, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !f.IsDir() {
-			if err = artifactTypeDetector(&sb, path); err != nil {
+	if err := filepath.WalkDir(p,
+		func(path string, info fs.DirEntry, err error) error {
+			if err != nil {
 				return err
 			}
-		}
-		return nil
-	})
-	if err != nil {
+			if !info.IsDir() {
+				if err = artifactTypeDetector(&sb, path, skipErrors); err != nil {
+					return err
+				}
+			}
+			return nil
+		}); err != nil {
 		return sb, err
 	}
 	return sb, nil
@@ -260,29 +285,38 @@ func (n *Nexus3) readFilesAndUpload() error {
 	return nil
 }
 
-func (n *Nexus3) readMavenFilesAndUpload() error {
+func (n *Nexus3) readMavenFilesAndUpload(skipErrors bool) error {
 	if err := n.detectFoldersWithPOM(n.Repository); err != nil {
 		return err
 	}
 	for i, path := range foldersWithPOMStringSlice {
 		log.Debug(strconv.Itoa(i) + " Detecting artifacts in folder '" + path + "'")
-		sb, err := pomDirs(path)
+		sb, err := pomDirs(path, skipErrors)
 		if err != nil {
 			return err
 		}
 		if sb.String() == "" {
-			return fmt.Errorf("The sb.String() should not be empty. Verify whether the path: '%s' contains artifacts", path)
+			err := fmt.Errorf("The sb.String() should not be empty. Verify whether the path: '%s' contains artifacts", path)
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return err
+			}
 		}
 		log.Info(strconv.Itoa(i) + " Upload '" + sb.String() + "'")
 		if err := n.multipartUpload(sb); err != nil {
-		return err
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return err
+			}
 		}
 	}
 	return nil
 }
 
 // Upload posts an artifact as a multipart to a specific nexus3 repository
-func (n Nexus3) Upload() error {
+func (n Nexus3) Upload(skipErrors bool) error {
 	log.Infof("Uploading '%s'", n.ArtifactType)
 	switch n.ArtifactType {
 	case "apt":
@@ -290,7 +324,7 @@ func (n Nexus3) Upload() error {
 			return err
 		}
 	case "maven2":
-		if err := n.readMavenFilesAndUpload(); err != nil {
+		if err := n.readMavenFilesAndUpload(skipErrors); err != nil {
 			return err
 		}
 	case "npm":

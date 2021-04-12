@@ -7,26 +7,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [6.0.4] - 2020-03-11
+## [6.0.9] - 2021-04-06
+
+### Fixed
+
+- G402 by ensuring that self-signed CA should be used, reported by
+[@titou10titou10](https://github.com/titou10titou10)
+
+## [6.0.8] - 2021-04-03
+
+### Added
+
+- Release snap by CI
+
+### Changed
+
+- Replace walk by walkDir as it is faster
+
+## [6.0.7] - 2021-04-02
+
+### Added
+
+- Scan waste in docker image using Dive
+- Security scanning using Trivy
+- Build and push docker image on new release
+
+### Changed
+
+- Alpine: 3.13.4
+- Golang: 1.16.3
+- Nexus3: 3.30.0
+
+### Fixed
+
+- Nexus3 IP address not allowed, reported by
+  [@Just4test](https://github.com/Just4test)
+
+## [6.0.6] - 2021-03-23
+
+### Fixed
+
+- Not possible to skip errors, reported by [@tunix](https://github.com/tunix)
+
+## [6.0.5] - 2021-03-21
+
+### Fixed
+
+- Typo in app name.
+- Omission of brew package.
+
+## [6.0.4] - 2021-03-11
 
 ### Fixed
 
 - Do not run docker image as root.
 
-## [6.0.3] - 2020-03-07
+## [6.0.3] - 2021-03-07
 
 ### Fixed
 
 - Docker not launching, reported by [@YoShiiro](https://github.com/YoShiiro)
 
-## [6.0.2] - 2020-03-06
+## [6.0.2] - 2021-03-06
 
 ### Fixed
 
 - Some artifacts could not be uploaded due to regex issue, reported by
   [@tunix](https://github.com/tunix)
 
-## [6.0.1] - 2020-02-18
+## [6.0.1] - 2021-02-18
 
 ### Changed
 
@@ -475,7 +524,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.4...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.9...HEAD
+[6.0.9]: https://github.com/030/n3dr/compare/6.0.8...6.0.9
+[6.0.8]: https://github.com/030/n3dr/compare/6.0.7...6.0.8
+[6.0.7]: https://github.com/030/n3dr/compare/6.0.6...6.0.7
+[6.0.6]: https://github.com/030/n3dr/compare/6.0.5...6.0.6
+[6.0.5]: https://github.com/030/n3dr/compare/6.0.4...6.0.5
 [6.0.4]: https://github.com/030/n3dr/compare/6.0.3...6.0.4
 [6.0.3]: https://github.com/030/n3dr/compare/6.0.2...6.0.3
 [6.0.2]: https://github.com/030/n3dr/compare/6.0.1...6.0.2

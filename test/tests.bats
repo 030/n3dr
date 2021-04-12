@@ -1,3 +1,5 @@
+readonly NEXUS_URL_ERROR_MSG_REGEX=".*the Nexus3 URL seems to be incorrect. Verify that it complies to the regex that is defined in the 'Nexus3 Struct' and that it does not end with a '/'. Error: 'URL: regular expression mismatch'"
+
 @test "invoking n3dr with incorrect password specification prints an error" {
   run ./${N3DR_DELIVERABLE} repositories -n http://localhost:9999 -u admin -p INCORRECT_PASSWORD -b
   [ "$status" -eq 1 ]
@@ -18,30 +20,27 @@
   run ./${N3DR_DELIVERABLE} repositories -n http://localhost:99999/ -u admin -p INCORRECT_PASSWORD -b
   [ "$status" -eq 1 ]
   echo $output
-  regex=".*The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: 'URL: regular expression mismatch'"
-  [[ "$output" =~ $regex ]]
+  [[ "$output" =~ $NEXUS_URL_ERROR_MSG_REGEX ]]
 }
 
 @test "invoking n3dr with backup subcommand and incorrect URL exits" {
   run ./${N3DR_DELIVERABLE} backup -u bla -n http://hihi/ -r bla -z
   [ "$status" -eq 1 ]
   echo $output
-  regex=".*The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: 'URL: regular expression mismatch'"
-  [[ "$output" =~ $regex ]]
+  [[ "$output" =~ $NEXUS_URL_ERROR_MSG_REGEX ]]
 }
 
 @test "invoking n3dr with upload subcommand and incorrect URL exits" {
   run ./${N3DR_DELIVERABLE} upload -u bla -n http://hihi/ -r bla
   [ "$status" -eq 1 ]
   echo $output
-  regex=".*The Nexus3 URL seems to be incorrect. Ensure that it does not end with a '/'. Error: 'URL: regular expression mismatch'"
-  [[ "$output" =~ $regex ]]
+  [[ "$output" =~ $NEXUS_URL_ERROR_MSG_REGEX ]]
 }
 
 @test "invoking n3dr with version subcommand should return version" {
   run ./${N3DR_DELIVERABLE} --version
   [ "$status" -eq 0 ]
   echo $output
-  regex=".*nd3r version.*"
+  regex=".*n3dr version.*"
   [[ "$output" =~ $regex ]]
 }
