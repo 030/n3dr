@@ -71,34 +71,42 @@ func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
 func artifactTypeDetector(sb *strings.Builder, path string, skipErrors bool) error {
 	var err error
 
-	regexVersion := `([\d\.-]+\d)`
+	regexVersion := `(([a-z\d\-]+)|(([a-z\d\.]+)))`
 	if rv := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_VERSION"); rv != "" {
 		regexVersion = rv
 	}
 
-	regexClassifier := `([a-zA-Z]+)?`
+	regexClassifier := `(-(.*?(\-([\w.]+))?)?)?`
 	if rc := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_CLASSIFIER"); rc != "" {
 		regexClassifier = rc
 	}
+  
+	re := regexp.MustCompile(`^.*\/([\w\-\.]+)\/`+ regexVersion +regexClassifier` \.([a-z]+)$`)
 
-	re := regexp.MustCompile(`^.*\/([\w\.-]+)-` + regexVersion + `-?` + regexClassifier + `\.([a-z]+)$`)
+	classifier := ""
 	if re.Match([]byte(path)) {
 		result := re.FindAllStringSubmatch(path, -1)
 		artifactElements := result[0]
 		log.Debugf("ArtifactElements: '%s'", artifactElements)
-		if len(result[0]) != 5 {
-			err := fmt.Errorf("Check whether the regex retrieves four elements from the artifact. Current: '%s'. Note that element 0 is the artifact itself.", artifactElements)
+ 		if len(result[0]) != 10 {
+			err := fmt.Errorf("Check whether the regex retrieves ten elements from the artifact. Current: '%s'. Note that element 3 is the artifact itself.", artifactElements)
 			if skipErrors {
 				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
 			} else {
 				return err
 			}
 		}
-		artifact := artifactElements[1]
-		version := artifactElements[2]
-		classifier := artifactElements[3]
-		ext := artifactElements[4]
+    
+    artifact := artifactElements[3]
+		version := artifactElements[1]
+		classifier := classifier
+		ext := artifactElements[10]
 		log.Infof("Artifact: '%v', Version: '%v', Classifier: '%v', Extension: '%v'.", artifact, version, classifier, ext)
+    // Check if the 'version' reported in the artifact name is different from the 'real' version
+		if artifactElements[7] != artifactElements[1] {
+			classifier = artifactElements[9]
+		} 
+
 		err = sbArtifact(sb, path, ext, classifier)
 	} else {
 		err := fmt.Errorf("Check whether regexVersion: '%s' and regexClassifier: '%s' match the artifact: '%s'", regexVersion, regexClassifier, path)
@@ -187,11 +195,10 @@ func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, re
 		return err
 	}
 	defer resp.Body.Close()
-
 	// For some reason a 200 instead of 201 is returned if an NPM has been uploaded
 	if resp.StatusCode == statusCreated {
 		log.Infof("Upload of %v Ok. StatusCode: %v.", file, resp.StatusCode)
-	} else {
+ 	} else {
 		log.Error(resp)
 		return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
 	}
