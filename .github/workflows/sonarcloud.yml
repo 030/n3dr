@@ -28,7 +28,7 @@ jobs:
             -Dsonar.organization=030-github
             -Dsonar.projectKey=030_n3dr
             -Dsonar.sources=.
-            -Dsonar.coverage.exclusions=**/*_test.go
+            -Dsonar.coverage.exclusions=**/*_test.go,**/root.go
             -Dsonar.verbose=true
             -Dsonar.go.coverage.reportPaths="coverage.txt"
         env:

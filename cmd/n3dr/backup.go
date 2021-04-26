@@ -5,12 +5,13 @@ import (
 
 	"github.com/030/n3dr/internal/artifacts"
 
+	bu "github.com/030/n3dr/internal/backup"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 var regex string
-var npm bool
+var npm, nuget bool
 
 // backupCmd represents the backup command
 var backupCmd = &cobra.Command{
@@ -32,9 +33,10 @@ reside in a certain Nexus3 repository`,
 				log.Fatal(err)
 			}
 
-			if npm {
-				log.Info("Backing up an NPM repository...")
-				if err := n.BackupAllNPMArtifacts(repository, dir, regex); err != nil {
+			if npm || nuget {
+				log.Info("Backing up an NPM or NuGet repository...")
+				bu := bu.Nexus3{Endpoint: n.URL, Password: n.Pass, Username: n.User, Repository: n.Repository, BaseDir: dir, Regex: regex}
+				if err := bu.AllArtifacts(); err != nil {
 					log.Fatal(err)
 				}
 			} else {
@@ -54,6 +56,7 @@ reside in a certain Nexus3 repository`,
 func init() {
 	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repositories")
 	backupCmd.Flags().BoolVarP(&npm, "npm", "", false, "backup an NPM repository")
+	backupCmd.Flags().BoolVarP(&nuget, "nuget", "", false, "backup a Nuget repository")
 	backupCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 
 	if err := backupCmd.MarkPersistentFlagRequired("n3drRepo"); err != nil {

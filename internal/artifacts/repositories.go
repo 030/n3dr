@@ -3,6 +3,8 @@ package artifacts
 import (
 	"fmt"
 
+	bck "github.com/030/n3dr/internal/backup"
+
 	validate "github.com/go-playground/validator/v10"
 	log "github.com/sirupsen/logrus"
 	"github.com/thedevsaddam/gojsonq"
@@ -86,13 +88,14 @@ func (n *Nexus3) repositoriesChannel(m repositoriesNamesAndFormatsMap, dir, rege
 		log.Debugf("Name: '%v'. Format: '%v'", name, format)
 
 		go func(dir, format, name string) {
+			log.Debugf("Repository: '%v'. Format: '%s'", name, format)
 			switch format {
 			case "maven2":
 				n.Repository = name
-				log.Debugf("Repository: '%v'", n.Repository)
 				errs <- n.StoreArtifactsOnDiskChannel(dir, regex)
 			case "npm":
-				errs <- n.BackupAllNPMArtifacts(name, dir, regex)
+				bckn := bck.Nexus3{BaseDir: dir, Endpoint: n.URL, Password: n.Pass, Username: n.User, Regex: regex, Repository: name}
+				errs <- bckn.AllArtifacts()
 			default:
 				log.Warnf("Nexus repository: '%s', format: '%v' download not supported", name, format)
 				errs <- nil
