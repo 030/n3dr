@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Download of nupkg packages.
+
+### Changed
+
+- Refactored NPM code.
+
 ## [6.0.10] - 2021-04-12
 
 ### Fixed

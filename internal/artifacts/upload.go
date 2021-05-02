@@ -170,7 +170,7 @@ func (n *Nexus3) readFiles() ([]string, error) {
 }
 
 func (n *Nexus3) uploadFile(file string, req *http.Request) error {
-	req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
+	req.SetBasicAuth(n.User, n.Pass)
 	req.Header.Set("Content-Type", "multipart/form-data")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -189,7 +189,7 @@ func (n *Nexus3) uploadFile(file string, req *http.Request) error {
 
 func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, req *http.Request, statusCreated int) error {
 	req.Header.Add("Content-Type", writer.FormDataContentType())
-	req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
+	req.SetBasicAuth(n.User, n.Pass)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

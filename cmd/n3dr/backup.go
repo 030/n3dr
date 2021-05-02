@@ -4,8 +4,7 @@ import (
 	"strings"
 
 	"github.com/030/n3dr/internal/artifacts"
-
-	bu "github.com/030/n3dr/internal/backup"
+	npmPkg "github.com/030/n3dr/internal/backup/npm"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -33,10 +32,10 @@ reside in a certain Nexus3 repository`,
 				log.Fatal(err)
 			}
 
-			if npm || nuget {
+			if npm {
 				log.Info("Backing up an NPM or NuGet repository...")
-				bu := bu.Nexus3{Endpoint: n.URL, Password: n.Pass, Username: n.User, Repository: n.Repository, BaseDir: dir, Regex: regex}
-				if err := bu.AllArtifacts(); err != nil {
+				npmn := npmPkg.Nexus3{Endpoint: n.URL, Password: n.Pass, Username: n.User, Repository: n.Repository, BaseDir: dir, Regex: regex}
+				if err := npmn.AllArtifacts(); err != nil {
 					log.Fatal(err)
 				}
 			} else {

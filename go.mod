@@ -5,8 +5,6 @@ go 1.16
 require (
 	github.com/030/go-multipart v1.0.2
 	github.com/030/mij v0.12.1
-	github.com/PuerkitoBio/goquery v1.6.1
-	github.com/andybalholm/cascadia v1.2.0
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/cavaliercoder/grab v2.0.0+incompatible
 	github.com/dsnet/compress v0.0.1 // indirect
@@ -39,10 +37,11 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/svenfuchs/jq v0.0.0-20180603193138-b038733a5990
 	github.com/thedevsaddam/gojsonq v2.3.0+incompatible
+	github.com/tidwall/gjson v1.7.5
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2 // indirect
-	golang.org/x/net v0.0.0-20210331212208-0fccb6fa2b5c
+	golang.org/x/net v0.0.0-20210331212208-0fccb6fa2b5c // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20210403161142-5e06dd20ab57 // indirect
 	golang.org/x/term v0.0.0-20210317153231-de623e64d2a6 // indirect

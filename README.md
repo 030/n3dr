@@ -387,8 +387,14 @@ a single command.
 
 ## Development
 
-### Unit Tests
+### Tests
 
 ```bash
 go test internal/artifacts/common.go internal/artifacts/common_test.go
+```
+
+#### NuGet
+
+```bash
+go test internal/backup/nuget/* -v
 ```

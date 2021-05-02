@@ -3,8 +3,7 @@ package artifacts
 import (
 	"fmt"
 
-	bck "github.com/030/n3dr/internal/backup"
-
+	"github.com/030/n3dr/internal/backup/npm"
 	validate "github.com/go-playground/validator/v10"
 	log "github.com/sirupsen/logrus"
 	"github.com/thedevsaddam/gojsonq"
@@ -94,8 +93,8 @@ func (n *Nexus3) repositoriesChannel(m repositoriesNamesAndFormatsMap, dir, rege
 				n.Repository = name
 				errs <- n.StoreArtifactsOnDiskChannel(dir, regex)
 			case "npm":
-				bckn := bck.Nexus3{BaseDir: dir, Endpoint: n.URL, Password: n.Pass, Username: n.User, Regex: regex, Repository: name}
-				errs <- bckn.AllArtifacts()
+				npmn := npm.Nexus3{BaseDir: dir, Endpoint: n.URL, Password: n.Pass, Username: n.User, Regex: regex, Repository: name}
+				errs <- npmn.AllArtifacts()
 			default:
 				log.Warnf("Nexus repository: '%s', format: '%v' download not supported", name, format)
 				errs <- nil
