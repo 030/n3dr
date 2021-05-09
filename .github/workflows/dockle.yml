@@ -1,0 +1,14 @@
+name: "Dive CI"
+on: [push]
+jobs:
+  dive:
+    runs-on: ubuntu-latest
+    name: Analyze image using dockle
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build image
+        run: docker build -t utrecht/n3dr:${{ github.sha }} .
+      - uses: hands-lab/dockle-action@v1
+        with:
+          image: utrecht/n3dr:${{ github.sha }}
