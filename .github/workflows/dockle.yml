@@ -1,4 +1,4 @@
-name: "Dive CI"
+name: "Dockle"
 on: [push]
 jobs:
   dive:
