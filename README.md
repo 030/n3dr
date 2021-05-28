@@ -195,6 +195,10 @@ navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
 n3dr upload -r releases -n <url>
 ```
 
+Note: if the snap package is used to upload artifacts, one has to ensure that
+the folder resides in the /home/$USER folder. Otherwise a:
+`lstat <repository-name>: no such file or directory` issue could occur.
+
 #### skipErrors
 
 One could use `--skipErrors` or `-s` to continue-on-error:
