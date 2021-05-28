@@ -17,6 +17,7 @@ import (
 )
 
 func (n *Nexus3) BackupAllNPMArtifacts(repository, dir, regex string) error {
+	log.Infof("Backing up: '%v'", n.Repository)
 	url := n.URL + "/service/rest/repository/browse/" + repository
 	npmRepoHTML, err := n.npmURL(url)
 	if err != nil {

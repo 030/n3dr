@@ -83,21 +83,20 @@ func (n *Nexus3) repositoriesChannel(m repositoriesNamesAndFormatsMap, dir, rege
 	errs := make(chan error)
 
 	for name, format := range m {
-		log.Debugf("Name: '%v'. Format: '%v'", name, format)
+		n.Repository = name
+		log.Infof("Name: '%s'. Format: '%s'", n.Repository, format)
 
-		go func(dir, format, name string) {
+		go func(dir, format string, n Nexus3) {
 			switch format {
 			case "maven2":
-				n.Repository = name
-				log.Debugf("Repository: '%v'", n.Repository)
 				errs <- n.StoreArtifactsOnDiskChannel(dir, regex)
 			case "npm":
-				errs <- n.BackupAllNPMArtifacts(name, dir, regex)
+				errs <- n.BackupAllNPMArtifacts(n.Repository, dir, regex)
 			default:
-				log.Warnf("Nexus repository: '%s', format: '%v' download not supported", name, format)
+				log.Warnf("Nexus repository: '%s', format: '%v' download not supported", n.Repository, format)
 				errs <- nil
 			}
-		}(dir, format, name)
+		}(dir, format, *n)
 	}
 	for range m {
 		if err := <-errs; err != nil {
