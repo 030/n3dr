@@ -1,4 +1,4 @@
-FROM golang:1.16.6-alpine3.14 as builder
+FROM golang:1.16.7-alpine3.14 as builder
 ENV PROJECT n3dr
 RUN mkdir $PROJECT && \
     adduser -D -g '' $PROJECT
