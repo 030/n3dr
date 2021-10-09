@@ -1,11 +1,9 @@
 package artifacts
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	"crypto/sha512"
 	"errors"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/url"
 	"os"
@@ -137,15 +135,20 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 
 	filename := filepath.Join(d, f)
 
-	md5sumLocal := ""
+	checksumDownloadedArtifact := ""
 	if fileExists(filename) {
-		md5sumLocal, err = hashFileMD5(filename)
+		dat, err := os.ReadFile(filename)
+		if err != nil {
+			return err
+		}
+
+		checksumDownloadedArtifact = fmt.Sprintf("%x", sha512.Sum512(dat))
 		if err != nil {
 			return err
 		}
 	}
 
-	if md5sumLocal == md5sum {
+	if checksumDownloadedArtifact == md5sum {
 		log.Debug("Skipping as file already exists.")
 	} else {
 		log.Debug("Creating ", filename)
@@ -206,23 +209,6 @@ func (n Nexus3) downloadArtifact(dir, url, md5 string) error {
 	return nil
 }
 
-// HashFileMD5 returns MD5 checksum of a file
-func hashFileMD5(filePath string) (string, error) {
-	var returnMD5String string
-	file, err := os.Open(filePath)
-	if err != nil {
-		return returnMD5String, err
-	}
-	defer file.Close()
-	hash := md5.New()
-	if _, err := io.Copy(hash, file); err != nil {
-		return returnMD5String, err
-	}
-	hashInBytes := hash.Sum(nil)[:16]
-	returnMD5String = hex.EncodeToString(hashInBytes)
-	return returnMD5String, nil
-}
-
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
@@ -244,13 +230,13 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 	json := string(bytes)
 	jq := gojsonq.New().JSONString(json)
 	log.Debugf("JQ: '%v'", jq)
-	downloadURLAndMd5s := jq.From("items").Only("downloadUrl", "checksum.md5")
+	downloadURLAndChecksums := jq.From("items").Only("downloadUrl", "checksum.sha512")
 
-	for _, downloadURLAndMd5 := range downloadURLAndMd5s.([]interface{}) {
-		log.Debugf("downloadURLAndMd5: '%v'", downloadURLAndMd5)
-		go func(downloadURLAndMd5 interface{}) {
-			downloadURL := fmt.Sprint(downloadURLAndMd5.(map[string]interface{})["downloadUrl"])
-			md5 := fmt.Sprint(downloadURLAndMd5.(map[string]interface{})["md5"])
+	for _, downloadURLAndChecksum := range downloadURLAndChecksums.([]interface{}) {
+		log.Debugf("downloadURLAndChecksum: '%v'", downloadURLAndChecksum)
+		go func(downloadURLAndChecksum interface{}) {
+			downloadURL := fmt.Sprint(downloadURLAndChecksum.(map[string]interface{})["downloadUrl"])
+			md5 := fmt.Sprint(downloadURLAndChecksum.(map[string]interface{})["sha512"])
 
 			log.Debugf("Only download artifacts that match the regex: '%s'. URL: '%s'", regex, downloadURL)
 			r, err := regexp.Compile(regex)
@@ -275,9 +261,9 @@ func (n Nexus3) continuationTokenRecursionChannel(cerr chan error, t, dir, regex
 				}
 			}
 			cerr <- nil
-		}(downloadURLAndMd5)
+		}(downloadURLAndChecksum)
 	}
-	for range downloadURLAndMd5s.([]interface{}) {
+	for range downloadURLAndChecksums.([]interface{}) {
 		if err := <-cerr; err != nil {
 			return err
 		}
