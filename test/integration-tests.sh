@@ -32,7 +32,7 @@ fi
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
 readonly NEXUS_URL=http://localhost:9999
 
-validate(){
+validate() {
   if [ -z "${N3DR_DELIVERABLE}" ]; then
     echo "No deliverable defined. Assuming that 'go run main.go' should be run."
     N3DR_DELIVERABLE="go run main.go"
@@ -47,12 +47,12 @@ validate(){
   fi
 }
 
-build(){
+build() {
   source ./scripts/build.sh
   cd cmd/n3dr
 }
 
-nexus(){
+nexus() {
   curl -L https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/47056b970df25334edf8f9a86bd6b2cb02a2b816/nexus-docker.sh -o start.sh
   chmod +x start.sh
 
@@ -61,18 +61,18 @@ nexus(){
   source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}"
 }
 
-artifact(){
+artifact() {
   mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0-2"
-  echo someContent > "maven-releases/some/group${1}/file${1}/1.0.0-2/f.i-l.e.${1}-1.0.0-2.jar"
-  echo someContentZIP > "maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.zip"
-  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" > "maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.pom"
+  echo someContent >"maven-releases/some/group${1}/file${1}/1.0.0-2/f.i-l.e.${1}-1.0.0-2.jar"
+  echo someContentZIP >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.zip"
+  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.pom"
 }
 
-files(){
+files() {
   for a in $(seq 100); do artifact "${a}"; done
 }
 
-upload(){
+upload() {
   echo "#134 archetype-catalog download issue"
   echo "URL:"
   echo "${NEXUS_URL}/repository/maven-releases/archetype-catalog.xml"
@@ -81,83 +81,83 @@ upload(){
 
   echo "Testing upload..."
   ./"${N3DR_DELIVERABLE}" upload -u admin \
-                                 -p "${PASSWORD}" \
-                                 -r maven-releases \
-                                 -n http://127.0.0.1:9999 \
-                                 -v "${NEXUS_API_VERSION}"
+    -p "${PASSWORD}" \
+    -r maven-releases \
+    -n http://127.0.0.1:9999 \
+    -v "${NEXUS_API_VERSION}"
   echo
 }
 
-uploadDeb(){
+uploadDeb() {
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     echo "Creating apt repo..."
     curl -u "admin:${PASSWORD}" \
-         -X POST "${NEXUS_URL}/service/rest/beta/repositories/apt/hosted" \
-         -H "accept: application/json" \
-         -H "Content-Type: application/json" \
-         --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${N3DR_APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
-  
+      -X POST "${NEXUS_URL}/service/rest/beta/repositories/apt/hosted" \
+      -H "accept: application/json" \
+      -H "Content-Type: application/json" \
+      --data "{\"name\":\"REPO_NAME_HOSTED_APT\",\"online\":true,\"proxy\":{\"remoteUrl\":\"http://nl.archive.ubuntu.com/ubuntu/\"},\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"},\"apt\": {\"distribution\": \"bionic\"},\"aptSigning\": {\"keypair\": \"${N3DR_APT_GPG_SECRET}\",\"passphrase\": \"abc\"}}"
+
     mkdir REPO_NAME_HOSTED_APT
     cd REPO_NAME_HOSTED_APT
     curl -L https://github.com/030/a2deb/releases/download/1.0.0/a2deb_1.0.0-0.deb -o a2deb.deb
     curl -L https://github.com/030/n3dr/releases/download/5.0.1/n3dr_5.0.1-0.deb -o n3dr.deb
     curl -L https://github.com/030/informado/releases/download/1.4.0/informado_1.4.0-0.deb -o informado.deb
     cd ..
-  
+
     echo "Testing deb upload..."
     ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
-  	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
-  	           -t=apt
+      -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
+      -t=apt
     echo
   else
     echo "Deb upload not supported in beta API"
   fi
 }
 
-uploadNPM(){
+uploadNPM() {
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     echo "Creating npm repo..."
     curl -f \
-         -v \
-         -u "admin:${PASSWORD}" \
-         -X POST "${NEXUS_URL}/service/rest/v1/repositories/npm/hosted" \
-         -H "accept: application/json" \
-         -H "Content-Type: application/json" \
-         --data "{\"name\":\"REPO_NAME_HOSTED_NPM\",\"online\":true,\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"}}"
+      -v \
+      -u "admin:${PASSWORD}" \
+      -X POST "${NEXUS_URL}/service/rest/v1/repositories/npm/hosted" \
+      -H "accept: application/json" \
+      -H "Content-Type: application/json" \
+      --data "{\"name\":\"REPO_NAME_HOSTED_NPM\",\"online\":true,\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"}}"
 
     mkdir REPO_NAME_HOSTED_NPM
     cd REPO_NAME_HOSTED_NPM
     curl https://registry.npmjs.org/@babel/core/-/core-7.12.10.tgz -o babel-core.tgz
     cd ..
-  
+
     echo "Testing NPM upload..."
     ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
-  	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
-  	           -t=npm
+      -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
+      -t=npm
     echo
   else
     echo "Nuget upload not supported in beta API"
   fi
 }
 
-uploadNuget(){
+uploadNuget() {
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     mkdir nuget-hosted
     cd nuget-hosted
     curl -L https://chocolatey.org/api/v2/package/n3dr/5.2.6 -o n3dr.5.2.6.nupkg
     cd ..
-  
+
     echo "Testing nuget upload..."
     ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
-  	           -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
-  	           -t=nuget
+      -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
+      -t=nuget
     echo
   else
     echo "Nuget upload not supported in beta API"
   fi
 }
 
-backupHelper(){
+backupHelper() {
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
     count_downloads 300
     test_zip 152
@@ -168,19 +168,19 @@ backupHelper(){
   cleanup_downloads
 }
 
-anonymous(){
+anonymous() {
   echo "Testing backup by anonymous user..."
   ./"${N3DR_DELIVERABLE}" backup -n ${NEXUS_URL} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
   backupHelper
 }
 
-backup(){
+backup() {
   echo "Testing backup..."
   ./"${N3DR_DELIVERABLE}" backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
   backupHelper
 }
 
-regex(){
+regex() {
   echo "Testing backup regex..."
   ./"${N3DR_DELIVERABLE}" backup -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
@@ -203,7 +203,7 @@ regex(){
   cleanup_downloads
 }
 
-repositories(){
+repositories() {
   local cmd="./$N3DR_DELIVERABLE repositories -n ${NEXUS_URL} -u admin -p $PASSWORD -v ${NEXUS_API_VERSION}"
 
   echo "Testing repositories..."
@@ -225,24 +225,24 @@ repositories(){
     test_zip 152
   else
     count_downloads 401
-    test_zip 232
+    test_zip 236
   fi
   cleanup_downloads
 }
 
-zipName(){
+zipName() {
   echo "Testing zipName..."
   ./"${N3DR_DELIVERABLE}" backup -n=${NEXUS_URL} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
   ./"${N3DR_DELIVERABLE}" repositories -n ${NEXUS_URL} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
   find . -name "helloZip*" -type f | wc -l | grep 2
 }
 
-clean(){
+clean() {
   cleanup
   cleanup_downloads
 }
 
-count_downloads(){
+count_downloads() {
   local actual
   actual=$(find ${DOWNLOAD_LOCATION} -type f | wc -l)
   echo "Expected number of artifacts: ${1}"
@@ -250,7 +250,7 @@ count_downloads(){
   echo "${actual}" | grep "${1}"
 }
 
-test_zip(){
+test_zip() {
   local size
   size=$(du n3dr-backup-*zip)
   echo "Actual ZIP size: ${size}"
@@ -258,7 +258,7 @@ test_zip(){
   echo "${size}" | grep "^${1}"
 }
 
-cleanup_downloads(){
+cleanup_downloads() {
   rm -rf nuget-hosted
   rm -rf REPO_NAME_HOSTED_APT
   rm -rf REPO_NAME_HOSTED_NPM
@@ -268,13 +268,13 @@ cleanup_downloads(){
   rm -f helloZip*zip
 }
 
-version(){
+version() {
   echo "Check whether ./n3dr (N3DR_DELIVERABLE: ${N3DR_DELIVERABLE}) --version returns version"
   "./${N3DR_DELIVERABLE}" --version
   echo
 }
 
-main(){
+main() {
   validate
   build
   nexus
