@@ -27,43 +27,55 @@ type ociObject struct {
 	metadata   map[string]string
 }
 
-func ociBackup(Bucketname, Filename string) error {
+func ociBackup(Bucketname, Filename string) (errs []error) {
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
 	ctx := context.Background()
 	namespace, err := getNamespace(ctx, o)
 
 	if err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
 	log.Debug("You are going to upload file " + Filename + " in bucket: " + Bucketname + "\n")
 	filename, err := filepath.Glob(Filename)
 	if filename == nil {
-		return fmt.Errorf("error: no files found to upload")
+		err = fmt.Errorf("error: no files found to upload")
+		errs = append(errs, err)
 	}
 
 	if err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 	for _, f := range filename {
 		file, err := os.Open(f)
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
-		defer file.Close()
+		defer func() {
+			if err := file.Close(); err != nil {
+				errs = append(errs, err)
+			}
+		}()
+
 		fi, err := file.Stat()
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 
 		o := ociObject{ctx, o, namespace, Bucketname, f, fi.Size(), file, nil}
 		err = o.putObject()
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 
 		// Removing temporary file
@@ -72,7 +84,8 @@ func ociBackup(Bucketname, Filename string) error {
 		}
 
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 	}
 	return nil

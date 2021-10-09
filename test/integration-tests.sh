@@ -105,7 +105,8 @@ uploadDeb() {
     cd ..
 
     echo "Testing deb upload..."
-    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_APT \
+    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" \
+      -r=REPO_NAME_HOSTED_APT \
       -n=${NEXUS_URL} -v="${NEXUS_API_VERSION}" \
       -t=apt
     echo

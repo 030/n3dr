@@ -72,27 +72,36 @@ func (n Nexus3) request(url string) (requestJSONResponse, error) {
 	req.Header.Set("Accept", "application/json")
 	req.SetBasicAuth(n.User, n.Pass)
 
-	bodyBytes, bodyString, err := n.response(req)
-	if err != nil {
-		return requestJSONResponse{}, err
+	bodyBytes, bodyString, errs := n.response(req)
+	for _, err := range errs {
+		if err != nil {
+			return requestJSONResponse{}, err
+		}
 	}
+
 	return requestJSONResponse{bodyBytes, bodyString}, nil
 }
 
-func (n Nexus3) response(req *http.Request) ([]byte, string, error) {
+func (n Nexus3) response(req *http.Request) (b []byte, s string, errs []error) {
 	retryClient := retryablehttp.NewClient()
 	retryClient.RetryMax = 5
 	retryClient.Logger = &RetryLogAdaptor{}
 	standardClient := retryClient.StandardClient()
 	resp, err := standardClient.Do(req)
 	if err != nil {
-		return nil, "", err
+		errs = append(errs, err)
+		return nil, "", errs
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			errs = append(errs, err)
+		}
+	}()
 
 	bodyBytes, bodyString, err := n.responseBodyString(resp)
 	if err != nil {
-		return nil, "", err
+		errs = append(errs, err)
+		return nil, "", errs
 	}
 
 	return bodyBytes, bodyString, nil

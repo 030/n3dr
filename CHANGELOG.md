@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Resolve gosec G401 and G501 issues
+- Resolve gosec G307, G401 and G501 issues.
 
 ## [6.0.12] - 2021-10-09
 
