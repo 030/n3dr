@@ -1,3 +1,4 @@
+---
 name: "Dockle"
 on: [push]
 jobs:

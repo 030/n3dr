@@ -1,0 +1,17 @@
+---
+name: "DIP"
+on: [push]
+jobs:
+  dive:
+    runs-on: ubuntu-latest
+    name: Check whether images are up-to-date
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # yamllint disable rule:line-length
+      - name: Download DIP
+        run: curl -L https://github.com/030/dip/releases/download/4.0.1/dip-ubuntu-20.04 -o dip && chmod +x dip
+      - name: Check Alpine
+        run: ./dip image --name=alpine --regex=^3\.[0-9]+\.[0-9]+$ --dockerfile
+      - name: Check Golang
+        run: ./dip image --name=golang --regex=^1\.[0-9]+\.[0-9]+-alpine3\.[0-9]+$ --dockerfile
