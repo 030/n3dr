@@ -3,7 +3,7 @@ ENV USERNAME n3dr
 RUN adduser -D -g '' $USERNAME
 COPY . /go/${USERNAME}/
 WORKDIR /go/${USERNAME}/cmd/${USERNAME}
-RUN apk add git=~2 && \
+RUN apk add --no-cache git=~2 && \
     CGO_ENABLED=0 go build && \
     cp n3dr /n3dr
 
