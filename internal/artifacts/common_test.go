@@ -36,6 +36,7 @@ func TestValidateNexusURL(t *testing.T) {
 		"https://boo.foo-boo-foo",
 		"https://boo.foo-boo-foo:1234",
 		"https://8.9.2.33:1234",
+		"http://mynexus:8081/nexus",
 	}
 	for _, nexus3URL := range nexus3URLs {
 		n := Nexus3{URL: nexus3URL}
