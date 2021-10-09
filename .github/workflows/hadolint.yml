@@ -1,0 +1,12 @@
+name: "Hadolint"
+on: [push]
+jobs:
+  dive:
+    runs-on: ubuntu-latest
+    name: Analyze image using hadolint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: hadolint/hadolint-action@v1.5.0
+        with:
+          dockerfile: Dockerfile

@@ -1,12 +1,9 @@
-FROM golang:1.17.0-alpine3.14 as builder
-ENV PROJECT n3dr
-RUN mkdir $PROJECT && \
-    adduser -D -g '' $PROJECT
-COPY cmd ./$PROJECT/cmd/
-COPY internal ./$PROJECT/internal/
-COPY go.mod go.sum ./$PROJECT/
-WORKDIR $PROJECT/cmd/n3dr
-RUN apk add git && \
+FROM golang:1.17.2-alpine3.14 as builder
+ENV USERNAME n3dr
+RUN adduser -D -g '' $USERNAME
+COPY . /go/${USERNAME}/
+WORKDIR /go/${USERNAME}/cmd/${USERNAME}
+RUN apk add git=~2 && \
     CGO_ENABLED=0 go build && \
     cp n3dr /n3dr
 
