@@ -41,19 +41,17 @@ jobs:
           grep ${version} build/package/snap/snapcraft.yaml
           echo "Checking README.md..."
           grep "n3dr:${version}" README.md
-        if: |
-          ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
+        # yamllint disable rule:line-length
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Create release
         run: ./scripts/build.sh
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           GITHUB_TAG: ${{ github.ref }}
           SHA512_CMD: ${{ matrix.shasum }}
-        if: |
-          ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
+        if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Create release windows
         shell: cmd
-        # yamllint disable rule:line-length
         run: |
           echo "GITHUB_TAG: '${{ github.ref }}'"
           echo "N3DR_DELIVERABLE: '${{ env.n3dr-deliverable }}'"
