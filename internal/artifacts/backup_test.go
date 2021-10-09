@@ -136,11 +136,13 @@ func TestArtifactNameContainingRepositoryName(t *testing.T) {
 }
 
 func TestCreateArtifact(t *testing.T) {
-	actualErrorFile := createArtifact(testDirHome+testDirUpload, "file100/file100", "some-content", "ba1f2511fc30423bdbb183fe33f3dd0f")
+	actualFileErrors := createArtifact(testDirHome+testDirUpload, "file100/file100", "some-content", "ba1f2511fc30423bdbb183fe33f3dd0f")
 	expectedErrorFile := "open " + testDirHome + testDirUpload + "/file100/file100: no such file or directory"
 
-	if actualErrorFile.Error() != expectedErrorFile {
-		t.Errorf(errMsgTxt, expectedErrorFile, actualErrorFile)
+	for _, actualFileError := range actualFileErrors {
+		if actualFileError.Error() != expectedErrorFile {
+			t.Errorf(errMsgTxt, expectedErrorFile, actualFileError)
+		}
 	}
 }
 
