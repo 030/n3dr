@@ -1,6 +1,6 @@
 ---
 name: n3dr
-base: core
+base: core20
 version: 6.0.12
 summary: Nexus3 Disaster Recovery
 description: |
