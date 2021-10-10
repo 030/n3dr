@@ -54,7 +54,7 @@ func ociBackup(Bucketname, Filename string) (errs []error) {
 		return errs
 	}
 	for _, f := range filename {
-		file, err := os.Open(f)
+		file, err := os.Open(filepath.Clean(f))
 		if err != nil {
 			errs = append(errs, err)
 			return errs

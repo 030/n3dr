@@ -221,7 +221,7 @@ func (n *Nexus3) openFileAndUpload(file string) error {
 	log.Infof("Uploading file %v to %v", file, n.URL)
 
 	// omitted 'defer f.Close' as it will cause a 'file already closed' issue
-	f, err := os.Open("./" + n.Repository + "/" + file)
+	f, err := os.Open(filepath.Clean("./" + n.Repository + "/" + file))
 	if err != nil {
 		return err
 	}
@@ -247,7 +247,7 @@ func (n *Nexus3) openMultipartFileAndUpload(f, httpMethod, uri string, statusCre
 	fileName := f
 	filePath := path.Join(fileDir, n.Repository, fileName)
 
-	file, err := os.Open(filePath)
+	file, err := os.Open(filepath.Clean(filePath))
 	if err != nil {
 		errs = append(errs, err)
 		return errs
