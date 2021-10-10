@@ -169,39 +169,50 @@ func (n *Nexus3) readFiles() ([]string, error) {
 	return names, err
 }
 
-func (n *Nexus3) uploadFile(file string, req *http.Request) error {
+func (n *Nexus3) uploadFile(file string, req *http.Request) (errs []error) {
 	req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
 	req.Header.Set("Content-Type", "multipart/form-data")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return err
+		errs = append(errs, err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			errs = append(errs, err)
+		}
+	}()
 
 	if resp.StatusCode == http.StatusCreated {
 		log.Infof("Upload of %v Ok. StatusCode: %v.", file, resp.StatusCode)
 	} else {
 		log.Error(resp)
-		return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
+		err := fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
+		errs = append(errs, err)
 	}
 	return nil
 }
 
-func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, req *http.Request, statusCreated int) error {
+func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, req *http.Request, statusCreated int) (errs []error) {
 	req.Header.Add("Content-Type", writer.FormDataContentType())
 	req.SetBasicAuth(n.User, os.ExpandEnv(n.Pass))
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return err
+		errs = append(errs, err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			errs = append(errs, err)
+		}
+	}()
+
 	// For some reason a 200 instead of 201 is returned if an NPM has been uploaded
 	if resp.StatusCode == statusCreated {
 		log.Infof("Upload of %v Ok. StatusCode: %v.", file, resp.StatusCode)
 	} else {
 		log.Error(resp)
-		return fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
+		err := fmt.Errorf("Upload of %v to %v failed. StatusCode: '%v'", file, n.URL, resp.StatusCode)
+		errs = append(errs, err)
 	}
 	return nil
 }
@@ -209,54 +220,77 @@ func (n *Nexus3) uploadMultipartFile(file *os.File, writer *multipart.Writer, re
 func (n *Nexus3) openFileAndUpload(file string) error {
 	log.Infof("Uploading file %v to %v", file, n.URL)
 
+	// omitted 'defer f.Close' as it will cause a 'file already closed' issue
 	f, err := os.Open("./" + n.Repository + "/" + file)
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+
 	req, err := http.NewRequest("POST", n.URL+"/repository/"+n.Repository+"/", f)
 	if err != nil {
 		return err
 	}
-	if err := n.uploadFile(file, req); err != nil {
-		return err
+
+	errs := n.uploadFile(file, req)
+	for _, err := range errs {
+		if err != nil {
+			return err
+		}
 	}
+
 	return nil
 }
 
-func (n *Nexus3) openMultipartFileAndUpload(f, httpMethod, uri string, statusCreated int) error {
+func (n *Nexus3) openMultipartFileAndUpload(f, httpMethod, uri string, statusCreated int) (errs []error) {
 	log.Infof("Uploading file %v to %v", f, n.URL)
 	fileDir, _ := os.Getwd()
 	fileName := f
 	filePath := path.Join(fileDir, n.Repository, fileName)
 
-	file, _ := os.Open(filePath)
-	defer file.Close()
+	file, err := os.Open(filePath)
+	if err != nil {
+		errs = append(errs, err)
+		return errs
+	}
+	defer func() {
+		if err := file.Close(); err != nil {
+			errs = append(errs, err)
+		}
+	}()
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 	part, err := writer.CreateFormFile("file", filepath.Base(file.Name()))
 	if err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
 	if _, err := io.Copy(part, file); err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
 	if err := writer.Close(); err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
 	log.Infof("Upload Method: '%v', URL: '%v'", httpMethod, n.URL+uri)
 	req, err := http.NewRequest(httpMethod, n.URL+uri, body)
 	if err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
-	if err := n.uploadMultipartFile(file, writer, req, statusCreated); err != nil {
-		return err
+	errs = n.uploadMultipartFile(file, writer, req, statusCreated)
+	for _, err := range errs {
+		if err != nil {
+			errs = append(errs, err)
+			return errs
+		}
 	}
+
 	return nil
 }
 
@@ -266,8 +300,11 @@ func (n *Nexus3) readMultipartFilesAndUpload(httpMethod, uri string, statusCreat
 		return err
 	}
 	for _, file := range files {
-		if err := n.openMultipartFileAndUpload(file, httpMethod, uri, statusCreated); err != nil {
-			return err
+		errs := n.openMultipartFileAndUpload(file, httpMethod, uri, statusCreated)
+		for _, err := range errs {
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil
