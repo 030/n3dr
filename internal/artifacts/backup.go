@@ -107,7 +107,7 @@ func (n Nexus3) continuationTokenRecursion(t string) ([]string, error) {
 	return append(tokenSlice, token), nil
 }
 
-func createArtifact(d string, f string, content string, md5sum string) error {
+func createArtifact(d string, f string, content string, md5sum string) (errs []error) {
 	ociBucketname := viper.GetString("ociBucket")
 	Filename := d + "/" + f
 
@@ -115,9 +115,9 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 	objectExists := false
 	if ociBucketname != "" {
 		objectExists, err := findObject(ociBucketname, Filename, md5sum)
-
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 
 		if objectExists && viper.GetBool("removeLocalFile") {
@@ -130,7 +130,8 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 
 	err := os.MkdirAll(d, os.ModePerm)
 	if err != nil {
-		return err
+		errs = append(errs, err)
+		return errs
 	}
 
 	filename := filepath.Join(d, f)
@@ -139,12 +140,14 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 	if fileExists(filename) {
 		dat, err := os.ReadFile(filename)
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 
 		checksumDownloadedArtifact = fmt.Sprintf("%x", sha512.Sum512(dat))
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 	}
 
@@ -154,20 +157,29 @@ func createArtifact(d string, f string, content string, md5sum string) error {
 		log.Debug("Creating ", filename)
 		file, err := os.Create(filename)
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
+		defer func() {
+			if err := file.Close(); err != nil {
+				errs = append(errs, err)
+			}
+		}()
 
 		_, err = file.WriteString(content)
-		defer file.Close()
 		if err != nil {
-			return err
+			errs = append(errs, err)
+			return errs
 		}
 	}
 
 	if ociBucketname != "" && !objectExists {
-		err := ociBackup(ociBucketname, Filename)
-		if err != nil {
-			return err
+		errs := ociBackup(ociBucketname, Filename)
+		for _, err := range errs {
+			if err != nil {
+				errs = append(errs, err)
+				return errs
+			}
 		}
 	}
 	return nil
@@ -203,8 +215,10 @@ func (n Nexus3) downloadArtifact(dir, url, md5 string) error {
 		return err
 	}
 
-	if err := createArtifact(filepath.Join(dir, n.Repository, d), f, jsonResp.strings, md5); err != nil {
-		return err
+	if errs := createArtifact(filepath.Join(dir, n.Repository, d), f, jsonResp.strings, md5); err != nil {
+		for _, err := range errs {
+			return err
+		}
 	}
 	return nil
 }
