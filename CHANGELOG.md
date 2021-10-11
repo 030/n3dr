@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.13] - 2021-10-11
+
 ### Fixed
 
 - Resolve gosec G304, G307, G401 and G501 issues.
+- Upload fails from Windows, reported by
+  [TheMaddinFromTqg](https://github.com/TheMaddinFromTqg).
 
 ## [6.0.12] - 2021-10-09
 
@@ -548,7 +552,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.12...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.0.13...HEAD
+[6.0.13]: https://github.com/030/n3dr/compare/6.0.12...6.0.13
 [6.0.12]: https://github.com/030/n3dr/compare/6.0.11...6.0.12
 [6.0.11]: https://github.com/030/n3dr/compare/6.0.10...6.0.11
 [6.0.10]: https://github.com/030/n3dr/compare/6.0.9...6.0.10
