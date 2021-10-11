@@ -391,6 +391,28 @@ a single command.
 
 ## Development
 
+### go-swagger
+
+Comment out `trap` in the integration-tests.sh and run it:
+
+```bash
+./test/integration-tests.sh
+```
+
+Once Nexus had been started, download the go-swagger, swagger.json and
+generate internal go-swagger code:
+
+```bash
+curl -L https://github.com/go-swagger/go-swagger/releases/download/v0.28.0/swagger_linux_amd64 -o swagger
+mkdir -p internal/go-swagger
+curl http://localhost:9999/service/rest/swagger.json -o swagger.json
+./swagger generate client \
+  --name=nexus3 \
+  --spec swagger.json \
+  --target=internal/go-swagger \
+  --skip-validation
+```
+
 ### Unit Tests
 
 ```bash
