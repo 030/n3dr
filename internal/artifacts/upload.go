@@ -11,6 +11,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -68,8 +69,13 @@ func sbArtifact(sb *strings.Builder, path, ext, classifier string) error {
 	return nil
 }
 
-func artifactTypeDetector(sb *strings.Builder, path string, skipErrors bool) error {
-	var err error
+func artifactTypeDetector(sb *strings.Builder, path string, skipErrors bool) (err error) {
+	regexBase := `^.*\/([\w\-\.]+)\/`
+
+	if runtime.GOOS == "windows" {
+		log.Info("N3DR is running on Windows. Correcting the regexBase...")
+		regexBase = `^.*\\([\w\-\.]+)\\`
+	}
 
 	regexVersion := `(([a-z\d\-]+)|(([a-z\d\.]+)))`
 	if rv := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_VERSION"); rv != "" {
@@ -81,7 +87,7 @@ func artifactTypeDetector(sb *strings.Builder, path string, skipErrors bool) err
 		regexClassifier = rc
 	}
 
-	re := regexp.MustCompile(`^.*\/([\w\-\.]+)\/` + regexVersion + regexClassifier + `\.([a-z]+)$`)
+	re := regexp.MustCompile(regexBase + regexVersion + regexClassifier + `\.([a-z]+)$`)
 
 	classifier := ""
 	if re.Match([]byte(path)) {
