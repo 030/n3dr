@@ -167,7 +167,7 @@ option.
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.0.12 .
+docker build -t utrecht/n3dr:6.0.13 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -177,7 +177,7 @@ docker build -t utrecht/n3dr:6.0.12 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.12
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.13
 ```
 
 ### Upload
@@ -186,7 +186,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.12
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.13
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -396,3 +396,39 @@ a single command.
 ```bash
 go test internal/artifacts/common.go internal/artifacts/common_test.go
 ```
+
+### Integration testing on Windows
+
+#### Packer
+
+```bash
+packer init packer/windows2016.json.pkr.hcl
+PACKER_LOG=1 packer build packer/windows2016.json.pkr.hcl
+```
+
+#### Vagrant
+
+```bash
+vagrant box add virtualbox_windows2016.box --name win2016/n3dr
+vagrant box list
+vagrant plugin install vagrant-reload vagrant-windows-update
+export VAGRANT_N3DR_NETWORK_ADAPTER=$(vboxmanage list bridgedifs |\
+  grep Name: | head -1 | awk '{ print $2 }')
+VAGRANT_NEXUS3_IP=192.168.0.42 VAGRANT_N3DR_IP=192.168.0.43 vagrant up
+vagrant provision nexus3
+vagrant destroy -f
+vagrant ssh nexus3
+```
+
+Login as `vagrant` with pass `vagrant` and issue:
+
+```bash
+cd C:\vagrant
+.\cmd\n3dr\n3dr.exe download -r maven-releases -n http://192.168.0.42:9999 \
+  -u admin -p some-password
+.\cmd\n3dr\n3dr.exe upload -r maven-releases -n http://192.168.0.42:9999 \
+  -u admin -p some-password
+```
+
+To check whether it is possible to upload artifacts to Nexus3 from Windows
+using N3DR.
