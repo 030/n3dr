@@ -405,12 +405,12 @@ generate internal go-swagger code:
 ```bash
 curl -L https://github.com/go-swagger/go-swagger/releases/download/v0.28.0/swagger_linux_amd64 -o swagger
 chmod +x swagger
-mkdir -p internal/go-swagger
+mkdir -p internal/goswagger
 curl http://localhost:9999/service/rest/swagger.json -o swagger.json
 ./swagger generate client \
   --name=nexus3 \
   --spec swagger.json \
-  --target=internal/go-swagger \
+  --target=internal/goswagger \
   --skip-validation
 go mod tidy
 ```
