@@ -65,6 +65,7 @@ The aims of the n3dr tool are:
 
 * to backup all artifacts from a certain Nexus maven repository.
 * to migrate all artifacts from NexusA to NexusB.
+* configuration-as-code.
 
 ## Installation
 
@@ -146,7 +147,7 @@ Flags:
 Use "n3dr [command] --help" for more information about a command.
 ```
 
-## insecureSkipVerify
+### insecureSkipVerify
 
 It is possible to load a custom CA to connect to Nexus3 if one created
 self-signed certificates, by using:
@@ -157,10 +158,42 @@ self-signed certificates, by using:
 
 Note: store the `ca.crt` in the `~/.n3dr` directory.
 
-## Anonymous
+### Anonymous
 
 In order to download as a anonymous user, one has to use the `--anonymous`
 option.
+
+### Configuration-as-code
+
+#### Create an admin user
+
+```bash
+n3dr configUser \
+  --email=some-admin-user@some-admin-user.some-admin-user \
+  --firstName=some-admin-user \
+  --lastName=some-admin-user \
+  --pass=some-admin-user \
+  --id=some-admin-user \
+  --admin \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Change the admin user pass
+
+```bash
+n3dr configUser \
+  --email=admin@example.org \
+  --firstName=admin \
+  --lastName=admin \
+  --pass=some-other-admin-pass \
+  --id=admin \
+  --changePass \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
 
 ## Docker
 

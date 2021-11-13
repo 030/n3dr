@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	admin                                bool
+	admin, changePass                    bool
 	email, firstName, id, lastName, pass string
 )
 
@@ -27,6 +27,10 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("configUser called")
+
+		if !admin && !changePass {
+			log.Fatal("either the admin or changePass is required")
+		}
 
 		acu := models.APICreateUser{
 			EmailAddress: email,
@@ -44,36 +48,43 @@ to quickly create a Cobra application.`,
 				log.Fatal(err)
 			}
 		}
+
+		if changePass {
+			if err := u.ChangePass(); err != nil {
+				log.Fatal(err)
+			}
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(configUserCmd)
 
-	configUserCmd.Flags().StringVarP(&email, "email", "e", "", "The email of the user")
+	configUserCmd.Flags().StringVarP(&email, "email", "", "", "The email of the user")
 	if err := configUserCmd.MarkFlagRequired("email"); err != nil {
 		log.Fatal(err)
 	}
 
-	configUserCmd.Flags().StringVarP(&firstName, "firstName", "f", "", "The firstName of the user")
+	configUserCmd.Flags().StringVarP(&firstName, "firstName", "", "", "The firstName of the user")
 	if err := configUserCmd.MarkFlagRequired("firstName"); err != nil {
 		log.Fatal(err)
 	}
 
-	configUserCmd.Flags().StringVarP(&lastName, "lastName", "l", "", "The lastName of the user")
+	configUserCmd.Flags().StringVarP(&lastName, "lastName", "", "", "The lastName of the user")
 	if err := configUserCmd.MarkFlagRequired("lastName"); err != nil {
 		log.Fatal(err)
 	}
 
-	configUserCmd.Flags().StringVarP(&pass, "pass", "p", "", "The pass of the user")
+	configUserCmd.Flags().StringVarP(&pass, "pass", "", "", "The pass of the user")
 	if err := configUserCmd.MarkFlagRequired("pass"); err != nil {
 		log.Fatal(err)
 	}
 
-	configUserCmd.Flags().StringVarP(&id, "id", "i", "", "The id of the user")
+	configUserCmd.Flags().StringVarP(&id, "id", "", "", "The id of the user")
 	if err := configUserCmd.MarkFlagRequired("id"); err != nil {
 		log.Fatal(err)
 	}
 
 	configUserCmd.Flags().BoolVar(&admin, "admin", false, "Whether a user should be admin")
+	configUserCmd.Flags().BoolVar(&changePass, "changePass", false, "Whether a pass should be changed")
 }
