@@ -296,5 +296,5 @@ main() {
   echo "In order to debug, comment out the 'trap clean EXIT', run this script again and login to http://localhost:9999 and login as admin and ${PASSWORD}"
 }
 
-# trap clean EXIT
+trap clean EXIT
 main
