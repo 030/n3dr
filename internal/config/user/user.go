@@ -29,7 +29,6 @@ func (u *User) Create() error {
 	if err != nil {
 		return fmt.Errorf("could not create user: '%v', perhaps the user already exists?", err)
 	}
-
 	log.Infof("created the following user: '%v'", resp.Payload)
 
 	return nil
