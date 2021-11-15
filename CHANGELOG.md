@@ -11,7 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Configuration-as-code.
+- Configuration-as-code:
+  - one
+  - two
+  - three
 
 ## [6.0.13] - 2021-10-11
 

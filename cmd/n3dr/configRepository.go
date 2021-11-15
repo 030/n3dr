@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	configRepoDelete               bool
-	configRepoName, configRepoType string
+	configRepoDelete                                                     bool
+	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL string
 )
 
 // configRepositoryCmd represents the configRepository command
@@ -35,13 +35,24 @@ var configRepositoryCmd = &cobra.Command{
 			os.Exit(0)
 		}
 
+		if configRepoRecipe == "proxy" {
+			if configRepoProxyURL == "" {
+				log.Fatal("configRepoProxyURL should not be empty")
+			}
+			r.ProxyRemoteURL = configRepoProxyURL
+		}
+
 		switch configRepoType {
+		case "apt":
+			if err := r.CreateAptProxied(configRepoName); err != nil {
+				log.Fatal(err)
+			}
 		case "raw":
 			if err := r.CreateRawHosted(configRepoName); err != nil {
 				log.Fatal(err)
 			}
 		default:
-			log.Fatalf("configRepoType should not be empty, but: 'raw' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
+			log.Fatalf("configRepoType should not be empty, but: 'apt' or 'raw' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
 		}
 	},
 }
@@ -54,6 +65,12 @@ func init() {
 		log.Fatal(err)
 	}
 
+	configRepositoryCmd.Flags().StringVarP(&configRepoRecipe, "configRepoRecipe", "", "hosted", "The repository recipe, i.e.: group, hosted, or proxy")
+	if err := configRepositoryCmd.MarkFlagRequired("configRepoRecipe"); err != nil {
+		log.Fatal(err)
+	}
+
 	configRepositoryCmd.Flags().BoolVar(&configRepoDelete, "configRepoDelete", false, "Delete a repository")
-	configRepositoryCmd.Flags().StringVarP(&configRepoType, "configRepoType", "", "", "The repository type")
+	configRepositoryCmd.Flags().StringVarP(&configRepoType, "configRepoType", "", "", "The repository type, e.g.: 'apt', 'raw'")
+	configRepositoryCmd.Flags().StringVarP(&configRepoProxyURL, "configRepoProxyURL", "", "", "The proxy repository URL, e.g.: 'http://nl.archive.ubuntu.com/ubuntu/'")
 }
