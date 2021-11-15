@@ -15,7 +15,17 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
+      - name: Set up Go
+        uses: actions/setup-go@v2
         with:
-          args: ./...
+          go-version: 1.17.0
+      - name: Download gosec
+        run: |
+          curl -L https://github.com/securego/gosec/releases/download/v2.8.1/gosec_2.8.1_linux_amd64.tar.gz -o gosec.tar.gz
+          tar -xvf gosec.tar.gz
+          chmod +x gosec
+          ./gosec --version
+      - name: Run gosec
+        run: |
+          go version
+          ./gosec ./...
