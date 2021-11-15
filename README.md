@@ -208,11 +208,25 @@ n3dr configRepository \
 
 #### Create a repository
 
-```bash
+##### Hosted Raw
 
+```bash
 n3dr configRepository \
-  --configRepoName bla \
+  --configRepoName some-repo \
   --configRepoType raw \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+##### Proxied Apt
+
+```bash
+n3dr configRepository \
+  --configRepoName some-apt-proxy-repo \
+  --configRepoType apt \
+  --configRepoRecipe proxy \
+  --configRepoProxyURL "http://nl.archive.ubuntu.com/ubuntu/" \
   -p <admin-pass> \
   -u <admin-user> \
   -n=<FQDN-without-http://-or-https>:<port-if-applicable>

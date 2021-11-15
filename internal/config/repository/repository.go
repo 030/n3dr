@@ -13,16 +13,56 @@ import (
 
 type Repository struct {
 	http.Nexus3
+	ProxyRemoteURL string
 }
 
-func (r *Repository) CreateRawHosted(name string) error {
-	log.Infof("Creating repository: '%s'...", name)
+func (r *Repository) CreateAptProxied(name string) error {
+	log.Infof("Creating proxied apt repository: '%s'...", name)
 	client := r.Nexus3.Client()
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
 
-	// "storage":{"blobStoreName":"default","strictContentTypeValidation":true,"writePolicy":"ALLOW_ONCE"},"maven": {"versionPolicy": "RELEASE","layoutPolicy": "STRICT"}}'
+	httpClientBlocked := false
+	httpClientAutoBlocked := true
+	httpClient := models.HTTPClientAttributes{AutoBlock: &httpClientAutoBlocked, Blocked: &httpClientBlocked}
+	negativeCacheEnabled := true
+	var negativeCacheTimeToLive int32 = 1440
+	negativeCache := models.NegativeCacheAttributes{Enabled: &negativeCacheEnabled, TimeToLive: &negativeCacheTimeToLive}
+	var contentMaxAge int32 = 1440
+	var metadataMaxAge int32 = 1440
+	remoteURL := r.ProxyRemoteURL
+	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
+	online := true
+	strictContentTypeValidation := true
+	flat := true
+	apt := models.AptProxyRepositoriesAttributes{Distribution: "bionic", Flat: &flat}
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation}
+	ma := models.AptProxyRepositoryAPIRequest{Apt: &apt, Name: &name, Online: &online, Storage: &mhsa, Proxy: &proxy, NegativeCache: &negativeCache, HTTPClient: &httpClient}
+	createAptProxy := repository_management.CreateRepository4Params{Body: &ma}
+	createAptProxy.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository4(&createAptProxy); err != nil {
+		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if repositoryCreated {
+			log.Infof("repository: '%s' has already been created", name)
+			return nil
+		}
+
+		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
+	}
+	log.Infof("created the following repository: '%v'", name)
+	return nil
+}
+
+func (r *Repository) CreateRawHosted(name string) error {
+	log.Infof("Creating raw hosted repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
 
 	online := true
 	strictContentTypeValidation := true
