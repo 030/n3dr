@@ -44,12 +44,22 @@ var configRepositoryCmd = &cobra.Command{
 
 		switch configRepoType {
 		case "apt":
-			if err := r.CreateAptProxied(configRepoName); err != nil {
-				log.Fatal(err)
+			if configRepoRecipe == "proxy" {
+				if err := r.CreateAptProxied(configRepoName); err != nil {
+					log.Fatal(err)
+				}
 			}
 		case "raw":
-			if err := r.CreateRawHosted(configRepoName); err != nil {
-				log.Fatal(err)
+			if configRepoRecipe == "hosted" {
+				if err := r.CreateRawHosted(configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			}
+		case "yum":
+			if configRepoRecipe == "proxy" {
+				if err := r.CreateYumProxied(configRepoName); err != nil {
+					log.Fatal(err)
+				}
 			}
 		default:
 			log.Fatalf("configRepoType should not be empty, but: 'apt' or 'raw' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
