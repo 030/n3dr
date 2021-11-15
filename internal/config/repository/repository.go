@@ -57,6 +57,45 @@ func (r *Repository) CreateAptProxied(name string) error {
 	return nil
 }
 
+func (r *Repository) CreateYumProxied(name string) error {
+	log.Infof("Creating proxied yum repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	httpClientBlocked := false
+	httpClientAutoBlocked := true
+	httpClient := models.HTTPClientAttributes{AutoBlock: &httpClientAutoBlocked, Blocked: &httpClientBlocked}
+	negativeCacheEnabled := true
+	var negativeCacheTimeToLive int32 = 1440
+	negativeCache := models.NegativeCacheAttributes{Enabled: &negativeCacheEnabled, TimeToLive: &negativeCacheTimeToLive}
+	var contentMaxAge int32 = 1440
+	var metadataMaxAge int32 = 1440
+	remoteURL := r.ProxyRemoteURL
+	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
+	online := true
+	strictContentTypeValidation := true
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation}
+	body := models.YumProxyRepositoryAPIRequest{Name: &name, Online: &online, Storage: &mhsa, Proxy: &proxy, NegativeCache: &negativeCache, HTTPClient: &httpClient}
+	createYumProxy := repository_management.CreateRepository22Params{Body: &body}
+	createYumProxy.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository22(&createYumProxy); err != nil {
+		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if repositoryCreated {
+			log.Infof("repository: '%s' has already been created", name)
+			return nil
+		}
+
+		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
+	}
+	log.Infof("created the following repository: '%v'", name)
+	return nil
+}
+
 func (r *Repository) CreateRawHosted(name string) error {
 	log.Infof("Creating raw hosted repository: '%s'...", name)
 	client := r.Nexus3.Client()

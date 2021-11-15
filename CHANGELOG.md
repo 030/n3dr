@@ -12,9 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Configuration-as-code:
-  - one
-  - two
-  - three
+  - Enable and disable anonymous access
+  - Create a hosted raw repository
+  - Configure a proxied apt repository
+  - Delete repositories
+  - Change the admin user pass
+  - Create an admin user
+  - Create a yum proxied repository
 
 ## [6.0.13] - 2021-10-11
 

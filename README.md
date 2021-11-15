@@ -232,6 +232,19 @@ n3dr configRepository \
   -n=<FQDN-without-http://-or-https>:<port-if-applicable>
 ```
 
+##### Proxied Yum
+
+```bash
+n3dr configRepository \
+  --configRepoName some-yum-proxy-repo \
+  --configRepoType yum \
+  --configRepoRecipe proxy \
+  --configRepoProxyURL "http://mirror.centos.org/centos/" \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
 #### Anonymous access
 
 ##### Disable
