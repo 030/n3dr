@@ -206,6 +206,18 @@ n3dr configRepository \
   -n=<FQDN-without-http://-or-https>:<port-if-applicable>
 ```
 
+#### Create a repository
+
+```bash
+
+n3dr configRepository \
+  --configRepoName bla \
+  --configRepoType raw \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
 #### Anonymous access
 
 ##### Disable
