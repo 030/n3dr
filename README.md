@@ -195,6 +195,38 @@ n3dr configUser \
   -n=<FQDN-without-http://-or-https>:<port-if-applicable>
 ```
 
+#### Delete a repository
+
+```bash
+n3dr configRepository \
+  --configRepoName some-repo-name \
+  --configRepoDelete \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Anonymous access
+
+##### Disable
+
+```bash
+n3dr config \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+##### Enable
+
+```bash
+n3dr config \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable> \
+  --configUserAnonymous
+```
+
 ## Docker
 
 ### Build
