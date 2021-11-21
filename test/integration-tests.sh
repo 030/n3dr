@@ -275,6 +275,10 @@ version() {
   echo
 }
 
+cac() {
+  echo "Configuration as code"
+}
+
 main() {
   validate
   build

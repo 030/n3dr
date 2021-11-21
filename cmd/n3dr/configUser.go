@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	admin, changePass                    bool
-	email, firstName, id, lastName, pass string
+	admin, changePass, downloadUser, uploadUser bool
+	email, firstName, id, lastName, pass        string
 )
 
 // configUserCmd represents the configUser command
@@ -28,8 +28,8 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("configUser called")
 
-		if !admin && !changePass {
-			log.Fatal("either the admin or changePass is required")
+		if !admin && !downloadUser && !uploadUser && !changePass {
+			log.Fatal("either the admin, changePass, downloadUser or uploadUser is required")
 		}
 
 		acu := models.APICreateUser{
@@ -44,6 +44,44 @@ to quickly create a Cobra application.`,
 
 		if admin {
 			u.Roles = []string{"nx-admin"}
+			if err := u.Create(); err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		if downloadUser {
+			u.Roles = []string{"nx-download"}
+			rr := models.RoleXORequest{
+				ID:   "nx-download",
+				Name: "nx-download",
+				Privileges: []string{
+					"nx-repository-view-*-*-browse",
+					"nx-repository-view-*-*-read",
+				},
+			}
+			r := user.Role{RoleXORequest: rr, Nexus3: n}
+			if err := r.CreateRole(); err != nil {
+				log.Fatal(err)
+			}
+			if err := u.Create(); err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		if uploadUser {
+			u.Roles = []string{"nx-upload"}
+			rr := models.RoleXORequest{
+				ID:   "nx-upload",
+				Name: "nx-upload",
+				Privileges: []string{
+					"nx-repository-view-*-*-add",
+					"nx-repository-view-*-*-edit",
+				},
+			}
+			r := user.Role{RoleXORequest: rr, Nexus3: n}
+			if err := r.CreateRole(); err != nil {
+				log.Fatal(err)
+			}
 			if err := u.Create(); err != nil {
 				log.Fatal(err)
 			}
@@ -86,5 +124,7 @@ func init() {
 	}
 
 	configUserCmd.Flags().BoolVar(&admin, "admin", false, "Whether a user should be admin")
+	configUserCmd.Flags().BoolVar(&downloadUser, "downloadUser", false, "Whether a user should be able to download")
+	configUserCmd.Flags().BoolVar(&uploadUser, "uploadUser", false, "Whether a user should be able to upload")
 	configUserCmd.Flags().BoolVar(&changePass, "changePass", false, "Whether a pass should be changed")
 }

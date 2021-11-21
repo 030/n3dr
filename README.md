@@ -180,7 +180,37 @@ n3dr configUser \
   -n=<FQDN-without-http://-or-https>:<port-if-applicable>
 ```
 
-#### Change the admin user pass
+#### Create a downloadUser
+
+```bash
+n3dr configUser \
+  --email=some-admin-user@some-admin-user.some-admin-user \
+  --firstName=some-admin-user \
+  --lastName=some-admin-user \
+  --pass=some-admin-user \
+  --id=some-admin-user \
+  --downloadUser \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Create a uploadUser
+
+```bash
+n3dr configUser \
+  --email=some-admin-user@some-admin-user.some-admin-user \
+  --firstName=some-admin-user \
+  --lastName=some-admin-user \
+  --pass=some-admin-user \
+  --id=some-admin-user \
+  --uploadUser \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Change a user pass
 
 ```bash
 n3dr configUser \
@@ -271,7 +301,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.0.13 .
+docker build -t utrecht/n3dr:6.1.0 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -281,7 +311,7 @@ docker build -t utrecht/n3dr:6.0.13 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.13
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.1.0
 ```
 
 ### Upload
@@ -290,7 +320,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.13
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.1.0
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:

@@ -5,11 +5,17 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/030/n3dr/internal/goswagger/client/security_management_roles"
 	"github.com/030/n3dr/internal/goswagger/client/security_management_users"
 	"github.com/030/n3dr/internal/goswagger/models"
 	"github.com/030/n3dr/internal/pkg/http"
 	log "github.com/sirupsen/logrus"
 )
+
+type Role struct {
+	http.Nexus3
+	models.RoleXORequest
+}
 
 type User struct {
 	http.Nexus3
@@ -27,9 +33,42 @@ func (u *User) Create() error {
 	createUser.WithTimeout(time.Second * 30)
 	resp, err := client.SecurityManagementUsers.CreateUser(&createUser)
 	if err != nil {
-		return fmt.Errorf("could not create user: '%v', perhaps the user already exists?", err)
+		userCreated, errRegex := regexp.MatchString("status 500", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if userCreated {
+			log.Infof("user: '%s' has already been created", u.UserID)
+			return nil
+		}
+		return fmt.Errorf("could not create user: '%v'", err)
 	}
 	log.Infof("created the following user: '%v'", resp.Payload)
+
+	return nil
+}
+
+func (r *Role) CreateRole() error {
+	log.Infof("creating role: '%s'...", r.ID)
+
+	client := r.Nexus3.Client()
+
+	createRole := security_management_roles.CreateParams{Body: &r.RoleXORequest}
+	createRole.WithTimeout(time.Second * 30)
+	resp, err := client.SecurityManagementRoles.Create(&createRole)
+	if err != nil {
+		roleCreated, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if roleCreated {
+			log.Infof("role: '%s' has already been created", r.Name)
+			return nil
+		}
+
+		return fmt.Errorf("could not create role: '%v', perhaps the role already exists?", err)
+	}
+	log.Infof("created the following role: '%v'", resp.Payload)
 
 	return nil
 }
