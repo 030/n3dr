@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Change the admin user pass
   - Create an admin user
   - Create a yum proxied repository
+  - Generate a download and upload user
 
 ## [6.0.13] - 2021-10-11
 

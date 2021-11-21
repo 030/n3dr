@@ -35,6 +35,10 @@ var configRepositoryCmd = &cobra.Command{
 			os.Exit(0)
 		}
 
+		if configRepoRecipe == "" {
+			log.Fatal("configRepoReceipe should not be empty")
+		}
+
 		if configRepoRecipe == "proxy" {
 			if configRepoProxyURL == "" {
 				log.Fatal("configRepoProxyURL should not be empty")
@@ -76,10 +80,6 @@ func init() {
 	}
 
 	configRepositoryCmd.Flags().StringVarP(&configRepoRecipe, "configRepoRecipe", "", "hosted", "The repository recipe, i.e.: group, hosted, or proxy")
-	if err := configRepositoryCmd.MarkFlagRequired("configRepoRecipe"); err != nil {
-		log.Fatal(err)
-	}
-
 	configRepositoryCmd.Flags().BoolVar(&configRepoDelete, "configRepoDelete", false, "Delete a repository")
 	configRepositoryCmd.Flags().StringVarP(&configRepoType, "configRepoType", "", "", "The repository type, e.g.: 'apt', 'raw'")
 	configRepositoryCmd.Flags().StringVarP(&configRepoProxyURL, "configRepoProxyURL", "", "", "The proxy repository URL, e.g.: 'http://nl.archive.ubuntu.com/ubuntu/'")
