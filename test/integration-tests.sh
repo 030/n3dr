@@ -16,7 +16,7 @@ fi
 
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
-  NEXUS_VERSION=3.34.1
+  NEXUS_VERSION=3.36.0
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
@@ -275,6 +275,10 @@ version() {
   echo
 }
 
+cac() {
+  echo "Configuration as code"
+}
+
 main() {
   validate
   build
@@ -296,5 +300,5 @@ main() {
   echo "In order to debug, comment out the 'trap clean EXIT', run this script again and login to http://localhost:9999 and login as admin and ${PASSWORD}"
 }
 
-trap clean EXIT
+# trap clean EXIT
 main

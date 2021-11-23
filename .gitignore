@@ -21,3 +21,5 @@ coverage.txt
 .vagrant
 virtualbox*
 *.exe
+swagger
+swagger.json
