@@ -138,7 +138,7 @@ func createArtifact(d string, f string, content string, md5sum string) (errs []e
 
 	checksumDownloadedArtifact := ""
 	if fileExists(filename) {
-		dat, err := os.ReadFile(filename)
+		dat, err := os.ReadFile(filepath.Clean(filename))
 		if err != nil {
 			errs = append(errs, err)
 			return errs

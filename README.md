@@ -65,6 +65,7 @@ The aims of the n3dr tool are:
 
 * to backup all artifacts from a certain Nexus maven repository.
 * to migrate all artifacts from NexusA to NexusB.
+* configuration-as-code.
 
 ## Installation
 
@@ -90,7 +91,7 @@ Get the darwin artifact from the releases tab.
 
 ```bash
 choco install n3dr
-````
+```
 
 ## Configuration
 
@@ -146,7 +147,7 @@ Flags:
 Use "n3dr [command] --help" for more information about a command.
 ```
 
-## insecureSkipVerify
+### insecureSkipVerify
 
 It is possible to load a custom CA to connect to Nexus3 if one created
 self-signed certificates, by using:
@@ -157,17 +158,150 @@ self-signed certificates, by using:
 
 Note: store the `ca.crt` in the `~/.n3dr` directory.
 
-## Anonymous
+### Anonymous
 
 In order to download as a anonymous user, one has to use the `--anonymous`
 option.
+
+### Configuration-as-code
+
+#### Create an admin user
+
+```bash
+n3dr configUser \
+  --email=some-admin-user@some-admin-user.some-admin-user \
+  --firstName=some-admin-user \
+  --lastName=some-admin-user \
+  --pass=some-admin-user \
+  --id=some-admin-user \
+  --admin \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Create a downloadUser
+
+```bash
+n3dr configUser \
+  --email=some-admin-user@some-admin-user.some-admin-user \
+  --firstName=some-admin-user \
+  --lastName=some-admin-user \
+  --pass=some-admin-user \
+  --id=some-admin-user \
+  --downloadUser \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Create a uploadUser
+
+```bash
+n3dr configUser \
+  --email=some-admin-user@some-admin-user.some-admin-user \
+  --firstName=some-admin-user \
+  --lastName=some-admin-user \
+  --pass=some-admin-user \
+  --id=some-admin-user \
+  --uploadUser \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Change a user pass
+
+```bash
+n3dr configUser \
+  --email=admin@example.org \
+  --firstName=admin \
+  --lastName=admin \
+  --pass=some-other-admin-pass \
+  --id=admin \
+  --changePass \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Delete a repository
+
+```bash
+n3dr configRepository \
+  --configRepoName some-repo-name \
+  --configRepoDelete \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Create a repository
+
+##### Hosted Raw
+
+```bash
+n3dr configRepository \
+  --configRepoName some-repo \
+  --configRepoType raw \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+##### Proxied Apt
+
+```bash
+n3dr configRepository \
+  --configRepoName some-apt-proxy-repo \
+  --configRepoType apt \
+  --configRepoRecipe proxy \
+  --configRepoProxyURL "http://nl.archive.ubuntu.com/ubuntu/" \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+##### Proxied Yum
+
+```bash
+n3dr configRepository \
+  --configRepoName some-yum-proxy-repo \
+  --configRepoType yum \
+  --configRepoRecipe proxy \
+  --configRepoProxyURL "http://mirror.centos.org/centos/" \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+#### Anonymous access
+
+##### Disable
+
+```bash
+n3dr config \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
+##### Enable
+
+```bash
+n3dr config \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable> \
+  --configUserAnonymous
+```
 
 ## Docker
 
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.0.13 .
+docker build -t utrecht/n3dr:6.1.0 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -177,7 +311,7 @@ docker build -t utrecht/n3dr:6.0.13 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.13
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.1.0
 ```
 
 ### Upload
@@ -186,7 +320,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.0.13
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.1.0
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -390,6 +524,36 @@ a single command.
 [![Stargazers over time](https://starchart.cc/030/n3dr.svg)](https://starchart.cc/030/n3dr)
 
 ## Development
+
+### go-swagger
+
+Comment out `trap` in the integration-tests.sh and run it:
+
+```bash
+./test/integration-tests.sh
+```
+
+Once Nexus had been started, download the go-swagger, swagger.json and
+generate internal go-swagger code:
+
+```bash
+export GITHUB_URL=https://github.com
+export GS_URI=go-swagger/go-swagger/releases/download
+export GS_VERSION=v0.28.0
+export GS_URL=${GITHUB_URL}/${GS_URI}/${GS_VERSION}/swagger_linux_amd64
+curl -L \
+  ${GS_URL} \
+  -o swagger
+chmod +x swagger
+mkdir -p internal/goswagger
+curl http://localhost:9999/service/rest/swagger.json -o swagger.json
+./swagger generate client \
+  --name=nexus3 \
+  --spec swagger.json \
+  --target=internal/goswagger \
+  --skip-validation
+go mod tidy
+```
 
 ### Unit Tests
 

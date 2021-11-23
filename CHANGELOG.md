@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.0] - 2021-11-12
+
+### Added
+
+- Configuration-as-code:
+  - Enable and disable anonymous access
+  - Create a hosted raw repository
+  - Configure a proxied apt repository
+  - Delete repositories
+  - Change the admin user pass
+  - Create an admin user
+  - Create a yum proxied repository
+  - Generate a download and upload user
+
 ## [6.0.13] - 2021-10-11
 
 ### Fixed
@@ -552,7 +566,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.0.13...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.1.0...HEAD
+[6.1.0]: https://github.com/030/n3dr/compare/6.0.13...6.1.0
 [6.0.13]: https://github.com/030/n3dr/compare/6.0.12...6.0.13
 [6.0.12]: https://github.com/030/n3dr/compare/6.0.11...6.0.12
 [6.0.11]: https://github.com/030/n3dr/compare/6.0.10...6.0.11
