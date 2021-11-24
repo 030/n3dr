@@ -16,7 +16,7 @@ jobs:
             nexus-api-version: beta
             shasum: shasum -a 512
           - os: ubuntu-20.04
-            nexus-version: 3.34.1
+            nexus-version: 3.37.0
             nexus-api-version: v1
             shasum: sha512sum
           - os: ubuntu-20.04
@@ -36,12 +36,6 @@ jobs:
       - name: Unit tests
         run: go test ./... -cover
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
-      - name: Install bats
-        run: |
-          set -x
-          sudo apt-get update
-          sudo apt-get install bats -y
-        if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
       - name: Use the value
@@ -60,12 +54,4 @@ jobs:
           docker run --rm -v $(pwd):/data cytopia/yamllint:1.26-0.8 .
           docker run --rm -v $(pwd):/app -w /app \
             golangci/golangci-lint:v1.39.0-alpine golangci-lint run -v
-        if: ${{ startsWith(matrix.os, 'ubuntu') }}
-      - name: Integration test
-        run: ./test/integration-tests.sh
-        env:
-          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
-          NEXUS_VERSION: ${{ matrix.nexus-version }}
-          NEXUS_API_VERSION: ${{ matrix.nexus-api-version }}
-          N3DR_APT_GPG_SECRET: ${{ secrets.N3DR_APT_GPG_SECRET }}
         if: ${{ startsWith(matrix.os, 'ubuntu') }}

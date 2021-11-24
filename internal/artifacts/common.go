@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -30,9 +31,9 @@ const (
 
 // Nexus3 contains the attributes that are used by several functions
 type Nexus3 struct {
-	URL                                                                        string `validate:"nonzero,regexp=^http(s)?://[a-z0-9\\.-]+(:[0-9]+)?(/[a-z0-9\\.-]+)*$"`
-	APIVersion, ArtifactType, DownloadDirName, Pass, Repository, User, ZipName string
-	ZIP                                                                        bool
+	URL                                                                                            string `validate:"nonzero,regexp=^http(s)?://[a-z0-9\\.-]+(:[0-9]+)?(/[a-z0-9\\.-]+)*$"`
+	APIVersion, ArtifactType, DownloadDirName, DownloadDirNameZip, Pass, Repository, User, ZipName string
+	ZIP                                                                                            bool
 }
 
 // RetryLogAdaptor adapts the retryablehttp.Logger interface to the logrus logger.
@@ -128,21 +129,23 @@ func (n Nexus3) responseBodyString(resp *http.Response) ([]byte, string, error) 
 }
 
 // CreateZip adds all artifacts to a ZIP archive
-func (n Nexus3) CreateZip(dir string) error {
+func (n Nexus3) CreateZip(dir string, zipDirDest string) (err error) {
 	if n.ZIP {
 		if n.ZipName == "" {
 			n.ZipName = "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
 		}
-		cwd, err := os.Getwd()
+		if zipDirDest == "" {
+			zipDirDest, err = os.Getwd()
+			if err != nil {
+				return err
+			}
+		}
+		log.Warnf("Trying to create a zip file in: '%v'. Note that this could result in a 'permission denied' issue if N3DR has been installed using snap and is run in a different directory than your own home folder.", zipDirDest)
+		err = archiver.Archive([]string{dir}, filepath.Join(zipDirDest, n.ZipName))
 		if err != nil {
 			return err
 		}
-		log.Warnf("Trying to create a zip file in: '%v'. Note that this could result in a 'permission denied' issue if N3DR has been installed using snap and is run in a different directory than your own home folder.", cwd)
-		err = archiver.Archive([]string{dir}, n.ZipName)
-		if err != nil {
-			return err
-		}
-		log.Infof("Zipfile: '%v' created in '%v'", n.ZipName, cwd)
+		log.Infof("Zipfile: '%v' created in '%v'", n.ZipName, zipDirDest)
 	}
 	return nil
 }

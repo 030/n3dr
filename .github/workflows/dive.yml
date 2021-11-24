@@ -1,5 +1,5 @@
 ---
-name: "Dive CI"
+name: Dive CI
 on: [push]
 jobs:
   dive:

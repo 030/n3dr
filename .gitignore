@@ -23,3 +23,4 @@ virtualbox*
 *.exe
 swagger
 swagger.json
+*.log

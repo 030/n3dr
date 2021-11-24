@@ -43,7 +43,7 @@ reside in a certain Nexus3 repository`,
 				}
 			}
 
-			if err := n.CreateZip(dir); err != nil {
+			if err := n.CreateZip(dir, downloadDirNameZip); err != nil {
 				log.Fatal(err)
 			}
 		}

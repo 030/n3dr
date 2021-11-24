@@ -19,8 +19,8 @@ import (
 )
 
 var (
-	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName string
-	anonymous, debug, insecureSkipVerify, skipErrors, zip                                         bool
+	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip string
+	anonymous, debug, https, insecureSkipVerify, skipErrors, zip                                                      bool
 )
 
 var rootCmd = &cobra.Command{
@@ -50,9 +50,11 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
 	rootCmd.PersistentFlags().StringVar(&downloadDirName, "directory-prefix", "", "directory to store downloaded artifacts")
+	rootCmd.PersistentFlags().StringVar(&downloadDirNameZip, "directory-prefix-zip", "", "directory to store the zipped artifacts")
 	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
 	rootCmd.PersistentFlags().BoolVar(&anonymous, "anonymous", false, "Skip authentication")
 	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
+	rootCmd.PersistentFlags().BoolVarP(&https, "https", "", true, "https true or false")
 }
 
 func n3drHiddenHome() (string, error) {
