@@ -1,4 +1,4 @@
-name: "Hadolint"
+name: Hadolint
 on: [push]
 jobs:
   dive:

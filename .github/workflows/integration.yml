@@ -1,0 +1,40 @@
+---
+name: Integration
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            nexus-version: 3.37.0
+            nexus-api-version: v1
+            shasum: sha512sum
+          - os: ubuntu-20.04
+            nexus-version: 3.9.0
+            nexus-api-version: beta
+            shasum: sha512sum
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.0
+      - name: Install bats
+        run: |
+          set -x
+          sudo apt-get update
+          sudo apt-get install bats -y
+      - name: Integration test
+        run: |
+          ./test/integration-tests.sh
+        env:
+          N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
+          NEXUS_VERSION: ${{ matrix.nexus-version }}
+          NEXUS_API_VERSION: ${{ matrix.nexus-api-version }}
+          N3DR_APT_GPG_SECRET: ${{ secrets.N3DR_APT_GPG_SECRET }}

@@ -1,5 +1,5 @@
 ---
-name: "DIP"
+name: DIP
 on: [push]
 jobs:
   dive:

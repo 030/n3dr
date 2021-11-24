@@ -1,5 +1,5 @@
 ---
-name: "Dockle"
+name: Dockle
 on: [push]
 jobs:
   dive:

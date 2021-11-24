@@ -7,12 +7,12 @@ import (
 
 	"github.com/030/n3dr/internal/goswagger/client/repository_management"
 	"github.com/030/n3dr/internal/goswagger/models"
-	"github.com/030/n3dr/internal/pkg/http"
+	"github.com/030/n3dr/internal/pkg/connection"
 	log "github.com/sirupsen/logrus"
 )
 
 type Repository struct {
-	http.Nexus3
+	connection.Nexus3
 	ProxyRemoteURL string
 }
 

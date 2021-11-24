@@ -301,7 +301,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.1.0 .
+docker build -t utrecht/n3dr:6.2.0 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -311,7 +311,7 @@ docker build -t utrecht/n3dr:6.1.0 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.1.0
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.2.0
 ```
 
 ### Upload
@@ -320,7 +320,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.1.0
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.2.0
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -518,6 +518,70 @@ a single command.
 | maven2 | x      | x      | `+`   |
 | npm    | x      | x      | `*`   |
 | nuget  |        | x      |       |
+
+### repositoriesV2
+
+| type      | backup | upload | label |
+|-----------|--------|--------|-------|
+| apt       | x      | x      | `^`   |
+| bower     |        |        |       |
+| cocoapods |        |        |       |
+| conan     |        |        |       |
+| docker    |        |        |       |
+| gitlfs    |        |        |       |
+| go        |        |        |       |
+| helm      |        |        |       |
+| maven2    | x      |        | `+`   |
+| npm       | x      | x      | `*`   |
+| nuget     | x      | x      | `$`   |
+| p2        |        |        |       |
+| pypi      |        |        |       |
+| r         |        |        |       |
+| raw       | x      | x      | `%`   |
+| rubygems  |        |        |       |
+| yum       |        |        |       |
+| unknown   | x      | x      | `?`   |
+
+#### backup
+
+`repositoriesV2` command in conjunction with the `--backup` subcommand ensures
+that all artifacts are downloaded from Nexus3 and stored in a folder that is
+defined with the `--directory-prefix` parameter.
+
+```bash
+n3dr repositoriesV2 \
+  --backup \
+  -n some-url \
+  -u some-user \
+  -p some-pass \
+  --directory-prefix /tmp/some-dir
+```
+
+#### upload
+
+```bash
+n3dr repositoriesV2 \
+  --upload \
+  -n some-url \
+  -u some-user \
+  -p some-pass \
+  --directory-prefix /tmp/some-dir
+```
+
+#### sync
+
+```bash
+n3dr sync \
+  --otherNexus3Passwords=some-pass-B,some-pass-C \
+  --otherNexus3Users=admin,admin \
+  --otherNexus3URLs=localhost:9998,localhost:9997 \
+  --directory-prefix /some/dir \
+  -p some-pass-A \
+  -n localhost:9999 \
+  -u admin
+```
+
+Note: use `--https=false` in order to connect to a <http://nexus-url/>.
 
 ## Stargazers over time
 
