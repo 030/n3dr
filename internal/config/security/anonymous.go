@@ -6,12 +6,12 @@ import (
 
 	"github.com/030/n3dr/internal/goswagger/client/security_management_anonymous_access"
 	"github.com/030/n3dr/internal/goswagger/models"
-	"github.com/030/n3dr/internal/pkg/http"
+	"github.com/030/n3dr/internal/pkg/connection"
 	log "github.com/sirupsen/logrus"
 )
 
 type Security struct {
-	http.Nexus3
+	connection.Nexus3
 }
 
 func (s *Security) Anonymous(enabled bool) error {

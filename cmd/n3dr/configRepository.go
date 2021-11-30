@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/030/n3dr/internal/config/repository"
-	"github.com/030/n3dr/internal/pkg/http"
+	"github.com/030/n3dr/internal/pkg/connection"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +25,7 @@ var configRepositoryCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("configRepository called")
 
-		n := http.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
 		r := repository.Repository{Nexus3: n}
 
 		if configRepoDelete {

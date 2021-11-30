@@ -8,17 +8,17 @@ import (
 	"github.com/030/n3dr/internal/goswagger/client/security_management_roles"
 	"github.com/030/n3dr/internal/goswagger/client/security_management_users"
 	"github.com/030/n3dr/internal/goswagger/models"
-	"github.com/030/n3dr/internal/pkg/http"
+	"github.com/030/n3dr/internal/pkg/connection"
 	log "github.com/sirupsen/logrus"
 )
 
 type Role struct {
-	http.Nexus3
+	connection.Nexus3
 	models.RoleXORequest
 }
 
 type User struct {
-	http.Nexus3
+	connection.Nexus3
 	models.APICreateUser
 }
 

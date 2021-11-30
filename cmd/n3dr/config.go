@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/030/n3dr/internal/config/security"
-	"github.com/030/n3dr/internal/pkg/http"
+	"github.com/030/n3dr/internal/pkg/connection"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -19,7 +19,7 @@ var configCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("config called")
 
-		n := http.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
 		s := security.Security{Nexus3: n}
 		if err := s.Anonymous(configUserAnonymous); err != nil {
 			log.Fatal(err)

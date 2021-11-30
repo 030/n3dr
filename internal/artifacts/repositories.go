@@ -129,7 +129,7 @@ func (n *Nexus3) Downloads(regex string) error {
 	if err := n.downloadAllArtifactsFromRepositories(dir, regex); err != nil {
 		return err
 	}
-	if err := n.CreateZip(dir); err != nil {
+	if err := n.CreateZip(dir, n.DownloadDirNameZip); err != nil {
 		return err
 	}
 	return nil
