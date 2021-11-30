@@ -1,4 +1,4 @@
-package http
+package connection
 
 import (
 	apiclient "github.com/030/n3dr/internal/goswagger/client"
@@ -7,11 +7,16 @@ import (
 )
 
 type Nexus3 struct {
-	FQDN, Pass, User string
+	DownloadDirName, FQDN, Pass, User string
+	HTTPS                             bool
 }
 
 func (n *Nexus3) Client() *apiclient.Nexus3 {
-	r := httptransport.New(n.FQDN, apiclient.DefaultBasePath, apiclient.DefaultSchemes)
+	schemes := apiclient.DefaultSchemes
+	if n.HTTPS {
+		schemes = []string{"http", "https"}
+	}
+	r := httptransport.New(n.FQDN, apiclient.DefaultBasePath, schemes)
 	r.DefaultAuthentication = httptransport.BasicAuth(n.User, n.Pass)
 	return apiclient.New(r, strfmt.Default)
 }

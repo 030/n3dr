@@ -5,7 +5,7 @@ import (
 
 	"github.com/030/n3dr/internal/config/user"
 	"github.com/030/n3dr/internal/goswagger/models"
-	"github.com/030/n3dr/internal/pkg/http"
+	"github.com/030/n3dr/internal/pkg/connection"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -39,7 +39,7 @@ to quickly create a Cobra application.`,
 			Password:     pass,
 			UserID:       id,
 		}
-		n := http.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
 		u := user.User{APICreateUser: acu, Nexus3: n}
 
 		if admin {
