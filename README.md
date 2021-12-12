@@ -165,6 +165,19 @@ option.
 
 ### Configuration-as-code
 
+#### LDAP
+
+```bash
+n3dr configLDAP \
+  --configLDAPAuthPassword=a \
+  --configLDAPAuthUsername=b \
+  --configLDAPHost=c \
+  --configLDAPName=d \
+  -p <admin-pass> \
+  -u <admin-user> \
+  -n=<FQDN-without-http://-or-https>:<port-if-applicable>
+```
+
 #### Create an admin user
 
 ```bash
@@ -527,6 +540,7 @@ a single command.
 | bower     |        |        |       |
 | cocoapods |        |        |       |
 | conan     |        |        |       |
+| conda     |        |        |       |
 | docker    |        |        |       |
 | gitlfs    |        |        |       |
 | go        |        |        |       |

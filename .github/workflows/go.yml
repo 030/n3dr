@@ -12,20 +12,12 @@ jobs:
       matrix:
         include:
           - os: macos-10.15
-            nexus-version: 3.9.0
-            nexus-api-version: beta
             shasum: shasum -a 512
           - os: ubuntu-20.04
-            nexus-version: 3.37.0
-            nexus-api-version: v1
             shasum: sha512sum
           - os: ubuntu-20.04
-            nexus-version: 3.9.0
-            nexus-api-version: beta
             shasum: sha512sum
           - os: windows-2019
-            nexus-version: 3.9.0
-            nexus-api-version: beta
             shasum: sha512sum
     steps:
       - uses: actions/checkout@v2
