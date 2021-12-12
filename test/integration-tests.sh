@@ -6,7 +6,7 @@ if [ -z "${N3DR_APT_GPG_SECRET}" ]; then
   echo "docker run -v /tmp/gpg-output:/root/.gnupg -v ${PWD}/test/gpg/:/tmp/ --rm -it vladgh/gpg --batch --generate-key /tmp/generate"
   echo "docker run --rm -it -v /tmp/gpg-output:/root/.gnupg -v ${PWD}/test/gpg/:/tmp/ vladgh/gpg --output /tmp/my_rsa_key --armor --export-secret-key joe@foo.bar"
   echo "Enter 'abc' as a password, if the prompt appears"
-  echo "export N3DR_APT_GPG_SECRET=\$(sudo cat test/gpg/my_rsa_key | docker run -i m2s:2020-08-05)"
+  printf "export N3DR_APT_GPG_SECRET=\$(sudo cat test/gpg/my_rsa_key | tr -d '\\\n')"
   echo "sudo rm -r /tmp/gpg-output"
   echo "rm test/gpg/my_rsa_key"
   echo
@@ -16,7 +16,7 @@ fi
 
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
-  NEXUS_VERSION=3.37.0
+  NEXUS_VERSION=3.37.1
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
@@ -276,7 +276,7 @@ zipName() {
 }
 
 clean() {
-  for r in a b; do NEXUS_DOCKER_NAME=nexus-${r} cleanup; done
+  for r in a b c; do NEXUS_DOCKER_NAME=nexus-${r} cleanup; done
   cleanup_downloads
 }
 
@@ -364,5 +364,5 @@ and respectively ${PASSWORD_NEXUS_A}, ${PASSWORD_NEXUS_B} or
 ${PASSWORD_NEXUS_C}"
 }
 
-# trap clean EXIT
+#trap clean EXIT
 main

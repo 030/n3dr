@@ -15,3 +15,9 @@ jobs:
         run: ./dip image --name=alpine --regex=^3\.[0-9]+\.[0-9]+$ --dockerfile
       - name: Check Golang
         run: ./dip image --name=golang --regex=^1\.[0-9]+\.[0-9]+-alpine3\.[0-9]+$ --dockerfile
+      - name: Check Nexus3
+        run: |
+          NEXUS_VERSION=$(./dip image --name=sonatype/nexus3 --regex=^3\.[0-9]+\.[0-9]+$)
+          grep "${NEXUS_VERSION}" ./test/integration-tests.sh
+          grep "${NEXUS_VERSION}" ./.github/workflows/go.yml
+          grep "${NEXUS_VERSION}" ./.github/workflows/integration.yml

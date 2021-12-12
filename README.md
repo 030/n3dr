@@ -527,6 +527,7 @@ a single command.
 | bower     |        |        |       |
 | cocoapods |        |        |       |
 | conan     |        |        |       |
+| conda     |        |        |       |
 | docker    |        |        |       |
 | gitlfs    |        |        |       |
 | go        |        |        |       |
