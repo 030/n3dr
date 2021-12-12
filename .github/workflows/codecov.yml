@@ -18,7 +18,7 @@ jobs:
       - name: Unit test
         run: |
           go test -short -cover -v -coverprofile=coverage.txt \
-          -covermode=atomic ./...
+          -covermode=atomic $(go list ./... | grep -v internal/goswagger)
       - uses: codecov/codecov-action@v1
         with:
           files: ./coverage.txt
