@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sync"
 	"time"
 
@@ -118,21 +119,29 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 				shaType, checksum := artifacts.Checksum(asset)
 
 				log.Debugf("downloadURL: '%s', format: '%s', checksum: '%s'", asset.DownloadURL, asset.Format, checksum)
-
-				file := filepath.Join(n.DownloadDirName, repo, asset.Path)
-				downloadedFileChecksum, checksumLocalFileErrs := artifacts.ChecksumLocalFile(file, shaType)
-				for _, checksumLocalFileErr := range checksumLocalFileErrs {
-					if checksumLocalFileErr != nil {
-						errs = append(errs, checksumLocalFileErr)
-						return
-					}
+				assetPath := asset.Path
+				filesToBeSkipped, err := regexp.MatchString(`^\.(sha(1|256|512)|md5)$`, filepath.Ext(assetPath))
+				if err != nil {
+					errs = append(errs, err)
+					return
 				}
+				log.Debugf("file: %s, filesToBeSkipped: %v", assetPath, filesToBeSkipped)
+				if !filesToBeSkipped {
+					file := filepath.Join(n.DownloadDirName, repo, assetPath)
+					downloadedFileChecksum, checksumLocalFileErrs := artifacts.ChecksumLocalFile(file, shaType)
+					for _, checksumLocalFileErr := range checksumLocalFileErrs {
+						if checksumLocalFileErr != nil {
+							errs = append(errs, checksumLocalFileErr)
+							return
+						}
+					}
 
-				downloadErrs := n.download(checksum, downloadedFileChecksum, asset)
-				for _, downloadErr := range downloadErrs {
-					if downloadErr != nil {
-						errs = append(errs, downloadErr)
-						return
+					downloadErrs := n.download(checksum, downloadedFileChecksum, asset)
+					for _, downloadErr := range downloadErrs {
+						if downloadErr != nil {
+							errs = append(errs, downloadErr)
+							return
+						}
 					}
 				}
 			}(asset)
@@ -168,12 +177,14 @@ func (n *Nexus3) Backup() error {
 		wg.Add(1)
 		go func(repo *models.AbstractAPIRepository) {
 			defer wg.Done()
-			log.Infof("backing up '%s', '%s', %s", repo.Name, repo.Type, repo.Format)
-			if err := os.MkdirAll(filepath.Join(n.DownloadDirName, repo.Name), chmodDir); err != nil {
-				errs = append(errs, err)
-			}
-			if err := n.downloadIfChecksumMismatchLocalFile("", repo.Name); err != nil {
-				errs = append(errs, err)
+			if repo.Type != "group" {
+				log.Infof("backing up '%s', '%s', %s", repo.Name, repo.Type, repo.Format)
+				if err := os.MkdirAll(filepath.Join(n.DownloadDirName, repo.Name), chmodDir); err != nil {
+					errs = append(errs, err)
+				}
+				if err := n.downloadIfChecksumMismatchLocalFile("", repo.Name); err != nil {
+					errs = append(errs, err)
+				}
 			}
 		}(repo)
 	}
