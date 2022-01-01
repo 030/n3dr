@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -22,6 +23,10 @@ import (
 
 type Nexus3 struct {
 	*connection.Nexus3
+}
+
+type mavenParts struct {
+	classifier, ext string
 }
 
 func uploadStatus(err error) (int, error) {
@@ -104,14 +109,71 @@ func checkIfLocalArtifactResidesInNexus(continuationToken, localDiskRepo, path s
 	if continuationToken == "" {
 		return false, err
 	}
-	bestaat, err := checkIfLocalArtifactResidesInNexus(continuationToken, localDiskRepo, path, client)
+	exists, err := checkIfLocalArtifactResidesInNexus(continuationToken, localDiskRepo, path, client)
 	if err != nil {
 		return false, err
 	}
-	if bestaat {
+	if exists {
 		return true, nil
 	}
 	return false, err
+}
+
+func maven(path string, skipErrors bool) (mp mavenParts, err error) {
+	regexBase := `^.*\/([\w\-\.]+)\/`
+
+	if runtime.GOOS == "windows" {
+		log.Info("N3DR is running on Windows. Correcting the regexBase...")
+		regexBase = `^.*\\([\w\-\.]+)\\`
+	}
+
+	regexVersion := `(([a-z\d\-]+)|(([a-z\d\.]+)))`
+	if rv := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_VERSION"); rv != "" {
+		regexVersion = rv
+	}
+
+	regexClassifier := `(-(.*?(\-([\w.]+))?)?)?`
+	if rc := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_CLASSIFIER"); rc != "" {
+		regexClassifier = rc
+	}
+
+	re := regexp.MustCompile(regexBase + regexVersion + regexClassifier + `\.([a-z]+)$`)
+
+	classifier := ""
+	ext := ""
+	if re.Match([]byte(path)) {
+		result := re.FindAllStringSubmatch(path, -1)
+		artifactElements := result[0]
+		artifactElementsLength := len(result[0])
+		log.Debugf("ArtifactElements: '%s'. ArtifactElementLength: '%d'", artifactElements, artifactElementsLength)
+		if artifactElementsLength != 11 {
+			err := fmt.Errorf("check whether the regex retrieves ten elements from the artifact. Current: '%s'. Note that element 3 is the artifact itself", artifactElements)
+			if skipErrors {
+				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+			} else {
+				return mp, err
+			}
+		}
+
+		artifact := artifactElements[3]
+		version := artifactElements[1]
+		ext = artifactElements[10]
+
+		// Check if the 'version' reported in the artifact name is different from the 'real' version
+		if artifactElements[7] != artifactElements[1] {
+			classifier = artifactElements[9]
+		}
+
+		log.Debugf("Artifact: '%v', Version: '%v', Classifier: '%v', Extension: '%v'.", artifact, version, classifier, ext)
+	} else {
+		err := fmt.Errorf("check whether regexVersion: '%s' and regexClassifier: '%s' match the artifact: '%s'", regexVersion, regexClassifier, path)
+		if skipErrors {
+			log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
+		} else {
+			return mp, err
+		}
+	}
+	return mavenParts{classifier: classifier, ext: ext}, nil
 }
 
 func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string) error {
@@ -122,12 +184,58 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 	c := components.UploadComponentParams{}
 	switch rf := repoFormat; rf {
 	case "apt":
+		fmt.Print("^")
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
 			return err
 		}
 		c.AptAsset = f
+	case "maven2":
+		fmt.Print("+")
+		if filepath.Ext(path) == ".pom" {
+			c.Repository = localDiskRepo
+			f, err := os.Open(filepath.Clean(path))
+			if err != nil {
+				return err
+			}
+			c.Maven2Asset1 = f
+			ext1 := "pom"
+			c.Maven2Asset1Extension = &ext1
+
+			dir = filepath.Dir(path)
+			if err := filepath.WalkDir(dir,
+				func(path string, info fs.DirEntry, err error) error {
+					if err != nil {
+						return err
+					}
+					if filepath.Ext(path) == ".jar" {
+						f2, err = os.Open(filepath.Clean(path))
+						if err != nil {
+							return err
+						}
+						mp, err := maven(path, false)
+						if err != nil {
+							return err
+						}
+						c.Maven2Asset2 = f2
+						c.Maven2Asset2Extension = &mp.ext
+						c.Maven2Asset2Classifier = &mp.classifier
+					}
+					if filepath.Ext(path) == ".zip" {
+						f3, err = os.Open(filepath.Clean(path))
+						if err != nil {
+							return err
+						}
+						c.Maven2Asset3 = f3
+						ext3 := "zip"
+						c.Maven2Asset3Extension = &ext3
+					}
+					return nil
+				}); err != nil {
+				return err
+			}
+		}
 	case "npm":
 		fmt.Print("*")
 		c.Repository = localDiskRepo
@@ -183,7 +291,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 
 	files := []*os.File{f, f2, f3}
 	for _, file := range files {
-		if err := boek(file); err != nil {
+		if err := closeFileObjectIfNeeded(file); err != nil {
 			return err
 		}
 	}
@@ -231,7 +339,7 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 	return nil
 }
 
-func boek(f *os.File) error {
+func closeFileObjectIfNeeded(f *os.File) error {
 	fi, err := f.Stat()
 	if err != nil {
 		return err
