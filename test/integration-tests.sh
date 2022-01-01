@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 if [ -z "${N3DR_APT_GPG_SECRET}" ]; then
   echo "N3DR_APT_GPG_SECRET should not be empty"
@@ -6,7 +6,7 @@ if [ -z "${N3DR_APT_GPG_SECRET}" ]; then
   echo "docker run -v /tmp/gpg-output:/root/.gnupg -v ${PWD}/test/gpg/:/tmp/ --rm -it vladgh/gpg --batch --generate-key /tmp/generate"
   echo "docker run --rm -it -v /tmp/gpg-output:/root/.gnupg -v ${PWD}/test/gpg/:/tmp/ vladgh/gpg --output /tmp/my_rsa_key --armor --export-secret-key joe@foo.bar"
   echo "Enter 'abc' as a password, if the prompt appears"
-  printf "export N3DR_APT_GPG_SECRET=\$(sudo cat test/gpg/my_rsa_key | tr -d '\\\n')"
+  printf "export N3DR_APT_GPG_SECRET=\$(sudo cat test/gpg/my_rsa_key | tr '\\\n' ' ' | sed -r \"s|-----[A-Z]+ PGP PRIVATE KEY BLOCK-----||g;s| |\\\\\\\\\\\n|g;s|(.*)|-----BEGIN PGP PRIVATE KEY BLOCK-----\\\1-----END PGP PRIVATE KEY BLOCK-----|g\")"
   echo
   echo "sudo rm -r /tmp/gpg-output"
   echo "rm test/gpg/my_rsa_key"
