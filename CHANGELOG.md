@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.4.0] - 2021-01-02
+
+### Added
+
+- Upload of Maven2 artifacts using `repositoriesV2`.
+
 ## [6.3.0] - 2021-12-31
 
 ### Added
@@ -591,7 +597,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.3.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.4.0...HEAD
+[6.4.0]: https://github.com/030/n3dr/compare/6.3.0...6.4.0
 [6.3.0]: https://github.com/030/n3dr/compare/6.2.0...6.3.0
 [6.2.0]: https://github.com/030/n3dr/compare/6.1.0...6.2.0
 [6.1.0]: https://github.com/030/n3dr/compare/6.0.13...6.1.0
