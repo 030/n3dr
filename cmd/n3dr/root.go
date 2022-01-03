@@ -116,22 +116,39 @@ func initConfig() {
 	viper.AutomaticEnv()
 }
 
+func valueInConfigFile(key string) (string, error) {
+	conf := viper.ConfigFileUsed()
+	log.Infof("%s parameter empty. Reading it from config file: '%s'", key, conf)
+	value := viper.GetString(key)
+	if value == "" {
+		return "", fmt.Errorf("key: '%s' does not seem to contain a value. Check whether this key is populated in the config file: '%s'", key, conf)
+	}
+	return value, nil
+}
+
 func parseVarsFromConfig() {
+	var err error
 	if !anonymous {
 		if n3drUser == "" {
-			log.Infof("n3drUser empty. Reading if from '%v'", viper.ConfigFileUsed())
-			n3drUser = viper.GetString("n3drUser")
+			n3drUser, err = valueInConfigFile("n3drUser")
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 
 		if n3drPass == "" {
-			log.Infof("n3drPass empty. Reading if from '%v'", viper.ConfigFileUsed())
-			n3drPass = viper.GetString("n3drPass")
+			n3drPass, err = valueInConfigFile("n3drPass")
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	}
 
 	if n3drURL == "" {
-		log.Infof("n3drURL empty. Reading if from '%v'", viper.ConfigFileUsed())
-		n3drURL = viper.GetString("n3drURL")
+		n3drURL, err = valueInConfigFile("n3drURL")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
