@@ -491,19 +491,8 @@ go run main.go backup -npm -n some-url -r some-npm-repo -d --npm
 
 ## logo
 
-```bash
-go get -u github.com/gobuffalo/packr/v2/packr2
-cd cmd/n3dr
-~/go/bin/packr2 clean
-~/go/bin/packr2
-mv packrd/packed-packr.go ../../internal/packrd/
-```
-
-Change the `main/main-packr.go`:
-
-```bash
-import _ "github.com/030/n3dr/internal/packrd"
-```
+If you want to change the logo, just edit
+`cmd/n3dr/assets/logo/text-image-com-n3dr.txt` and rebuild with
 
 ```bash
 go build
