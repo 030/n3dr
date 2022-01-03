@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"crypto/x509"
+	_ "embed"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -10,13 +11,15 @@ import (
 	"path/filepath"
 
 	cli "github.com/030/n3dr/internal/artifacts"
-	"github.com/gobuffalo/packr/v2"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/viper"
 )
+
+//go:embed assets/logo/text-image-com-n3dr.txt
+var logo string
 
 var (
 	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip string
@@ -96,18 +99,13 @@ func configFilePath() string {
 	return cfgFile
 }
 
-func asci() error {
-	box := packr.New("logo", "../../assets/logo")
-	s, err := box.FindString("text-image-com-n3dr.txt")
-	if err != nil {
-		return err
-	}
-	fmt.Println(s)
+func ascii() error {
+	fmt.Println(logo)
 	return nil
 }
 
 func initConfig() {
-	if err := asci(); err != nil {
+	if err := ascii(); err != nil {
 		log.Fatal(err)
 	}
 	enableDebug()
