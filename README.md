@@ -40,7 +40,7 @@
 [![codebeat badge](https://codebeat.co/badges/6c33543d-d05b-44e4-8924-140382148de9)](https://codebeat.co/projects/github-com-030-n3dr-master)
 
 <a href="https://n3dr.releasesoftwaremoreoften.com">\
-<img src="https://github.com/030/n3dr/raw/master/assets/logo/logo.png" width="100"></a>
+<img src="https://github.com/030/n3dr/raw/master/cmd/n3dr/assets/logo/logo.png" width="100"></a>
 
 ## Backup or Migrate an entire Nexus Artifact Server
 
