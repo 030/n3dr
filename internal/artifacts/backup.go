@@ -92,21 +92,6 @@ func (n Nexus3) continuationToken(token string) (string, error) {
 	return tokenWithoutQuotes, nil
 }
 
-func (n Nexus3) continuationTokenRecursion(t string) ([]string, error) {
-	token, err := n.continuationToken(t)
-	if err != nil {
-		return nil, err
-	}
-	if token == "null" {
-		return []string{token}, nil
-	}
-	tokenSlice, err := n.continuationTokenRecursion(token)
-	if err != nil {
-		return nil, err
-	}
-	return append(tokenSlice, token), nil
-}
-
 func createArtifact(d string, f string, content string, md5sum string) (errs []error) {
 	ociBucketname := viper.GetString("ociBucket")
 	Filename := d + "/" + f
