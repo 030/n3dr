@@ -10,20 +10,21 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+
 	cli "github.com/030/n3dr/internal/artifacts"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
-	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
-	"github.com/spf13/viper"
 )
 
 //go:embed assets/logo/text-image-com-n3dr.txt
 var logo string
 
 var (
-	apiVersion, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip string
-	anonymous, debug, https, insecureSkipVerify, skipErrors, zip                                                      bool
+	apiVersion, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip string
+	anonymous, debug, https, insecureSkipVerify, skipErrors, zip                                                                      bool
 )
 
 var rootCmd = &cobra.Command{
@@ -58,6 +59,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&anonymous, "anonymous", false, "Skip authentication")
 	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
 	rootCmd.PersistentFlags().BoolVarP(&https, "https", "", true, "https true or false")
+	rootCmd.PersistentFlags().StringVarP(&basePathPrefix, "basePathPrefix", "", "", "the nexus basePathPrefix. Default: \"\"")
 }
 
 func n3drHiddenHome() (string, error) {

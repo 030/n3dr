@@ -64,7 +64,7 @@ func (n *Nexus3) reposOnDisk() (localDiskRepos []string, errs []error) {
 }
 
 func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
-	cn := connection.Nexus3{FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS}
+	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS}
 	a := artifacts.Nexus3{Nexus3: &cn}
 	repos, err := a.Repos()
 	if err != nil {

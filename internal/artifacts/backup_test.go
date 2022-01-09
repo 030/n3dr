@@ -1,104 +1,21 @@
 package artifacts
 
 import (
-	"io/fs"
-	"os"
-	"path/filepath"
-	"reflect"
 	"testing"
-
-	log "github.com/sirupsen/logrus"
 )
 
 const (
-	errMsg         = "Not equal. Expected: %d. Actual: %d."
-	errMsgTxt      = "Incorrect. Expected: %v. Actual: %v"
-	testFileJar100 = testDirHome + testDirDownload + "/maven-releases/file1/file1/1.0.0/file1-1.0.0.jar"
+	errMsgTxt       = "Incorrect. Expected: %v. Actual: %v"
+	testDirDownload = "/download"
+	testDirUpload   = "/testFiles"
 )
 
-func TestContinuationTokenHash(t *testing.T) {
-	actual, _ := n.continuationTokenRecursion("null")
-	actualSize := len(actual)
-	expectedSize := 3
-	if expectedSize != actualSize {
-		t.Errorf(errMsg, expectedSize, actualSize)
-	}
-
-	tokenSlice := []string{
-		"foo",
-		"boo",
-		"",
-		"----",
-		"123",
-		"11111111111111111111111111111111111",
-	}
-	for _, token := range tokenSlice {
-		_, actualError := n.continuationTokenRecursion(token)
-
-		expectedError := tokenErrMsg + token
-		if actualError.Error() != expectedError {
-			t.Errorf(errMsgTxt, expectedError, actualError)
-		}
-	}
-}
-
-func allFiles(dir string) ([]string, error) {
-	fileList := []string{}
-	err := filepath.WalkDir(dir,
-		func(path string, info fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if !info.IsDir() {
-				fileList = append(fileList, path)
-			}
-			return nil
-		})
-	return fileList, err
-}
-
-func TestStoreArtifactsOnDiskChannel(t *testing.T) {
-	if err := n.StoreArtifactsOnDiskChannel(testDirHome+testDirDownload, ".*"); err != nil {
-		log.Fatal(err)
-	}
-
-	actual, _ := allFiles(testDirHome + testDirDownload)
-
-	actualFileNumber := len(actual)
-	expected := 9
-	if expected != actualFileNumber {
-		t.Errorf(errMsg, expected, actualFileNumber)
-	}
-
-	expectedDownloads := []string{
-		testFileJar100,
-		"/tmp/n3drtest/download/maven-releases/file1/file1/1.0.0/file1-1.0.0.pom",
-		"/tmp/n3drtest/download/maven-releases/file1/file1/maven-metadata.xml",
-		"/tmp/n3drtest/download/maven-releases/file2/file2/1.0.0/file2-1.0.0.jar",
-		"/tmp/n3drtest/download/maven-releases/file2/file2/1.0.0/file2-1.0.0.pom",
-		"/tmp/n3drtest/download/maven-releases/file2/file2/maven-metadata.xml",
-		"/tmp/n3drtest/download/maven-releases/file3/file3/1.0.0/file3-1.0.0.jar",
-		"/tmp/n3drtest/download/maven-releases/file3/file3/1.0.0/file3-1.0.0.pom",
-		"/tmp/n3drtest/download/maven-releases/file3/file3/maven-metadata.xml",
-	}
-	for _, f := range expectedDownloads {
-		if _, err := os.Stat(f); os.IsNotExist(err) {
-			t.Errorf("File %s should exist, but does not.", f)
-		}
-	}
-
-	if !reflect.DeepEqual(expectedDownloads, actual) {
-		t.Errorf("Slice not identical. Expected %s, but was %s.", expectedDownloads, actual)
-	}
-}
-
-func TestDownloadURL(t *testing.T) {
-	_, actualError := n.downloadURL("some-token")
-	expectedError := "ResponseCode: '406' and Message '406 Not Acceptable' for URL: http://localhost:9999/service/rest/v1/assets?repository=maven-releases&continuationToken=some-token"
-
-	if actualError.Error() != expectedError {
-		t.Errorf(errMsgTxt, expectedError, actualError)
-	}
+var n = Nexus3{
+	URL:        "http://localhost:9999",
+	User:       "admin",
+	Pass:       "admin123",
+	Repository: "maven-releases",
+	APIVersion: "v1",
 }
 
 func TestArtifactName(t *testing.T) {
@@ -163,13 +80,4 @@ func TestFileExists(t *testing.T) {
 	if result != expectedResult {
 		t.Errorf(errMsgTxt, expectedResult, result)
 	}
-
-	file = testFileJar100
-	result = fileExists(file)
-	expectedResult = true
-
-	if result != expectedResult {
-		t.Errorf(errMsgTxt, expectedResult, result)
-	}
-
 }

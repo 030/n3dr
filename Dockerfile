@@ -1,4 +1,4 @@
-FROM golang:1.17.5-alpine3.15 as builder
+FROM golang:1.17.6-alpine3.15 as builder
 ENV USERNAME n3dr
 RUN adduser -D -g '' $USERNAME
 COPY . /go/${USERNAME}/
