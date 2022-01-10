@@ -1,6 +1,6 @@
 <!--  Thanks for sending a pull request!  Here are some tips for you:
 
-<https://github.com/030/n3dr/blob/master/CONTRIBUTING.md/>
+<https://github.com/030/n3dr/blob/main/CONTRIBUTING.md/>
 
 -->
 
