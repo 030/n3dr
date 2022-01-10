@@ -314,7 +314,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.4.2 .
+docker build -t utrecht/n3dr:6.4.3 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -324,7 +324,7 @@ docker build -t utrecht/n3dr:6.4.2 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.4.2
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.4.3
 ```
 
 ### Upload
@@ -333,7 +333,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.4.2
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.4.3
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -528,9 +528,12 @@ a single command.
 | apt       | x      | x      | `^`   |
 | bower     |        |        |       |
 | cocoapods |        |        |       |
+| composer  |        |        |       |
 | conan     |        |        |       |
 | conda     |        |        |       |
+| cpan      |        |        |       |
 | docker    |        |        |       |
+| elpa      |        |        |       |
 | gitlfs    |        |        |       |
 | go        |        |        |       |
 | helm      |        |        |       |

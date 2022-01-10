@@ -33,6 +33,10 @@ fi
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
 readonly DOWNLOAD_LOCATION_PASS=${DOWNLOAD_LOCATION}-pass
 readonly DOWNLOAD_LOCATION_SYNC=${DOWNLOAD_LOCATION}-sync
+readonly DOWNLOAD_LOCATION_SYNC_A=${DOWNLOAD_LOCATION_SYNC}-a
+readonly DOWNLOAD_LOCATION_SYNC_B=${DOWNLOAD_LOCATION_SYNC}-b
+readonly DOWNLOAD_LOCATION_SYNC_C=${DOWNLOAD_LOCATION_SYNC}-c
+readonly DOWNLOAD_LOCATION_SYNC_SIZE=23M
 readonly PORT_NEXUS_A=9999
 readonly PORT_NEXUS_B=9998
 readonly PORT_NEXUS_C=9997
@@ -277,8 +281,10 @@ zipName() {
 }
 
 clean() {
-  for r in a b c; do NEXUS_DOCKER_NAME=nexus-${r} cleanup; done
+  for r in a b c; do docker stop nexus-${r} || true; done
+  docker stop rproxy-nginx-nexus3 || true
   cleanup_downloads
+  git checkout ../../test/rproxy-nginx-nexus3.conf
 }
 
 count_downloads() {
@@ -303,7 +309,11 @@ cleanup_downloads() {
   rm -rf REPO_NAME_HOSTED_NPM
   rm -rf maven-releases
   rm -rf "${DOWNLOAD_LOCATION}"
+  rm -rf "${DOWNLOAD_LOCATION_PASS}"
   rm -rf "${DOWNLOAD_LOCATION_SYNC}"
+  rm -rf "${DOWNLOAD_LOCATION_SYNC_A}"
+  rm -rf "${DOWNLOAD_LOCATION_SYNC_B}"
+  rm -rf "${DOWNLOAD_LOCATION_SYNC_C}"
   rm -f n3dr-backup-*zip
   rm -f helloZip*zip
 }
@@ -316,6 +326,19 @@ version() {
 
 cac() {
   echo "Configuration as code"
+}
+
+test_sync() {
+  ./"${N3DR_DELIVERABLE}" repositoriesV2 \
+    --backup \
+    --directory-prefix "${1}" \
+    -p "${2}" \
+    -n "${3}" \
+    -u admin \
+    --https=false
+  size=$(du -sh "${1}")
+  echo "Backup size '${1}': '${size}'"
+  echo "${size}" | grep "${DOWNLOAD_LOCATION_SYNC_SIZE}"
 }
 
 sync() {
@@ -334,8 +357,32 @@ sync() {
       -p "${PASSWORD_NEXUS_A}" \
       -n "${URL_NEXUS_A_V2}" \
       -u admin
+
+    test_sync "${DOWNLOAD_LOCATION_SYNC_A}" "${PASSWORD_NEXUS_A}" "${URL_NEXUS_A_V2}"
+    test_sync "${DOWNLOAD_LOCATION_SYNC_B}" "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B_V2}"
+    test_sync "${DOWNLOAD_LOCATION_SYNC_C}" "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C_V2}"
   else
     echo "RepositoriesV2 sync not supported in beta API"
+  fi
+}
+
+rproxy() {
+  if [ "${NEXUS_API_VERSION}" != "beta" ]; then
+    echo "Testing rproxy in front of a nexus server..."
+    ip_nexus_a=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nexus-a)
+    mkdir -p /tmp/n3dr-rproxy
+    sed -i "s|WILL_BE_REPLACED|${ip_nexus_a}|" ../../test/rproxy-nginx-nexus3.conf
+    docker run -d --rm --name rproxy-nginx-nexus3 -p 9990:80 -v "${PWD}"/../../test/rproxy-nginx-nexus3.conf:/etc/nginx/nginx.conf nginx:1.21.5-alpine
+    sleep 10
+    ./"${N3DR_DELIVERABLE}" repositoriesV2 \
+      --count \
+      -p "${PASSWORD_NEXUS_A}" \
+      -n localhost:9990 \
+      -u admin \
+      --https=false \
+      --basePathPrefix=alternativeBasePathNexus3
+  else
+    echo "Rproxy check skipped in conjunction with beta API"
   fi
 }
 
@@ -357,6 +404,7 @@ main() {
   zipName
   version
   sync
+  rproxy
   bats --tap ../../test/tests.bats
   echo "
 In order to debug, comment out the 'trap clean EXIT', run this script again and
@@ -365,5 +413,5 @@ and respectively ${PASSWORD_NEXUS_A}, ${PASSWORD_NEXUS_B} or
 ${PASSWORD_NEXUS_C}"
 }
 
-#trap clean EXIT
+trap clean EXIT
 main
