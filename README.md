@@ -32,15 +32,15 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_n3dr)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_n3dr)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2810/badge)](https://bestpractices.coreinfrastructure.org/projects/2810)
-[![codecov](https://codecov.io/gh/030/n3dr/branch/master/graph/badge.svg)](https://codecov.io/gh/030/n3dr)
-[![BCH compliance](https://bettercodehub.com/edge/badge/030/n3dr?branch=master)](https://bettercodehub.com/results/030/n3dr)
+[![codecov](https://codecov.io/gh/030/n3dr/branch/main/graph/badge.svg)](https://codecov.io/gh/030/n3dr)
+[![BCH compliance](https://bettercodehub.com/edge/badge/030/n3dr?branch=main)](https://bettercodehub.com/results/030/n3dr)
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-web.svg)](https://golangci.com/r/github.com/030/n3dr)
 [![Chocolatey](https://img.shields.io/chocolatey/dt/n3dr)](https://chocolatey.org/packages/n3dr)
 [![n3dr](https://snapcraft.io//n3dr/badge.svg)](https://snapcraft.io/n3dr)
-[![codebeat badge](https://codebeat.co/badges/6c33543d-d05b-44e4-8924-140382148de9)](https://codebeat.co/projects/github-com-030-n3dr-master)
+[![codebeat badge](https://codebeat.co/badges/6c33543d-d05b-44e4-8924-140382148de9)](https://codebeat.co/projects/github-com-030-n3dr-main)
 
 <a href="https://n3dr.releasesoftwaremoreoften.com">\
-<img src="https://github.com/030/n3dr/raw/master/cmd/n3dr/assets/logo/logo.png" width="100"></a>
+<img src="https://github.com/030/n3dr/raw/main/cmd/n3dr/assets/logo/logo.png" width="100"></a>
 
 ## Backup or Migrate an entire Nexus Artifact Server
 
