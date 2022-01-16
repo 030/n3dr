@@ -314,7 +314,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.4.3 .
+docker build -t utrecht/n3dr:6.5.0 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -324,7 +324,7 @@ docker build -t utrecht/n3dr:6.4.3 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.4.3
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.5.0
 ```
 
 ### Upload
@@ -333,7 +333,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.4.3
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.5.0
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -545,7 +545,7 @@ a single command.
 | r         |        |        |       |
 | raw       | x      | x      | `%`   |
 | rubygems  |        |        |       |
-| yum       |        |        |       |
+| yum       | x      | x      | `#`   |
 | unknown   | x      | x      | `?`   |
 
 #### backup
@@ -636,8 +636,8 @@ go test internal/artifacts/common.go internal/artifacts/common_test.go
 #### Packer
 
 ```bash
-packer init packer/windows2016.json.pkr.hcl
-PACKER_LOG=1 packer build packer/windows2016.json.pkr.hcl
+packer init build/packer/windows2016.json.pkr.hcl
+PACKER_LOG=1 packer build build/packer/windows2016.json.pkr.hcl
 ```
 
 #### Vagrant
