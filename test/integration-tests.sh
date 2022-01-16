@@ -32,11 +32,13 @@ fi
 
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
 readonly DOWNLOAD_LOCATION_PASS=${DOWNLOAD_LOCATION}-pass
+readonly DOWNLOAD_LOCATION_RPROXY=${DOWNLOAD_LOCATION}-rproxy
 readonly DOWNLOAD_LOCATION_SYNC=${DOWNLOAD_LOCATION}-sync
 readonly DOWNLOAD_LOCATION_SYNC_A=${DOWNLOAD_LOCATION_SYNC}-a
 readonly DOWNLOAD_LOCATION_SYNC_B=${DOWNLOAD_LOCATION_SYNC}-b
 readonly DOWNLOAD_LOCATION_SYNC_C=${DOWNLOAD_LOCATION_SYNC}-c
-readonly DOWNLOAD_LOCATION_SYNC_SIZE=23M
+readonly DOWNLOAD_LOCATION_SYNC_SIZE=151452
+readonly HOSTED_REPO_YUM=REPO_NAME_HOSTED_YUM
 readonly PORT_NEXUS_A=9999
 readonly PORT_NEXUS_B=9998
 readonly PORT_NEXUS_C=9997
@@ -103,8 +105,7 @@ files() {
 
 upload() {
   echo "#134 archetype-catalog download issue"
-  echo "URL:"
-  echo "${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml"
+  echo "URL: '${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml'"
   echo "does not seem to contain a Maven artifact"
   curl -f ${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml
 
@@ -161,6 +162,17 @@ createHostedNPM() {
     -d "{\"name\":\"REPO_NAME_HOSTED_NPM\",\"online\":true,\"storage\":{\"blobStoreName\":\"default\",\"strictContentTypeValidation\":true,\"writePolicy\":\"ALLOW_ONCE\"}}"
 }
 
+createHostedYum() {
+  echo "Creating hosted yum repository..."
+  ./"${N3DR_DELIVERABLE}" configRepository \
+    --configRepoName ${HOSTED_REPO_YUM} \
+    --configRepoType yum \
+    -p "${1}" \
+    -n "${2}" \
+    -u admin \
+    --https=false
+}
+
 uploadNPM() {
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     createHostedNPM "${PASSWORD_NEXUS_A}" "${URL_NEXUS_A}"
@@ -194,6 +206,38 @@ uploadNuget() {
     echo
   else
     echo "Nuget upload not supported in beta API"
+  fi
+}
+
+uploadYumArtifact() {
+  curl -X 'POST' \
+    ${URL_NEXUS_A}/service/rest/v1/components?repository=${HOSTED_REPO_YUM} \
+    -s \
+    -f \
+    -u "admin:${PASSWORD_NEXUS_A}" \
+    -H 'accept: application/json' \
+    -H 'Content-Type: multipart/form-data' \
+    -F "yum.asset=@${HOSTED_REPO_YUM}/${1};type=application/x-rpm" \
+    -F "yum.asset.filename=${1}"
+}
+
+uploadYum() {
+  if [ "${NEXUS_API_VERSION}" != "beta" ]; then
+    createHostedYum "${PASSWORD_NEXUS_A}" "${URL_NEXUS_A_V2}"
+
+    mkdir ${HOSTED_REPO_YUM}
+    cd ${HOSTED_REPO_YUM}
+    curl -sL https://yum.puppet.com/puppet7-release-el-8.noarch.rpm \
+      -o puppet.rpm
+    curl -sL https://packages.chef.io/files/stable/chef-workstation/21.10.640/el/8/chef-workstation-21.10.640-1.el8.x86_64.rpm \
+      -o chef.rpm
+    cd ..
+
+    echo "Upload yum artifacts..."
+    for a in chef puppet; do uploadYumArtifact "${a}.rpm"; done
+    echo
+  else
+    echo "yum upload not supported in beta API"
   fi
 }
 
@@ -250,7 +294,7 @@ repositories() {
   $cmd -a | grep maven-releases
 
   echo "> Counting number of repositories..."
-  expected_number=7
+  expected_number=8
   if [ "${NEXUS_API_VERSION}" == "beta" ]; then
     expected_number=5
   fi
@@ -259,7 +303,7 @@ repositories() {
   [ "${actual_number}" == "${expected_number}" ]
 
   echo "> Testing zip functionality..."
-  testZipSizeDir=/tmp/n3dr/testZipSize/
+  testZipSizeDir=${DOWNLOAD_LOCATION}/testZipSize/
   $cmd -b -z \
     --directory-prefix ${testZipSizeDir} \
     --directory-prefix-zip ${testZipSizeDir}
@@ -307,9 +351,11 @@ cleanup_downloads() {
   rm -rf nuget-hosted
   rm -rf REPO_NAME_HOSTED_APT
   rm -rf REPO_NAME_HOSTED_NPM
+  rm -rf ${HOSTED_REPO_YUM}
   rm -rf maven-releases
   rm -rf "${DOWNLOAD_LOCATION}"
   rm -rf "${DOWNLOAD_LOCATION_PASS}"
+  rm -rf "${DOWNLOAD_LOCATION_RPROXY}"
   rm -rf "${DOWNLOAD_LOCATION_SYNC}"
   rm -rf "${DOWNLOAD_LOCATION_SYNC_A}"
   rm -rf "${DOWNLOAD_LOCATION_SYNC_B}"
@@ -324,10 +370,6 @@ version() {
   echo
 }
 
-cac() {
-  echo "Configuration as code"
-}
-
 test_sync() {
   ./"${N3DR_DELIVERABLE}" repositoriesV2 \
     --backup \
@@ -336,7 +378,7 @@ test_sync() {
     -n "${3}" \
     -u admin \
     --https=false
-  size=$(du -sh "${1}")
+  size=$(du -s "${1}")
   echo "Backup size '${1}': '${size}'"
   echo "${size}" | grep "${DOWNLOAD_LOCATION_SYNC_SIZE}"
 }
@@ -348,6 +390,8 @@ sync() {
     createHostedAPT "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C}"
     createHostedNPM "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B}"
     createHostedNPM "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C}"
+    createHostedYum "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B_V2}"
+    createHostedYum "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C_V2}"
 
     ./"${N3DR_DELIVERABLE}" sync \
       --otherNexus3Passwords="${PASSWORD_NEXUS_B}","${PASSWORD_NEXUS_C}" \
@@ -370,12 +414,13 @@ rproxy() {
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
     echo "Testing rproxy in front of a nexus server..."
     ip_nexus_a=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nexus-a)
-    mkdir -p /tmp/n3dr-rproxy
+    mkdir -p ${DOWNLOAD_LOCATION_RPROXY}
     sed -i "s|WILL_BE_REPLACED|${ip_nexus_a}|" ../../test/rproxy-nginx-nexus3.conf
     docker run -d --rm --name rproxy-nginx-nexus3 -p 9990:80 -v "${PWD}"/../../test/rproxy-nginx-nexus3.conf:/etc/nginx/nginx.conf nginx:1.21.5-alpine
     sleep 10
     ./"${N3DR_DELIVERABLE}" repositoriesV2 \
       --count \
+      --directory-prefix "${DOWNLOAD_LOCATION_RPROXY}" \
       -p "${PASSWORD_NEXUS_A}" \
       -n localhost:9990 \
       -u admin \
@@ -399,6 +444,7 @@ main() {
   uploadDeb
   uploadNPM
   uploadNuget
+  uploadYum
   repositories
   regex
   zipName

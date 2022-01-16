@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"regexp"
 	"sync"
 	"time"
 
@@ -120,12 +119,11 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 
 				log.Debugf("downloadURL: '%s', format: '%s', checksum: '%s'", asset.DownloadURL, asset.Format, checksum)
 				assetPath := asset.Path
-				filesToBeSkipped, err := regexp.MatchString(`^\.(sha(1|256|512)|md5)$`, filepath.Ext(assetPath))
+				filesToBeSkipped, err := artifacts.FilesToBeSkipped(assetPath)
 				if err != nil {
 					errs = append(errs, err)
 					return
 				}
-				log.Debugf("file: %s, filesToBeSkipped: %v", assetPath, filesToBeSkipped)
 				if !filesToBeSkipped {
 					file := filepath.Join(n.DownloadDirName, repo, assetPath)
 					downloadedFileChecksum, checksumLocalFileErrs := artifacts.ChecksumLocalFile(file, shaType)
