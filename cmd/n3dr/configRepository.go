@@ -60,10 +60,16 @@ var configRepositoryCmd = &cobra.Command{
 				}
 			}
 		case "yum":
-			if configRepoRecipe == "proxy" {
+			if configRepoRecipe == "hosted" {
+				if err := r.CreateYumHosted(configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			} else if configRepoRecipe == "proxy" {
 				if err := r.CreateYumProxied(configRepoName); err != nil {
 					log.Fatal(err)
 				}
+			} else {
+				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
 			}
 		default:
 			log.Fatalf("configRepoType should not be empty, but: 'apt' or 'raw' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)

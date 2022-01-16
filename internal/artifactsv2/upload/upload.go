@@ -182,9 +182,9 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 
 	var f, f2, f3 *os.File
 	c := components.UploadComponentParams{}
+	artifacts.PrintType(repoFormat)
 	switch rf := repoFormat; rf {
 	case "apt":
-		fmt.Print("^")
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
@@ -192,7 +192,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		}
 		c.AptAsset = f
 	case "maven2":
-		fmt.Print("+")
 		if filepath.Ext(path) == ".pom" {
 			c.Repository = localDiskRepo
 			f, err := os.Open(filepath.Clean(path))
@@ -237,7 +236,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 			}
 		}
 	case "npm":
-		fmt.Print("*")
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
@@ -245,7 +243,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		}
 		c.NpmAsset = f
 	case "nuget":
-		fmt.Print("$")
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
@@ -253,7 +250,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		}
 		c.NugetAsset = f
 	case "raw":
-		fmt.Print("%")
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
@@ -262,8 +258,15 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		c.RawAsset1 = f
 		c.RawDirectory = &dir
 		c.RawAsset1Filename = &filename
+	case "yum":
+		c.Repository = localDiskRepo
+		f, err := os.Open(filepath.Clean(path))
+		if err != nil {
+			return err
+		}
+		c.YumAsset = f
+		c.YumAssetFilename = &filename
 	default:
-		fmt.Print("?")
 		return nil
 	}
 
@@ -278,11 +281,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 			return uploadStatusErr
 		}
 		if statusCode == 204 {
-			log.Infof("artifact: '%v' has been uploaded", path)
-			return nil
-		}
-		if statusCode == 400 {
-			log.Debugf("artifact: '%v' has already been uploaded, perhaps 'redeploy' is disabled?", path)
+			log.Debugf("artifact: '%v' has been uploaded", path)
 			return nil
 		}
 
@@ -308,7 +307,11 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				return err
 			}
 
-			if !info.IsDir() && !(filepath.Ext(path) == ".sha512") && !(filepath.Ext(path) == ".sha256") && !(filepath.Ext(path) == ".sha1") && !(filepath.Ext(path) == ".md5") {
+			filesToBeSkipped, err := artifacts.FilesToBeSkipped(filepath.Ext(path))
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() && !filesToBeSkipped {
 				wg.Add(1)
 				go func() {
 					defer wg.Done()
