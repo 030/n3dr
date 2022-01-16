@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"regexp"
 
 	"github.com/030/n3dr/internal/goswagger/models"
 	log "github.com/sirupsen/logrus"
@@ -53,6 +54,8 @@ func PrintType(assetFormat string) {
 		fmt.Print("$")
 	case "raw":
 		fmt.Print("%")
+	case "yum":
+		fmt.Print("#")
 	default:
 		fmt.Print("?")
 		log.Debugf("Unknown type: '%s'", af)
@@ -71,4 +74,13 @@ func Checksum(asset *models.AssetXO) (string, string) {
 		checksum = fmt.Sprintf("%s", asset.Checksum[shaType])
 	}
 	return shaType, checksum
+}
+
+func FilesToBeSkipped(path string) (bool, error) {
+	filesToBeSkipped, err := regexp.MatchString(`^\.(sha(1|256|512)|md5)$`, filepath.Ext(path))
+	if err != nil {
+		return false, err
+	}
+	log.Debugf("file: %s, filesToBeSkipped: %v", path, filesToBeSkipped)
+	return filesToBeSkipped, nil
 }

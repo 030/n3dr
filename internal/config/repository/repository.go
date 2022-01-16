@@ -126,6 +126,39 @@ func (r *Repository) CreateRawHosted(name string) error {
 	return nil
 }
 
+func (r *Repository) CreateYumHosted(name string) error {
+	log.Infof("Creating yum hosted repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	online := true
+	strictContentTypeValidation := true
+	writePolicy := "allow_once"
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+
+	var repoDataDepth int32 = 0
+	yum := models.YumAttributes{DeployPolicy: models.YumAttributesDeployPolicySTRICT, RepodataDepth: &repoDataDepth}
+	mr := models.YumHostedRepositoryAPIRequest{Name: &name, Online: &online, Storage: &mhsa, Yum: &yum}
+	createYumHosted := repository_management.CreateRepository21Params{Body: &mr}
+	createYumHosted.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository21(&createYumHosted); err != nil {
+		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if repositoryCreated {
+			log.Infof("repository: '%s' has already been created", name)
+			return nil
+		}
+
+		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
+	}
+	log.Infof("created the following repository: '%v'", name)
+	return nil
+}
+
 func (r *Repository) Delete(name string) error {
 	log.Infof("Deleting repository: '%s'...", name)
 	client := r.Nexus3.Client()

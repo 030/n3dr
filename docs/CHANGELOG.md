@@ -7,9 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.5.0] - 2021-01-16
+
+### Added
+
+- create hosted yum repositories.
+- example how to create a hosted yum repository.
+- upload RPMs into yum repository.
+
 ### Changed
 
 - master renamed to main branch.
+
+### Fixed
+
+- return error if upload of an artifact fails to ensure that one is aware if
+  some file cannot be uploaded and that files are not uploaded if they already
+  exist in a Nexus3 repository.
+
+### Removed
+
+- some duplicated code by using `FilesToBeSkipped` and `PrintType` functions.
 
 ## [6.4.3] - 2021-01-10
 
@@ -636,7 +654,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.4.3...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.5.0...HEAD
+[6.5.0]: https://github.com/030/n3dr/compare/6.4.3...6.5.0
 [6.4.3]: https://github.com/030/n3dr/compare/6.4.2...6.4.3
 [6.4.2]: https://github.com/030/n3dr/compare/6.4.1...6.4.2
 [6.4.1]: https://github.com/030/n3dr/compare/6.4.0...6.4.1
