@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/030/n3dr/workflows/Go/badge.svg?event=push)](https://github.com/030/n3dr/actions?query=workflow%3AGo)
 [![GoDoc Widget]][GoDoc]
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/030/n3dr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
 [![StackOverflow SE Questions](https://img.shields.io/stackexchange/stackoverflow/t/n3dr.svg?logo=stackoverflow)](https://stackoverflow.com/tags/n3dr)
 [![DevOps SE Questions](https://img.shields.io/stackexchange/devops/t/n3dr.svg?logo=stackexchange)](https://devops.stackexchange.com/tags/n3dr)
