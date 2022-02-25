@@ -27,6 +27,6 @@ jobs:
           push: true
           tags: utrecht/n3dr:${{ steps.version.outputs.version }}
           build-args: |
-            VERSION=${GITHUB_REF}
+            VERSION=${{ github.ref }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
