@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [6.5.0] - 2021-01-16
+## [6.5.1] - 2022-02-26
+
+### Fixed
+
+- version omitted when docker --version is run.
+
+## [6.5.0] - 2022-01-16
 
 ### Added
 
@@ -29,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - some duplicated code by using `FilesToBeSkipped` and `PrintType` functions.
 
-## [6.4.3] - 2021-01-10
+## [6.4.3] - 2022-01-10
 
 ### Added
 
@@ -49,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - integration tests from unit testing.
 
-## [6.4.2] - 2021-01-03
+## [6.4.2] - 2022-01-03
 
 ### Fixed
 
@@ -57,14 +63,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `~/.n3dr/config.yml` reported by
   [der-eismann](https://github.com/der-eismann).
 
-## [6.4.1] - 2021-01-03
+## [6.4.1] - 2022-01-03
 
 ### Changed
 
 - Use Go embed for logo and change path for logo file by
   [der-eismann](https://github.com/der-eismann).
 
-## [6.4.0] - 2021-01-02
+## [6.4.0] - 2022-01-02
 
 ### Added
 
@@ -596,7 +602,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- URL in repositories subcommand always set to http://localhost:9999.
+- URL in repositories subcommand always set to <http://localhost:9999>.
 
 ## [2.1.0] - 2019-05-19
 
@@ -654,7 +660,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.5.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.5.1...HEAD
+[6.5.1]: https://github.com/030/n3dr/compare/6.5.0...6.5.1
 [6.5.0]: https://github.com/030/n3dr/compare/6.4.3...6.5.0
 [6.4.3]: https://github.com/030/n3dr/compare/6.4.2...6.4.3
 [6.4.2]: https://github.com/030/n3dr/compare/6.4.1...6.4.2

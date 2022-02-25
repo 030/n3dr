@@ -1,10 +1,11 @@
-FROM golang:1.17.6-alpine3.15 as builder
+FROM golang:1.17.7-alpine3.15 as builder
+ARG VERSION
 ENV USERNAME n3dr
 RUN adduser -D -g '' $USERNAME
 COPY . /go/${USERNAME}/
 WORKDIR /go/${USERNAME}/cmd/${USERNAME}
 RUN apk add --no-cache git=~2 && \
-    CGO_ENABLED=0 go build && \
+    CGO_ENABLED=0 go build -ldflags "-X main.Version=${VERSION}" && \
     cp n3dr /n3dr
 
 FROM alpine:3.15.0

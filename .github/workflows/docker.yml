@@ -3,7 +3,7 @@ name: Docker
 on:
   push:
     tags:
-      - "*"
+      - '*'
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -26,5 +26,7 @@ jobs:
         with:
           push: true
           tags: utrecht/n3dr:${{ steps.version.outputs.version }}
+          build-args: |
+            VERSION=${GITHUB_REF}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
