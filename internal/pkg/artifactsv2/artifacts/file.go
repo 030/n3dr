@@ -14,32 +14,32 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func ChecksumLocalFile(file, shaType string) (checksum string, errs []error) {
+func ChecksumLocalFile(file, shaType string) (checksum string, err error) {
 	f, err := os.Open(filepath.Clean(file))
 	if err != nil {
 		log.Debugf("file: '%v' not found on local disk", f)
 		return "", nil
 	}
-	if err == nil {
-		defer func() {
-			if err := f.Close(); err != nil {
-				errs = append(errs, err)
-			}
-		}()
-		h := sha512.New()
-		if shaType == "sha256" {
-			h = sha256.New()
+
+	defer func() {
+		if err := f.Close(); err != nil {
+			panic(err)
 		}
-		if shaType == "sha1" {
-			/* #nosec */
-			h = sha1.New()
-		}
-		if _, err := io.Copy(h, f); err != nil {
-			return "", errs
-		}
-		checksum = fmt.Sprintf("%x", h.Sum(nil))
+	}()
+	h := sha512.New()
+	if shaType == "sha256" {
+		h = sha256.New()
 	}
-	return checksum, errs
+	if shaType == "sha1" {
+		/* #nosec */
+		h = sha1.New()
+	}
+	if _, err := io.Copy(h, f); err != nil {
+		return "", err
+	}
+	checksum = fmt.Sprintf("%x", h.Sum(nil))
+
+	return checksum, err
 }
 
 func PrintType(assetFormat string) {

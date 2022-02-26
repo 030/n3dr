@@ -24,3 +24,4 @@ virtualbox*
 swagger
 swagger.json
 *.log
+test/rproxy-nginx-nexus3.conf.tmp

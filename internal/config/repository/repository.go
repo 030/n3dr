@@ -96,6 +96,45 @@ func (r *Repository) CreateYumProxied(name string) error {
 	return nil
 }
 
+func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) error {
+	log.Infof("Creating docker hosted repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	online := true
+	strictContentTypeValidation := true
+	writePolicy := "allow_once"
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+
+	var forceBasicAuth = true
+	var v1Enabled = false
+	docker := models.DockerAttributes{ForceBasicAuth: &forceBasicAuth, V1Enabled: &v1Enabled}
+	if secure {
+		docker.HTTPSPort = port
+	} else {
+		docker.HTTPPort = port
+	}
+	mr := models.DockerHostedRepositoryAPIRequest{Docker: &docker, Name: &name, Online: &online, Storage: &mhsa}
+	createRawHosted := repository_management.CreateRepository18Params{Body: &mr}
+	createRawHosted.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository18(&createRawHosted); err != nil {
+		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if repositoryCreated {
+			log.Infof("repository: '%s' has already been created", name)
+			return nil
+		}
+
+		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
+	}
+	log.Infof("created the following repository: '%v'", name)
+	return nil
+}
+
 func (r *Repository) CreateRawHosted(name string) error {
 	log.Infof("Creating raw hosted repository: '%s'...", name)
 	client := r.Nexus3.Client()

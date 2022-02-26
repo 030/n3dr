@@ -20,7 +20,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.0
+          go-version: 1.18.0
       - name: Unit tests
         run: go test ./... -cover
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
@@ -41,5 +41,5 @@ jobs:
             README.md -s /data/.markdownlint.rb
           docker run --rm -v $(pwd):/data cytopia/yamllint:1.26-0.8 .
           docker run --rm -v $(pwd):/app -w /app \
-            golangci/golangci-lint:v1.39.0-alpine golangci-lint run -v
+            golangci/golangci-lint:v1.45.2-alpine golangci-lint run -v
         if: ${{ startsWith(matrix.os, 'ubuntu') }}

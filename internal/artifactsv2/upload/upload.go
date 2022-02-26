@@ -17,6 +17,7 @@ import (
 	"github.com/030/n3dr/internal/goswagger/client/components"
 	"github.com/030/n3dr/internal/pkg/artifactsv2/artifacts"
 	"github.com/030/n3dr/internal/pkg/connection"
+	"github.com/030/p2iwd/pkg/p2iwd"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -33,7 +34,7 @@ func uploadStatus(err error) (int, error) {
 	re := regexp.MustCompile(`status (\d{3})`)
 	match := re.FindStringSubmatch(err.Error())
 	if len(match) != 2 {
-		return 0, fmt.Errorf("http status code not found")
+		return 0, fmt.Errorf("http status code not found in error message: '%v'", err)
 	}
 	statusCode := match[1]
 	statusCodeInt, err := strconv.Atoi(statusCode)
@@ -44,22 +45,21 @@ func uploadStatus(err error) (int, error) {
 	return statusCodeInt, nil
 }
 
-func (n *Nexus3) reposOnDisk() (localDiskRepos []string, errs []error) {
+func (n *Nexus3) reposOnDisk() (localDiskRepos []string, err error) {
 	file, err := os.Open(n.DownloadDirName)
 	if err != nil {
-		errs = append(errs, err)
-		return
+		return nil, err
 	}
 	defer func() {
 		if err := file.Close(); err != nil {
-			errs = append(errs, err)
-			return
+			panic(err)
 		}
 	}()
 	localDiskRepos, err = file.Readdirnames(0)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
+	log.Infof("found the following localDiskRepos: '%v'", localDiskRepos)
 	return localDiskRepos, nil
 }
 
@@ -72,51 +72,13 @@ func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
 	}
 	var repoFormat string
 	for _, repo := range repos {
-		if repo.Name == localDiskRepo {
+		repoName := repo.Name
+		if repoName == localDiskRepo {
 			repoFormat = repo.Format
 		}
 	}
+	log.Infof("format of repo: '%s' is: '%s'", localDiskRepo, repoFormat)
 	return repoFormat, nil
-}
-
-func checkIfLocalArtifactResidesInNexus(continuationToken, localDiskRepo, path string, client *client.Nexus3) (bool, error) {
-	g := components.GetComponentsParams{ContinuationToken: &continuationToken, Repository: localDiskRepo}
-	g.WithTimeout(time.Second * 60)
-	resp, err := client.Components.GetComponents(&g)
-	if err != nil {
-		return false, fmt.Errorf("cannot get components from repo: '%s'. Error: '%v'. Does the repo exist in Nexus3?", localDiskRepo, err)
-	}
-	continuationToken = resp.GetPayload().ContinuationToken
-	for _, item := range resp.GetPayload().Items {
-		for _, asset := range item.Assets {
-			if filepath.Base(asset.Path) == filepath.Base(path) {
-				shaType, nexusFileChecksum := artifacts.Checksum(asset)
-
-				localFileChecksum, checksumLocalFileErrs := artifacts.ChecksumLocalFile(path, shaType)
-				for _, checksumLocalFileErr := range checksumLocalFileErrs {
-					if checksumLocalFileErr != nil {
-						return false, checksumLocalFileErr
-					}
-				}
-
-				if nexusFileChecksum == localFileChecksum {
-					log.Debugf("file: '%v' has already been uploaded", path)
-					return true, nil
-				}
-			}
-		}
-	}
-	if continuationToken == "" {
-		return false, err
-	}
-	exists, err := checkIfLocalArtifactResidesInNexus(continuationToken, localDiskRepo, path, client)
-	if err != nil {
-		return false, err
-	}
-	if exists {
-		return true, nil
-	}
-	return false, err
 }
 
 func maven(path string, skipErrors bool) (mp mavenParts, err error) {
@@ -182,7 +144,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 
 	var f, f2, f3 *os.File
 	c := components.UploadComponentParams{}
-	artifacts.PrintType(repoFormat)
 	switch rf := repoFormat; rf {
 	case "apt":
 		c.Repository = localDiskRepo
@@ -194,7 +155,8 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 	case "maven2":
 		if filepath.Ext(path) == ".pom" {
 			c.Repository = localDiskRepo
-			f, err := os.Open(filepath.Clean(path))
+			var err error
+			f, err = os.Open(filepath.Clean(path))
 			if err != nil {
 				return err
 			}
@@ -278,6 +240,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 	if err := client.Components.UploadComponent(&c); err != nil {
 		statusCode, uploadStatusErr := uploadStatus(err)
 		if uploadStatusErr != nil {
+			log.Error(path)
 			return uploadStatusErr
 		}
 		if statusCode == 204 {
@@ -287,6 +250,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 
 		return fmt.Errorf("cannot upload component: '%s', error: '%v'", path, err)
 	}
+	artifacts.PrintType(repoFormat)
 
 	files := []*os.File{f, f2, f3}
 	for _, file := range files {
@@ -298,7 +262,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 }
 
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
-	var errs []error
 	var wg sync.WaitGroup
 	client := n.Nexus3.Client()
 	if err := filepath.WalkDir(localDiskRepoHome,
@@ -315,17 +278,9 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				wg.Add(1)
 				go func() {
 					defer wg.Done()
-					exists, err := checkIfLocalArtifactResidesInNexus("", localDiskRepo, path, client)
-					if err != nil {
-						errs = append(errs, err)
-						return
-					}
-					if exists {
-						return
-					}
+
 					if err := UploadSingleArtifact(client, path, localDiskRepo, localDiskRepoHome, repoFormat); err != nil {
-						errs = append(errs, err)
-						return
+						log.Error(err)
 					}
 				}()
 			}
@@ -334,11 +289,7 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 		return err
 	}
 	wg.Wait()
-	for _, err := range errs {
-		if err != nil {
-			return err
-		}
-	}
+
 	return nil
 }
 
@@ -356,14 +307,11 @@ func closeFileObjectIfNeeded(f *os.File) error {
 }
 
 func (n *Nexus3) Upload() error {
-	localDiskRepos, repoOnDiskErrs := n.reposOnDisk()
-	for _, repoOnDiskErr := range repoOnDiskErrs {
-		if repoOnDiskErr != nil {
-			return repoOnDiskErr
-		}
+	localDiskRepos, err := n.reposOnDisk()
+	if err != nil {
+		return err
 	}
 
-	var errs []error
 	var wg sync.WaitGroup
 	for _, localDiskRepo := range localDiskRepos {
 		wg.Add(1)
@@ -372,23 +320,27 @@ func (n *Nexus3) Upload() error {
 			log.Infof("Uploading files to Nexus: '%s' repository: '%s'...", n.FQDN, localDiskRepo)
 			repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
 			if err != nil {
-				errs = append(errs, err)
+				panic(err)
+			}
+			if repoFormat == "docker" || localDiskRepo == "snapshots" {
+				log.Warn("docker and snapshot repositories skipped")
 				return
 			}
+			if localDiskRepo == "p2iwd" {
+				h := n.DockerHost + ":" + fmt.Sprint(n.DockerPort)
+				pdr := p2iwd.DockerRegistry{Dir: filepath.Join(n.DownloadDirName, "p2iwd"), Host: h, Pass: n.Pass, User: n.User}
+				if err := pdr.Upload(); err != nil {
+					panic(err)
+				}
+			}
+
 			localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
 			if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat); err != nil {
-				errs = append(errs, err)
-				return
+				panic(err)
 			}
 		}(localDiskRepo)
 	}
-
 	wg.Wait()
-	for _, err := range errs {
-		if err != nil {
-			return err
-		}
-	}
 
 	return nil
 }

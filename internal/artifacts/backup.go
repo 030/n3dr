@@ -140,7 +140,7 @@ func createArtifact(d string, f string, content string, md5sum string) (errs []e
 		log.Debug("Skipping as file already exists.")
 	} else {
 		log.Debug("Creating ", filename)
-		file, err := os.Create(filename)
+		file, err := os.Create(filepath.Clean(filename))
 		if err != nil {
 			errs = append(errs, err)
 			return errs
