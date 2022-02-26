@@ -18,11 +18,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17.0
+          go-version: 1.18.0
       - name: Download gosec
         run: |
           export GOSEC_URL=https://github.com/securego/gosec/releases/download
-          export GOSEC_VERSION=2.8.1
+          export GOSEC_VERSION=2.11.0
           export GOSEC=${GOSEC_URL}/v${GOSEC_VERSION}/gosec_${GOSEC_VERSION}
           curl -L ${GOSEC}_linux_amd64.tar.gz -o gosec.tar.gz
           tar -xvf gosec.tar.gz

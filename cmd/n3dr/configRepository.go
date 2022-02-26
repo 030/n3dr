@@ -11,7 +11,8 @@ import (
 )
 
 var (
-	configRepoDelete                                                     bool
+	configRepoDockerPortSecure, configRepoDelete                         bool
+	configRepoDockerPort                                                 int32
 	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL string
 )
 
@@ -53,6 +54,12 @@ var configRepositoryCmd = &cobra.Command{
 					log.Fatal(err)
 				}
 			}
+		case "docker":
+			if configRepoRecipe == "hosted" {
+				if err := r.CreateDockerHosted(configRepoDockerPortSecure, configRepoDockerPort, configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			}
 		case "raw":
 			if configRepoRecipe == "hosted" {
 				if err := r.CreateRawHosted(configRepoName); err != nil {
@@ -85,8 +92,10 @@ func init() {
 		log.Fatal(err)
 	}
 
-	configRepositoryCmd.Flags().StringVarP(&configRepoRecipe, "configRepoRecipe", "", "hosted", "The repository recipe, i.e.: group, hosted, or proxy")
+	configRepositoryCmd.Flags().StringVar(&configRepoRecipe, "configRepoRecipe", "hosted", "The repository recipe, i.e.: group, hosted, or proxy")
 	configRepositoryCmd.Flags().BoolVar(&configRepoDelete, "configRepoDelete", false, "Delete a repository")
-	configRepositoryCmd.Flags().StringVarP(&configRepoType, "configRepoType", "", "", "The repository type, e.g.: 'apt', 'raw'")
-	configRepositoryCmd.Flags().StringVarP(&configRepoProxyURL, "configRepoProxyURL", "", "", "The proxy repository URL, e.g.: 'http://nl.archive.ubuntu.com/ubuntu/'")
+	configRepositoryCmd.Flags().StringVar(&configRepoType, "configRepoType", "", "The repository type, e.g.: 'apt', 'raw'")
+	configRepositoryCmd.Flags().StringVar(&configRepoProxyURL, "configRepoProxyURL", "", "The proxy repository URL, e.g.: 'http://nl.archive.ubuntu.com/ubuntu/'")
+	configRepositoryCmd.Flags().Int32Var(&configRepoDockerPort, "configRepoDockerPort", 8082, "The docker connector port, e.g. 8082")
+	configRepositoryCmd.Flags().BoolVar(&configRepoDockerPortSecure, "configRepoDockerPortSecure", false, "Whether the docker connector port should be secure")
 }

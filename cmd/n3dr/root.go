@@ -23,8 +23,9 @@ import (
 var logo string
 
 var (
-	apiVersion, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip string
-	anonymous, debug, https, insecureSkipVerify, skipErrors, zip                                                                      bool
+	apiVersion, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost string
+	anonymous, debug, dockerPortSecure, https, insecureSkipVerify, showLogo, skipErrors, zip                                                      bool
+	dockerPort                                                                                                                                    int32
 )
 
 var rootCmd = &cobra.Command{
@@ -60,6 +61,10 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
 	rootCmd.PersistentFlags().BoolVarP(&https, "https", "", true, "https true or false")
 	rootCmd.PersistentFlags().StringVarP(&basePathPrefix, "basePathPrefix", "", "", "the nexus basePathPrefix. Default: \"\"")
+	rootCmd.PersistentFlags().BoolVarP(&showLogo, "showLogo", "", true, "show N3DR logo or not. Default: true")
+	rootCmd.PersistentFlags().StringVar(&dockerHost, "dockerHost", "", "The docker host, e.g. localhost")
+	rootCmd.PersistentFlags().Int32Var(&dockerPort, "dockerPort", 0, "The docker connector port, e.g. 8082")
+	rootCmd.PersistentFlags().BoolVar(&dockerPortSecure, "dockerPortSecure", false, "Whether the docker connector port should be secure")
 }
 
 func n3drHiddenHome() (string, error) {
@@ -102,7 +107,9 @@ func configFilePath() string {
 }
 
 func ascii() error {
-	fmt.Println(logo)
+	if showLogo {
+		fmt.Println(logo)
+	}
 	return nil
 }
 

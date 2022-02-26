@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.6.0] - 2022-04-19
+
+### Added
+
+- create a hosted docker repository.
+- `showLogo` flag to hide N3DR logo.
+- backup, upload and sync docker images.
+
+### Changed
+
+- Alpine to 3.15.4.
+- Golang 1.17 to 1.18.
+- GoSec 2.8.1 to 2.11.0.
+- GolangCILint 1.39 to 1.45.
+
+### Fixed
+
+- cumbersome error handling in repositoriesV2.
+- broken codebeat badge.
+
+### Removed
+
+- troublesome existence check while uploading.
+
 ## [6.5.1] - 2022-02-26
 
 ### Fixed
@@ -660,7 +684,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.5.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.6.0...HEAD
+[6.6.0]: https://github.com/030/n3dr/compare/6.5.1...6.6.0
 [6.5.1]: https://github.com/030/n3dr/compare/6.5.0...6.5.1
 [6.5.0]: https://github.com/030/n3dr/compare/6.4.3...6.5.0
 [6.4.3]: https://github.com/030/n3dr/compare/6.4.2...6.4.3
