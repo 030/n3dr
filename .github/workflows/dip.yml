@@ -20,3 +20,7 @@ jobs:
           NEXUS_VERSION=$(./dip image --name=sonatype/nexus3 --regex=^3\.[0-9]+\.[0-9]+$)
           grep "${NEXUS_VERSION}" ./test/integration-tests.sh
           grep "${NEXUS_VERSION}" ./.github/workflows/integration.yml
+      - name: Check golangci-lint
+        run: |
+          GOLANGCI_LINT_VERSION=$(./dip image --name=golangci/golangci-lint --regex=^v1\.[0-9]+\.[0-9]+-alpine$)
+          grep "golangci-lint:${GOLANGCI_LINT_VERSION}" ./.github/workflows/go.yml

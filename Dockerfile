@@ -1,4 +1,4 @@
-FROM golang:1.17.7-alpine3.15 as builder
+FROM golang:1.18.1-alpine3.15 as builder
 ARG VERSION
 ENV USERNAME n3dr
 RUN adduser -D -g '' $USERNAME
@@ -8,7 +8,10 @@ RUN apk add --no-cache git=~2 && \
     CGO_ENABLED=0 go build -ldflags "-X main.Version=${VERSION}" && \
     cp n3dr /n3dr
 
-FROM alpine:3.15.0
+FROM alpine:3.15.4
+RUN apk update && \
+    apk upgrade && \
+    rm -rf /var/cache/apk/*
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /n3dr /usr/local/bin/n3dr
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
