@@ -13,6 +13,7 @@ import (
 	"github.com/030/n3dr/internal/goswagger/models"
 	"github.com/030/n3dr/internal/pkg/artifactsv2/artifacts"
 	"github.com/030/n3dr/internal/pkg/connection"
+	"github.com/030/p2iwd/pkg/p2iwd"
 	"github.com/hashicorp/go-retryablehttp"
 
 	log "github.com/sirupsen/logrus"
@@ -48,11 +49,11 @@ func (n *Nexus3) CountRepositoriesV2() error {
 	return nil
 }
 
-func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models.AssetXO) (errs []error) {
+func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models.AssetXO) error {
 	if checksum != downloadedFileChecksum {
 		req, err := http.NewRequest("GET", asset.DownloadURL, nil)
 		if err != nil {
-			errs = append(errs, err)
+			return err
 		}
 		req.SetBasicAuth(n.User, n.Pass)
 
@@ -63,35 +64,35 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 
 		dir := filepath.Dir(asset.Path)
 		if err := os.MkdirAll(filepath.Join(n.DownloadDirName, asset.Repository, dir), chmodDir); err != nil {
-			errs = append(errs, err)
+			return err
 		}
 
 		out, err := os.Create(filepath.Join(n.DownloadDirName, asset.Repository, asset.Path))
 		if err != nil {
-			errs = append(errs, err)
+			return err
 		}
 		defer func() {
 			if err := out.Close(); err != nil {
-				errs = append(errs, err)
+				panic(err)
 			}
 		}()
 		resp, err := standardClient.Do(req)
 		if err != nil {
-			errs = append(errs, err)
+			return err
 		}
 		defer func() {
 			if err := resp.Body.Close(); err != nil {
-				errs = append(errs, err)
+				panic(err)
 			}
 		}()
 
 		if resp.StatusCode != http.StatusOK {
 			err := fmt.Errorf("bad status: %s", resp.Status)
-			errs = append(errs, err)
+			return err
 		}
 		_, err = io.Copy(out, resp.Body)
 		if err != nil {
-			errs = append(errs, err)
+			return err
 		}
 
 		artifacts.PrintType(asset.Format)
@@ -100,7 +101,6 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 }
 
 func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo string) error {
-	var errs []error
 	var wg sync.WaitGroup
 	client := n.Nexus3.Client()
 	c := components.GetComponentsParams{ContinuationToken: &continuationToken, Repository: repo}
@@ -121,36 +121,24 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 				assetPath := asset.Path
 				filesToBeSkipped, err := artifacts.FilesToBeSkipped(assetPath)
 				if err != nil {
-					errs = append(errs, err)
-					return
+					panic(err)
 				}
 				if !filesToBeSkipped {
 					file := filepath.Join(n.DownloadDirName, repo, assetPath)
-					downloadedFileChecksum, checksumLocalFileErrs := artifacts.ChecksumLocalFile(file, shaType)
-					for _, checksumLocalFileErr := range checksumLocalFileErrs {
-						if checksumLocalFileErr != nil {
-							errs = append(errs, checksumLocalFileErr)
-							return
-						}
+					downloadedFileChecksum, err := artifacts.ChecksumLocalFile(file, shaType)
+					if err != nil {
+						panic(err)
 					}
 
-					downloadErrs := n.download(checksum, downloadedFileChecksum, asset)
-					for _, downloadErr := range downloadErrs {
-						if downloadErr != nil {
-							errs = append(errs, downloadErr)
-							return
-						}
+					if err := n.download(checksum, downloadedFileChecksum, asset); err != nil {
+						panic(err)
 					}
 				}
 			}(asset)
 		}
 	}
 	wg.Wait()
-	for _, err := range errs {
-		if err != nil {
-			return err
-		}
-	}
+
 	if continuationToken == "" {
 		return nil
 	}
@@ -162,36 +150,38 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 }
 
 func (n *Nexus3) Backup() error {
-	var errs []error
 	var wg sync.WaitGroup
 
-	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS}
+	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS, DockerHost: n.DockerHost, DockerPort: n.DockerPort, DockerPortSecure: n.DockerPortSecure}
 	a := artifacts.Nexus3{Nexus3: &cn}
 	repos, err := a.Repos()
 	if err != nil {
 		return err
 	}
 	for _, repo := range repos {
-		wg.Add(1)
-		go func(repo *models.AbstractAPIRepository) {
-			defer wg.Done()
-			if repo.Type != "group" {
-				log.Infof("backing up '%s', '%s', %s", repo.Name, repo.Type, repo.Format)
-				if err := os.MkdirAll(filepath.Join(n.DownloadDirName, repo.Name), chmodDir); err != nil {
-					errs = append(errs, err)
-				}
-				if err := n.downloadIfChecksumMismatchLocalFile("", repo.Name); err != nil {
-					errs = append(errs, err)
-				}
+		log.Infof("backing up '%s', '%s', %s", repo.Name, repo.Type, repo.Format)
+		if repo.Format == "docker" {
+			h := n.DockerHost + ":" + fmt.Sprint(n.DockerPort)
+			pdr := p2iwd.DockerRegistry{Dir: filepath.Join(n.DownloadDirName, "p2iwd"), Host: h, Pass: n.Pass, User: n.User}
+			if err := pdr.Backup(); err != nil {
+				return err
 			}
-		}(repo)
-	}
-	wg.Wait()
-	for _, err := range errs {
-		if err != nil {
-			return err
+		} else {
+			wg.Add(1)
+			go func(repo *models.AbstractAPIRepository) {
+				defer wg.Done()
+				if repo.Type != "group" {
+					if err := os.MkdirAll(filepath.Join(n.DownloadDirName, repo.Name), chmodDir); err != nil {
+						panic(err)
+					}
+					if err := n.downloadIfChecksumMismatchLocalFile("", repo.Name); err != nil {
+						panic(err)
+					}
+				}
+			}(repo)
 		}
 	}
+	wg.Wait()
 
 	return nil
 }

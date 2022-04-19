@@ -38,7 +38,7 @@
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-web.svg)](https://golangci.com/r/github.com/030/n3dr)
 [![Chocolatey](https://img.shields.io/chocolatey/dt/n3dr)](https://chocolatey.org/packages/n3dr)
 [![n3dr](https://snapcraft.io//n3dr/badge.svg)](https://snapcraft.io/n3dr)
-[![codebeat badge](https://codebeat.co/badges/6c33543d-d05b-44e4-8924-140382148de9)](https://codebeat.co/projects/github-com-030-n3dr-main)
+[![codebeat badge](https://codebeat.co/badges/f4aa5086-a4d5-41cd-893a-5da816ee9107)](https://codebeat.co/projects/github-com-030-n3dr-main)
 
 <a href="https://n3dr.releasesoftwaremoreoften.com">\
 <img src="https://github.com/030/n3dr/raw/main/cmd/n3dr/assets/logo/logo.png" width="100"></a>
@@ -315,7 +315,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.5.1 .
+docker build -t utrecht/n3dr:6.6.0 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -325,7 +325,7 @@ docker build -t utrecht/n3dr:6.5.1 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.5.1
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.6.0
 ```
 
 ### Upload
@@ -334,7 +334,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.5.1
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.6.0
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -533,7 +533,7 @@ a single command.
 | conan     |        |        |       |
 | conda     |        |        |       |
 | cpan      |        |        |       |
-| docker    |        |        |       |
+| docker    | x      | x      | ``    |
 | elpa      |        |        |       |
 | gitlfs    |        |        |       |
 | go        |        |        |       |

@@ -17,7 +17,7 @@ fi
 
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
-  NEXUS_VERSION=3.37.3
+  NEXUS_VERSION=3.38.1
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
@@ -27,9 +27,19 @@ fi
 
 if [ -z "${N3DR_DELIVERABLE}" ]; then
   echo "N3DR_DELIVERABLE empty, setting it to the default value"
-  N3DR_DELIVERABLE=n3dr
+  N3DR_DELIVERABLE=./n3dr
 fi
 
+if [ -z "${N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE}" ]; then
+  echo "N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE empty, setting it to the default value"
+  N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE=true
+fi
+
+readonly DOCKER_REGISTRY_HTTP_CONNECTOR_A=8888
+readonly DOCKER_REGISTRY_HTTP_CONNECTOR_B=8887
+readonly DOCKER_REGISTRY_HTTP_CONNECTOR_C=8886
+readonly DOCKER_REGISTRY_HTTP_CONNECTOR_INTERNAL=8083
+readonly DOCKER_URL=http://localhost
 readonly DOWNLOAD_LOCATION=/tmp/n3dr
 readonly DOWNLOAD_LOCATION_PASS=${DOWNLOAD_LOCATION}-pass
 readonly DOWNLOAD_LOCATION_RPROXY=${DOWNLOAD_LOCATION}-rproxy
@@ -37,7 +47,8 @@ readonly DOWNLOAD_LOCATION_SYNC=${DOWNLOAD_LOCATION}-sync
 readonly DOWNLOAD_LOCATION_SYNC_A=${DOWNLOAD_LOCATION_SYNC}-a
 readonly DOWNLOAD_LOCATION_SYNC_B=${DOWNLOAD_LOCATION_SYNC}-b
 readonly DOWNLOAD_LOCATION_SYNC_C=${DOWNLOAD_LOCATION_SYNC}-c
-readonly DOWNLOAD_LOCATION_SYNC_SIZE=151452
+readonly DOWNLOAD_LOCATION_SYNC_SIZE=23540
+readonly HOSTED_REPO_DOCKER=REPO_NAME_HOSTED_DOCKER
 readonly HOSTED_REPO_YUM=REPO_NAME_HOSTED_YUM
 readonly PORT_NEXUS_A=9999
 readonly PORT_NEXUS_B=9998
@@ -65,6 +76,7 @@ validate() {
 }
 
 build() {
+  # shellcheck disable=SC1091
   source ./scripts/build.sh
   cd cmd/n3dr
 }
@@ -72,16 +84,16 @@ build() {
 startNexus() {
   # shellcheck disable=SC1091
   # as nexus-docker.sh is retrieved remotely
-  source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}" "nexus-${1}" "${2}" "${DOWNLOAD_LOCATION_PASS}" &>/dev/null
+  source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}" "nexus-${1}" "${2}" "${DOWNLOAD_LOCATION_PASS}" "${3}" "${DOCKER_REGISTRY_HTTP_CONNECTOR_INTERNAL}" &>/dev/null
 }
 
 nexus() {
-  curl -sL https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/d6e02230d86bce0ad555fdb0330ed4162c735d09/nexus-docker.sh -o start.sh
+  curl -sL https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/6dd6ce267cba17139d4da0ece908b8c67c14bd21/nexus-docker.sh -o start.sh
   chmod +x start.sh
 
-  startNexus a ${PORT_NEXUS_A} &
-  startNexus b ${PORT_NEXUS_B} &
-  startNexus c ${PORT_NEXUS_C} &
+  startNexus a ${PORT_NEXUS_A} ${DOCKER_REGISTRY_HTTP_CONNECTOR_A} &
+  startNexus b ${PORT_NEXUS_B} ${DOCKER_REGISTRY_HTTP_CONNECTOR_B} &
+  startNexus c ${PORT_NEXUS_C} ${DOCKER_REGISTRY_HTTP_CONNECTOR_C} &
   wait
 
   PASSWORD_NEXUS_A=$(cat ${DOWNLOAD_LOCATION_PASS}/nexus-a.txt)
@@ -96,7 +108,7 @@ artifact() {
   mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0-2"
   echo someContent >"maven-releases/some/group${1}/file${1}/1.0.0-2/f.i-l.e.${1}-1.0.0-2.jar"
   echo someContentZIP >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.zip"
-  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>file${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.pom"
+  echo -e " <project >\n <modelVersion >4.0.0 </modelVersion >\n <groupId >some.group${1} </groupId >\n <artifactId >file${1} </artifactId >\n <version >1.0.0-2 </version >\n </project >" >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.pom"
 }
 
 files() {
@@ -104,17 +116,14 @@ files() {
 }
 
 upload() {
-  echo "#134 archetype-catalog download issue"
+  echo " #134 archetype-catalog download issue"
   echo "URL: '${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml'"
   echo "does not seem to contain a Maven artifact"
   curl -f ${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml
 
   echo "Testing upload..."
-  ./"${N3DR_DELIVERABLE}" upload -u admin \
-    -p "${PASSWORD}" \
-    -r maven-releases \
-    -n ${URL_NEXUS_A} \
-    -v "${NEXUS_API_VERSION}"
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} upload \
+    -r maven-releases
   echo
 }
 
@@ -141,9 +150,8 @@ uploadDeb() {
     cd ..
 
     echo "Testing deb upload..."
-    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" \
+    ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} upload \
       -r=REPO_NAME_HOSTED_APT \
-      -n=${URL_NEXUS_A} -v="${NEXUS_API_VERSION}" \
       -t=apt
     echo
   else
@@ -164,13 +172,45 @@ createHostedNPM() {
 
 createHostedYum() {
   echo "Creating hosted yum repository..."
-  ./"${N3DR_DELIVERABLE}" configRepository \
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} configRepository \
     --configRepoName ${HOSTED_REPO_YUM} \
     --configRepoType yum \
     -p "${1}" \
     -n "${2}" \
-    -u admin \
     --https=false
+}
+
+createHostedDocker() {
+  echo "Creating hosted docker repository..."
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} configRepository \
+    --configRepoName ${HOSTED_REPO_DOCKER} \
+    --configRepoType docker \
+    -p "${1}" \
+    -n "${2}" \
+    --https=false \
+    --configRepoDockerPort="${DOCKER_REGISTRY_HTTP_CONNECTOR_INTERNAL}"
+}
+
+uploadDocker() {
+  if [ "${NEXUS_API_VERSION}" != "beta" ]; then
+    local docker_registry_uri=repository/testi/utrecht/n3dr
+    createHostedDocker "${PASSWORD_NEXUS_A}" "${URL_NEXUS_A_V2}"
+
+    echo "Testing docker upload..."
+    docker login ${DOCKER_URL}:${DOCKER_REGISTRY_HTTP_CONNECTOR_A} \
+      -p "${PASSWORD_NEXUS_A}" -u admin
+
+    for d in $(seq 5); do
+      local docker_registry_tag=localhost:${DOCKER_REGISTRY_HTTP_CONNECTOR_A}/${docker_registry_uri}:6.${d}.0
+      docker pull "utrecht/n3dr:6.${d}.0"
+      docker tag "utrecht/n3dr:6.${d}.0" "${docker_registry_tag}"
+      docker push "${docker_registry_tag}"
+    done
+
+    echo
+  else
+    echo "docker upload not supported in beta API"
+  fi
 }
 
 uploadNPM() {
@@ -183,8 +223,8 @@ uploadNPM() {
     cd ..
 
     echo "Testing NPM upload..."
-    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=REPO_NAME_HOSTED_NPM \
-      -n=${URL_NEXUS_A} -v="${NEXUS_API_VERSION}" \
+    ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} upload \
+      -r=REPO_NAME_HOSTED_NPM \
       -t=npm
     echo
   else
@@ -200,8 +240,8 @@ uploadNuget() {
     cd ..
 
     echo "Testing nuget upload..."
-    ./"${N3DR_DELIVERABLE}" upload -u=admin -p="${PASSWORD}" -r=nuget-hosted \
-      -n=${URL_NEXUS_A} -v="${NEXUS_API_VERSION}" \
+    ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} upload \
+      -r=nuget-hosted \
       -t=nuget
     echo
   else
@@ -217,7 +257,7 @@ uploadYumArtifact() {
     -u "admin:${PASSWORD_NEXUS_A}" \
     -H 'accept: application/json' \
     -H 'Content-Type: multipart/form-data' \
-    -F "yum.asset=@${HOSTED_REPO_YUM}/${1};type=application/x-rpm" \
+    -F "yum.asset=@${1};type=application/x-rpm" \
     -F "yum.asset.filename=${1}"
 }
 
@@ -227,14 +267,13 @@ uploadYum() {
 
     mkdir ${HOSTED_REPO_YUM}
     cd ${HOSTED_REPO_YUM}
-    curl -sL https://yum.puppet.com/puppet7-release-el-8.noarch.rpm \
-      -o puppet.rpm
-    curl -sL https://packages.chef.io/files/stable/chef-workstation/21.10.640/el/8/chef-workstation-21.10.640-1.el8.x86_64.rpm \
-      -o chef.rpm
-    cd ..
+    for i in $(seq 5 9); do
+      curl -sL "https://yum.puppet.com/puppet-release-el-${i}.noarch.rpm" \
+        -o "puppet${i}.rpm"
+      uploadYumArtifact "puppet${i}.rpm"
+    done
 
-    echo "Upload yum artifacts..."
-    for a in chef puppet; do uploadYumArtifact "${a}.rpm"; done
+    cd ..
     echo
   else
     echo "yum upload not supported in beta API"
@@ -243,58 +282,80 @@ uploadYum() {
 
 backupHelper() {
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-    count_downloads 300
-    test_zip 152
+    count_downloads 301 "${1}"
+    test_zip 132 "${1}"
   else
-    count_downloads 400
-    test_zip 196
+    count_downloads 401 "${1}"
+    test_zip 172 "${1}"
+  fi
+  cleanup_downloads
+}
+
+backupRegexHelper() {
+  if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
+    count_downloads 4 "${1}"
+    test_zip 4 "${1}"
+  else
+    count_downloads 5 "${1}"
+    test_zip 4 "${1}"
   fi
   cleanup_downloads
 }
 
 anonymous() {
   echo "Testing backup by anonymous user..."
-  ./"${N3DR_DELIVERABLE}" backup -n ${URL_NEXUS_A} -r maven-releases -v "${NEXUS_API_VERSION}" -z --anonymous
-  backupHelper
+  local downloadDir="${DOWNLOAD_LOCATION}/anonymous/"
+  ${N3DR_DELIVERABLE} backup \
+    -n ${URL_NEXUS_A} \
+    -r maven-releases \
+    -v "${NEXUS_API_VERSION}" \
+    -z \
+    --anonymous \
+    --directory-prefix="${downloadDir}" \
+    --directory-prefix-zip="${downloadDir}"
+  backupHelper "${downloadDir}"
 }
 
 backup() {
   echo "Testing backup..."
-  ./"${N3DR_DELIVERABLE}" backup -n ${URL_NEXUS_A} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -z
-  backupHelper
+  local downloadDir="${DOWNLOAD_LOCATION}/backup/"
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} backup \
+    -r maven-releases \
+    -z \
+    --directory-prefix="${downloadDir}" \
+    --directory-prefix-zip="${downloadDir}"
+  backupHelper "${downloadDir}"
 }
 
 regex() {
-  echo "Testing backup regex..."
-  ./"${N3DR_DELIVERABLE}" backup -n ${URL_NEXUS_A} -u admin -p "${PASSWORD}" -r maven-releases -v "${NEXUS_API_VERSION}" -x 'some/group42' -z
-  if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-    count_downloads 3
-    test_zip 4
-  else
-    count_downloads 4
-    test_zip 4
-  fi
-  cleanup_downloads
-  echo -e "\nTesting repositories regex..."
-  ./"${N3DR_DELIVERABLE}" repositories -n ${URL_NEXUS_A} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -x 'some/group42' -z
-  if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-    count_downloads 3
-    test_zip 4
-  else
-    count_downloads 4
-    test_zip 4
-  fi
-  cleanup_downloads
+  echo -e "Testing regex..."
+  local downloadDir="${DOWNLOAD_LOCATION}/backup-regex/"
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} backup \
+    -r maven-releases \
+    -x 'some/group42' \
+    -z \
+    --directory-prefix="${downloadDir}" \
+    --directory-prefix-zip="${downloadDir}"
+  backupRegexHelper "${downloadDir}"
+
+  local downloadDir="${DOWNLOAD_LOCATION}/repositories-regex/"
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositories \
+    -b \
+    -x 'some/group42' \
+    -z \
+    --directory-prefix="${downloadDir}" \
+    --directory-prefix-zip="${downloadDir}"
+  backupRegexHelper "${downloadDir}"
 }
 
 repositories() {
-  local cmd="./$N3DR_DELIVERABLE repositories -n ${URL_NEXUS_A} -u admin -p ${PASSWORD} -v ${NEXUS_API_VERSION}"
+  local cmd="${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositories"
 
   echo "Testing repositories..."
   $cmd -a | grep maven-releases
 
   echo "> Counting number of repositories..."
-  expected_number=8
+  expected_number=9
   if [ "${NEXUS_API_VERSION}" == "beta" ]; then
     expected_number=5
   fi
@@ -308,10 +369,10 @@ repositories() {
     --directory-prefix ${testZipSizeDir} \
     --directory-prefix-zip ${testZipSizeDir}
   if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-    count_downloads 301
+    count_downloads 301 ${testZipSizeDir}
     test_zip 132 ${testZipSizeDir}
   else
-    count_downloads 402
+    count_downloads 402 ${testZipSizeDir}
     test_zip 208 ${testZipSizeDir}
   fi
   cleanup_downloads
@@ -319,8 +380,8 @@ repositories() {
 
 zipName() {
   echo "Testing zipName..."
-  ./"${N3DR_DELIVERABLE}" backup -n=${URL_NEXUS_A} -u=admin -p="${PASSWORD}" -r=maven-releases -v="${NEXUS_API_VERSION}" -z -i=helloZipFile.zip
-  ./"${N3DR_DELIVERABLE}" repositories -n ${URL_NEXUS_A} -u admin -p "${PASSWORD}" -v "${NEXUS_API_VERSION}" -b -z -i=helloZipRepositoriesFile.zip
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} backup -r=maven-releases -z -i=helloZipFile.zip
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositories -b -z -i=helloZipRepositoriesFile.zip
   find . -name "helloZip*" -type f | wc -l | grep 2
 }
 
@@ -328,12 +389,11 @@ clean() {
   for r in a b c; do docker stop nexus-${r} || true; done
   docker stop rproxy-nginx-nexus3 || true
   cleanup_downloads
-  git checkout ../../test/rproxy-nginx-nexus3.conf
 }
 
 count_downloads() {
   local actual
-  actual=$(find ${DOWNLOAD_LOCATION} -type f | wc -l)
+  actual=$(find "${2}" -type f | wc -l)
   echo "Expected number of artifacts: ${1}"
   echo "Actual number of artifacts: ${actual}"
   echo "${actual}" | grep "${1}"
@@ -341,7 +401,7 @@ count_downloads() {
 
 test_zip() {
   local size
-  size=$(du "${2}"n3dr-backup-*zip)
+  size=$(du "${2}"*n3dr-backup-*zip)
   echo "Actual ZIP size: ${size}"
   echo "Expected ZIP size: ${1}"
   echo "${size}" | grep "^${1}"
@@ -366,21 +426,25 @@ cleanup_downloads() {
 
 version() {
   echo "Check whether ./n3dr (N3DR_DELIVERABLE: ${N3DR_DELIVERABLE}) --version returns version"
-  "./${N3DR_DELIVERABLE}" --version
+  ${N3DR_DELIVERABLE} --version
   echo
 }
 
 test_sync() {
-  ./"${N3DR_DELIVERABLE}" repositoriesV2 \
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} repositoriesV2 \
     --backup \
     --directory-prefix "${1}" \
     -p "${2}" \
     -n "${3}" \
-    -u admin \
-    --https=false
-  size=$(du -s "${1}")
+    --https=false \
+    --dockerHost="${DOCKER_URL}" \
+    --dockerPort="${4}" \
+    --dockerPortSecure=false
+  size=$(du -s --exclude=*p2iwd* "${1}")
   echo "Backup size '${1}': '${size}'"
   echo "${size}" | grep "${DOWNLOAD_LOCATION_SYNC_SIZE}"
+
+  find "${1}/p2iwd/" -type f | wc -l | grep 45
 }
 
 sync() {
@@ -388,23 +452,30 @@ sync() {
     echo "Testing the sync between NexusA and followers NexusB and C..."
     createHostedAPT "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B}"
     createHostedAPT "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C}"
+    createHostedDocker "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B_V2}"
+    createHostedDocker "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C_V2}"
     createHostedNPM "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B}"
     createHostedNPM "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C}"
     createHostedYum "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B_V2}"
     createHostedYum "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C_V2}"
 
-    ./"${N3DR_DELIVERABLE}" sync \
+    ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} sync \
       --otherNexus3Passwords="${PASSWORD_NEXUS_B}","${PASSWORD_NEXUS_C}" \
       --otherNexus3Users=admin,admin \
       --otherNexus3URLs="${URL_NEXUS_B_V2}","${URL_NEXUS_C_V2}" \
       --directory-prefix "${DOWNLOAD_LOCATION_SYNC}" \
       -p "${PASSWORD_NEXUS_A}" \
       -n "${URL_NEXUS_A_V2}" \
-      -u admin
+      --dockerHost="${DOCKER_URL}" \
+      --dockerPort="${DOCKER_REGISTRY_HTTP_CONNECTOR_A}" \
+      --dockerPortSecure=false \
+      --otherDockerPorts="${DOCKER_REGISTRY_HTTP_CONNECTOR_B}","${DOCKER_REGISTRY_HTTP_CONNECTOR_C}" \
+      --otherDockerHosts=http://localhost,http://localhost \
+      --otherDockerSecurePorts=false,false
 
-    test_sync "${DOWNLOAD_LOCATION_SYNC_A}" "${PASSWORD_NEXUS_A}" "${URL_NEXUS_A_V2}"
-    test_sync "${DOWNLOAD_LOCATION_SYNC_B}" "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B_V2}"
-    test_sync "${DOWNLOAD_LOCATION_SYNC_C}" "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C_V2}"
+    test_sync "${DOWNLOAD_LOCATION_SYNC_A}" "${PASSWORD_NEXUS_A}" "${URL_NEXUS_A_V2}" "${DOCKER_REGISTRY_HTTP_CONNECTOR_A}"
+    test_sync "${DOWNLOAD_LOCATION_SYNC_B}" "${PASSWORD_NEXUS_B}" "${URL_NEXUS_B_V2}" "${DOCKER_REGISTRY_HTTP_CONNECTOR_B}"
+    test_sync "${DOWNLOAD_LOCATION_SYNC_C}" "${PASSWORD_NEXUS_C}" "${URL_NEXUS_C_V2}" "${DOCKER_REGISTRY_HTTP_CONNECTOR_C}"
   else
     echo "RepositoriesV2 sync not supported in beta API"
   fi
@@ -412,18 +483,20 @@ sync() {
 
 rproxy() {
   if [ "${NEXUS_API_VERSION}" != "beta" ]; then
+    local rproxy_conf=../../test/rproxy-nginx-nexus3.conf
+    local rproxy_conf_tmp="${rproxy_conf}.tmp"
+
     echo "Testing rproxy in front of a nexus server..."
     ip_nexus_a=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nexus-a)
     mkdir -p ${DOWNLOAD_LOCATION_RPROXY}
-    sed -i "s|WILL_BE_REPLACED|${ip_nexus_a}|" ../../test/rproxy-nginx-nexus3.conf
-    docker run -d --rm --name rproxy-nginx-nexus3 -p 9990:80 -v "${PWD}"/../../test/rproxy-nginx-nexus3.conf:/etc/nginx/nginx.conf nginx:1.21.5-alpine
+    sed -e "s|WILL_BE_REPLACED|${ip_nexus_a}|" "${rproxy_conf}" >"${rproxy_conf_tmp}"
+    docker run -d --rm --name rproxy-nginx-nexus3 -p 9990:80 -v "${PWD}"/"${rproxy_conf_tmp}":/etc/nginx/nginx.conf nginx:1.21.5-alpine
     sleep 10
-    ./"${N3DR_DELIVERABLE}" repositoriesV2 \
+    ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} repositoriesV2 \
       --count \
       --directory-prefix "${DOWNLOAD_LOCATION_RPROXY}" \
       -p "${PASSWORD_NEXUS_A}" \
       -n localhost:9990 \
-      -u admin \
       --https=false \
       --basePathPrefix=alternativeBasePathNexus3
   else
@@ -438,10 +511,13 @@ main() {
   files
 
   export PASSWORD=${PASSWORD_NEXUS_A}
+  readonly N3DR_DELIVERABLE_WITH_BASE_OPTIONS="${N3DR_DELIVERABLE} -u admin --showLogo=false"
+  readonly N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A="${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} -p ${PASSWORD} -n ${URL_NEXUS_A} -v ${NEXUS_API_VERSION}"
   upload
   anonymous
   backup
   uploadDeb
+  uploadDocker
   uploadNPM
   uploadNuget
   uploadYum
@@ -453,11 +529,15 @@ main() {
   rproxy
   bats --tap ../../test/tests.bats
   echo "
-In order to debug, comment out the 'trap clean EXIT', run this script again and
+In order to debug, issue:
+N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE=false ./test/integration-tests.sh and
 login to ${URL_NEXUS_A}, ${URL_NEXUS_B} or ${URL_NEXUS_C} and login as admin
 and respectively ${PASSWORD_NEXUS_A}, ${PASSWORD_NEXUS_B} or
 ${PASSWORD_NEXUS_C}"
 }
 
-trap clean EXIT
+if "${N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE}"; then
+  trap clean EXIT
+fi
+
 main
