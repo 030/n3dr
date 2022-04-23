@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- cannot uploaded Maven artifacts containing underscores and uppercases.
+- cannot upload Maven artifacts containing underscores and uppercases.
   Reported by [fekal0id](https://github.com/fekal0id).
 
 ## [6.6.0] - 2022-04-19
