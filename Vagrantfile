@@ -6,8 +6,8 @@ Vagrant.configure("2") do |config|
     v.customize ['setextradata', :id, 'GUI/ScaleFactor', '2.0']
     v.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
     v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-    v.customize ["modifyvm", :id, "--memory", "2048"]
-    v.customize ["modifyvm", :id, "--cpus", "2"]
+    v.customize ["modifyvm", :id, "--memory", "8192"]
+    v.customize ["modifyvm", :id, "--cpus", "4"]
   end
 
   config.vm.define "n3dr" do |n3dr|
