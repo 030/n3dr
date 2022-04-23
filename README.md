@@ -315,7 +315,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.6.0 .
+docker build -t utrecht/n3dr:6.6.1 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -325,7 +325,7 @@ docker build -t utrecht/n3dr:6.6.0 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.6.0
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.6.1
 ```
 
 ### Upload
@@ -334,7 +334,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.6.0
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.6.1
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -659,7 +659,7 @@ Login as `vagrant` with pass `vagrant` and issue:
 
 ```bash
 cd C:\vagrant
-.\cmd\n3dr\n3dr.exe download -r maven-releases -n http://192.168.0.42:9999 \
+.\cmd\n3dr\n3dr.exe backup -r maven-releases -n http://192.168.0.42:9999 \
   -u admin -p some-password
 .\cmd\n3dr\n3dr.exe upload -r maven-releases -n http://192.168.0.42:9999 \
   -u admin -p some-password

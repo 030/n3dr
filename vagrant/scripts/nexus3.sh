@@ -23,10 +23,9 @@ docker() {
 
 n3dr() {
     cd /vagrant
-    sed -i "s|^\(trap clean EXIT\)|#\1|" test/integration-tests.sh
     sed -i "s|  upload|echo \$PASSWORD \&\& exit 0 #upload|" test/integration-tests.sh
     sed -i "s|  build|#build|" test/integration-tests.sh
-    ./test/integration-tests.sh
+    N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE=false ./test/integration-tests.sh
     cd -
     nexus3ip=$(ip a | grep 192 | awk '{ print $2 }' | sed -e "s|\/24||g")
     echo "Navigate to ${nexus3ip}:9999 and login with 'admin' and the provided password"

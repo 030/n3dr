@@ -105,10 +105,10 @@ nexus() {
 }
 
 artifact() {
-  mkdir -p "maven-releases/some/group${1}/file${1}/1.0.0-2"
-  echo someContent >"maven-releases/some/group${1}/file${1}/1.0.0-2/f.i-l.e.${1}-1.0.0-2.jar"
-  echo someContentZIP >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.zip"
-  echo -e " <project >\n <modelVersion >4.0.0 </modelVersion >\n <groupId >some.group${1} </groupId >\n <artifactId >file${1} </artifactId >\n <version >1.0.0-2 </version >\n </project >" >"maven-releases/some/group${1}/file${1}/1.0.0-2/file${1}-1.0.0-2.pom"
+  mkdir -p "maven-releases/some/group${1}/File_${1}/1.0.0-2"
+  echo someContent >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.jar"
+  echo someContentZIP >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.zip"
+  echo -e " <project >\n <modelVersion >4.0.0 </modelVersion >\n <groupId >some.group${1} </groupId >\n <artifactId >File_${1} </artifactId >\n <version >1.0.0-2 </version >\n </project >" >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.pom"
 }
 
 files() {
@@ -373,7 +373,7 @@ repositories() {
     test_zip 132 ${testZipSizeDir}
   else
     count_downloads 402 ${testZipSizeDir}
-    test_zip 208 ${testZipSizeDir}
+    test_zip 212 ${testZipSizeDir}
   fi
   cleanup_downloads
 }
