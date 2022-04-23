@@ -89,7 +89,7 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 		regexBase = `^.*\\([\w\-\.]+)\\`
 	}
 
-	regexVersion := `(([a-z\d\-]+)|(([a-z\d\.]+)))`
+	regexVersion := `(([A-Za-z\d\-_]+)|(([a-z\d\.]+)))`
 	if rv := os.Getenv("N3DR_MAVEN_UPLOAD_REGEX_VERSION"); rv != "" {
 		regexVersion = rv
 	}
