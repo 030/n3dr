@@ -44,19 +44,19 @@ func NewGetRepository20OK() *GetRepository20OK {
 successful operation
 */
 type GetRepository20OK struct {
-	Payload *models.SimpleAPIGroupRepository
+	Payload *models.DockerProxyAPIRepository
 }
 
 func (o *GetRepository20OK) Error() string {
-	return fmt.Sprintf("[GET /v1/repositories/yum/group/{repositoryName}][%d] getRepository20OK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1/repositories/docker/proxy/{repositoryName}][%d] getRepository20OK  %+v", 200, o.Payload)
 }
-func (o *GetRepository20OK) GetPayload() *models.SimpleAPIGroupRepository {
+func (o *GetRepository20OK) GetPayload() *models.DockerProxyAPIRepository {
 	return o.Payload
 }
 
 func (o *GetRepository20OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.SimpleAPIGroupRepository)
+	o.Payload = new(models.DockerProxyAPIRepository)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

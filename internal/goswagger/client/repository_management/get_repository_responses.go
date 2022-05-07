@@ -29,6 +29,24 @@ func (o *GetRepositoryReader) ReadResponse(response runtime.ClientResponse, cons
 			return nil, err
 		}
 		return result, nil
+	case 401:
+		result := NewGetRepositoryUnauthorized()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+	case 403:
+		result := NewGetRepositoryForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+	case 404:
+		result := NewGetRepositoryNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	default:
 		return nil, runtime.NewAPIError("response status code does not match any response statuses defined for this endpoint in the swagger spec", response, response.Code())
 	}
@@ -44,24 +62,87 @@ func NewGetRepositoryOK() *GetRepositoryOK {
 successful operation
 */
 type GetRepositoryOK struct {
-	Payload *models.SimpleAPIGroupRepository
+	Payload *models.RepositoryXO
 }
 
 func (o *GetRepositoryOK) Error() string {
-	return fmt.Sprintf("[GET /v1/repositories/maven/group/{repositoryName}][%d] getRepositoryOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1/repositories/{repositoryName}][%d] getRepositoryOK  %+v", 200, o.Payload)
 }
-func (o *GetRepositoryOK) GetPayload() *models.SimpleAPIGroupRepository {
+func (o *GetRepositoryOK) GetPayload() *models.RepositoryXO {
 	return o.Payload
 }
 
 func (o *GetRepositoryOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.SimpleAPIGroupRepository)
+	o.Payload = new(models.RepositoryXO)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetRepositoryUnauthorized creates a GetRepositoryUnauthorized with default headers values
+func NewGetRepositoryUnauthorized() *GetRepositoryUnauthorized {
+	return &GetRepositoryUnauthorized{}
+}
+
+/* GetRepositoryUnauthorized describes a response with status code 401, with default header values.
+
+Authentication required
+*/
+type GetRepositoryUnauthorized struct {
+}
+
+func (o *GetRepositoryUnauthorized) Error() string {
+	return fmt.Sprintf("[GET /v1/repositories/{repositoryName}][%d] getRepositoryUnauthorized ", 401)
+}
+
+func (o *GetRepositoryUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewGetRepositoryForbidden creates a GetRepositoryForbidden with default headers values
+func NewGetRepositoryForbidden() *GetRepositoryForbidden {
+	return &GetRepositoryForbidden{}
+}
+
+/* GetRepositoryForbidden describes a response with status code 403, with default header values.
+
+Insufficient permissions
+*/
+type GetRepositoryForbidden struct {
+}
+
+func (o *GetRepositoryForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/repositories/{repositoryName}][%d] getRepositoryForbidden ", 403)
+}
+
+func (o *GetRepositoryForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewGetRepositoryNotFound creates a GetRepositoryNotFound with default headers values
+func NewGetRepositoryNotFound() *GetRepositoryNotFound {
+	return &GetRepositoryNotFound{}
+}
+
+/* GetRepositoryNotFound describes a response with status code 404, with default header values.
+
+Repository not found
+*/
+type GetRepositoryNotFound struct {
+}
+
+func (o *GetRepositoryNotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/repositories/{repositoryName}][%d] getRepositoryNotFound ", 404)
+}
+
+func (o *GetRepositoryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }
