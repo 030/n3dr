@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.6.2] - 2022-05-07
+
+### Changed
+
+- API to 3.38.1.
+
 ## [6.6.1] - 2022-04-23
 
 ### Fixed
@@ -691,7 +697,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.6.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.6.2...HEAD
+[6.6.2]: https://github.com/030/n3dr/compare/6.6.1...6.6.2
 [6.6.1]: https://github.com/030/n3dr/compare/6.6.0...6.6.1
 [6.6.0]: https://github.com/030/n3dr/compare/6.5.1...6.6.0
 [6.5.1]: https://github.com/030/n3dr/compare/6.5.0...6.5.1

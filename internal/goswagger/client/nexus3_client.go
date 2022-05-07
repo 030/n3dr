@@ -28,6 +28,7 @@ import (
 	"github.com/030/n3dr/internal/goswagger/client/security_certificates"
 	"github.com/030/n3dr/internal/goswagger/client/security_management"
 	"github.com/030/n3dr/internal/goswagger/client/security_management_anonymous_access"
+	"github.com/030/n3dr/internal/goswagger/client/security_management_j_w_t"
 	"github.com/030/n3dr/internal/goswagger/client/security_management_l_d_a_p"
 	"github.com/030/n3dr/internal/goswagger/client/security_management_privileges"
 	"github.com/030/n3dr/internal/goswagger/client/security_management_realms"
@@ -98,6 +99,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Nexus3 {
 	cli.SecurityCertificates = security_certificates.New(transport, formats)
 	cli.SecurityManagement = security_management.New(transport, formats)
 	cli.SecurityManagementAnonymousAccess = security_management_anonymous_access.New(transport, formats)
+	cli.SecurityManagementjwt = security_management_j_w_t.New(transport, formats)
 	cli.SecurityManagementldap = security_management_l_d_a_p.New(transport, formats)
 	cli.SecurityManagementPrivileges = security_management_privileges.New(transport, formats)
 	cli.SecurityManagementRealms = security_management_realms.New(transport, formats)
@@ -186,6 +188,8 @@ type Nexus3 struct {
 
 	SecurityManagementAnonymousAccess security_management_anonymous_access.ClientService
 
+	SecurityManagementjwt security_management_j_w_t.ClientService
+
 	SecurityManagementldap security_management_l_d_a_p.ClientService
 
 	SecurityManagementPrivileges security_management_privileges.ClientService
@@ -226,6 +230,7 @@ func (c *Nexus3) SetTransport(transport runtime.ClientTransport) {
 	c.SecurityCertificates.SetTransport(transport)
 	c.SecurityManagement.SetTransport(transport)
 	c.SecurityManagementAnonymousAccess.SetTransport(transport)
+	c.SecurityManagementjwt.SetTransport(transport)
 	c.SecurityManagementldap.SetTransport(transport)
 	c.SecurityManagementPrivileges.SetTransport(transport)
 	c.SecurityManagementRealms.SetTransport(transport)
