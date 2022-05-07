@@ -59,7 +59,10 @@ func NewGetRepositoryParamsWithHTTPClient(client *http.Client) *GetRepositoryPar
 */
 type GetRepositoryParams struct {
 
-	// RepositoryName.
+	/* RepositoryName.
+
+	   Name of the repository to get
+	*/
 	RepositoryName string
 
 	timeout    time.Duration

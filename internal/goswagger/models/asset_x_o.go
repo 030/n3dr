@@ -28,6 +28,9 @@ type AssetXO struct {
 	// download Url
 	DownloadURL string `json:"downloadUrl,omitempty"`
 
+	// file size
+	FileSize int64 `json:"fileSize,omitempty"`
+
 	// format
 	Format string `json:"format,omitempty"`
 
@@ -43,6 +46,12 @@ type AssetXO struct {
 
 	// repository
 	Repository string `json:"repository,omitempty"`
+
+	// uploader
+	Uploader string `json:"uploader,omitempty"`
+
+	// uploader Ip
+	UploaderIP string `json:"uploaderIp,omitempty"`
 }
 
 // Validate validates this asset x o

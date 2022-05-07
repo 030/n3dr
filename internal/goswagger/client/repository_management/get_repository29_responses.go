@@ -48,7 +48,7 @@ type GetRepository29OK struct {
 }
 
 func (o *GetRepository29OK) Error() string {
-	return fmt.Sprintf("[GET /v1/repositories/conda/proxy/{repositoryName}][%d] getRepository29OK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1/repositories/pypi/proxy/{repositoryName}][%d] getRepository29OK  %+v", 200, o.Payload)
 }
 func (o *GetRepository29OK) GetPayload() *models.SimpleAPIProxyRepository {
 	return o.Payload
