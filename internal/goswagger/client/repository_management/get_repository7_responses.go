@@ -44,19 +44,19 @@ func NewGetRepository7OK() *GetRepository7OK {
 successful operation
 */
 type GetRepository7OK struct {
-	Payload *models.SimpleAPIProxyRepository
+	Payload *models.SimpleAPIHostedRepository
 }
 
 func (o *GetRepository7OK) Error() string {
-	return fmt.Sprintf("[GET /v1/repositories/raw/proxy/{repositoryName}][%d] getRepository7OK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1/repositories/raw/hosted/{repositoryName}][%d] getRepository7OK  %+v", 200, o.Payload)
 }
-func (o *GetRepository7OK) GetPayload() *models.SimpleAPIProxyRepository {
+func (o *GetRepository7OK) GetPayload() *models.SimpleAPIHostedRepository {
 	return o.Payload
 }
 
 func (o *GetRepository7OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.SimpleAPIProxyRepository)
+	o.Payload = new(models.SimpleAPIHostedRepository)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

@@ -194,6 +194,8 @@ type ClientService interface {
 
 	GetRepository40(params *GetRepository40Params, opts ...ClientOption) (*GetRepository40OK, error)
 
+	GetRepository41(params *GetRepository41Params, opts ...ClientOption) (*GetRepository41OK, error)
+
 	GetRepository5(params *GetRepository5Params, opts ...ClientOption) (*GetRepository5OK, error)
 
 	GetRepository6(params *GetRepository6Params, opts ...ClientOption) (*GetRepository6OK, error)
@@ -2042,7 +2044,7 @@ func (a *Client) GetRepositories1(params *GetRepositories1Params, opts ...Client
 }
 
 /*
-  GetRepository gets repository
+  GetRepository gets repository details
 */
 func (a *Client) GetRepository(params *GetRepositoryParams, opts ...ClientOption) (*GetRepositoryOK, error) {
 	// TODO: Validate the params before sending
@@ -2052,7 +2054,7 @@ func (a *Client) GetRepository(params *GetRepositoryParams, opts ...ClientOption
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/maven/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2090,7 +2092,7 @@ func (a *Client) GetRepository1(params *GetRepository1Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_1",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/maven/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/maven/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2128,7 +2130,7 @@ func (a *Client) GetRepository10(params *GetRepository10Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_10",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/npm/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/npm/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2166,7 +2168,7 @@ func (a *Client) GetRepository11(params *GetRepository11Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_11",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/nuget/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/npm/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2204,7 +2206,7 @@ func (a *Client) GetRepository12(params *GetRepository12Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_12",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/nuget/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/nuget/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2242,7 +2244,7 @@ func (a *Client) GetRepository13(params *GetRepository13Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_13",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/nuget/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/nuget/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2280,7 +2282,7 @@ func (a *Client) GetRepository14(params *GetRepository14Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_14",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/rubygems/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/nuget/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2318,7 +2320,7 @@ func (a *Client) GetRepository15(params *GetRepository15Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_15",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/rubygems/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/rubygems/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2356,7 +2358,7 @@ func (a *Client) GetRepository16(params *GetRepository16Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_16",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/rubygems/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/rubygems/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2394,7 +2396,7 @@ func (a *Client) GetRepository17(params *GetRepository17Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_17",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/docker/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/rubygems/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2432,7 +2434,7 @@ func (a *Client) GetRepository18(params *GetRepository18Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_18",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/docker/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/docker/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2470,7 +2472,7 @@ func (a *Client) GetRepository19(params *GetRepository19Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_19",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/docker/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/docker/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2508,7 +2510,7 @@ func (a *Client) GetRepository2(params *GetRepository2Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_2",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/maven/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/maven/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2546,7 +2548,7 @@ func (a *Client) GetRepository20(params *GetRepository20Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_20",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/yum/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/docker/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2584,7 +2586,7 @@ func (a *Client) GetRepository21(params *GetRepository21Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_21",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/yum/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/yum/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2622,7 +2624,7 @@ func (a *Client) GetRepository22(params *GetRepository22Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_22",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/yum/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/yum/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2660,7 +2662,7 @@ func (a *Client) GetRepository23(params *GetRepository23Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_23",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/helm/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/yum/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2698,7 +2700,7 @@ func (a *Client) GetRepository24(params *GetRepository24Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_24",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/helm/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/helm/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2736,7 +2738,7 @@ func (a *Client) GetRepository25(params *GetRepository25Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_25",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/gitlfs/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/helm/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2774,7 +2776,7 @@ func (a *Client) GetRepository26(params *GetRepository26Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_26",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/pypi/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/gitlfs/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2812,7 +2814,7 @@ func (a *Client) GetRepository27(params *GetRepository27Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_27",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/pypi/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/pypi/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2850,7 +2852,7 @@ func (a *Client) GetRepository28(params *GetRepository28Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_28",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/pypi/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/pypi/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2888,7 +2890,7 @@ func (a *Client) GetRepository29(params *GetRepository29Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_29",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/conda/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/pypi/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2926,7 +2928,7 @@ func (a *Client) GetRepository3(params *GetRepository3Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_3",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/apt/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/maven/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -2964,7 +2966,7 @@ func (a *Client) GetRepository30(params *GetRepository30Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_30",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/conan/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/conda/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3002,7 +3004,7 @@ func (a *Client) GetRepository31(params *GetRepository31Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_31",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/r/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/conan/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3040,7 +3042,7 @@ func (a *Client) GetRepository32(params *GetRepository32Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_32",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/r/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/r/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3078,7 +3080,7 @@ func (a *Client) GetRepository33(params *GetRepository33Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_33",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/r/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/r/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3116,7 +3118,7 @@ func (a *Client) GetRepository34(params *GetRepository34Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_34",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/cocoapods/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/r/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3154,7 +3156,7 @@ func (a *Client) GetRepository35(params *GetRepository35Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_35",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/go/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/cocoapods/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3192,7 +3194,7 @@ func (a *Client) GetRepository36(params *GetRepository36Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_36",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/go/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/go/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3230,7 +3232,7 @@ func (a *Client) GetRepository37(params *GetRepository37Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_37",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/p2/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/go/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3268,7 +3270,7 @@ func (a *Client) GetRepository38(params *GetRepository38Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_38",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/bower/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/p2/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3306,7 +3308,7 @@ func (a *Client) GetRepository39(params *GetRepository39Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_39",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/bower/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/bower/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3344,7 +3346,7 @@ func (a *Client) GetRepository4(params *GetRepository4Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_4",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/apt/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/apt/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3382,7 +3384,7 @@ func (a *Client) GetRepository40(params *GetRepository40Params, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_40",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/bower/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/bower/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3410,6 +3412,44 @@ func (a *Client) GetRepository40(params *GetRepository40Params, opts ...ClientOp
 }
 
 /*
+  GetRepository41 gets repository
+*/
+func (a *Client) GetRepository41(params *GetRepository41Params, opts ...ClientOption) (*GetRepository41OK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetRepository41Params()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getRepository_41",
+		Method:             "GET",
+		PathPattern:        "/v1/repositories/bower/proxy/{repositoryName}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetRepository41Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetRepository41OK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getRepository_41: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
   GetRepository5 gets repository
 */
 func (a *Client) GetRepository5(params *GetRepository5Params, opts ...ClientOption) (*GetRepository5OK, error) {
@@ -3420,7 +3460,7 @@ func (a *Client) GetRepository5(params *GetRepository5Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_5",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/raw/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/apt/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3458,7 +3498,7 @@ func (a *Client) GetRepository6(params *GetRepository6Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_6",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/raw/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/raw/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3496,7 +3536,7 @@ func (a *Client) GetRepository7(params *GetRepository7Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_7",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/raw/proxy/{repositoryName}",
+		PathPattern:        "/v1/repositories/raw/hosted/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3534,7 +3574,7 @@ func (a *Client) GetRepository8(params *GetRepository8Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_8",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/npm/group/{repositoryName}",
+		PathPattern:        "/v1/repositories/raw/proxy/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -3572,7 +3612,7 @@ func (a *Client) GetRepository9(params *GetRepository9Params, opts ...ClientOpti
 	op := &runtime.ClientOperation{
 		ID:                 "getRepository_9",
 		Method:             "GET",
-		PathPattern:        "/v1/repositories/npm/hosted/{repositoryName}",
+		PathPattern:        "/v1/repositories/npm/group/{repositoryName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
