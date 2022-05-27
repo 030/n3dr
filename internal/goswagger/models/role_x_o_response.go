@@ -32,6 +32,9 @@ type RoleXOResponse struct {
 	// Unique: true
 	Privileges []string `json:"privileges"`
 
+	// Indicates whether the role can be changed. The system will ignore any supplied external values.
+	ReadOnly bool `json:"readOnly,omitempty"`
+
 	// The list of roles assigned to this role.
 	// Unique: true
 	Roles []string `json:"roles"`

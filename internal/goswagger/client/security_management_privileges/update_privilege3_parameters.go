@@ -65,7 +65,7 @@ type UpdatePrivilege3Params struct {
 
 	   The privilege to update.
 	*/
-	Body *models.APIPrivilegeRepositoryContentSelectorRequest
+	Body *models.APIPrivilegeRepositoryAdminRequest
 
 	/* PrivilegeID.
 
@@ -127,13 +127,13 @@ func (o *UpdatePrivilege3Params) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update privilege 3 params
-func (o *UpdatePrivilege3Params) WithBody(body *models.APIPrivilegeRepositoryContentSelectorRequest) *UpdatePrivilege3Params {
+func (o *UpdatePrivilege3Params) WithBody(body *models.APIPrivilegeRepositoryAdminRequest) *UpdatePrivilege3Params {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update privilege 3 params
-func (o *UpdatePrivilege3Params) SetBody(body *models.APIPrivilegeRepositoryContentSelectorRequest) {
+func (o *UpdatePrivilege3Params) SetBody(body *models.APIPrivilegeRepositoryAdminRequest) {
 	o.Body = body
 }
 
