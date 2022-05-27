@@ -13,8 +13,10 @@ import (
 	"github.com/030/n3dr/internal/goswagger/models"
 	"github.com/030/n3dr/internal/pkg/artifactsv2/artifacts"
 	"github.com/030/n3dr/internal/pkg/connection"
+	"github.com/030/n3dr/internal/pkg/s3"
 	"github.com/030/p2iwd/pkg/p2iwd"
 	"github.com/hashicorp/go-retryablehttp"
+	"github.com/mholt/archiver"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -182,6 +184,19 @@ func (n *Nexus3) Backup() error {
 		}
 	}
 	wg.Wait()
+
+	if n.AwsBucket != "" {
+		zipFilename := "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
+		zipFilenamePath := filepath.Join(n.DownloadDirNameZip, zipFilename)
+		if err := archiver.Archive([]string{n.DownloadDirName}, zipFilenamePath); err != nil {
+			return err
+		}
+
+		nS3 := s3.Nexus3{AwsBucket: n.AwsBucket, AwsId: n.AwsId, AwsRegion: n.AwsRegion, AwsSecret: n.AwsSecret, ZipFilename: zipFilenamePath}
+		if err := nS3.Upload(); err != nil {
+			return err
+		}
+	}
 
 	return nil
 }

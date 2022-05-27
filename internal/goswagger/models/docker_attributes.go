@@ -32,6 +32,10 @@ type DockerAttributes struct {
 	// Example: 8083
 	HTTPSPort int32 `json:"httpsPort,omitempty"`
 
+	// Allows to use subdomain
+	// Example: docker-a
+	Subdomain string `json:"subdomain,omitempty"`
+
 	// Whether to allow clients to use the V1 API to interact with this repository
 	// Example: false
 	// Required: true
