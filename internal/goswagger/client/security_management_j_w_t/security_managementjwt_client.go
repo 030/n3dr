@@ -28,61 +28,28 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	GetSecret(params *GetSecretParams, opts ...ClientOption) error
-
-	UpdateSecret(params *UpdateSecretParams, opts ...ClientOption) error
+	ResetSecret(params *ResetSecretParams, opts ...ClientOption) error
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-  GetSecret gets j w t secret
+  ResetSecret resets j w t secret note that session will be expired for the all logged in users
 */
-func (a *Client) GetSecret(params *GetSecretParams, opts ...ClientOption) error {
+func (a *Client) ResetSecret(params *ResetSecretParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetSecretParams()
+		params = NewResetSecretParams()
 	}
 	op := &runtime.ClientOperation{
-		ID:                 "getSecret",
-		Method:             "GET",
+		ID:                 "resetSecret",
+		Method:             "PUT",
 		PathPattern:        "/v1/security/jwt",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
 		Params:             params,
-		Reader:             &GetSecretReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	_, err := a.transport.Submit(op)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-/*
-  UpdateSecret sets j w t secret note that session will be expired for the all logged in users
-*/
-func (a *Client) UpdateSecret(params *UpdateSecretParams, opts ...ClientOption) error {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateSecretParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "updateSecret",
-		Method:             "PUT",
-		PathPattern:        "/v1/security/jwt",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"text/plain"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &UpdateSecretReader{formats: a.formats},
+		Reader:             &ResetSecretReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}

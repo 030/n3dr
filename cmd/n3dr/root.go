@@ -23,9 +23,9 @@ import (
 var logo string
 
 var (
-	apiVersion, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost string
-	anonymous, debug, dockerPortSecure, https, insecureSkipVerify, showLogo, skipErrors, zip                                                      bool
-	dockerPort                                                                                                                                    int32
+	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost string
+	anonymous, awsS3, debug, dockerPortSecure, https, insecureSkipVerify, showLogo, skipErrors, zip                                                                                       bool
+	dockerPort                                                                                                                                                                            int32
 )
 
 var rootCmd = &cobra.Command{
@@ -46,6 +46,7 @@ func execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
+	rootCmd.PersistentFlags().BoolVarP(&awsS3, "awsS3", "", false, "whether the backup zip should be uploaded to AWS S3")
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/"+cli.DefaultCfgFileWithExt+")")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "enable debug logging")
 	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
@@ -114,6 +115,8 @@ func ascii() error {
 }
 
 func initConfig() {
+	parseConfig(configFilePath())
+	viper.AutomaticEnv()
 	if err := ascii(); err != nil {
 		log.Fatal(err)
 	}
@@ -121,8 +124,6 @@ func initConfig() {
 	if err := insecureCerts(); err != nil {
 		log.Fatal(err)
 	}
-	parseConfig(configFilePath())
-	viper.AutomaticEnv()
 }
 
 func valueInConfigFile(key string) (string, error) {
@@ -155,6 +156,28 @@ func parseVarsFromConfig() {
 
 	if n3drURL == "" {
 		n3drURL, err = valueInConfigFile("n3drURL")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	showLogo = viper.GetBool("showLogo")
+	log.Info(showLogo)
+
+	if awsS3 {
+		awsBucket, err = valueInConfigFile("awsBucket")
+		if err != nil {
+			log.Fatal(err)
+		}
+		awsId, err = valueInConfigFile("awsId")
+		if err != nil {
+			log.Fatal(err)
+		}
+		awsRegion, err = valueInConfigFile("awsRegion")
+		if err != nil {
+			log.Fatal(err)
+		}
+		awsSecret, err = valueInConfigFile("awsSecret")
 		if err != nil {
 			log.Fatal(err)
 		}

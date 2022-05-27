@@ -8,9 +8,9 @@ import (
 )
 
 type Nexus3 struct {
-	BasePathPrefix, DockerHost, DownloadDirName, FQDN, Pass, User string
-	DockerPort                                                    int32
-	DockerPortSecure, HTTPS                                       bool
+	AwsBucket, AwsId, AwsRegion, AwsSecret, BasePathPrefix, DockerHost, DownloadDirName, DownloadDirNameZip, FQDN, Pass, User string
+	DockerPort                                                                                                                int32
+	DockerPortSecure, HTTPS                                                                                                   bool
 }
 
 func (n *Nexus3) Client() *apiclient.Nexus3 {

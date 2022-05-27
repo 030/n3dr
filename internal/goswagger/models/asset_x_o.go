@@ -37,6 +37,10 @@ type AssetXO struct {
 	// id
 	ID string `json:"id,omitempty"`
 
+	// last downloaded
+	// Format: date-time
+	LastDownloaded strfmt.DateTime `json:"lastDownloaded,omitempty"`
+
 	// last modified
 	// Format: date-time
 	LastModified strfmt.DateTime `json:"lastModified,omitempty"`
@@ -58,6 +62,10 @@ type AssetXO struct {
 func (m *AssetXO) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateLastDownloaded(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateLastModified(formats); err != nil {
 		res = append(res, err)
 	}
@@ -65,6 +73,18 @@ func (m *AssetXO) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *AssetXO) validateLastDownloaded(formats strfmt.Registry) error {
+	if swag.IsZero(m.LastDownloaded) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("lastDownloaded", "body", "date-time", m.LastDownloaded.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

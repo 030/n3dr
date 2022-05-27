@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "*"
+      - '*'
 jobs:
   release:
     name: Create Release
@@ -29,7 +29,7 @@ jobs:
           ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Set N3DR deliverable environment variable on Windows
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $env:GITHUB_ENV
-        if: ${{ startsWith(matrix.os, 'windows') }}
+        if: ${{ startsWith(matrix.os, 'windows') }}go
       - name: Use the value
         run: |
           echo "${{ env.n3dr-deliverable }}"
@@ -56,7 +56,7 @@ jobs:
           echo "GITHUB_TAG: '${{ github.ref }}'"
           echo "N3DR_DELIVERABLE: '${{ env.n3dr-deliverable }}'"
           cd cmd/n3dr
-          go build -ldflags "-X main.Version=${{ github.ref }}" -o "${{ env.n3dr-deliverable }}"
+          go build -buildvcs=false -ldflags "-X main.Version=${{ github.ref }}" -o "${{ env.n3dr-deliverable }}"
           sha512sum "${{ env.n3dr-deliverable }}" > "${{ env.n3dr-deliverable }}.sha512.txt"
           chmod +x "${{ env.n3dr-deliverable }}"
           ls n3dr-windows-2019
