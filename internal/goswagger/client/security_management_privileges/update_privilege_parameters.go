@@ -65,13 +65,13 @@ type UpdatePrivilegeParams struct {
 
 	   The privilege to update.
 	*/
-	Body *models.APIPrivilegeWildcardRequest
+	Body *models.APIPrivilegeApplicationRequest
 
-	/* PrivilegeID.
+	/* PrivilegeName.
 
-	   The id of the privilege to update.
+	   The name of the privilege to update.
 	*/
-	PrivilegeID string
+	PrivilegeName string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -127,25 +127,25 @@ func (o *UpdatePrivilegeParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update privilege params
-func (o *UpdatePrivilegeParams) WithBody(body *models.APIPrivilegeWildcardRequest) *UpdatePrivilegeParams {
+func (o *UpdatePrivilegeParams) WithBody(body *models.APIPrivilegeApplicationRequest) *UpdatePrivilegeParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update privilege params
-func (o *UpdatePrivilegeParams) SetBody(body *models.APIPrivilegeWildcardRequest) {
+func (o *UpdatePrivilegeParams) SetBody(body *models.APIPrivilegeApplicationRequest) {
 	o.Body = body
 }
 
-// WithPrivilegeID adds the privilegeID to the update privilege params
-func (o *UpdatePrivilegeParams) WithPrivilegeID(privilegeID string) *UpdatePrivilegeParams {
-	o.SetPrivilegeID(privilegeID)
+// WithPrivilegeName adds the privilegeName to the update privilege params
+func (o *UpdatePrivilegeParams) WithPrivilegeName(privilegeName string) *UpdatePrivilegeParams {
+	o.SetPrivilegeName(privilegeName)
 	return o
 }
 
-// SetPrivilegeID adds the privilegeId to the update privilege params
-func (o *UpdatePrivilegeParams) SetPrivilegeID(privilegeID string) {
-	o.PrivilegeID = privilegeID
+// SetPrivilegeName adds the privilegeName to the update privilege params
+func (o *UpdatePrivilegeParams) SetPrivilegeName(privilegeName string) {
+	o.PrivilegeName = privilegeName
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -161,8 +161,8 @@ func (o *UpdatePrivilegeParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		}
 	}
 
-	// path param privilegeId
-	if err := r.SetPathParam("privilegeId", o.PrivilegeID); err != nil {
+	// path param privilegeName
+	if err := r.SetPathParam("privilegeName", o.PrivilegeName); err != nil {
 		return err
 	}
 

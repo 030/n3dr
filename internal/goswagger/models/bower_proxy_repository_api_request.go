@@ -48,6 +48,9 @@ type BowerProxyRepositoryAPIRequest struct {
 	// Required: true
 	Proxy *ProxyAttributes `json:"proxy"`
 
+	// replication
+	Replication *ReplicationAttributes `json:"replication,omitempty"`
+
 	// routing rule
 	RoutingRule string `json:"routingRule,omitempty"`
 
@@ -85,6 +88,10 @@ func (m *BowerProxyRepositoryAPIRequest) Validate(formats strfmt.Registry) error
 	}
 
 	if err := m.validateProxy(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateReplication(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -218,6 +225,25 @@ func (m *BowerProxyRepositoryAPIRequest) validateProxy(formats strfmt.Registry) 
 	return nil
 }
 
+func (m *BowerProxyRepositoryAPIRequest) validateReplication(formats strfmt.Registry) error {
+	if swag.IsZero(m.Replication) { // not required
+		return nil
+	}
+
+	if m.Replication != nil {
+		if err := m.Replication.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("replication")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("replication")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *BowerProxyRepositoryAPIRequest) validateStorage(formats strfmt.Registry) error {
 
 	if err := validate.Required("storage", "body", m.Storage); err != nil {
@@ -259,6 +285,10 @@ func (m *BowerProxyRepositoryAPIRequest) ContextValidate(ctx context.Context, fo
 	}
 
 	if err := m.contextValidateProxy(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateReplication(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -344,6 +374,22 @@ func (m *BowerProxyRepositoryAPIRequest) contextValidateProxy(ctx context.Contex
 				return ve.ValidateName("proxy")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("proxy")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *BowerProxyRepositoryAPIRequest) contextValidateReplication(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Replication != nil {
+		if err := m.Replication.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("replication")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("replication")
 			}
 			return err
 		}

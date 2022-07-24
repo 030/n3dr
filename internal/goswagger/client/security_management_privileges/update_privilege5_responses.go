@@ -56,7 +56,7 @@ type UpdatePrivilege5BadRequest struct {
 }
 
 func (o *UpdatePrivilege5BadRequest) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeId}][%d] updatePrivilege5BadRequest ", 400)
+	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5BadRequest ", 400)
 }
 
 func (o *UpdatePrivilege5BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -77,7 +77,7 @@ type UpdatePrivilege5Forbidden struct {
 }
 
 func (o *UpdatePrivilege5Forbidden) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeId}][%d] updatePrivilege5Forbidden ", 403)
+	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5Forbidden ", 403)
 }
 
 func (o *UpdatePrivilege5Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -98,7 +98,7 @@ type UpdatePrivilege5NotFound struct {
 }
 
 func (o *UpdatePrivilege5NotFound) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeId}][%d] updatePrivilege5NotFound ", 404)
+	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5NotFound ", 404)
 }
 
 func (o *UpdatePrivilege5NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

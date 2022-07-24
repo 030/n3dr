@@ -50,7 +50,7 @@ type CreatePrivilegeBadRequest struct {
 }
 
 func (o *CreatePrivilegeBadRequest) Error() string {
-	return fmt.Sprintf("[POST /v1/security/privileges/wildcard][%d] createPrivilegeBadRequest ", 400)
+	return fmt.Sprintf("[POST /v1/security/privileges/application][%d] createPrivilegeBadRequest ", 400)
 }
 
 func (o *CreatePrivilegeBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -71,7 +71,7 @@ type CreatePrivilegeForbidden struct {
 }
 
 func (o *CreatePrivilegeForbidden) Error() string {
-	return fmt.Sprintf("[POST /v1/security/privileges/wildcard][%d] createPrivilegeForbidden ", 403)
+	return fmt.Sprintf("[POST /v1/security/privileges/application][%d] createPrivilegeForbidden ", 403)
 }
 
 func (o *CreatePrivilegeForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
