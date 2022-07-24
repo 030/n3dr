@@ -315,7 +315,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.7.0 .
+docker build -t utrecht/n3dr:6.7.1 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -325,7 +325,7 @@ docker build -t utrecht/n3dr:6.7.0 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.0
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.1
 ```
 
 ### Upload
@@ -334,7 +334,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.0
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.1
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -610,7 +610,7 @@ generate internal go-swagger code:
 ```bash
 export GITHUB_URL=https://github.com
 export GS_URI=go-swagger/go-swagger/releases/download
-export GS_VERSION=v0.28.0
+export GS_VERSION=v0.29.0
 export GS_URL=${GITHUB_URL}/${GS_URI}/${GS_VERSION}/swagger_linux_amd64
 curl -L \
   ${GS_URL} \

@@ -65,13 +65,13 @@ type UpdatePrivilege3Params struct {
 
 	   The privilege to update.
 	*/
-	Body *models.APIPrivilegeRepositoryAdminRequest
+	Body *models.APIPrivilegeRepositoryContentSelectorRequest
 
-	/* PrivilegeID.
+	/* PrivilegeName.
 
-	   The id of the privilege to update.
+	   The name of the privilege to update.
 	*/
-	PrivilegeID string
+	PrivilegeName string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -127,25 +127,25 @@ func (o *UpdatePrivilege3Params) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update privilege 3 params
-func (o *UpdatePrivilege3Params) WithBody(body *models.APIPrivilegeRepositoryAdminRequest) *UpdatePrivilege3Params {
+func (o *UpdatePrivilege3Params) WithBody(body *models.APIPrivilegeRepositoryContentSelectorRequest) *UpdatePrivilege3Params {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update privilege 3 params
-func (o *UpdatePrivilege3Params) SetBody(body *models.APIPrivilegeRepositoryAdminRequest) {
+func (o *UpdatePrivilege3Params) SetBody(body *models.APIPrivilegeRepositoryContentSelectorRequest) {
 	o.Body = body
 }
 
-// WithPrivilegeID adds the privilegeID to the update privilege 3 params
-func (o *UpdatePrivilege3Params) WithPrivilegeID(privilegeID string) *UpdatePrivilege3Params {
-	o.SetPrivilegeID(privilegeID)
+// WithPrivilegeName adds the privilegeName to the update privilege 3 params
+func (o *UpdatePrivilege3Params) WithPrivilegeName(privilegeName string) *UpdatePrivilege3Params {
+	o.SetPrivilegeName(privilegeName)
 	return o
 }
 
-// SetPrivilegeID adds the privilegeId to the update privilege 3 params
-func (o *UpdatePrivilege3Params) SetPrivilegeID(privilegeID string) {
-	o.PrivilegeID = privilegeID
+// SetPrivilegeName adds the privilegeName to the update privilege 3 params
+func (o *UpdatePrivilege3Params) SetPrivilegeName(privilegeName string) {
+	o.PrivilegeName = privilegeName
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -161,8 +161,8 @@ func (o *UpdatePrivilege3Params) WriteToRequest(r runtime.ClientRequest, reg str
 		}
 	}
 
-	// path param privilegeId
-	if err := r.SetPathParam("privilegeId", o.PrivilegeID); err != nil {
+	// path param privilegeName
+	if err := r.SetPathParam("privilegeName", o.PrivilegeName); err != nil {
 		return err
 	}
 

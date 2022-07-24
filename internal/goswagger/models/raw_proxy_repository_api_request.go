@@ -48,6 +48,9 @@ type RawProxyRepositoryAPIRequest struct {
 	// raw
 	Raw *RawAttributes `json:"raw,omitempty"`
 
+	// replication
+	Replication *ReplicationAttributes `json:"replication,omitempty"`
+
 	// routing rule
 	RoutingRule string `json:"routingRule,omitempty"`
 
@@ -85,6 +88,10 @@ func (m *RawProxyRepositoryAPIRequest) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRaw(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateReplication(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -218,6 +225,25 @@ func (m *RawProxyRepositoryAPIRequest) validateRaw(formats strfmt.Registry) erro
 	return nil
 }
 
+func (m *RawProxyRepositoryAPIRequest) validateReplication(formats strfmt.Registry) error {
+	if swag.IsZero(m.Replication) { // not required
+		return nil
+	}
+
+	if m.Replication != nil {
+		if err := m.Replication.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("replication")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("replication")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *RawProxyRepositoryAPIRequest) validateStorage(formats strfmt.Registry) error {
 
 	if err := validate.Required("storage", "body", m.Storage); err != nil {
@@ -259,6 +285,10 @@ func (m *RawProxyRepositoryAPIRequest) ContextValidate(ctx context.Context, form
 	}
 
 	if err := m.contextValidateRaw(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateReplication(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -344,6 +374,22 @@ func (m *RawProxyRepositoryAPIRequest) contextValidateRaw(ctx context.Context, f
 				return ve.ValidateName("raw")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("raw")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RawProxyRepositoryAPIRequest) contextValidateReplication(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Replication != nil {
+		if err := m.Replication.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("replication")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("replication")
 			}
 			return err
 		}

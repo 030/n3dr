@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.7.1] - 2022-07-24
+
+### Changed
+
+- Alpine version to 3.16.1.
+- Golang version to 1.18.4-alpine3.16.
+- GolangCI version to v1.47.2-alpine.
+- Nexus3 and API version to 3.40.1.
+
+### Updated
+
+- the versions of multiple Golang modules.
+
 ## [6.7.0] - 2022-05-27
 
 ### Added
@@ -17,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Alpine version to 3.16.2.
+- Alpine version to 3.16.0.
 - Golang version to 1.18.2-alpine3.16.
 - GolangCI version to v1.46.2-alpine.
 - Nexus3 and API version to 3.39.0.
@@ -712,7 +725,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.7.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.7.1...HEAD
+[6.7.1]: https://github.com/030/n3dr/compare/6.7.0...6.7.1
 [6.7.0]: https://github.com/030/n3dr/compare/6.6.2...6.7.0
 [6.6.2]: https://github.com/030/n3dr/compare/6.6.1...6.6.2
 [6.6.1]: https://github.com/030/n3dr/compare/6.6.0...6.6.1

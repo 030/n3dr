@@ -64,7 +64,7 @@ type ClientService interface {
 }
 
 /*
-  CreatePrivilege creates a wildcard type privilege
+  CreatePrivilege creates an application type privilege
 */
 func (a *Client) CreatePrivilege(params *CreatePrivilegeParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -74,7 +74,7 @@ func (a *Client) CreatePrivilege(params *CreatePrivilegeParams, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "createPrivilege",
 		Method:             "POST",
-		PathPattern:        "/v1/security/privileges/wildcard",
+		PathPattern:        "/v1/security/privileges/application",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -95,7 +95,7 @@ func (a *Client) CreatePrivilege(params *CreatePrivilegeParams, opts ...ClientOp
 }
 
 /*
-  CreatePrivilege1 creates an application type privilege
+  CreatePrivilege1 creates a wildcard type privilege
 */
 func (a *Client) CreatePrivilege1(params *CreatePrivilege1Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -105,7 +105,7 @@ func (a *Client) CreatePrivilege1(params *CreatePrivilege1Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "createPrivilege_1",
 		Method:             "POST",
-		PathPattern:        "/v1/security/privileges/application",
+		PathPattern:        "/v1/security/privileges/wildcard",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -157,7 +157,7 @@ func (a *Client) CreatePrivilege2(params *CreatePrivilege2Params, opts ...Client
 }
 
 /*
-  CreatePrivilege3 creates a repository view type privilege
+  CreatePrivilege3 creates a repository admin type privilege
 */
 func (a *Client) CreatePrivilege3(params *CreatePrivilege3Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -167,7 +167,7 @@ func (a *Client) CreatePrivilege3(params *CreatePrivilege3Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "createPrivilege_3",
 		Method:             "POST",
-		PathPattern:        "/v1/security/privileges/repository-view",
+		PathPattern:        "/v1/security/privileges/repository-admin",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -188,7 +188,7 @@ func (a *Client) CreatePrivilege3(params *CreatePrivilege3Params, opts ...Client
 }
 
 /*
-  CreatePrivilege4 creates a repository admin type privilege
+  CreatePrivilege4 creates a repository view type privilege
 */
 func (a *Client) CreatePrivilege4(params *CreatePrivilege4Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -198,7 +198,7 @@ func (a *Client) CreatePrivilege4(params *CreatePrivilege4Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "createPrivilege_4",
 		Method:             "POST",
-		PathPattern:        "/v1/security/privileges/repository-admin",
+		PathPattern:        "/v1/security/privileges/repository-view",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -250,7 +250,7 @@ func (a *Client) CreatePrivilege5(params *CreatePrivilege5Params, opts ...Client
 }
 
 /*
-  DeletePrivilege deletes a privilege by id
+  DeletePrivilege deletes a privilege by name
 */
 func (a *Client) DeletePrivilege(params *DeletePrivilegeParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -260,7 +260,7 @@ func (a *Client) DeletePrivilege(params *DeletePrivilegeParams, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "deletePrivilege",
 		Method:             "DELETE",
-		PathPattern:        "/v1/security/privileges/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -281,7 +281,7 @@ func (a *Client) DeletePrivilege(params *DeletePrivilegeParams, opts ...ClientOp
 }
 
 /*
-  GetPrivilege retrieves a privilege by id
+  GetPrivilege retrieves a privilege by name
 */
 func (a *Client) GetPrivilege(params *GetPrivilegeParams, opts ...ClientOption) (*GetPrivilegeOK, error) {
 	// TODO: Validate the params before sending
@@ -291,7 +291,7 @@ func (a *Client) GetPrivilege(params *GetPrivilegeParams, opts ...ClientOption) 
 	op := &runtime.ClientOperation{
 		ID:                 "getPrivilege",
 		Method:             "GET",
-		PathPattern:        "/v1/security/privileges/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -357,7 +357,7 @@ func (a *Client) GetPrivileges(params *GetPrivilegesParams, opts ...ClientOption
 }
 
 /*
-  UpdatePrivilege updates a wildcard type privilege
+  UpdatePrivilege updates an application type privilege
 */
 func (a *Client) UpdatePrivilege(params *UpdatePrivilegeParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -367,7 +367,7 @@ func (a *Client) UpdatePrivilege(params *UpdatePrivilegeParams, opts ...ClientOp
 	op := &runtime.ClientOperation{
 		ID:                 "updatePrivilege",
 		Method:             "PUT",
-		PathPattern:        "/v1/security/privileges/wildcard/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/application/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -388,7 +388,7 @@ func (a *Client) UpdatePrivilege(params *UpdatePrivilegeParams, opts ...ClientOp
 }
 
 /*
-  UpdatePrivilege1 updates an application type privilege
+  UpdatePrivilege1 updates a wildcard type privilege
 */
 func (a *Client) UpdatePrivilege1(params *UpdatePrivilege1Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -398,7 +398,7 @@ func (a *Client) UpdatePrivilege1(params *UpdatePrivilege1Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "updatePrivilege_1",
 		Method:             "PUT",
-		PathPattern:        "/v1/security/privileges/application/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/wildcard/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -429,7 +429,7 @@ func (a *Client) UpdatePrivilege2(params *UpdatePrivilege2Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "updatePrivilege_2",
 		Method:             "PUT",
-		PathPattern:        "/v1/security/privileges/repository-view/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/repository-view/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -450,7 +450,7 @@ func (a *Client) UpdatePrivilege2(params *UpdatePrivilege2Params, opts ...Client
 }
 
 /*
-  UpdatePrivilege3 updates a repository admin type privilege
+  UpdatePrivilege3 updates a repository content selector type privilege
 */
 func (a *Client) UpdatePrivilege3(params *UpdatePrivilege3Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -460,7 +460,7 @@ func (a *Client) UpdatePrivilege3(params *UpdatePrivilege3Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "updatePrivilege_3",
 		Method:             "PUT",
-		PathPattern:        "/v1/security/privileges/repository-admin/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/repository-content-selector/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -481,7 +481,7 @@ func (a *Client) UpdatePrivilege3(params *UpdatePrivilege3Params, opts ...Client
 }
 
 /*
-  UpdatePrivilege4 updates a repository content selector type privilege
+  UpdatePrivilege4 updates a repository admin type privilege
 */
 func (a *Client) UpdatePrivilege4(params *UpdatePrivilege4Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -491,7 +491,7 @@ func (a *Client) UpdatePrivilege4(params *UpdatePrivilege4Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "updatePrivilege_4",
 		Method:             "PUT",
-		PathPattern:        "/v1/security/privileges/repository-content-selector/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/repository-admin/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -522,7 +522,7 @@ func (a *Client) UpdatePrivilege5(params *UpdatePrivilege5Params, opts ...Client
 	op := &runtime.ClientOperation{
 		ID:                 "updatePrivilege_5",
 		Method:             "PUT",
-		PathPattern:        "/v1/security/privileges/script/{privilegeId}",
+		PathPattern:        "/v1/security/privileges/script/{privilegeName}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
