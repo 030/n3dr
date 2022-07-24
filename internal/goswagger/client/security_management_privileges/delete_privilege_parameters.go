@@ -59,11 +59,11 @@ func NewDeletePrivilegeParamsWithHTTPClient(client *http.Client) *DeletePrivileg
 */
 type DeletePrivilegeParams struct {
 
-	/* PrivilegeID.
+	/* PrivilegeName.
 
-	   The id of the privilege to delete.
+	   The name of the privilege to delete.
 	*/
-	PrivilegeID string
+	PrivilegeName string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -118,15 +118,15 @@ func (o *DeletePrivilegeParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithPrivilegeID adds the privilegeID to the delete privilege params
-func (o *DeletePrivilegeParams) WithPrivilegeID(privilegeID string) *DeletePrivilegeParams {
-	o.SetPrivilegeID(privilegeID)
+// WithPrivilegeName adds the privilegeName to the delete privilege params
+func (o *DeletePrivilegeParams) WithPrivilegeName(privilegeName string) *DeletePrivilegeParams {
+	o.SetPrivilegeName(privilegeName)
 	return o
 }
 
-// SetPrivilegeID adds the privilegeId to the delete privilege params
-func (o *DeletePrivilegeParams) SetPrivilegeID(privilegeID string) {
-	o.PrivilegeID = privilegeID
+// SetPrivilegeName adds the privilegeName to the delete privilege params
+func (o *DeletePrivilegeParams) SetPrivilegeName(privilegeName string) {
+	o.PrivilegeName = privilegeName
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -137,8 +137,8 @@ func (o *DeletePrivilegeParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	}
 	var res []error
 
-	// path param privilegeId
-	if err := r.SetPathParam("privilegeId", o.PrivilegeID); err != nil {
+	// path param privilegeName
+	if err := r.SetPathParam("privilegeName", o.PrivilegeName); err != nil {
 		return err
 	}
 

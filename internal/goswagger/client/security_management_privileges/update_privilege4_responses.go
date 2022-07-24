@@ -56,7 +56,7 @@ type UpdatePrivilege4BadRequest struct {
 }
 
 func (o *UpdatePrivilege4BadRequest) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/repository-content-selector/{privilegeId}][%d] updatePrivilege4BadRequest ", 400)
+	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege4BadRequest ", 400)
 }
 
 func (o *UpdatePrivilege4BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -77,7 +77,7 @@ type UpdatePrivilege4Forbidden struct {
 }
 
 func (o *UpdatePrivilege4Forbidden) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/repository-content-selector/{privilegeId}][%d] updatePrivilege4Forbidden ", 403)
+	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege4Forbidden ", 403)
 }
 
 func (o *UpdatePrivilege4Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -98,7 +98,7 @@ type UpdatePrivilege4NotFound struct {
 }
 
 func (o *UpdatePrivilege4NotFound) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/repository-content-selector/{privilegeId}][%d] updatePrivilege4NotFound ", 404)
+	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege4NotFound ", 404)
 }
 
 func (o *UpdatePrivilege4NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

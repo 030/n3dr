@@ -65,7 +65,7 @@ type CreatePrivilegeParams struct {
 
 	   The privilege to create.
 	*/
-	Body *models.APIPrivilegeWildcardRequest
+	Body *models.APIPrivilegeApplicationRequest
 
 	timeout    time.Duration
 	Context    context.Context
@@ -121,13 +121,13 @@ func (o *CreatePrivilegeParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create privilege params
-func (o *CreatePrivilegeParams) WithBody(body *models.APIPrivilegeWildcardRequest) *CreatePrivilegeParams {
+func (o *CreatePrivilegeParams) WithBody(body *models.APIPrivilegeApplicationRequest) *CreatePrivilegeParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create privilege params
-func (o *CreatePrivilegeParams) SetBody(body *models.APIPrivilegeWildcardRequest) {
+func (o *CreatePrivilegeParams) SetBody(body *models.APIPrivilegeApplicationRequest) {
 	o.Body = body
 }
 
