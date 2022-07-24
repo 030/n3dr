@@ -67,11 +67,11 @@ type UpdatePrivilege2Params struct {
 	*/
 	Body *models.APIPrivilegeRepositoryViewRequest
 
-	/* PrivilegeID.
+	/* PrivilegeName.
 
-	   The id of the privilege to update.
+	   The name of the privilege to update.
 	*/
-	PrivilegeID string
+	PrivilegeName string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -137,15 +137,15 @@ func (o *UpdatePrivilege2Params) SetBody(body *models.APIPrivilegeRepositoryView
 	o.Body = body
 }
 
-// WithPrivilegeID adds the privilegeID to the update privilege 2 params
-func (o *UpdatePrivilege2Params) WithPrivilegeID(privilegeID string) *UpdatePrivilege2Params {
-	o.SetPrivilegeID(privilegeID)
+// WithPrivilegeName adds the privilegeName to the update privilege 2 params
+func (o *UpdatePrivilege2Params) WithPrivilegeName(privilegeName string) *UpdatePrivilege2Params {
+	o.SetPrivilegeName(privilegeName)
 	return o
 }
 
-// SetPrivilegeID adds the privilegeId to the update privilege 2 params
-func (o *UpdatePrivilege2Params) SetPrivilegeID(privilegeID string) {
-	o.PrivilegeID = privilegeID
+// SetPrivilegeName adds the privilegeName to the update privilege 2 params
+func (o *UpdatePrivilege2Params) SetPrivilegeName(privilegeName string) {
+	o.PrivilegeName = privilegeName
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -161,8 +161,8 @@ func (o *UpdatePrivilege2Params) WriteToRequest(r runtime.ClientRequest, reg str
 		}
 	}
 
-	// path param privilegeId
-	if err := r.SetPathParam("privilegeId", o.PrivilegeID); err != nil {
+	// path param privilegeName
+	if err := r.SetPathParam("privilegeName", o.PrivilegeName); err != nil {
 		return err
 	}
 

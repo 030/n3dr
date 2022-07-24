@@ -59,11 +59,11 @@ func NewGetPrivilegeParamsWithHTTPClient(client *http.Client) *GetPrivilegeParam
 */
 type GetPrivilegeParams struct {
 
-	/* PrivilegeID.
+	/* PrivilegeName.
 
-	   The id of the privilege to retrieve.
+	   The name of the privilege to retrieve.
 	*/
-	PrivilegeID string
+	PrivilegeName string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -118,15 +118,15 @@ func (o *GetPrivilegeParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithPrivilegeID adds the privilegeID to the get privilege params
-func (o *GetPrivilegeParams) WithPrivilegeID(privilegeID string) *GetPrivilegeParams {
-	o.SetPrivilegeID(privilegeID)
+// WithPrivilegeName adds the privilegeName to the get privilege params
+func (o *GetPrivilegeParams) WithPrivilegeName(privilegeName string) *GetPrivilegeParams {
+	o.SetPrivilegeName(privilegeName)
 	return o
 }
 
-// SetPrivilegeID adds the privilegeId to the get privilege params
-func (o *GetPrivilegeParams) SetPrivilegeID(privilegeID string) {
-	o.PrivilegeID = privilegeID
+// SetPrivilegeName adds the privilegeName to the get privilege params
+func (o *GetPrivilegeParams) SetPrivilegeName(privilegeName string) {
+	o.PrivilegeName = privilegeName
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -137,8 +137,8 @@ func (o *GetPrivilegeParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	}
 	var res []error
 
-	// path param privilegeId
-	if err := r.SetPathParam("privilegeId", o.PrivilegeID); err != nil {
+	// path param privilegeName
+	if err := r.SetPathParam("privilegeName", o.PrivilegeName); err != nil {
 		return err
 	}
 

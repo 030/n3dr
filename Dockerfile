@@ -1,4 +1,4 @@
-FROM golang:1.18.2-alpine3.16 as builder
+FROM golang:1.18.4-alpine3.16 as builder
 ARG VERSION
 ENV USERNAME n3dr
 RUN adduser -D -g '' $USERNAME
@@ -8,7 +8,7 @@ RUN apk add --no-cache git=~2 && \
   CGO_ENABLED=0 go build -ldflags "-X main.Version=${VERSION}" -buildvcs=false && \
   cp n3dr /n3dr
 
-FROM alpine:3.16.0
+FROM alpine:3.16.1
 RUN apk update && \
   apk upgrade && \
   rm -rf /var/cache/apk/*

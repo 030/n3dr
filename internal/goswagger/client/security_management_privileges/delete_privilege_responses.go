@@ -56,7 +56,7 @@ type DeletePrivilegeBadRequest struct {
 }
 
 func (o *DeletePrivilegeBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeId}][%d] deletePrivilegeBadRequest ", 400)
+	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeBadRequest ", 400)
 }
 
 func (o *DeletePrivilegeBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -77,7 +77,7 @@ type DeletePrivilegeForbidden struct {
 }
 
 func (o *DeletePrivilegeForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeId}][%d] deletePrivilegeForbidden ", 403)
+	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeForbidden ", 403)
 }
 
 func (o *DeletePrivilegeForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -98,7 +98,7 @@ type DeletePrivilegeNotFound struct {
 }
 
 func (o *DeletePrivilegeNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeId}][%d] deletePrivilegeNotFound ", 404)
+	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeNotFound ", 404)
 }
 
 func (o *DeletePrivilegeNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

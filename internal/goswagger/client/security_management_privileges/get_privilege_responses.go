@@ -60,7 +60,7 @@ type GetPrivilegeOK struct {
 }
 
 func (o *GetPrivilegeOK) Error() string {
-	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeId}][%d] getPrivilegeOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeOK  %+v", 200, o.Payload)
 }
 func (o *GetPrivilegeOK) GetPayload() *models.APIPrivilege {
 	return o.Payload
@@ -91,7 +91,7 @@ type GetPrivilegeForbidden struct {
 }
 
 func (o *GetPrivilegeForbidden) Error() string {
-	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeId}][%d] getPrivilegeForbidden ", 403)
+	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeForbidden ", 403)
 }
 
 func (o *GetPrivilegeForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -112,7 +112,7 @@ type GetPrivilegeNotFound struct {
 }
 
 func (o *GetPrivilegeNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeId}][%d] getPrivilegeNotFound ", 404)
+	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeNotFound ", 404)
 }
 
 func (o *GetPrivilegeNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
