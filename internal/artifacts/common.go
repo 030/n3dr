@@ -2,7 +2,7 @@ package artifacts
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -113,7 +113,7 @@ func (n Nexus3) responseBodyString(resp *http.Response) ([]byte, string, error) 
 	var bodyBytes []byte
 	var err error
 	if resp.StatusCode == http.StatusOK {
-		bodyBytes, err = ioutil.ReadAll(resp.Body)
+		bodyBytes, err = io.ReadAll(resp.Body)
 		if err != nil {
 			return nil, "", err
 		}
