@@ -24,6 +24,7 @@ reside in a certain Nexus3 repository`,
 			log.Fatal(err)
 		}
 
+		log.Warn("The backup command is deprecated. Use the repositoriesV2 command instead")
 		selectedRepositories := strings.Split(n3drRepo, ",")
 		for _, repository := range selectedRepositories {
 			log.Info("Processing repository: ", repository)
@@ -51,6 +52,7 @@ reside in a certain Nexus3 repository`,
 	Version: rootCmd.Version,
 }
 
+// Deprecated: will be replaced by the repositoriesV2 command.
 func init() {
 	backupCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repositories")
 	backupCmd.Flags().BoolVarP(&npm, "npm", "", false, "backup an NPM repository")

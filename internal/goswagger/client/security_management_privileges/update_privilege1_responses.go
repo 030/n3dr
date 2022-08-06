@@ -56,7 +56,7 @@ type UpdatePrivilege1BadRequest struct {
 }
 
 func (o *UpdatePrivilege1BadRequest) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilege1BadRequest ", 400)
+	return fmt.Sprintf("[PUT /v1/security/privileges/application/{privilegeName}][%d] updatePrivilege1BadRequest ", 400)
 }
 
 func (o *UpdatePrivilege1BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -77,7 +77,7 @@ type UpdatePrivilege1Forbidden struct {
 }
 
 func (o *UpdatePrivilege1Forbidden) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilege1Forbidden ", 403)
+	return fmt.Sprintf("[PUT /v1/security/privileges/application/{privilegeName}][%d] updatePrivilege1Forbidden ", 403)
 }
 
 func (o *UpdatePrivilege1Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -98,7 +98,7 @@ type UpdatePrivilege1NotFound struct {
 }
 
 func (o *UpdatePrivilege1NotFound) Error() string {
-	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilege1NotFound ", 404)
+	return fmt.Sprintf("[PUT /v1/security/privileges/application/{privilegeName}][%d] updatePrivilege1NotFound ", 404)
 }
 
 func (o *UpdatePrivilege1NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

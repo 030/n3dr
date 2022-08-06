@@ -25,7 +25,7 @@ type AzureBlobStoreAPIAuthentication struct {
 
 	// The type of Azure authentication to use.
 	// Required: true
-	// Enum: [ACCOUNTKEY MANAGEDIDENTITY]
+	// Enum: [ACCOUNTKEY MANAGEDIDENTITY ENVIRONMENTVARIABLE]
 	AuthenticationMethod *string `json:"authenticationMethod"`
 }
 
@@ -47,7 +47,7 @@ var azureBlobStoreApiAuthenticationTypeAuthenticationMethodPropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ACCOUNTKEY","MANAGEDIDENTITY"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ACCOUNTKEY","MANAGEDIDENTITY","ENVIRONMENTVARIABLE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -62,6 +62,9 @@ const (
 
 	// AzureBlobStoreAPIAuthenticationAuthenticationMethodMANAGEDIDENTITY captures enum value "MANAGEDIDENTITY"
 	AzureBlobStoreAPIAuthenticationAuthenticationMethodMANAGEDIDENTITY string = "MANAGEDIDENTITY"
+
+	// AzureBlobStoreAPIAuthenticationAuthenticationMethodENVIRONMENTVARIABLE captures enum value "ENVIRONMENTVARIABLE"
+	AzureBlobStoreAPIAuthenticationAuthenticationMethodENVIRONMENTVARIABLE string = "ENVIRONMENTVARIABLE"
 )
 
 // prop value enum
