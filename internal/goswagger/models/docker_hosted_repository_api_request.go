@@ -42,7 +42,7 @@ type DockerHostedRepositoryAPIRequest struct {
 
 	// storage
 	// Required: true
-	Storage *HostedStorageAttributes `json:"storage"`
+	Storage *DockerHostedStorageAttributes `json:"storage"`
 }
 
 // Validate validates this docker hosted repository Api request

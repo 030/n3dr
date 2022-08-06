@@ -106,7 +106,7 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 	online := true
 	strictContentTypeValidation := true
 	writePolicy := "allow_once"
-	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	dhsa := models.DockerHostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
 
 	var forceBasicAuth = true
 	var v1Enabled = false
@@ -116,7 +116,7 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 	} else {
 		docker.HTTPPort = port
 	}
-	mr := models.DockerHostedRepositoryAPIRequest{Docker: &docker, Name: &name, Online: &online, Storage: &mhsa}
+	mr := models.DockerHostedRepositoryAPIRequest{Docker: &docker, Name: &name, Online: &online, Storage: &dhsa}
 	createRawHosted := repository_management.CreateRepository18Params{Body: &mr}
 	createRawHosted.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository18(&createRawHosted); err != nil {

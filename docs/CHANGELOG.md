@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.7.2] - 2022-08-06
+
+### Added
+
+- deprecation notice that `repositoriesV2` will replace the `backup`,
+  `repositories` and `upload` commands.
+
+### Changed
+
+- Golang version to 1.19.0-alpine3.16.
+- GolangCI version to v1.48.0-alpine.
+- Nexus3 and API version to 3.41.0.
+- `io/ioutil` by either `os` or `io` as it is deprecated since Golang 1.16.
+
+### Updated
+
+- the versions of multiple Golang modules.
+
 ## [6.7.1] - 2022-07-24
 
 ### Changed
@@ -725,7 +743,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Download all artifacts from a certain Nexus3 repository.
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.7.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.7.2...HEAD
+[6.7.2]: https://github.com/030/n3dr/compare/6.7.1...6.7.2
 [6.7.1]: https://github.com/030/n3dr/compare/6.7.0...6.7.1
 [6.7.0]: https://github.com/030/n3dr/compare/6.6.2...6.7.0
 [6.6.2]: https://github.com/030/n3dr/compare/6.6.1...6.6.2

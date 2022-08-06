@@ -315,7 +315,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.7.1 .
+docker build -t utrecht/n3dr:6.7.2 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -325,7 +325,7 @@ docker build -t utrecht/n3dr:6.7.1 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.1
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.2
 ```
 
 ### Upload
@@ -334,7 +334,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.1
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.7.2
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
@@ -596,41 +596,7 @@ Note: use `--https=false` in order to connect to a <http://nexus-url/>.
 
 ## Development
 
-### go-swagger
-
-Run:
-
-```bash
-N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE=false ./test/integration-tests.sh
-```
-
-Once Nexus had been started, download the go-swagger, swagger.json and
-generate internal go-swagger code:
-
-```bash
-export GITHUB_URL=https://github.com
-export GS_URI=go-swagger/go-swagger/releases/download
-export GS_VERSION=v0.29.0
-export GS_URL=${GITHUB_URL}/${GS_URI}/${GS_VERSION}/swagger_linux_amd64
-curl -L \
-  ${GS_URL} \
-  -o swagger
-chmod +x swagger
-mkdir -p internal/goswagger
-curl http://localhost:9999/service/rest/swagger.json -o swagger.json
-./swagger generate client \
-  --name=nexus3 \
-  --spec swagger.json \
-  --target=internal/goswagger \
-  --skip-validation
-go mod tidy
-```
-
-### Unit Tests
-
-```bash
-go test internal/artifacts/common.go internal/artifacts/common_test.go
-```
+* [docs](./docs/development/README.md)
 
 ### Integration testing on Windows
 
