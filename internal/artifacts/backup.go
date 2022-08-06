@@ -4,7 +4,6 @@ import (
 	"crypto/sha512"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -37,7 +36,7 @@ func TempDownloadDir(downloadDirName string) (string, error) {
 	if err := os.MkdirAll(tmpDir, os.ModePerm); err != nil {
 		return "", nil
 	}
-	dname, err := ioutil.TempDir(tmpDir, "download")
+	dname, err := os.MkdirTemp(tmpDir, "download")
 	if err != nil {
 		return "", err
 	}

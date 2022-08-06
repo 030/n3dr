@@ -5,7 +5,6 @@ import (
 	"crypto/x509"
 	_ "embed"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -200,7 +199,7 @@ func insecureCerts() error {
 		if err != nil {
 			return err
 		}
-		caCert, err := ioutil.ReadFile(filepath.Clean(filepath.Join(n3drHomeDir, "ca.crt")))
+		caCert, err := os.ReadFile(filepath.Clean(filepath.Join(n3drHomeDir, "ca.crt")))
 		if err != nil {
 			return err
 		}

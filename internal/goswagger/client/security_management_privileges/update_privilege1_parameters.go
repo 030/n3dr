@@ -65,7 +65,7 @@ type UpdatePrivilege1Params struct {
 
 	   The privilege to update.
 	*/
-	Body *models.APIPrivilegeWildcardRequest
+	Body *models.APIPrivilegeApplicationRequest
 
 	/* PrivilegeName.
 
@@ -127,13 +127,13 @@ func (o *UpdatePrivilege1Params) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update privilege 1 params
-func (o *UpdatePrivilege1Params) WithBody(body *models.APIPrivilegeWildcardRequest) *UpdatePrivilege1Params {
+func (o *UpdatePrivilege1Params) WithBody(body *models.APIPrivilegeApplicationRequest) *UpdatePrivilege1Params {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update privilege 1 params
-func (o *UpdatePrivilege1Params) SetBody(body *models.APIPrivilegeWildcardRequest) {
+func (o *UpdatePrivilege1Params) SetBody(body *models.APIPrivilegeApplicationRequest) {
 	o.Body = body
 }
 

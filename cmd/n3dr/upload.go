@@ -15,6 +15,7 @@ var uploadCmd = &cobra.Command{
 	Long: `Use this command in order to upload all artifacts to
 a specific Nexus3 repository, e.g. maven-releases`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Warn("The upload command is deprecated. Use the repositoriesV2 command instead")
 		n := cli.Nexus3{URL: n3drURL, User: n3drUser, Pass: n3drPass, Repository: n3drRepo, APIVersion: apiVersion, ArtifactType: artifactType}
 		if err := n.ValidateNexusURL(); err != nil {
 			log.Fatal(err)
@@ -26,6 +27,7 @@ a specific Nexus3 repository, e.g. maven-releases`,
 	Version: rootCmd.Version,
 }
 
+// Deprecated: will be replaced by the repositoriesV2 command.
 func init() {
 	uploadCmd.Flags().StringVarP(&artifactType, "artifactType", "t", "maven2", "type of artifacts that have to be uploaded")
 	uploadCmd.PersistentFlags().StringVarP(&n3drRepo, "n3drRepo", "r", "", "nexus3 repository")

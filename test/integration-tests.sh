@@ -17,7 +17,7 @@ fi
 
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
-  NEXUS_VERSION=3.40.1
+  NEXUS_VERSION=3.41.0
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
