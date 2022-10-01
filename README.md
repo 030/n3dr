@@ -1,7 +1,7 @@
 # N3DR
 
 [![CI](https://github.com/030/n3dr/workflows/Go/badge.svg?event=push)](https://github.com/030/n3dr/actions?query=workflow%3AGo)
-[![GoDoc Widget]][GoDoc]
+[![GoDoc Widget]][godoc]
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/030/n3dr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
 [![StackOverflow SE Questions](https://img.shields.io/stackexchange/stackoverflow/t/n3dr.svg?logo=stackoverflow)](https://stackoverflow.com/tags/n3dr)
@@ -39,6 +39,8 @@
 [![Chocolatey](https://img.shields.io/chocolatey/dt/n3dr)](https://chocolatey.org/packages/n3dr)
 [![n3dr](https://snapcraft.io//n3dr/badge.svg)](https://snapcraft.io/n3dr)
 [![codebeat badge](https://codebeat.co/badges/f4aa5086-a4d5-41cd-893a-5da816ee9107)](https://codebeat.co/projects/github-com-030-n3dr-main)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 <a href="https://n3dr.releasesoftwaremoreoften.com">\
 <img src="https://github.com/030/n3dr/raw/main/cmd/n3dr/assets/logo/logo.png" width="100"></a>
@@ -64,9 +66,9 @@ upload the backed up proxy content to it.
 
 The aims of the n3dr tool are:
 
-* to backup all artifacts from a certain Nexus maven repository.
-* to migrate all artifacts from NexusA to NexusB.
-* configuration-as-code.
+- to backup all artifacts from a certain Nexus maven repository.
+- to migrate all artifacts from NexusA to NexusB.
+- configuration-as-code.
 
 ## Installation
 
@@ -101,15 +103,15 @@ choco install n3dr
 Create a user, e.g. n3dr-download in Nexus3, create a role, e.g. n3dr-download
 and assign the following roles:
 
-* `nx-repository-view-*-*-browse`
-* `nx-repository-view-*-*-read`
+- `nx-repository-view-*-*-browse`
+- `nx-repository-view-*-*-read`
 
 ### N3DR upload user
 
 In order to upload artifacts, additional privileges are required:
 
-* `nx-repository-view-*-*-add`
-* `nx-repository-view-*-*-edit`
+- `nx-repository-view-*-*-add`
+- `nx-repository-view-*-*-edit`
 
 ## Usage
 
@@ -406,8 +408,8 @@ n3dr repositories -u admin -n http://localhost:8081 -b
 
 Note: a new folder will be created for every repository:
 
-* download/maven-public
-* download/maven-releases
+- download/maven-public
+- download/maven-releases
 
 ### Backup only certain artifacts
 
@@ -468,8 +470,8 @@ n3dr upload -u <new-target-nexus3-user> -n <new-target-nexus3-server-url> \
 `n3dr` supports backing up to [OCI Object Storage](https://www.oracle.com/cloud/storage/object-storage.html).
 To enable this option you need to
 
-* Configure OCI environment and secrets locally: <https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm/>
-* Add following options to `~/.n3dr/config.yml`:
+- Configure OCI environment and secrets locally: <https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm/>
+- Add following options to `~/.n3dr/config.yml`:
 
 ```bash
 ociBucket: nexus_dev_archives
@@ -503,20 +505,20 @@ go build
 
 Although there is a number of equivalent tools:
 
-* <https://github.com/RiotGamesMinions/nexus_cli/>
-* <https://github.com/packagemgmt/repositorytools/>
-* <https://github.com/thiagofigueiro/nexus3-cli/>
+- <https://github.com/RiotGamesMinions/nexus_cli/>
+- <https://github.com/packagemgmt/repositorytools/>
+- <https://github.com/thiagofigueiro/nexus3-cli/>
 
 None of them seems to be able to backup all repositories by running
 a single command.
 
-[GoDoc]: https://godoc.org/github.com/030/n3dr
-[GoDoc Widget]: https://godoc.org/github.com/030/n3dr?status.svg
+[godoc]: https://godoc.org/github.com/030/n3dr
+[godoc widget]: https://godoc.org/github.com/030/n3dr?status.svg
 
 ## Supported
 
 | type   | backup | upload | label |
-|--------|--------|--------|-------|
+| ------ | ------ | ------ | ----- |
 | apt    |        | x      |       |
 | maven2 | x      | x      | `+`   |
 | npm    | x      | x      | `*`   |
@@ -525,7 +527,7 @@ a single command.
 ### repositoriesV2
 
 | type      | backup | upload | label |
-|-----------|--------|--------|-------|
+| --------- | ------ | ------ | ----- |
 | apt       | x      | x      | `^`   |
 | bower     |        |        |       |
 | cocoapods |        |        |       |
@@ -596,7 +598,7 @@ Note: use `--https=false` in order to connect to a <http://nexus-url/>.
 
 ## Development
 
-* [docs](./docs/development/README.md)
+- [docs](./docs/development/README.md)
 
 ### Integration testing on Windows
 
