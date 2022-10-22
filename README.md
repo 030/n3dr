@@ -70,21 +70,11 @@ The aims of the n3dr tool are:
 - to migrate all artifacts from NexusA to NexusB.
 - configuration-as-code.
 
+## Instructions
+
+- [snap](docs/instructions/snap.md)
+
 ## Installation
-
-### Linux
-
-```bash
-snap install n3dr
-```
-
-Check the downloaded artifacts:
-
-```bash
-sudo ls /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764>
-sudo cp -r /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764> /home/${USER}/n3dr-backup
-sudo chown $USER:$USER -R /home/${USER}/n3dr-backup
-```
 
 ### MacOSX
 
@@ -344,10 +334,6 @@ navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
 ```bash
 n3dr upload -r releases -n <url>
 ```
-
-Note: if the snap package is used to upload artifacts, one has to ensure that
-the folder resides in the /home/$USER folder. Otherwise a:
-`lstat <repository-name>: no such file or directory` issue could occur.
 
 #### skipErrors
 
