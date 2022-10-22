@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/030/n3dr/internal/artifactsv2"
-	"github.com/030/n3dr/internal/artifactsv2/upload"
-	"github.com/030/n3dr/internal/pkg/connection"
+	"github.com/030/n3dr/internal/app/n3dr/artifactsv2"
+	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload"
+	"github.com/030/n3dr/internal/app/n3dr/connection"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +25,7 @@ download artifacts from all repositories`,
 			}
 			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure}
+		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip}
 		a := artifactsv2.Nexus3{Nexus3: &n}
 		if namesV2 {
 			if err := a.RepositoryNamesV2(); err != nil {

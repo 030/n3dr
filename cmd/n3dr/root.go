@@ -9,13 +9,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-
-	cli "github.com/030/n3dr/internal/artifacts"
+	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
+	"github.com/spf13/viper"
 )
 
 //go:embed assets/logo/text-image-com-n3dr.txt
@@ -106,19 +105,16 @@ func configFilePath() string {
 	return cfgFile
 }
 
-func ascii() error {
+func ascii() {
 	if showLogo {
 		fmt.Println(logo)
 	}
-	return nil
 }
 
 func initConfig() {
 	parseConfig(configFilePath())
 	viper.AutomaticEnv()
-	if err := ascii(); err != nil {
-		log.Fatal(err)
-	}
+	ascii()
 	enableDebug()
 	if err := insecureCerts(); err != nil {
 		log.Fatal(err)
@@ -161,7 +157,6 @@ func parseVarsFromConfig() {
 	}
 
 	showLogo = viper.GetBool("showLogo")
-	log.Info(showLogo)
 
 	if awsS3 {
 		awsBucket, err = valueInConfigFile("awsBucket")

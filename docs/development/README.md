@@ -25,7 +25,7 @@ curl http://localhost:9999/service/rest/swagger.json -o swagger.json
 ./swagger generate client \
   --name=nexus3 \
   --spec swagger.json \
-  --target=internal/goswagger \
+  --target=internal/app/n3dr/goswagger \
   --skip-validation
 go mod tidy
 ```

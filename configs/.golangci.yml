@@ -1,0 +1,108 @@
+---
+issues:
+  exclude-rules:
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/backup.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/config.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/configLDAP.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/configRepository.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/configUser.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/repositories.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/repositoriesV2.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/root.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/sync.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: cmd/n3dr/upload.go
+      text: "don't use `init` function"
+    - linters:
+        - unparam
+      path: internal/app/n3dr/artifacts/npm.go
+      text: '`body` is unused'
+    - linters:
+        - containedctx
+      path: internal/app/n3dr/artifacts/oci.go
+      text: found a struct that contains a context.Context field
+    - linters:
+        - funlen
+      path: internal/app/n3dr/artifacts/backup.go
+      text: Function 'createArtifact' is too long
+    - linters:
+        - funlen
+      path: internal/app/n3dr/artifactsv2/upload/upload.go
+      text: Function 'UploadSingleArtifact' has too many statements
+    - linters:
+        - gocognit
+      path: internal/app/n3dr/artifactsv2/upload/upload.go
+      text: cognitive complexity 55 of func `UploadSingleArtifact` is high
+linters:
+  enable-all: true
+  disable:
+    - bodyclose
+    - cyclop
+    - durationcheck
+    - errorlint
+    - exhaustruct
+    - forbidigo
+    - forcetypeassert
+    - gochecknoglobals
+    - goconst
+    - gocritic
+    - godot
+    - goerr113
+    - gofumpt
+    - golint
+    - gomnd
+    - lll
+    - nestif
+    - nlreturn
+    - noctx
+    - nonamedreturns
+    - paralleltest
+    - revive
+    - stylecheck
+    - testpackage
+    - unused
+    - usestdlibvars
+    - varnamelen
+    - whitespace
+    - wrapcheck
+    - wsl
+    #
+    # The following linters have been deprecated
+    #
+    - maligned
+    - ifshort
+    - structcheck
+    - exhaustivestruct
+    - scopelint
+    - deadcode
+    - nosnakecase
+    - interfacer
+    - varcheck

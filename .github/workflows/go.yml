@@ -1,6 +1,6 @@
 ---
 name: Go
-on: [push]
+'on': push
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -24,7 +24,9 @@ jobs:
       - name: Unit tests
         run: |
           go test -short -cover -v -coverprofile=coverage.txt \
-          -covermode=atomic ./...
+          -covermode=atomic $(go list ./... |\
+            grep -v internal/goswagger |\
+            grep -v cmd/n3dr)
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - uses: codecov/codecov-action@v1
         with:
@@ -38,9 +40,9 @@ jobs:
           args: >
             -Dsonar.organization=030-github
             -Dsonar.projectKey=030_yaam
-            -Dsonar.exclusions=test/testdata/**
+            -Dsonar.exclusions=test/testdata/**,internal/goswagger/**
             -Dsonar.sources=.
-            -Dsonar.coverage.exclusions=**/*_test.go,test/testdata/**
+            -Dsonar.coverage.exclusions=**/*_test.go,test/testdata/**,internal/goswagger/**/*,cmd/**/*
             -Dsonar.verbose=true
             -Dsonar.go.coverage.reportPaths="coverage.txt"
         env:
@@ -61,9 +63,8 @@ jobs:
         run: |
           docker run --rm -v "$PWD:/mnt" koalaman/shellcheck:v0.7.1 */*.sh -x
           docker run --rm -v ${PWD}:/data markdownlint/markdownlint:0.11.0 \
-            README.md -s /data/.markdownlint.rb
-          docker run --rm -v $(pwd):/data cytopia/yamllint:1.26-0.8 .
+            README.md -s /data/configs/.markdownlint.rb
           docker run --rm -v $(pwd):/app -w /app -e GOFLAGS=-buildvcs=false \
             golangci/golangci-lint:v1.49.0-alpine golangci-lint run -v \
-            --timeout 2m30s
+            --timeout 2m30s --config configs/.golangci.yml
         if: ${{ startsWith(matrix.os, 'ubuntu') }}

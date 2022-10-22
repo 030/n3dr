@@ -1,6 +1,6 @@
 ---
 name: Dive CI
-on: [push]
+'on': push
 jobs:
   dive:
     runs-on: ubuntu-latest

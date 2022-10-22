@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/030/n3dr/internal/config/user"
-	"github.com/030/n3dr/internal/goswagger/models"
-	"github.com/030/n3dr/internal/pkg/connection"
+	"github.com/030/n3dr/internal/app/n3dr/config/user"
+	"github.com/030/n3dr/internal/app/n3dr/connection"
+	"github.com/030/n3dr/internal/app/n3dr/goswagger/models"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
