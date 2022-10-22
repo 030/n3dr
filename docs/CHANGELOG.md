@@ -2,9 +2,16 @@
 ## [Unreleased]
 
 
+<a name="6.7.5"></a>
+## [6.7.5] - 2022-10-22
+### Fix
+- **docs:** [[#264](https://github.com/030/n3dr/issues/264)] Improve snap.
+
+
 <a name="6.7.4"></a>
-## [6.7.4] - 2022-10-01
+## [6.7.4] - 2022-10-02
 ### Build
+- **deps:** Update versions.
 - **deps:** Add auto updater that creates a PR.
 
 
@@ -239,7 +246,8 @@
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.7.4...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.7.5...HEAD
+[6.7.5]: https://github.com/030/n3dr/compare/6.7.4...6.7.5
 [6.7.4]: https://github.com/030/n3dr/compare/6.7.3...6.7.4
 [6.7.3]: https://github.com/030/n3dr/compare/6.7.2...6.7.3
 [6.7.2]: https://github.com/030/n3dr/compare/6.7.1...6.7.2

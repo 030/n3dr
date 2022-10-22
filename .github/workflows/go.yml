@@ -22,7 +22,30 @@ jobs:
         with:
           go-version: 1.19.0
       - name: Unit tests
-        run: go test ./... -cover
+        run: |
+          go test -short -cover -v -coverprofile=coverage.txt \
+          -covermode=atomic ./...
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./coverage.txt
+          flags: unittests
+          verbose: true
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.organization=030-github
+            -Dsonar.projectKey=030_yaam
+            -Dsonar.exclusions=test/testdata/**
+            -Dsonar.sources=.
+            -Dsonar.coverage.exclusions=**/*_test.go,test/testdata/**
+            -Dsonar.verbose=true
+            -Dsonar.go.coverage.reportPaths="coverage.txt"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: Set N3DR deliverable environment variable
         run: echo "n3dr-deliverable=n3dr-${{ matrix.os }}" >> $GITHUB_ENV
