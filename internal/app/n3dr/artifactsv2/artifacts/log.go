@@ -1,4 +1,4 @@
-package main
+package artifacts
 
 import (
 	"github.com/030/n3dr/internal/app/n3dr/logger"
@@ -8,11 +8,7 @@ import (
 var log = logrus.New()
 
 func init() {
-	if err := logger.File("cmd/n3dr/main", log); err != nil {
+	if err := logger.File("internal/app/n3dr/artifactsv2/artifacts", log); err != nil {
 		panic(err)
 	}
-}
-
-func main() {
-	execute()
 }

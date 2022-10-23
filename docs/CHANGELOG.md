@@ -2,8 +2,14 @@
 ## [Unreleased]
 
 
+<a name="6.8.0"></a>
+## [6.8.0] - 2022-10-24
+### Feat
+- **logging:** [[#270](https://github.com/030/n3dr/issues/270)] Improve by adding a trace level.
+
+
 <a name="6.7.5"></a>
-## [6.7.5] - 2022-10-22
+## [6.7.5] - 2022-10-23
 ### Fix
 - **docs:** [[#264](https://github.com/030/n3dr/issues/264)] Improve snap.
 - **repositoriesV2:** [[#265](https://github.com/030/n3dr/issues/265)] Add missing zip functionality.
@@ -247,7 +253,8 @@
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.7.5...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.8.0...HEAD
+[6.8.0]: https://github.com/030/n3dr/compare/6.7.5...6.8.0
 [6.7.5]: https://github.com/030/n3dr/compare/6.7.4...6.7.5
 [6.7.4]: https://github.com/030/n3dr/compare/6.7.3...6.7.4
 [6.7.3]: https://github.com/030/n3dr/compare/6.7.2...6.7.3

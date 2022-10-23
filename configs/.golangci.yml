@@ -42,6 +42,18 @@ issues:
       path: cmd/n3dr/upload.go
       text: "don't use `init` function"
     - linters:
+        - gochecknoinits
+      path: cmd/n3dr/main.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: internal/app/n3dr/artifactsv2/download.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
+      path: internal/app/n3dr/artifactsv2/artifacts/log.go
+      text: "don't use `init` function"
+    - linters:
         - unparam
       path: internal/app/n3dr/artifacts/npm.go
       text: '`body` is unused'

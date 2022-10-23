@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 
 	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
-	homedir "github.com/mitchellh/go-homedir"
-	log "github.com/sirupsen/logrus"
+	"github.com/030/n3dr/internal/app/n3dr/project"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/viper"
@@ -66,27 +66,17 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&dockerPortSecure, "dockerPortSecure", false, "Whether the docker connector port should be secure")
 }
 
-func n3drHiddenHome() (string, error) {
-	home, err := homedir.Dir()
-	if err != nil {
-		return "", err
-	}
-	n3drHomeDir := filepath.Join(home, cli.HiddenN3DR)
-	log.Infof("n3drHomeDir: '%v'", n3drHomeDir)
-	return n3drHomeDir, nil
-}
-
 func configFile() (string, error) {
-	n3drHomeDir, err := n3drHiddenHome()
+	h, err := project.Home()
 	if err != nil {
 		return "", err
 	}
 
-	viper.AddConfigPath(n3drHomeDir)
+	viper.AddConfigPath(h)
 	viper.SetConfigName(cli.DefaultCfgFile)
 	viper.SetConfigType(cli.CfgFileExt)
 
-	file := filepath.Join(n3drHomeDir, cli.DefaultCfgFileWithExt)
+	file := filepath.Join(h, cli.DefaultCfgFileWithExt)
 	log.Debugf("configFile: '%v'", file)
 	return file, nil
 }
@@ -190,11 +180,11 @@ func parseConfig(cfgFile string) {
 func insecureCerts() error {
 	if insecureSkipVerify {
 		log.Infof("Loading CA in order to connect to Nexus3...")
-		n3drHomeDir, err := n3drHiddenHome()
+		h, err := project.Home()
 		if err != nil {
 			return err
 		}
-		caCert, err := os.ReadFile(filepath.Clean(filepath.Join(n3drHomeDir, "ca.crt")))
+		caCert, err := os.ReadFile(filepath.Clean(filepath.Join(h, "ca.crt")))
 		if err != nil {
 			return err
 		}
@@ -209,7 +199,7 @@ func insecureCerts() error {
 func enableDebug() {
 	log.SetReportCaller(true)
 	if debug {
-		log.SetLevel(log.DebugLevel)
+		log.SetLevel(logrus.DebugLevel)
 
 		// Added to be able to debug viper (used to read the config file)
 		// Viper is using a different logger

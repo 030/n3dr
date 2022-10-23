@@ -6,7 +6,6 @@ import (
 
 	"github.com/030/n3dr/internal/app/n3dr/config/repository"
 	"github.com/030/n3dr/internal/app/n3dr/connection"
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 

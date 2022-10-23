@@ -16,11 +16,8 @@ import (
 	"gopkg.in/validator.v2"
 )
 
-const projectName = "n3dr"
-
 const (
 	CfgFileExt     = "yml"
-	HiddenN3DR     = "." + projectName
 	DefaultCfgFile = "config"
 )
 

@@ -13,17 +13,26 @@ import (
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client/components"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/models"
+	"github.com/030/n3dr/internal/app/n3dr/logger"
 	"github.com/030/n3dr/internal/app/n3dr/s3"
 	"github.com/030/p2iwd/pkg/p2iwd"
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/mholt/archiver"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 const chmodDir = 0750
 
 type Nexus3 struct {
 	*connection.Nexus3
+}
+
+var log = logrus.New()
+
+func init() {
+	if err := logger.File("internal/app/n3dr/artifactsv2", log); err != nil {
+		panic(err)
+	}
 }
 
 func (n *Nexus3) RepositoryNamesV2() error {
@@ -52,6 +61,13 @@ func (n *Nexus3) CountRepositoriesV2() error {
 
 func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models.AssetXO) error {
 	if checksum != downloadedFileChecksum {
+		log.WithFields(logrus.Fields{
+			"downloadURL":      asset.DownloadURL,
+			"format":           asset.Format,
+			"actualChecksum":   downloadedFileChecksum,
+			"expectedChecksum": checksum,
+		}).Debug("Download artifact as actualChecksum deviates from expected one")
+
 		req, err := http.NewRequest("GET", asset.DownloadURL, nil)
 		if err != nil {
 			return err
@@ -118,7 +134,11 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 				defer wg.Done()
 				shaType, checksum := artifacts.Checksum(asset)
 
-				log.Debugf("downloadURL: '%s', format: '%s', checksum: '%s'", asset.DownloadURL, asset.Format, checksum)
+				log.WithFields(logrus.Fields{
+					"downloadURL": asset.DownloadURL,
+					"format":      asset.Format,
+					"checksum":    checksum,
+				}).Trace("Artifact")
 				assetPath := asset.Path
 				filesToBeSkipped, err := artifacts.FilesToBeSkipped(assetPath)
 				if err != nil {

@@ -11,13 +11,13 @@ import (
 	"regexp"
 
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/models"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 func ChecksumLocalFile(file, shaType string) (checksum string, err error) {
 	f, err := os.Open(filepath.Clean(file))
 	if err != nil {
-		log.Debugf("file: '%v' not found on local disk", f)
+		log.Debugf("file: '%v' not found on local disk", file)
 		return "", nil
 	}
 
@@ -77,10 +77,16 @@ func Checksum(asset *models.AssetXO) (string, string) {
 }
 
 func FilesToBeSkipped(path string) (bool, error) {
-	filesToBeSkipped, err := regexp.MatchString(`^\.(sha(1|256|512)|md5)$`, filepath.Ext(path))
+	regex := `^\.(sha(1|256|512)|md5)$`
+	skipped, err := regexp.MatchString(regex, filepath.Ext(path))
 	if err != nil {
 		return false, err
 	}
-	log.Debugf("file: %s, filesToBeSkipped: %v", path, filesToBeSkipped)
-	return filesToBeSkipped, nil
+	log.WithFields(logrus.Fields{
+		"path":    path,
+		"regex":   regex,
+		"skipped": skipped,
+	}).Trace("Skip file if it matches regex")
+
+	return skipped, nil
 }
