@@ -6,6 +6,7 @@
 ## [6.7.5] - 2022-10-22
 ### Fix
 - **docs:** [[#264](https://github.com/030/n3dr/issues/264)] Improve snap.
+- **repositoriesV2:** [[#265](https://github.com/030/n3dr/issues/265)] Add missing zip functionality.
 
 
 <a name="6.7.4"></a>

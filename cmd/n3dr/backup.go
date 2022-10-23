@@ -3,8 +3,7 @@ package main
 import (
 	"strings"
 
-	"github.com/030/n3dr/internal/artifacts"
-
+	"github.com/030/n3dr/internal/app/n3dr/artifacts"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )

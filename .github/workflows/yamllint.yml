@@ -1,0 +1,16 @@
+---
+name: Yamllint
+'on': push
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    container:
+      image: pipelinecomponents/yamllint:0.21.0
+      env:
+        YAMLLINT_CONFIG_FILE: /code/configs/.yamllint.yaml
+      options: --cpus 1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: run yamllint
+        run: yamllint .

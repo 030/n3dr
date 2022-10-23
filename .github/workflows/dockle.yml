@@ -1,6 +1,6 @@
 ---
 name: Dockle
-on: [push]
+'on': push
 jobs:
   dive:
     runs-on: ubuntu-latest
