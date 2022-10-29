@@ -81,6 +81,9 @@ func FilesToBeSkipped(path string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	log.Debugf("file: %s, filesToBeSkipped: %v", path, filesToBeSkipped)
+	if filesToBeSkipped {
+		log.Tracef("file: '%s' will be skipped", path)
+	}
+
 	return filesToBeSkipped, nil
 }

@@ -16,6 +16,19 @@ type Repository struct {
 	ProxyRemoteURL string
 }
 
+func created(name string, err error) error {
+	repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
+	if errRegex != nil {
+		return err
+	}
+	if repositoryCreated {
+		log.Infof("repository: '%s' has already been created", name)
+		return nil
+	}
+
+	return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
+}
+
 func (r *Repository) CreateAptProxied(name string) error {
 	log.Infof("Creating proxied apt repository: '%s'...", name)
 	client := r.Nexus3.Client()
@@ -42,16 +55,9 @@ func (r *Repository) CreateAptProxied(name string) error {
 	createAptProxy := repository_management.CreateRepository4Params{Body: &ma}
 	createAptProxy.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository4(&createAptProxy); err != nil {
-		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
-		if errRegex != nil {
+		if err := created(name, err); err != nil {
 			return err
 		}
-		if repositoryCreated {
-			log.Infof("repository: '%s' has already been created", name)
-			return nil
-		}
-
-		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
 	}
 	log.Infof("created the following repository: '%v'", name)
 	return nil
@@ -81,16 +87,9 @@ func (r *Repository) CreateYumProxied(name string) error {
 	createYumProxy := repository_management.CreateRepository22Params{Body: &body}
 	createYumProxy.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository22(&createYumProxy); err != nil {
-		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
-		if errRegex != nil {
+		if err := created(name, err); err != nil {
 			return err
 		}
-		if repositoryCreated {
-			log.Infof("repository: '%s' has already been created", name)
-			return nil
-		}
-
-		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
 	}
 	log.Infof("created the following repository: '%v'", name)
 	return nil
@@ -120,18 +119,64 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 	createRawHosted := repository_management.CreateRepository18Params{Body: &mr}
 	createRawHosted.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository18(&createRawHosted); err != nil {
-		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
-		if errRegex != nil {
+		if err := created(name, err); err != nil {
 			return err
 		}
-		if repositoryCreated {
-			log.Infof("repository: '%s' has already been created", name)
-			return nil
-		}
-
-		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
 	}
 	log.Infof("created the following repository: '%v'", name)
+	return nil
+}
+
+func (r *Repository) CreateMavenHosted(name string, snapshot bool) error {
+	log.Infof("creating maven hosted repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	online := true
+	strictContentTypeValidation := true
+	writePolicy := "allow_once"
+	mm := models.MavenAttributes{VersionPolicy: "Release", LayoutPolicy: "Strict", ContentDisposition: "Inline"}
+	if snapshot {
+		mm.VersionPolicy = "Snapshot"
+	}
+
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mr := models.MavenHostedRepositoryAPIRequest{Maven: &mm, Name: &name, Online: &online, Storage: &mhsa}
+	createMavenHosted := repository_management.CreateRepository1Params{Body: &mr}
+	createMavenHosted.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository1(&createMavenHosted); err != nil {
+		if err := created(name, err); err != nil {
+			return err
+		}
+	}
+	log.Infof("created the following repository: '%v'", name)
+
+	return nil
+}
+
+func (r *Repository) CreateNpmHosted(name string, snapshot bool) error {
+	log.Infof("creating npm hosted repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	online := true
+	strictContentTypeValidation := true
+	writePolicy := "allow_once"
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mr := models.NpmHostedRepositoryAPIRequest{Name: &name, Online: &online, Storage: &mhsa}
+	createNpmHosted := repository_management.CreateRepository9Params{Body: &mr}
+	createNpmHosted.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository9(&createNpmHosted); err != nil {
+		if err := created(name, err); err != nil {
+			return err
+		}
+	}
+	log.Infof("created the following repository: '%v'", name)
+
 	return nil
 }
 
@@ -150,16 +195,9 @@ func (r *Repository) CreateRawHosted(name string) error {
 	createRawHosted := repository_management.CreateRepository6Params{Body: &mr}
 	createRawHosted.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository6(&createRawHosted); err != nil {
-		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
-		if errRegex != nil {
+		if err := created(name, err); err != nil {
 			return err
 		}
-		if repositoryCreated {
-			log.Infof("repository: '%s' has already been created", name)
-			return nil
-		}
-
-		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
 	}
 	log.Infof("created the following repository: '%v'", name)
 	return nil
@@ -183,16 +221,9 @@ func (r *Repository) CreateYumHosted(name string) error {
 	createYumHosted := repository_management.CreateRepository21Params{Body: &mr}
 	createYumHosted.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository21(&createYumHosted); err != nil {
-		repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
-		if errRegex != nil {
+		if err := created(name, err); err != nil {
 			return err
 		}
-		if repositoryCreated {
-			log.Infof("repository: '%s' has already been created", name)
-			return nil
-		}
-
-		return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
 	}
 	log.Infof("created the following repository: '%v'", name)
 	return nil

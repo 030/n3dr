@@ -1,11 +1,11 @@
 ---
 name: Snapcraft
-on:
+'on':
   workflow_run:
-    workflows: ["Release"]
+    workflows: ['Release']
     push:
       tags:
-        - "*"
+        - '*'
     types:
       - completed
 jobs:

@@ -1,6 +1,6 @@
 ---
 name: Run Gosec
-on:
+'on':
   push:
     branches:
       - main
@@ -11,7 +11,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     env:
-      GO111MODULE: on
+      GO111MODULE: 'on'
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2

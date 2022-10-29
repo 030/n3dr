@@ -15,9 +15,26 @@ var (
 // repositoriesCmd represents the repositories command
 var repositoriesV2Cmd = &cobra.Command{
 	Use:   "repositoriesV2",
-	Short: "Count the number of repositories or return their names",
+	Short: "Count the number of repositories or return their names.",
 	Long: `Count the number of repositories, count the total or
-download artifacts from all repositories`,
+download artifacts from all repositories.
+
+Examples:
+  # Return the number of repositories without logging:
+  n3dr repositoriesV2 --count --logLevel=none
+
+  # Return the repository names:
+  n3dr repositoriesV2 --names
+
+  # Backup all artifacts that reside in a Nexus3 server in a certain dir and store these in a zip file:
+  n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --directory-prefix-zip /tmp/some-dir/some-zip --zip
+
+  # Backup all artifacts including docker images:
+  n3dr repositoriesV2 --backup -u some-user -p some-pass -n localhost:9000 --https=false --directory-prefix /tmp/some-dir --dockerPort 9001 --dockerHost http://localhost
+
+  # Upload artifacts, print errors on stderr and write them to syslog:
+  n3dr repositoriesV2 --upload -u some-user -p some-pass -n localhost:9000 --https=false --directory-prefix /tmp/some-dir --logLevel=none --logFile
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if !(namesV2 || countV2 || backupV2 || uploadV2) {
 			if err := cmd.Help(); err != nil {

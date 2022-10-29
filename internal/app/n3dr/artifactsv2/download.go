@@ -52,6 +52,12 @@ func (n *Nexus3) CountRepositoriesV2() error {
 
 func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models.AssetXO) error {
 	if checksum != downloadedFileChecksum {
+		log.WithFields(log.Fields{
+			"actual":   downloadedFileChecksum,
+			"url":      asset.DownloadURL,
+			"expected": checksum,
+		}).Debug("download artifact as checksum deviates")
+
 		req, err := http.NewRequest("GET", asset.DownloadURL, nil)
 		if err != nil {
 			return err
@@ -68,12 +74,12 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 			return err
 		}
 
-		out, err := os.Create(filepath.Join(n.DownloadDirName, asset.Repository, asset.Path))
+		dst, err := os.Create(filepath.Join(n.DownloadDirName, asset.Repository, asset.Path))
 		if err != nil {
 			return err
 		}
 		defer func() {
-			if err := out.Close(); err != nil {
+			if err := dst.Close(); err != nil {
 				panic(err)
 			}
 		}()
@@ -91,8 +97,11 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 			err := fmt.Errorf("bad status: %s", resp.Status)
 			return err
 		}
-		_, err = io.Copy(out, resp.Body)
+		_, err = io.Copy(dst, resp.Body)
 		if err != nil {
+			return err
+		}
+		if err := dst.Sync(); err != nil {
 			return err
 		}
 
@@ -118,7 +127,11 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 				defer wg.Done()
 				shaType, checksum := artifacts.Checksum(asset)
 
-				log.Debugf("downloadURL: '%s', format: '%s', checksum: '%s'", asset.DownloadURL, asset.Format, checksum)
+				log.WithFields(log.Fields{
+					"url":      asset.DownloadURL,
+					"format":   asset.Format,
+					"checksum": checksum,
+				}).Trace("Download artifact")
 				assetPath := asset.Path
 				filesToBeSkipped, err := artifacts.FilesToBeSkipped(assetPath)
 				if err != nil {

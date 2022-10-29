@@ -5,6 +5,8 @@ import (
 	"crypto/x509"
 	_ "embed"
 	"fmt"
+	"io"
+	"log/syslog"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,6 +14,8 @@ import (
 	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
+	logrus_syslog "github.com/sirupsen/logrus/hooks/syslog"
+	"github.com/sirupsen/logrus/hooks/writer"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/viper"
@@ -21,9 +25,9 @@ import (
 var logo string
 
 var (
-	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost string
-	anonymous, awsS3, debug, dockerPortSecure, https, insecureSkipVerify, showLogo, skipErrors, zip                                                                                       bool
-	dockerPort                                                                                                                                                                            int32
+	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost, logLevel string
+	anonymous, awsS3, debug, dockerPortSecure, logFile, https, insecureSkipVerify, showLogo, skipErrors, zip                                                                                        bool
+	dockerPort                                                                                                                                                                                      int32
 )
 
 var rootCmd = &cobra.Command{
@@ -64,6 +68,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&dockerHost, "dockerHost", "", "The docker host, e.g. localhost")
 	rootCmd.PersistentFlags().Int32Var(&dockerPort, "dockerPort", 0, "The docker connector port, e.g. 8082")
 	rootCmd.PersistentFlags().BoolVar(&dockerPortSecure, "dockerPortSecure", false, "Whether the docker connector port should be secure")
+	rootCmd.PersistentFlags().StringVar(&logLevel, "logLevel", "", "change the log level")
+	rootCmd.PersistentFlags().BoolVar(&logFile, "logFile", false, "write the log to syslog")
 }
 
 func n3drHiddenHome() (string, error) {
@@ -91,18 +97,18 @@ func configFile() (string, error) {
 	return file, nil
 }
 
-func configFilePath() string {
+func configFilePath() (string, error) {
 	if cfgFile != "" {
 		log.Infof("Reading configFile: '%v'", cfgFile)
 		viper.SetConfigFile(cfgFile)
 	} else {
 		file, err := configFile()
 		if err != nil {
-			log.Fatal(err)
+			return "", err
 		}
 		cfgFile = file
 	}
-	return cfgFile
+	return cfgFile, nil
 }
 
 func ascii() {
@@ -112,10 +118,22 @@ func ascii() {
 }
 
 func initConfig() {
-	parseConfig(configFilePath())
+	if err := logging(); err != nil {
+		log.Fatal(err)
+	}
+	enableDebug()
+
+	cf, err := configFilePath()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := parseConfig(cf); err != nil {
+		log.Fatal(err)
+	}
+
 	viper.AutomaticEnv()
 	ascii()
-	enableDebug()
+
 	if err := insecureCerts(); err != nil {
 		log.Fatal(err)
 	}
@@ -123,7 +141,7 @@ func initConfig() {
 
 func valueInConfigFile(key string) (string, error) {
 	conf := viper.ConfigFileUsed()
-	log.Infof("%s parameter empty. Reading it from config file: '%s'", key, conf)
+	log.Debugf("reading parameter: '%s' from config file", key)
 	value := viper.GetString(key)
 	if value == "" {
 		return "", fmt.Errorf("key: '%s' does not seem to contain a value. Check whether this key is populated in the config file: '%s'", key, conf)
@@ -131,20 +149,20 @@ func valueInConfigFile(key string) (string, error) {
 	return value, nil
 }
 
-func parseVarsFromConfig() {
+func parseVarsFromConfig() error {
 	var err error
 	if !anonymous {
 		if n3drUser == "" {
 			n3drUser, err = valueInConfigFile("n3drUser")
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 
 		if n3drPass == "" {
 			n3drPass, err = valueInConfigFile("n3drPass")
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 	}
@@ -152,7 +170,7 @@ func parseVarsFromConfig() {
 	if n3drURL == "" {
 		n3drURL, err = valueInConfigFile("n3drURL")
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
 
@@ -161,30 +179,36 @@ func parseVarsFromConfig() {
 	if awsS3 {
 		awsBucket, err = valueInConfigFile("awsBucket")
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		awsId, err = valueInConfigFile("awsId")
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		awsRegion, err = valueInConfigFile("awsRegion")
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		awsSecret, err = valueInConfigFile("awsSecret")
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
+
+	return nil
 }
 
-func parseConfig(cfgFile string) {
+func parseConfig(cfgFile string) error {
 	if err := viper.ReadInConfig(); err == nil {
 		log.Infof("Using config file: '%v'", viper.ConfigFileUsed())
-		parseVarsFromConfig()
+		if err := parseVarsFromConfig(); err != nil {
+			return err
+		}
 	} else {
 		log.Warnf("Looked for config file: '%v', but found: '%v' including err: '%v'. Check whether it exists, the YAML is correct and the content is valid", cfgFile, viper.ConfigFileUsed(), err)
 	}
+
+	return nil
 }
 
 func insecureCerts() error {
@@ -203,6 +227,69 @@ func insecureCerts() error {
 		log.Warn("Certificate validity check is disabled!")
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{MinVersion: tls.VersionTLS12, MaxVersion: tls.VersionTLS13, RootCAs: caCertPool}
 	}
+	return nil
+}
+
+func logging() (err error) {
+	if logLevel == "" {
+		logLevel, err = valueInConfigFile("logLevel")
+		if err != nil {
+			log.Warn("'logLevel' not found in configFile")
+		}
+		logLevel = "info"
+	}
+
+	if logLevel != "" {
+		log.SetFormatter(&log.TextFormatter{
+			FullTimestamp: true,
+		})
+	}
+
+	if logFile {
+		log.SetOutput(io.Discard)
+
+		log.SetFormatter(&log.TextFormatter{
+			DisableColors: true,
+		})
+
+		hook, err := logrus_syslog.NewSyslogHook("", "", syslog.LOG_INFO, "")
+		if err == nil {
+			log.AddHook(hook)
+		}
+	}
+
+	log.AddHook(&writer.Hook{
+		Writer:    os.Stderr,
+		LogLevels: []log.Level{log.ErrorLevel},
+	})
+
+	switch logLevel {
+	case "trace":
+		jww.SetLogThreshold(jww.LevelTrace)
+		jww.SetStdoutThreshold(jww.LevelTrace)
+		log.SetLevel(log.TraceLevel)
+	case "debug":
+		jww.SetLogThreshold(jww.LevelDebug)
+		jww.SetStdoutThreshold(jww.LevelDebug)
+		log.SetLevel(log.DebugLevel)
+	case "info":
+		jww.SetLogThreshold(jww.LevelInfo)
+		jww.SetStdoutThreshold(jww.LevelInfo)
+		log.SetLevel(log.InfoLevel)
+	case "warn":
+		jww.SetLogThreshold(jww.LevelWarn)
+		jww.SetStdoutThreshold(jww.LevelWarn)
+		log.SetLevel(log.WarnLevel)
+	case "error":
+		jww.SetLogThreshold(jww.LevelError)
+		jww.SetStdoutThreshold(jww.LevelError)
+		log.SetLevel(log.ErrorLevel)
+	case "none":
+		log.SetOutput(io.Discard)
+	default:
+		return fmt.Errorf("logLevel: '%s' is invalid and should have been 'trace', 'debug', 'info', 'warn', 'error' or 'none'", logLevel)
+	}
+
 	return nil
 }
 
