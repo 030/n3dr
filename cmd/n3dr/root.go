@@ -6,15 +6,14 @@ import (
 	_ "embed"
 	"fmt"
 	"io"
-	"log/syslog"
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 
 	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
-	logrus_syslog "github.com/sirupsen/logrus/hooks/syslog"
 	"github.com/sirupsen/logrus/hooks/writer"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
@@ -252,9 +251,8 @@ func logging() (err error) {
 			DisableColors: true,
 		})
 
-		hook, err := logrus_syslog.NewSyslogHook("", "", syslog.LOG_INFO, "")
-		if err == nil {
-			log.AddHook(hook)
+		if runtime.GOOS != "windows" {
+			logFileSyslog()
 		}
 	}
 
