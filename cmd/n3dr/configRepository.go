@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/030/n3dr/internal/app/n3dr/config/repository"
@@ -11,7 +10,7 @@ import (
 )
 
 var (
-	configRepoDockerPortSecure, configRepoDelete                         bool
+	configRepoDockerPortSecure, configRepoDelete, snapshot               bool
 	configRepoDockerPort                                                 int32
 	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL string
 )
@@ -22,10 +21,21 @@ var configRepositoryCmd = &cobra.Command{
 	Short: "Configure repositories",
 	Long: `Configure repositories, e.g.:
 * delete a repository
+
+Examples:
+  # Create a Docker repository:
+  n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType docker
+
+  # Create a Maven2 repository:
+  n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType maven2
+
+  # Create a Maven2 snapshot repository:
+  n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType maven2 --snapshot
+
+  # Create a NPM repository:
+  n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-npm --configRepoType npm
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("configRepository called")
-
 		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
 		r := repository.Repository{Nexus3: n}
 
@@ -60,6 +70,18 @@ var configRepositoryCmd = &cobra.Command{
 					log.Fatal(err)
 				}
 			}
+		case "maven2":
+			if configRepoRecipe == "hosted" {
+				if err := r.CreateMavenHosted(configRepoName, snapshot); err != nil {
+					log.Fatal(err)
+				}
+			}
+		case "npm":
+			if configRepoRecipe == "hosted" {
+				if err := r.CreateNpmHosted(configRepoName, snapshot); err != nil {
+					log.Fatal(err)
+				}
+			}
 		case "raw":
 			if configRepoRecipe == "hosted" {
 				if err := r.CreateRawHosted(configRepoName); err != nil {
@@ -79,7 +101,7 @@ var configRepositoryCmd = &cobra.Command{
 				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
 			}
 		default:
-			log.Fatalf("configRepoType should not be empty, but: 'apt' or 'raw' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
+			log.Fatalf("configRepoType should not be empty, but: 'apt', 'docker', 'maven', 'raw' or 'yum' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
 		}
 	},
 }
@@ -94,6 +116,7 @@ func init() {
 
 	configRepositoryCmd.Flags().StringVar(&configRepoRecipe, "configRepoRecipe", "hosted", "The repository recipe, i.e.: group, hosted, or proxy")
 	configRepositoryCmd.Flags().BoolVar(&configRepoDelete, "configRepoDelete", false, "Delete a repository")
+	configRepositoryCmd.Flags().BoolVar(&snapshot, "snapshot", false, "snapshot repository")
 	configRepositoryCmd.Flags().StringVar(&configRepoType, "configRepoType", "", "The repository type, e.g.: 'apt', 'raw'")
 	configRepositoryCmd.Flags().StringVar(&configRepoProxyURL, "configRepoProxyURL", "", "The proxy repository URL, e.g.: 'http://nl.archive.ubuntu.com/ubuntu/'")
 	configRepositoryCmd.Flags().Int32Var(&configRepoDockerPort, "configRepoDockerPort", 8082, "The docker connector port, e.g. 8082")

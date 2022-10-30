@@ -39,7 +39,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=030-github
-            -Dsonar.projectKey=030_yaam
+            -Dsonar.projectKey=030_n3dr
             -Dsonar.exclusions=test/testdata/**,internal/goswagger/**
             -Dsonar.sources=.
             -Dsonar.coverage.exclusions=**/*_test.go,test/testdata/**,internal/goswagger/**/*,cmd/**/*

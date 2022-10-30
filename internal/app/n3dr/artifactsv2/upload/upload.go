@@ -17,6 +17,7 @@ import (
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client/components"
+	"github.com/030/n3dr/internal/app/n3dr/goswagger/client/repository_management"
 	"github.com/030/p2iwd/pkg/p2iwd"
 	log "github.com/sirupsen/logrus"
 )
@@ -69,6 +70,7 @@ func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	var repoFormat string
 	for _, repo := range repos {
 		repoName := repo.Name
@@ -77,6 +79,7 @@ func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
 		}
 	}
 	log.Infof("format of repo: '%s' is: '%s'", localDiskRepo, repoFormat)
+
 	return repoFormat, nil
 }
 
@@ -237,6 +240,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 	}
 	c.WithTimeout(time.Second * 600)
 	if err := client.Components.UploadComponent(&c); err != nil {
+		log.Tracef("err: '%v' while uploading file: '%s'", err, path)
 		statusCode, uploadStatusErr := uploadStatus(err)
 		if uploadStatusErr != nil {
 			log.Error(path)
@@ -249,7 +253,6 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 
 		return fmt.Errorf("cannot upload component: '%s', error: '%v'", path, err)
 	}
-	artifacts.PrintType(repoFormat)
 
 	files := []*os.File{f, f2, f3}
 	for _, file := range files {
@@ -261,8 +264,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 }
 
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
-	var wg sync.WaitGroup
-	client := n.Nexus3.Client()
+	c := n.Nexus3.Client()
 	if err := filepath.WalkDir(localDiskRepoHome,
 		func(path string, info fs.DirEntry, err error) error {
 			if err != nil {
@@ -274,20 +276,25 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				return err
 			}
 			if !info.IsDir() && !filesToBeSkipped {
-				wg.Add(1)
-				go func() {
-					defer wg.Done()
-
-					if err := UploadSingleArtifact(client, path, localDiskRepo, localDiskRepoHome, repoFormat); err != nil {
-						log.Error(err)
+				if err := UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat); err != nil {
+					uploaded, errRegex := regexp.MatchString("status 400", err.Error())
+					if errRegex != nil {
+						panic(err)
 					}
-				}()
+					if uploaded {
+						log.Debugf("artifact: '%s' has already been uploaded", path)
+						return nil
+					}
+
+					log.Errorf("could not upload artifact: '%s', err: '%v'", path, err)
+				} else {
+					artifacts.PrintType(repoFormat)
+				}
 			}
 			return nil
 		}); err != nil {
 		return err
 	}
-	wg.Wait()
 
 	return nil
 }
@@ -317,19 +324,39 @@ func (n *Nexus3) Upload() error {
 		go func(localDiskRepo string) {
 			defer wg.Done()
 			log.Infof("Uploading files to Nexus: '%s' repository: '%s'...", n.FQDN, localDiskRepo)
-			repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
-			if err != nil {
-				panic(err)
-			}
-			if repoFormat == "docker" || localDiskRepo == "snapshots" {
-				log.Warn("docker and snapshot repositories skipped")
-				return
-			}
+
 			if localDiskRepo == "p2iwd" {
 				h := n.DockerHost + ":" + fmt.Sprint(n.DockerPort)
 				pdr := p2iwd.DockerRegistry{Dir: filepath.Join(n.DownloadDirName, "p2iwd"), Host: h, Pass: n.Pass, User: n.User}
 				if err := pdr.Upload(); err != nil {
 					panic(err)
+				}
+				return
+			}
+
+			repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
+			if err != nil {
+				panic(err)
+			}
+
+			if repoFormat == "" {
+				log.Errorf("repoFormat not detected. Verify whether repo: '%s' resides in Nexus", localDiskRepo)
+				return
+			}
+
+			if repoFormat == "maven2" {
+				client := n.Nexus3.Client()
+				r := repository_management.GetRepository2Params{RepositoryName: localDiskRepo}
+				r.WithTimeout(time.Second * 30)
+
+				resp, err := client.RepositoryManagement.GetRepository2(&r)
+				if err != nil {
+					log.Errorf("cannot determine version policy, repository: '%s'", localDiskRepo)
+					return
+				}
+				if resp.Payload.Maven.VersionPolicy == "Snapshot" {
+					log.Errorf("upload to snapshot repositories not supported. Affected repository: '%s'", localDiskRepo)
+					return
 				}
 			}
 
