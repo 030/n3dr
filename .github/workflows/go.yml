@@ -11,8 +11,6 @@ jobs:
             shasum: shasum -a 512
           - os: ubuntu-20.04
             shasum: sha512sum
-          - os: ubuntu-20.04
-            shasum: sha512sum
           - os: windows-2019
             shasum: sha512sum
     steps:
@@ -25,7 +23,8 @@ jobs:
         run: |
           go test -short -cover -v -coverprofile=coverage.txt \
           -covermode=atomic $(go list ./... |\
-            grep -v internal/goswagger |\
+            grep -v internal/app/n3dr/goswagger |\
+            grep -v internal/app/n3dr/n3drtest |\
             grep -v cmd/n3dr)
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - uses: codecov/codecov-action@v1
@@ -40,9 +39,9 @@ jobs:
           args: >
             -Dsonar.organization=030-github
             -Dsonar.projectKey=030_n3dr
-            -Dsonar.exclusions=test/testdata/**,internal/goswagger/**
+            -Dsonar.exclusions=test/testdata/**,internal/app/n3dr/goswagger/**
             -Dsonar.sources=.
-            -Dsonar.coverage.exclusions=**/*_test.go,test/testdata/**,internal/goswagger/**/*,cmd/**/*
+            -Dsonar.coverage.exclusions=**/*_test.go,test/testdata/**,internal/app/n3dr/goswagger/**/*,cmd/**/*
             -Dsonar.verbose=true
             -Dsonar.go.coverage.reportPaths="coverage.txt"
         env:

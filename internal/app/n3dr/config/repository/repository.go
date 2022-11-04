@@ -60,6 +60,7 @@ func (r *Repository) CreateAptProxied(name string) error {
 		}
 	}
 	log.Infof("created the following repository: '%v'", name)
+
 	return nil
 }
 
@@ -92,6 +93,7 @@ func (r *Repository) CreateYumProxied(name string) error {
 		}
 	}
 	log.Infof("created the following repository: '%v'", name)
+
 	return nil
 }
 
@@ -124,6 +126,7 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 		}
 	}
 	log.Infof("created the following repository: '%v'", name)
+
 	return nil
 }
 
@@ -200,6 +203,7 @@ func (r *Repository) CreateRawHosted(name string) error {
 		}
 	}
 	log.Infof("created the following repository: '%v'", name)
+
 	return nil
 }
 
@@ -226,6 +230,7 @@ func (r *Repository) CreateYumHosted(name string) error {
 		}
 	}
 	log.Infof("created the following repository: '%v'", name)
+
 	return nil
 }
 
@@ -251,5 +256,6 @@ func (r *Repository) Delete(name string) error {
 		return fmt.Errorf("could not delete repository: '%v', err: '%v'", name, err)
 	}
 	log.Infof("deleted the following repository: '%v'", name)
+
 	return nil
 }

@@ -2,10 +2,19 @@
 ## [Unreleased]
 
 
+<a name="6.8.1"></a>
+## [6.8.1] - 2022-11-04
+### Fix
+- [[#278](https://github.com/030/n3dr/issues/278)] Backup a single repository using repositoriesV2.
+
+
 <a name="6.8.0"></a>
 ## [6.8.0] - 2022-10-30
 ### Feat
 - **logging:** [[#270](https://github.com/030/n3dr/issues/270)] Improve by adding a trace level.
+
+### Fix
+- **windows:** [[#270](https://github.com/030/n3dr/issues/270)] Omit syslog.
 
 
 <a name="6.7.5"></a>
@@ -253,7 +262,8 @@
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.8.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.8.1...HEAD
+[6.8.1]: https://github.com/030/n3dr/compare/6.8.0...6.8.1
 [6.8.0]: https://github.com/030/n3dr/compare/6.7.5...6.8.0
 [6.7.5]: https://github.com/030/n3dr/compare/6.7.4...6.7.5
 [6.7.4]: https://github.com/030/n3dr/compare/6.7.3...6.7.4

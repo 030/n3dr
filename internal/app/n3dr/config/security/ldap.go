@@ -37,5 +37,6 @@ func (l *LDAPParams) LDAP() error {
 		return fmt.Errorf("could not create ldap: '%v', err: '%v'", *l.CreateLdapServerXo.Name, err)
 	}
 	log.Infof("created the following repository: '%v'", *l.CreateLdapServerXo.Name)
+
 	return nil
 }

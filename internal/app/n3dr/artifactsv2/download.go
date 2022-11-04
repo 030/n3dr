@@ -163,6 +163,42 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 	return nil
 }
 
+func (n *Nexus3) zipFile() error {
+	zipFilename := "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
+	zipFilenamePath := filepath.Join(n.DownloadDirNameZip, zipFilename)
+	if n.AwsBucket != "" || n.ZIP {
+		log.Infof("Trying to create a zip file: '%s' in '%s'...", zipFilename, zipFilenamePath)
+		if err := archiver.Archive([]string{n.DownloadDirName}, zipFilenamePath); err != nil {
+			return err
+		}
+		log.Infof("Zipfile: '%v' created in '%v'", zipFilename, zipFilenamePath)
+	}
+
+	if n.AwsBucket != "" {
+		nS3 := s3.Nexus3{AwsBucket: n.AwsBucket, AwsId: n.AwsId, AwsRegion: n.AwsRegion, AwsSecret: n.AwsSecret, ZipFilename: zipFilenamePath}
+		if err := nS3.Upload(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (n *Nexus3) SingleRepoBackup() error {
+	if err := os.MkdirAll(filepath.Join(n.DownloadDirName, n.RepoName), chmodDir); err != nil {
+		return err
+	}
+	if err := n.downloadIfChecksumMismatchLocalFile("", n.RepoName); err != nil {
+		return err
+	}
+
+	if err := n.zipFile(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (n *Nexus3) Backup() error {
 	var wg sync.WaitGroup
 
@@ -197,21 +233,8 @@ func (n *Nexus3) Backup() error {
 	}
 	wg.Wait()
 
-	zipFilename := "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
-	zipFilenamePath := filepath.Join(n.DownloadDirNameZip, zipFilename)
-	if n.AwsBucket != "" || n.ZIP {
-		log.Infof("Trying to create a zip file: '%s' in '%s'...", zipFilename, zipFilenamePath)
-		if err := archiver.Archive([]string{n.DownloadDirName}, zipFilenamePath); err != nil {
-			return err
-		}
-		log.Infof("Zipfile: '%v' created in '%v'", zipFilename, zipFilenamePath)
-	}
-
-	if n.AwsBucket != "" {
-		nS3 := s3.Nexus3{AwsBucket: n.AwsBucket, AwsId: n.AwsId, AwsRegion: n.AwsRegion, AwsSecret: n.AwsSecret, ZipFilename: zipFilenamePath}
-		if err := nS3.Upload(); err != nil {
-			return err
-		}
+	if err := n.zipFile(); err != nil {
+		return err
 	}
 
 	return nil

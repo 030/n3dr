@@ -12,14 +12,15 @@ import (
 
 func TestMain(m *testing.M) {
 	containers := []mij.DockerImage{n3drtest.Image(10000)}
-
 	if err := n3drtest.Setup(containers); err != nil {
 		panic(err)
 	}
+
 	code := m.Run()
 	if err := n3drtest.Shutdown(containers); err != nil {
 		panic(err)
 	}
+
 	os.Exit(code)
 }
 
