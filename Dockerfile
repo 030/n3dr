@@ -9,9 +9,6 @@ RUN apk add --no-cache git=~2 && \
   cp n3dr /n3dr
 
 FROM alpine:3.16.2
-RUN apk update && \
-  apk upgrade && \
-  rm -rf /var/cache/apk/*
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /n3dr /usr/local/bin/n3dr
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/

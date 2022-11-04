@@ -26,6 +26,12 @@ Examples:
   # Return the repository names:
   n3dr repositoriesV2 --names
 
+  # Backup a single repository:
+  n3dr repositoriesV2 --backup --n3drRepo some-repo --directory-prefix /tmp/some-dir
+
+  # Backup all artifacts:
+  n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
+
   # Backup all artifacts that reside in a Nexus3 server in a certain dir and store these in a zip file:
   n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --directory-prefix-zip /tmp/some-dir/some-zip --zip
 
@@ -42,7 +48,7 @@ Examples:
 			}
 			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip}
+		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo}
 		a := artifactsv2.Nexus3{Nexus3: &n}
 		if namesV2 {
 			if err := a.RepositoryNamesV2(); err != nil {
@@ -55,8 +61,14 @@ Examples:
 			}
 		}
 		if backupV2 {
-			if err := a.Backup(); err != nil {
-				log.Fatal(err)
+			if n.RepoName != "" {
+				if err := a.SingleRepoBackup(); err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				if err := a.Backup(); err != nil {
+					log.Fatal(err)
+				}
 			}
 		}
 		if uploadV2 {
@@ -75,6 +87,7 @@ func init() {
 	repositoriesV2Cmd.Flags().BoolVarP(&backupV2, "backup", "", false, "backup artifacts from all repositories")
 	repositoriesV2Cmd.Flags().BoolVarP(&uploadV2, "upload", "", false, "upload artifacts from all repositories")
 	repositoriesV2Cmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
+	repositoriesV2Cmd.Flags().StringVar(&n3drRepo, "n3drRepo", "", "backup a single nexus3 repository")
 
 	rootCmd.AddCommand(repositoriesV2Cmd)
 }
