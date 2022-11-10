@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="6.8.2"></a>
+## [6.8.2] - 2022-11-10
+### Build
+- **deps:** Update versions.
+
+
 <a name="6.8.1"></a>
 ## [6.8.1] - 2022-11-04
 ### Fix
@@ -262,7 +268,8 @@
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.8.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.8.2...HEAD
+[6.8.2]: https://github.com/030/n3dr/compare/6.8.1...6.8.2
 [6.8.1]: https://github.com/030/n3dr/compare/6.8.0...6.8.1
 [6.8.0]: https://github.com/030/n3dr/compare/6.7.5...6.8.0
 [6.7.5]: https://github.com/030/n3dr/compare/6.7.4...6.7.5

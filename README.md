@@ -307,7 +307,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.8.1 .
+docker build -t utrecht/n3dr:6.8.2 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -317,7 +317,7 @@ docker build -t utrecht/n3dr:6.8.1 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.1
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.2
 ```
 
 ### Upload
@@ -326,7 +326,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.1
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.2
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:

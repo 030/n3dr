@@ -64,6 +64,6 @@ jobs:
           docker run --rm -v ${PWD}:/data markdownlint/markdownlint:0.11.0 \
             README.md -s /data/configs/.markdownlint.rb
           docker run --rm -v $(pwd):/app -w /app -e GOFLAGS=-buildvcs=false \
-            golangci/golangci-lint:v1.49.0-alpine golangci-lint run -v \
+            golangci/golangci-lint:v1.50.1-alpine golangci-lint run -v \
             --timeout 2m30s --config configs/.golangci.yml
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
