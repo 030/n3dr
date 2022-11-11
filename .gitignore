@@ -2,12 +2,15 @@ download
 *.jar*
 maven-metadata*
 maven-releases
+!test/testdata/upload/maven-releases
 cmd/n3dr/n3dr
 cmd/n3dr/n3dr.sha512.txt
 !cmd/n3dr/*.go
 *.out*
 *.pom*
 REPO_NAME_HOSTED_APT/
+REPO_NAME_HOSTED_NPM/
+REPO_NAME_HOSTED_YUM/
 .snapcraft
 *.snap
 start.sh

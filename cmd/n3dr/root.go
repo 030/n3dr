@@ -5,16 +5,14 @@ import (
 	"crypto/x509"
 	_ "embed"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"path/filepath"
-	"runtime"
 
+	"github.com/030/logging/pkg/logging"
 	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
-	"github.com/sirupsen/logrus/hooks/writer"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/viper"
@@ -67,7 +65,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&dockerHost, "dockerHost", "", "The docker host, e.g. localhost")
 	rootCmd.PersistentFlags().Int32Var(&dockerPort, "dockerPort", 0, "The docker connector port, e.g. 8082")
 	rootCmd.PersistentFlags().BoolVar(&dockerPortSecure, "dockerPortSecure", false, "Whether the docker connector port should be secure")
-	rootCmd.PersistentFlags().StringVar(&logLevel, "logLevel", "", "change the log level")
+	rootCmd.PersistentFlags().StringVar(&logLevel, "logLevel", "info", "change the log level")
 	rootCmd.PersistentFlags().BoolVar(&logFile, "logFile", false, "write the log to syslog")
 }
 
@@ -117,9 +115,11 @@ func ascii() {
 }
 
 func initConfig() {
-	if err := logging(); err != nil {
+	l := logging.Logging{File: "n3dr.log", Level: logLevel, Syslog: logFile}
+	if _, err := l.Setup(); err != nil {
 		log.Fatal(err)
 	}
+
 	enableDebug()
 
 	cf, err := configFilePath()
@@ -226,68 +226,6 @@ func insecureCerts() error {
 		log.Warn("Certificate validity check is disabled!")
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{MinVersion: tls.VersionTLS12, MaxVersion: tls.VersionTLS13, RootCAs: caCertPool}
 	}
-	return nil
-}
-
-func logging() (err error) {
-	if logLevel == "" {
-		logLevel, err = valueInConfigFile("logLevel")
-		if err != nil {
-			log.Warn("'logLevel' not found in configFile")
-		}
-		logLevel = "info"
-	}
-
-	if logLevel != "" {
-		log.SetFormatter(&log.TextFormatter{
-			FullTimestamp: true,
-		})
-	}
-
-	if logFile {
-		log.SetOutput(io.Discard)
-
-		log.SetFormatter(&log.TextFormatter{
-			DisableColors: true,
-		})
-
-		if runtime.GOOS != "windows" {
-			logFileSyslog()
-		}
-	}
-
-	log.AddHook(&writer.Hook{
-		Writer:    os.Stderr,
-		LogLevels: []log.Level{log.ErrorLevel},
-	})
-
-	switch logLevel {
-	case "trace":
-		jww.SetLogThreshold(jww.LevelTrace)
-		jww.SetStdoutThreshold(jww.LevelTrace)
-		log.SetLevel(log.TraceLevel)
-	case "debug":
-		jww.SetLogThreshold(jww.LevelDebug)
-		jww.SetStdoutThreshold(jww.LevelDebug)
-		log.SetLevel(log.DebugLevel)
-	case "info":
-		jww.SetLogThreshold(jww.LevelInfo)
-		jww.SetStdoutThreshold(jww.LevelInfo)
-		log.SetLevel(log.InfoLevel)
-	case "warn":
-		jww.SetLogThreshold(jww.LevelWarn)
-		jww.SetStdoutThreshold(jww.LevelWarn)
-		log.SetLevel(log.WarnLevel)
-	case "error":
-		jww.SetLogThreshold(jww.LevelError)
-		jww.SetStdoutThreshold(jww.LevelError)
-		log.SetLevel(log.ErrorLevel)
-	case "none":
-		log.SetOutput(io.Discard)
-	default:
-		return fmt.Errorf("logLevel: '%s' is invalid and should have been 'trace', 'debug', 'info', 'warn', 'error' or 'none'", logLevel)
-	}
-
 	return nil
 }
 

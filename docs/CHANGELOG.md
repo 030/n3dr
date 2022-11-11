@@ -2,11 +2,14 @@
 ## [Unreleased]
 
 
-<a name="6.8.2"></a>
-## [6.8.2] - 2022-11-10
-### Build
-- **deps:** Update versions.
+<a name="6.8.3"></a>
+## [6.8.3] - 2022-11-11
+### Fix
+- [[#266](https://github.com/030/n3dr/issues/266)] Some artifacts not uploaded.
 
+
+<a name="6.8.2"></a>
+## [6.8.2] - 2022-11-11
 ### Fix
 - Ensure that auto updater updates the nexus version in the integration test.
 
@@ -271,7 +274,8 @@
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.8.2...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/6.8.3...HEAD
+[6.8.3]: https://github.com/030/n3dr/compare/6.8.2...6.8.3
 [6.8.2]: https://github.com/030/n3dr/compare/6.8.1...6.8.2
 [6.8.1]: https://github.com/030/n3dr/compare/6.8.0...6.8.1
 [6.8.0]: https://github.com/030/n3dr/compare/6.7.5...6.8.0

@@ -4,8 +4,10 @@ go 1.19
 
 require (
 	github.com/030/go-multipart v1.0.2
+	github.com/030/logging v0.1.0
 	github.com/030/mij v1.0.2
-	github.com/030/p2iwd v0.2.0
+	github.com/030/multipart v1.0.5
+	github.com/030/p2iwd v1.0.0
 	github.com/PuerkitoBio/goquery v1.8.0
 	github.com/andybalholm/cascadia v1.3.1
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d

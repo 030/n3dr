@@ -77,7 +77,7 @@ func Checksum(asset *models.AssetXO) (string, string) {
 }
 
 func FilesToBeSkipped(path string) (bool, error) {
-	filesToBeSkipped, err := regexp.MatchString(`^\.(sha(1|256|512)|md5)$`, filepath.Ext(path))
+	filesToBeSkipped, err := regexp.MatchString(`^\.(sha(1|256|512)|md5|xml)$`, filepath.Ext(path))
 	if err != nil {
 		return false, err
 	}

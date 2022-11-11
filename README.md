@@ -2,12 +2,13 @@
 
 [![CI](https://github.com/030/n3dr/workflows/Go/badge.svg?event=push)](https://github.com/030/n3dr/actions?query=workflow%3AGo)
 [![GoDoc Widget]][godoc]
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/030/n3dr)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/030/n3dr?logo=go)
 [![Go Report Card](https://goreportcard.com/badge/github.com/030/n3dr)](https://goreportcard.com/report/github.com/030/n3dr)
 [![StackOverflow SE Questions](https://img.shields.io/stackexchange/stackoverflow/t/n3dr.svg?logo=stackoverflow)](https://stackoverflow.com/tags/n3dr)
 [![DevOps SE Questions](https://img.shields.io/stackexchange/devops/t/n3dr.svg?logo=stackexchange)](https://devops.stackexchange.com/tags/n3dr)
 [![ServerFault SE Questions](https://img.shields.io/stackexchange/serverfault/t/n3dr.svg?logo=serverfault)](https://serverfault.com/tags/n3dr)
-![Docker Pulls](https://img.shields.io/docker/pulls/utrecht/n3dr.svg)
+[![Docker Pulls](https://img.shields.io/docker/pulls/utrecht/n3dr?logo=docker&logoColor=white)](https://hub.docker.com/r/utrecht/n3dr)
+![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/utrecht/n3dr?logo=docker&logoColor=white&sort=semver)
 ![Issues](https://img.shields.io/github/issues-raw/030/n3dr.svg)
 ![Pull requests](https://img.shields.io/github/issues-pr-raw/030/n3dr.svg)
 ![Total downloads](https://img.shields.io/github/downloads/030/n3dr/total.svg)
@@ -20,7 +21,7 @@
 ![Commit activity](https://img.shields.io/github/commit-activity/m/030/n3dr.svg)
 ![Last commit](https://img.shields.io/github/last-commit/030/n3dr.svg)
 ![Release date](https://img.shields.io/github/release-date/030/n3dr.svg)
-![Latest Production Release Version](https://img.shields.io/github/release/030/n3dr.svg)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/030/n3dr?logo=github&sort=semver)](https://github.com/030/n3dr/releases/latest)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=bugs)](https://sonarcloud.io/dashboard?id=030_n3dr)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=code_smells)](https://sonarcloud.io/dashboard?id=030_n3dr)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=coverage)](https://sonarcloud.io/dashboard?id=030_n3dr)
@@ -32,15 +33,16 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=security_rating)](https://sonarcloud.io/dashboard?id=030_n3dr)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=030_n3dr)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=030_n3dr&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=030_n3dr)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2810/badge)](https://bestpractices.coreinfrastructure.org/projects/2810)
 [![codecov](https://codecov.io/gh/030/n3dr/branch/main/graph/badge.svg)](https://codecov.io/gh/030/n3dr)
-[![BCH compliance](https://bettercodehub.com/edge/badge/030/n3dr?branch=main)](https://bettercodehub.com/results/030/n3dr)
 [![GolangCI](https://golangci.com/badges/github.com/golangci/golangci-web.svg)](https://golangci.com/r/github.com/030/n3dr)
 [![Chocolatey](https://img.shields.io/chocolatey/dt/n3dr)](https://chocolatey.org/packages/n3dr)
 [![n3dr](https://snapcraft.io//n3dr/badge.svg)](https://snapcraft.io/n3dr)
 [![codebeat badge](https://codebeat.co/badges/f4aa5086-a4d5-41cd-893a-5da816ee9107)](https://codebeat.co/projects/github-com-030-n3dr-main)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+
+[godoc]: https://godoc.org/github.com/030/n3dr
+[godoc widget]: https://godoc.org/github.com/030/n3dr?status.svg
 
 <a href="https://n3dr.releasesoftwaremoreoften.com">\
 <img src="https://github.com/030/n3dr/raw/main/cmd/n3dr/assets/logo/logo.png" width="100"></a>
@@ -497,9 +499,6 @@ Although there is a number of equivalent tools:
 
 None of them seems to be able to backup all repositories by running
 a single command.
-
-[godoc]: https://godoc.org/github.com/030/n3dr
-[godoc widget]: https://godoc.org/github.com/030/n3dr?status.svg
 
 ## Supported
 
