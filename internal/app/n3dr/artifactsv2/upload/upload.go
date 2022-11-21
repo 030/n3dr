@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/artifacts"
+	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload/maven2/snapshot"
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client/components"
@@ -312,6 +313,29 @@ func closeFileObjectIfNeeded(f *os.File) error {
 	return err
 }
 
+func (n *Nexus3) maven2SnapshotsUpload(localDiskRepo string) {
+	client := n.Nexus3.Client()
+	r := repository_management.GetRepository2Params{RepositoryName: localDiskRepo}
+	r.WithTimeout(time.Second * 30)
+	resp, err := client.RepositoryManagement.GetRepository2(&r)
+	if err != nil {
+		log.Errorf("cannot determine version policy, repository: '%s'", localDiskRepo)
+		return
+	}
+	vp := resp.Payload.Maven.VersionPolicy
+	log.Tracef("VersionPolicy: ''%s", vp)
+
+	if strings.EqualFold(vp, "snapshot") {
+		s := snapshot.Nexus3{DownloadDirName: n.DownloadDirName, FQDN: n.FQDN, Pass: n.Pass, RepoFormat: "maven2", RepoName: localDiskRepo, SkipErrors: n.SkipErrors, User: n.User}
+		if err := s.Upload(); err != nil {
+			if !n.SkipErrors {
+				panic(err)
+			}
+			log.Error(err)
+		}
+	}
+}
+
 func (n *Nexus3) Upload() error {
 	localDiskRepos, err := n.reposOnDisk()
 	if err != nil {
@@ -323,6 +347,7 @@ func (n *Nexus3) Upload() error {
 		wg.Add(1)
 		go func(localDiskRepo string) {
 			defer wg.Done()
+
 			log.Infof("Uploading files to Nexus: '%s' repository: '%s'...", n.FQDN, localDiskRepo)
 
 			if localDiskRepo == "p2iwd" {
@@ -338,26 +363,13 @@ func (n *Nexus3) Upload() error {
 			if err != nil {
 				panic(err)
 			}
-
 			if repoFormat == "" {
 				log.Errorf("repoFormat not detected. Verify whether repo: '%s' resides in Nexus", localDiskRepo)
 				return
 			}
 
 			if repoFormat == "maven2" {
-				client := n.Nexus3.Client()
-				r := repository_management.GetRepository2Params{RepositoryName: localDiskRepo}
-				r.WithTimeout(time.Second * 30)
-
-				resp, err := client.RepositoryManagement.GetRepository2(&r)
-				if err != nil {
-					log.Errorf("cannot determine version policy, repository: '%s'", localDiskRepo)
-					return
-				}
-				if resp.Payload.Maven.VersionPolicy == "Snapshot" {
-					log.Errorf("upload to snapshot repositories not supported. Affected repository: '%s'", localDiskRepo)
-					return
-				}
+				n.maven2SnapshotsUpload(localDiskRepo)
 			}
 
 			localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)

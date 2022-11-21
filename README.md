@@ -59,15 +59,71 @@ N3DR excludes the backup of group repositories and is able to backup all Maven2
 and NPM repositories and migrate and/or restore Maven2 artifacts to another
 Nexus server.
 
-Note: uploads to proxy and snapshot repositories are not supported by Nexus
-itself. As a workaround one could create a hosted repository in Nexus and
-upload the backed up proxy content to it.
+Note: uploads to proxy repositories are not supported by Nexus itself. As a
+workaround one could create a hosted repository in Nexus and upload the backed
+up proxy content to it.
 
 The aims of the n3dr tool are:
 
 - to backup all artifacts from a certain Nexus maven repository.
 - to migrate all artifacts from NexusA to NexusB.
 - configuration-as-code.
+
+## Quickstart
+
+`~/.n3dr/config.yml` or `~/snap/n3dr/current/.n3dr/config.yml`:
+
+```bash
+---
+n3drPass: some-pass
+n3drURL: some-url
+n3drUser: some-user
+showLogo: false
+```
+
+backup all artifacts:
+
+```bash
+n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
+```
+
+start another nexus3 server:
+
+```bash
+docker run --rm -d -p 9000:8081 --name nexus3-n3dr sonatype/nexus3:3.42.0
+```
+
+upload the artifacts to the other nexus server:
+
+```bash
+n3dr repositoriesV2 --upload -u admin \
+-p $(docker exec -it nexus3-n3dr cat /nexus-data/admin.password) \
+-n localhost:9000 --https=false --directory-prefix /tmp/some-dir
+```
+
+`repoFormat not detected. Verify whether repo: 'releases' resides in Nexus`:
+
+```bash
+n3dr configRepository -u admin \
+-p $(docker exec -it nexus3-n3dr cat /nexus-data/admin.password) \
+-n localhost:9000 --https=false --configRepoName releases \
+--configRepoType maven2
+```
+
+`repoFormat not detected. Verify whether repo: 'snapshots' resides in Nexus`:
+
+```bash
+n3dr configRepository -u admin \
+-p $(docker exec -it nexus3-n3dr cat /nexus-data/admin.password) \
+-n localhost:9000 --https=false --configRepoName snapshots \
+--configRepoType maven2 --snapshot
+```
+
+cleanup:
+
+```bash
+docker stop nexus3-n3dr
+```
 
 ## Instructions
 
@@ -306,7 +362,7 @@ n3dr config \
 ### Build
 
 ```bash
-docker build -t utrecht/n3dr:6.8.2 .
+docker build -t utrecht/n3dr:6.8.3 .
 ```
 
 [![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
@@ -316,7 +372,7 @@ docker build -t utrecht/n3dr:6.8.2 .
 ```bash
 docker run -it \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.2
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.3
 ```
 
 ### Upload
@@ -325,7 +381,7 @@ docker run -it \
 docker run -it \
   --entrypoint=/bin/ash \
   -v /home/${USER}/.n3dr:/root/.n3dr \
-  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.2
+  -v /tmp/n3dr:/tmp/n3dr utrecht/n3dr:6.8.3
 ```
 
 navigate to the repository folder, e.g. `/tmp/n3dr/download*/` and upload:
