@@ -2,7 +2,7 @@
 name: DIP
 'on':
   schedule:
-    - cron: '35 14 10 * *'
+    - cron: '0 0 19 * *'
 jobs:
   dip:
     runs-on: ubuntu-latest
