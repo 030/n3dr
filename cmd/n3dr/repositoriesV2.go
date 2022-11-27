@@ -8,9 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	countV2, namesV2, backupV2, uploadV2 bool
-)
+var countV2, namesV2, backupV2, uploadV2 bool
 
 // repositoriesCmd represents the repositories command
 var repositoriesV2Cmd = &cobra.Command{
@@ -48,7 +46,7 @@ Examples:
 			}
 			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo}
+		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors}
 		a := artifactsv2.Nexus3{Nexus3: &n}
 		if namesV2 {
 			if err := a.RepositoryNamesV2(); err != nil {
