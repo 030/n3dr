@@ -182,7 +182,6 @@ Available Commands:
 Flags:
   -v, --apiVersion string        The Nexus3 APIVersion, e.g. v1 or beta
                                  (default "v1")
-  -d, --debug                    Enable debug logging
   -h, --help                     help for n3dr
       --insecureSkipVerify       Skip repository certificate check
   -p, --n3drPass string          The Nexus3 password
@@ -530,7 +529,7 @@ removeLocalFile: true
 Use the `--npm` parameter to backup NPM artifacts.
 
 ```bash
-go run main.go backup -npm -n some-url -r some-npm-repo -d --npm
+go run main.go backup -npm -n some-url -r some-npm-repo --npm
 ```
 
 ## logo

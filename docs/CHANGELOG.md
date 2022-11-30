@@ -2,12 +2,23 @@
 ## [Unreleased]
 
 
+<a name="7.0.0"></a>
+## [7.0.0] - 2022-11-30
+### Fix
+- **logging:** [[#270](https://github.com/030/n3dr/issues/270)] Optional write to syslog and/or file and default loglevel set to info.
+
+### BREAKING CHANGE
+
+The `--debug` and `-d` shorthand have been replaced by `--logLevel debug`.
+
+
 <a name="6.8.3"></a>
-## [6.8.3] - 2022-11-21
+## [6.8.3] - 2022-11-28
 ### Build
 - **auto-updater:** Update schedule.
 
 ### Fix
+- [[#254](https://github.com/030/n3dr/issues/254)] Broken snapcraft build.
 - **maven2:** [[#254](https://github.com/030/n3dr/issues/254)] Upload snapshots.
 
 
@@ -277,7 +288,8 @@
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/6.8.3...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.0.0...HEAD
+[7.0.0]: https://github.com/030/n3dr/compare/6.8.3...7.0.0
 [6.8.3]: https://github.com/030/n3dr/compare/6.8.2...6.8.3
 [6.8.2]: https://github.com/030/n3dr/compare/6.8.1...6.8.2
 [6.8.1]: https://github.com/030/n3dr/compare/6.8.0...6.8.1
