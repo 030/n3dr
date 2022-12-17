@@ -40,7 +40,7 @@ jobs:
           echo "Checking build/package/snap/snapcraft.yaml..."
           grep ${version} build/package/snap/snapcraft.yaml
           echo "Checking README.md..."
-          grep "n3dr:${version}" README.md
+          grep "n3dr:${version}" docs/README.md
         # yamllint disable rule:line-length
         if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Create release

@@ -4,6 +4,9 @@
 
 <a name="7.0.0"></a>
 ## [7.0.0] - 2022-12-17
+### Build
+- **snap:** [[#290](https://github.com/030/n3dr/issues/290)] Stable version 7.
+
 ### Fix
 - [[#263](https://github.com/030/n3dr/issues/263)] Remove deprecated commands.
 

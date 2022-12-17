@@ -31,4 +31,4 @@ jobs:
         with:
           store_login: ${{ secrets.SNAPCRAFT_LOGIN }}
           snap: ${{ steps.snapcraft.outputs.snap }}
-          release: stable
+          release: 7/stable
