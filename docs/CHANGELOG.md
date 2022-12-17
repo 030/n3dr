@@ -9,8 +9,11 @@
 
 ### Fix
 - [[#263](https://github.com/030/n3dr/issues/263)] Remove deprecated commands.
+- **logging:** [[#270](https://github.com/030/n3dr/issues/270)] Optional write to syslog and/or file and default loglevel set to info.
 
 ### BREAKING CHANGE
+
+The `--debug` and `-d` shorthand have been replaced by `--logLevel debug`.
 
 The `backup`, `upload` and `repositories` commands have been removed.
 
