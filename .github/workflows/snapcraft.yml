@@ -5,7 +5,7 @@ name: Snapcraft
     workflows: ['Release']
     push:
       tags:
-        - '*'
+        - 6.**
     types:
       - completed
 jobs:
