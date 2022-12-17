@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Check whether images are up-to-date
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.WORKFLOW_TOKEN }}

@@ -16,7 +16,7 @@ jobs:
             nexus-api-version: beta
             shasum: sha512sum
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Go
         uses: actions/setup-go@v2
         with:

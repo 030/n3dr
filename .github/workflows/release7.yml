@@ -1,11 +1,8 @@
 ---
-name: Release
-'on':
-  push:
-    tags:
-      - '*'
+name: release7
+'on': [workflow_call]
 jobs:
-  release:
+  release7:
     name: Create Release
     runs-on: ${{ matrix.os }}
     strategy:
@@ -18,7 +15,9 @@ jobs:
           - os: windows-2019
             shasum: sha512sum
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: release/7
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
