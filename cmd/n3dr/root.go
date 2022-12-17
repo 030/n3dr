@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
+	cli "github.com/030/n3dr/internal/app/n3dr/artifactsv2"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
 	"github.com/sirupsen/logrus/hooks/writer"
@@ -22,6 +22,8 @@ import (
 
 //go:embed assets/logo/text-image-com-n3dr.txt
 var logo string
+
+var regex string
 
 var (
 	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost, logLevel string
@@ -69,6 +71,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&dockerPortSecure, "dockerPortSecure", false, "Whether the docker connector port should be secure")
 	rootCmd.PersistentFlags().StringVar(&logLevel, "logLevel", "", "change the log level")
 	rootCmd.PersistentFlags().BoolVar(&logFile, "logFile", false, "write the log to syslog")
+	rootCmd.PersistentFlags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 }
 
 func n3drHiddenHome() (string, error) {
