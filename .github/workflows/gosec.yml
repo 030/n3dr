@@ -1,12 +1,6 @@
 ---
 name: Run Gosec
-'on':
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+'on': push
 jobs:
   tests:
     runs-on: ubuntu-latest
