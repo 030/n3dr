@@ -5,28 +5,27 @@ import (
 	"crypto/x509"
 	_ "embed"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"path/filepath"
-	"runtime"
 
-	cli "github.com/030/n3dr/internal/app/n3dr/artifacts"
+	"github.com/030/logging/pkg/logging"
+	cli "github.com/030/n3dr/internal/app/n3dr/artifactsv2"
 	homedir "github.com/mitchellh/go-homedir"
 	log "github.com/sirupsen/logrus"
-	"github.com/sirupsen/logrus/hooks/writer"
 	"github.com/spf13/cobra"
-	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/viper"
 )
 
 //go:embed assets/logo/text-image-com-n3dr.txt
 var logo string
 
+var regex string
+
 var (
-	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, n3drRepo, n3drURL, n3drPass, n3drUser, Version, zipName, downloadDirName, downloadDirNameZip, dockerHost, logLevel string
-	anonymous, awsS3, debug, dockerPortSecure, logFile, https, insecureSkipVerify, showLogo, skipErrors, zip                                                                                        bool
-	dockerPort                                                                                                                                                                                      int32
+	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, dockerHost, downloadDirName, downloadDirNameZip, logFile, logLevel, n3drPass, n3drRepo, n3drURL, n3drUser, Version, zipName string
+	anonymous, awsS3, dockerPortSecure, https, insecureSkipVerify, showLogo, skipErrors, syslog, zip                                                                                                         bool
+	dockerPort                                                                                                                                                                                               int32
 )
 
 var rootCmd = &cobra.Command{
@@ -35,6 +34,27 @@ var rootCmd = &cobra.Command{
 	Long: `N3DR is a tool that is capable of backing up all artifacts from a certain
 Nexus3 repository and restoring them.`,
 	Version: Version,
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if logFile == "" {
+			logFile = viper.GetString("logFile")
+		}
+
+		if logLevel == "info" {
+			value := viper.GetString("logLevel")
+			if value != "" {
+				logLevel = value
+			}
+		}
+
+		if !syslog {
+			syslog = viper.GetBool("syslog")
+		}
+
+		l := logging.Logging{File: logFile, Level: logLevel, Syslog: syslog}
+		if _, err := l.Setup(); err != nil {
+			log.Fatal(err)
+		}
+	},
 }
 
 func execute() {
@@ -47,28 +67,28 @@ func execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().BoolVarP(&awsS3, "awsS3", "", false, "whether the backup zip should be uploaded to AWS S3")
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/"+cli.DefaultCfgFileWithExt+")")
-	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "enable debug logging")
-	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
-	rootCmd.PersistentFlags().StringVarP(&zipName, "zipName", "i", "", "the name of the zip file")
-	rootCmd.PersistentFlags().BoolVar(&insecureSkipVerify, "insecureSkipVerify", false, "Skip repository certificate check")
-	rootCmd.PersistentFlags().StringVarP(&n3drPass, "n3drPass", "p", "", "nexus3 password")
-	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
-	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
-	rootCmd.PersistentFlags().StringVar(&downloadDirName, "directory-prefix", "", "directory to store downloaded artifacts")
-	rootCmd.PersistentFlags().StringVar(&downloadDirNameZip, "directory-prefix-zip", "", "directory to store the zipped artifacts")
-	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
 	rootCmd.PersistentFlags().BoolVar(&anonymous, "anonymous", false, "Skip authentication")
-	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
-	rootCmd.PersistentFlags().BoolVarP(&https, "https", "", true, "https true or false")
+	rootCmd.PersistentFlags().StringVarP(&apiVersion, "apiVersion", "v", "v1", "nexus3 APIVersion, e.g. v1 or beta")
+	rootCmd.PersistentFlags().BoolVarP(&awsS3, "awsS3", "", false, "whether the backup zip should be uploaded to AWS S3")
 	rootCmd.PersistentFlags().StringVarP(&basePathPrefix, "basePathPrefix", "", "", "the nexus basePathPrefix. Default: \"\"")
-	rootCmd.PersistentFlags().BoolVarP(&showLogo, "showLogo", "", true, "show N3DR logo or not. Default: true")
 	rootCmd.PersistentFlags().StringVar(&dockerHost, "dockerHost", "", "The docker host, e.g. localhost")
 	rootCmd.PersistentFlags().Int32Var(&dockerPort, "dockerPort", 0, "The docker connector port, e.g. 8082")
 	rootCmd.PersistentFlags().BoolVar(&dockerPortSecure, "dockerPortSecure", false, "Whether the docker connector port should be secure")
-	rootCmd.PersistentFlags().StringVar(&logLevel, "logLevel", "", "change the log level")
-	rootCmd.PersistentFlags().BoolVar(&logFile, "logFile", false, "write the log to syslog")
+	rootCmd.PersistentFlags().StringVar(&downloadDirName, "directory-prefix", "", "directory to store downloaded artifacts")
+	rootCmd.PersistentFlags().StringVar(&downloadDirNameZip, "directory-prefix-zip", "", "directory to store the zipped artifacts")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/"+cli.DefaultCfgFileWithExt+")")
+	rootCmd.PersistentFlags().BoolVarP(&https, "https", "", true, "https true or false")
+	rootCmd.PersistentFlags().BoolVar(&insecureSkipVerify, "insecureSkipVerify", false, "Skip repository certificate check")
+	rootCmd.PersistentFlags().StringVar(&logFile, "logFile", "", "define the path to the logFile")
+	rootCmd.PersistentFlags().StringVar(&logLevel, "logLevel", "info", "change the log level (default: info, options: trace, debug, info, warn, error or none)")
+	rootCmd.PersistentFlags().StringVarP(&n3drPass, "n3drPass", "p", "", "nexus3 password")
+	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
+	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
+	rootCmd.PersistentFlags().BoolVarP(&showLogo, "showLogo", "", true, "show N3DR logo or not. Default: true")
+	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
+	rootCmd.PersistentFlags().BoolVar(&syslog, "syslog", false, "whether the logs should be written to syslog")
+	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
+	rootCmd.PersistentFlags().StringVarP(&zipName, "zipName", "i", "", "the name of the zip file")
 }
 
 func n3drHiddenHome() (string, error) {
@@ -117,11 +137,6 @@ func ascii() {
 }
 
 func initConfig() {
-	if err := logging(); err != nil {
-		log.Fatal(err)
-	}
-	enableDebug()
-
 	cf, err := configFilePath()
 	if err != nil {
 		log.Fatal(err)
@@ -227,78 +242,4 @@ func insecureCerts() error {
 		http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{MinVersion: tls.VersionTLS12, MaxVersion: tls.VersionTLS13, RootCAs: caCertPool}
 	}
 	return nil
-}
-
-func logging() (err error) {
-	if logLevel == "" {
-		logLevel, err = valueInConfigFile("logLevel")
-		if err != nil {
-			log.Warn("'logLevel' not found in configFile")
-		}
-		logLevel = "info"
-	}
-
-	if logLevel != "" {
-		log.SetFormatter(&log.TextFormatter{
-			FullTimestamp: true,
-		})
-	}
-
-	if logFile {
-		log.SetOutput(io.Discard)
-
-		log.SetFormatter(&log.TextFormatter{
-			DisableColors: true,
-		})
-
-		if runtime.GOOS != "windows" {
-			logFileSyslog()
-		}
-	}
-
-	log.AddHook(&writer.Hook{
-		Writer:    os.Stderr,
-		LogLevels: []log.Level{log.ErrorLevel},
-	})
-
-	switch logLevel {
-	case "trace":
-		jww.SetLogThreshold(jww.LevelTrace)
-		jww.SetStdoutThreshold(jww.LevelTrace)
-		log.SetLevel(log.TraceLevel)
-	case "debug":
-		jww.SetLogThreshold(jww.LevelDebug)
-		jww.SetStdoutThreshold(jww.LevelDebug)
-		log.SetLevel(log.DebugLevel)
-	case "info":
-		jww.SetLogThreshold(jww.LevelInfo)
-		jww.SetStdoutThreshold(jww.LevelInfo)
-		log.SetLevel(log.InfoLevel)
-	case "warn":
-		jww.SetLogThreshold(jww.LevelWarn)
-		jww.SetStdoutThreshold(jww.LevelWarn)
-		log.SetLevel(log.WarnLevel)
-	case "error":
-		jww.SetLogThreshold(jww.LevelError)
-		jww.SetStdoutThreshold(jww.LevelError)
-		log.SetLevel(log.ErrorLevel)
-	case "none":
-		log.SetOutput(io.Discard)
-	default:
-		return fmt.Errorf("logLevel: '%s' is invalid and should have been 'trace', 'debug', 'info', 'warn', 'error' or 'none'", logLevel)
-	}
-
-	return nil
-}
-
-func enableDebug() {
-	log.SetReportCaller(true)
-	if debug {
-		log.SetLevel(log.DebugLevel)
-
-		// Added to be able to debug viper (used to read the config file)
-		// Viper is using a different logger
-		jww.SetLogThreshold(jww.LevelTrace)
-		jww.SetStdoutThreshold(jww.LevelDebug)
-	}
 }

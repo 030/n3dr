@@ -30,6 +30,9 @@ Examples:
   # Backup all artifacts:
   n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
 
+  # Backup all artifacts, set log level to trace and write it to a file and syslog:
+  n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --logFile some-file.log --logLevel trace --syslog
+
   # Backup all artifacts that reside in a Nexus3 server in a certain dir and store these in a zip file:
   n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --directory-prefix-zip /tmp/some-dir/some-zip --zip
 

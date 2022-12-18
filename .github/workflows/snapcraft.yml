@@ -1,25 +1,19 @@
 ---
-name: Snapcraft
+name: snapcraft
 'on':
-  workflow_run:
-    workflows: ['Release']
-    push:
-      tags:
-        - 6.**
-    types:
-      - completed
+  push:
+    tags:
+      - 7.**
 jobs:
   release:
+    uses: ./.github/workflows/release.yml
+  snapcraft:
+    needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      # yamllint disable rule:line-length
-      - name: Remove Docker
-        run: |
-          # https://github.com/canonical/lxd-cloud/blob/f20a64a8af42485440dcbfd370faf14137d2f349/test/includes/lxd.sh#L13-L23
-          sudo rm -rf /etc/docker
-          sudo apt-get purge moby-buildx moby-engine moby-cli moby-compose moby-containerd moby-runc -y
-          sudo iptables -P FORWARD ACCEPT
+      - uses: actions/checkout@v3
+        with:
+          ref: main
       - uses: snapcore/action-build@v1
         with:
           path: build/package
@@ -31,4 +25,4 @@ jobs:
         with:
           store_login: ${{ secrets.SNAPCRAFT_LOGIN }}
           snap: ${{ steps.snapcraft.outputs.snap }}
-          release: stable
+          release: candidate

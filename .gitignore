@@ -1,3 +1,6 @@
+*.log
+
 cmd/n3dr/n3dr
 cmd/n3dr/n3dr.sha512.txt
+
 dip

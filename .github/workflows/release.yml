@@ -1,9 +1,6 @@
 ---
-name: Release
-'on':
-  push:
-    tags:
-      - 6.**
+name: release
+'on': [workflow_call]
 jobs:
   release:
     name: Create Release
@@ -18,7 +15,9 @@ jobs:
           - os: windows-2019
             shasum: sha512sum
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: main
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
@@ -40,7 +39,7 @@ jobs:
           echo "Checking build/package/snap/snapcraft.yaml..."
           grep ${version} build/package/snap/snapcraft.yaml
           echo "Checking README.md..."
-          grep "n3dr:${version}" README.md
+          grep "n3dr:${version}" docs/README.md
         # yamllint disable rule:line-length
         if: ${{ startsWith(matrix.os, 'mac') || startsWith(matrix.os, 'ubuntu') }}
       - name: Create release
