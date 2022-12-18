@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="7.0.1"></a>
+## [7.0.1] - 2022-12-18
+### Fix
+- [[#294](https://github.com/030/n3dr/issues/294)] Apply auto updates.
+
+
 <a name="7.0.0"></a>
 ## [7.0.0] - 2022-12-17
 ### Build
@@ -10,6 +16,7 @@
 ### Fix
 - [[#263](https://github.com/030/n3dr/issues/263)] Remove deprecated commands.
 - **logging:** [[#270](https://github.com/030/n3dr/issues/270)] Optional write to syslog and/or file and default loglevel set to info.
+- **snap:** [[#290](https://github.com/030/n3dr/issues/290)] Snap and release version 7.
 
 ### BREAKING CHANGE
 
@@ -294,7 +301,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.0.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.0.1...HEAD
+[7.0.1]: https://github.com/030/n3dr/compare/7.0.0...7.0.1
 [7.0.0]: https://github.com/030/n3dr/compare/6.8.3...7.0.0
 [6.8.3]: https://github.com/030/n3dr/compare/6.8.2...6.8.3
 [6.8.2]: https://github.com/030/n3dr/compare/6.8.1...6.8.2
