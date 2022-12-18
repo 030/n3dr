@@ -71,7 +71,22 @@ The aims of the n3dr tool are:
 
 ## Quickstart
 
-`~/.n3dr/config.yml` or `~/snap/n3dr/current/.n3dr/config.yml`:
+Download the [latest N3DR binary](https://github.com/030/n3dr/releases/tag/7.0.0):
+
+```bash
+cd /tmp && \
+curl -L https://github.com/030/n3dr/releases/download/7.0.0/n3dr-ubuntu-20.04 \
+  -o n3dr-ubuntu-20.04 && \
+curl -L https://github.com/030/n3dr/releases/download/7.0.0/\
+n3dr-ubuntu-20.04.sha512.txt \
+  -o n3dr-ubuntu-20.04.sha512.txt && \
+sha512sum -c n3dr-ubuntu-20.04.sha512.txt && \
+chmod +x n3dr-ubuntu-20.04 && \
+mv n3dr-ubuntu-20.04 n3dr && \
+./n3dr --version
+```
+
+Adjust the `~/.n3dr/config.yml` file:
 
 ```bash
 ---
@@ -84,7 +99,7 @@ showLogo: false
 backup all artifacts:
 
 ```bash
-n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
+./n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
 ```
 
 start another nexus3 server:
@@ -96,7 +111,7 @@ docker run --rm -d -p 9000:8081 --name nexus3-n3dr sonatype/nexus3:3.42.0
 upload the artifacts to the other nexus server:
 
 ```bash
-n3dr repositoriesV2 --upload -u admin \
+./n3dr repositoriesV2 --upload -u admin \
 -p $(docker exec -it nexus3-n3dr cat /nexus-data/admin.password) \
 -n localhost:9000 --https=false --directory-prefix /tmp/some-dir
 ```
@@ -104,7 +119,7 @@ n3dr repositoriesV2 --upload -u admin \
 `repoFormat not detected. Verify whether repo: 'releases' resides in Nexus`:
 
 ```bash
-n3dr configRepository -u admin \
+./n3dr configRepository -u admin \
 -p $(docker exec -it nexus3-n3dr cat /nexus-data/admin.password) \
 -n localhost:9000 --https=false --configRepoName releases \
 --configRepoType maven2
@@ -113,7 +128,7 @@ n3dr configRepository -u admin \
 `repoFormat not detected. Verify whether repo: 'snapshots' resides in Nexus`:
 
 ```bash
-n3dr configRepository -u admin \
+./n3dr configRepository -u admin \
 -p $(docker exec -it nexus3-n3dr cat /nexus-data/admin.password) \
 -n localhost:9000 --https=false --configRepoName snapshots \
 --configRepoType maven2 --snapshot
@@ -124,6 +139,10 @@ cleanup:
 ```bash
 docker stop nexus3-n3dr
 ```
+
+## Instructions
+
+- [snap](./docs/instructions/snap.md)
 
 ## Stargazers over time
 
