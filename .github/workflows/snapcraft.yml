@@ -1,19 +1,19 @@
 ---
-name: snapcraft7
+name: snapcraft
 'on':
   push:
     tags:
       - 7.**
 jobs:
-  release7:
-    uses: ./.github/workflows/release7.yml
-  snapcraft7:
-    needs: [release7]
+  release:
+    uses: ./.github/workflows/release.yml
+  snapcraft:
+    needs: [release]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: release/7
+          ref: main
       - uses: snapcore/action-build@v1
         with:
           path: build/package

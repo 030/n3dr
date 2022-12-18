@@ -1,8 +1,8 @@
 ---
-name: release7
+name: release
 'on': [workflow_call]
 jobs:
-  release7:
+  release:
     name: Create Release
     runs-on: ${{ matrix.os }}
     strategy:
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: release/7
+          ref: main
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
