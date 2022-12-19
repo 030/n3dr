@@ -3,9 +3,15 @@
 
 
 <a name="7.0.1"></a>
-## [7.0.1] - 2022-12-18
+## [7.0.1] - 2022-12-19
+### Build
+- **deps:** Update versions.
+
 ### Fix
+- [[#294](https://github.com/030/n3dr/issues/294)] Update n3dr version in README.
+- [[#294](https://github.com/030/n3dr/issues/294)] Merge conflicts.
 - [[#294](https://github.com/030/n3dr/issues/294)] Apply auto updates.
+- **snap:** [[#290](https://github.com/030/n3dr/issues/290)] Restrict release of older snaps to main.
 
 
 <a name="7.0.0"></a>
