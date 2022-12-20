@@ -53,7 +53,7 @@ jobs:
           echo "Checking build/package/snap/snapcraft.yaml..."
           sed -i "s|^\(version: \)\([0-9]\+\.\)\{2\}[0-9]\+|\1${{ env.NEW_TAG }}|" build/package/snap/snapcraft.yaml
           echo "Checking README.md..."
-          sed -i "s|\(n3dr:\)\([0-9]\+\.\)\{2\}[0-9]\+|\1${{ env.NEW_TAG }}|" README.md
+          sed -i "s|\(n3dr:\)\([0-9]\+\.\)\{2\}[0-9]\+|\1${{ env.NEW_TAG }}|" docs/README.md
           sed -i "s|\(n3dr\/releases\/tag\/\)\([0-9]\+\.\)\{2\}[0-9]\+|\1${{ env.NEW_TAG }}|g" README.md
           sed -i "s|\(releases\/download\/\)\([0-9]\+\.\)\{2\}[0-9]\+|\1${{ env.NEW_TAG }}|g" README.md
       - uses: EndBug/add-and-commit@v9
