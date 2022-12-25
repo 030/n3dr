@@ -336,6 +336,37 @@ func (n *Nexus3) maven2SnapshotsUpload(localDiskRepo string) {
 	}
 }
 
+func (n *Nexus3) uploadArtifactsSingleDir(localDiskRepo string) {
+	log.Infof("Uploading files to Nexus: '%s' repository: '%s'...", n.FQDN, localDiskRepo)
+
+	if localDiskRepo == "p2iwd" {
+		h := n.DockerHost + ":" + fmt.Sprint(n.DockerPort)
+		pdr := p2iwd.DockerRegistry{Dir: filepath.Join(n.DownloadDirName, "p2iwd"), Host: h, Pass: n.Pass, User: n.User}
+		if err := pdr.Upload(); err != nil {
+			panic(err)
+		}
+		return
+	}
+
+	repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
+	if err != nil {
+		panic(err)
+	}
+	if repoFormat == "" {
+		log.Errorf("repoFormat not detected. Verify whether repo: '%s' resides in Nexus", localDiskRepo)
+		return
+	}
+
+	if repoFormat == "maven2" {
+		n.maven2SnapshotsUpload(localDiskRepo)
+	}
+
+	localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
+	if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat); err != nil {
+		panic(err)
+	}
+}
+
 func (n *Nexus3) Upload() error {
 	localDiskRepos, err := n.reposOnDisk()
 	if err != nil {
@@ -344,39 +375,16 @@ func (n *Nexus3) Upload() error {
 
 	var wg sync.WaitGroup
 	for _, localDiskRepo := range localDiskRepos {
-		wg.Add(1)
-		go func(localDiskRepo string) {
-			defer wg.Done()
+		if n.WithoutWaitGroups {
+			n.uploadArtifactsSingleDir(localDiskRepo)
+		} else {
+			wg.Add(1)
+			go func(localDiskRepo string) {
+				defer wg.Done()
 
-			log.Infof("Uploading files to Nexus: '%s' repository: '%s'...", n.FQDN, localDiskRepo)
-
-			if localDiskRepo == "p2iwd" {
-				h := n.DockerHost + ":" + fmt.Sprint(n.DockerPort)
-				pdr := p2iwd.DockerRegistry{Dir: filepath.Join(n.DownloadDirName, "p2iwd"), Host: h, Pass: n.Pass, User: n.User}
-				if err := pdr.Upload(); err != nil {
-					panic(err)
-				}
-				return
-			}
-
-			repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
-			if err != nil {
-				panic(err)
-			}
-			if repoFormat == "" {
-				log.Errorf("repoFormat not detected. Verify whether repo: '%s' resides in Nexus", localDiskRepo)
-				return
-			}
-
-			if repoFormat == "maven2" {
-				n.maven2SnapshotsUpload(localDiskRepo)
-			}
-
-			localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
-			if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat); err != nil {
-				panic(err)
-			}
-		}(localDiskRepo)
+				n.uploadArtifactsSingleDir(localDiskRepo)
+			}(localDiskRepo)
+		}
 	}
 	wg.Wait()
 
