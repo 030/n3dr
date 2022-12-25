@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var countV2, namesV2, backupV2, uploadV2 bool
+var countV2, namesV2, backupV2, uploadV2, withoutWaitGroups, withoutWaitGroupArtifacts, withoutWaitGroupRepositories bool
 
 // repositoriesCmd represents the repositories command
 var repositoriesV2Cmd = &cobra.Command{
@@ -30,6 +30,15 @@ Examples:
   # Backup all artifacts:
   n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
 
+  # Backup all artifacts without waitGroupRepositories:
+  n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --withoutWaitGroupRepositories
+
+  # Backup all artifacts without waitGroupArtifacts:
+  n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --withoutWaitGroupArtifacts
+
+  # Backup all artifacts without waitGroups:
+  n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --withoutWaitGroups
+
   # Backup all artifacts, set log level to trace and write it to a file and syslog:
   n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir --logFile some-file.log --logLevel trace --syslog
 
@@ -38,6 +47,15 @@ Examples:
 
   # Backup all artifacts including docker images:
   n3dr repositoriesV2 --backup -u some-user -p some-pass -n localhost:9000 --https=false --directory-prefix /tmp/some-dir --dockerPort 9001 --dockerHost http://localhost
+
+  # Upload all artifacts:
+  n3dr repositoriesV2 --upload --directory-prefix /tmp/some-dir
+
+  # Upload all artifacts and skip errors:
+  n3dr repositoriesV2 --upload --directory-prefix /tmp/some-dir --skipErrors
+
+  # Upload all artifacts without waitGroups:
+  n3dr repositoriesV2 --upload --directory-prefix /tmp/some-dir --withoutWaitGroups
 
   # Upload artifacts, print errors on stderr and write them to syslog:
   n3dr repositoriesV2 --upload -u some-user -p some-pass -n localhost:9000 --https=false --directory-prefix /tmp/some-dir --logLevel=none --logFile
@@ -49,7 +67,7 @@ Examples:
 			}
 			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors}
+		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
 		a := artifactsv2.Nexus3{Nexus3: &n}
 		if namesV2 {
 			if err := a.RepositoryNamesV2(); err != nil {
@@ -89,6 +107,9 @@ func init() {
 	repositoriesV2Cmd.Flags().BoolVarP(&uploadV2, "upload", "", false, "upload artifacts from all repositories")
 	repositoriesV2Cmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only download artifacts that match a regular expression, e.g. 'some/group42'")
 	repositoriesV2Cmd.Flags().StringVar(&n3drRepo, "n3drRepo", "", "backup a single nexus3 repository")
+	repositoriesV2Cmd.PersistentFlags().BoolVar(&withoutWaitGroups, "withoutWaitGroups", false, "disable the use of waitGroups")
+	repositoriesV2Cmd.PersistentFlags().BoolVar(&withoutWaitGroupArtifacts, "withoutWaitGroupArtifacts", false, "disable the use of waitGroupArtifacts")
+	repositoriesV2Cmd.PersistentFlags().BoolVar(&withoutWaitGroupRepositories, "withoutWaitGroupRepositories", false, "disable the use of waitGroupRepositories")
 
 	rootCmd.AddCommand(repositoriesV2Cmd)
 }

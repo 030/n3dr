@@ -2,12 +2,16 @@
 ## [Unreleased]
 
 
-<a name="7.0.1"></a>
-## [7.0.1] - 2022-12-19
-### Build
-- **deps:** Update versions.
-
+<a name="7.0.2"></a>
+## [7.0.2] - 2022-12-25
 ### Fix
+- [[#304](https://github.com/030/n3dr/issues/304)] Optional waitgroup to mitigate memory issues in large Nexus3 environments.
+
+
+<a name="7.0.1"></a>
+## [7.0.1] - 2022-12-20
+### Fix
+- [[#294](https://github.com/030/n3dr/issues/294)] Update n3dr version in docs/README.
 - [[#294](https://github.com/030/n3dr/issues/294)] Update n3dr version in README.
 - [[#294](https://github.com/030/n3dr/issues/294)] Merge conflicts.
 - [[#294](https://github.com/030/n3dr/issues/294)] Apply auto updates.
@@ -307,7 +311,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.0.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.0.2...HEAD
+[7.0.2]: https://github.com/030/n3dr/compare/7.0.1...7.0.2
 [7.0.1]: https://github.com/030/n3dr/compare/7.0.0...7.0.1
 [7.0.0]: https://github.com/030/n3dr/compare/6.8.3...7.0.0
 [6.8.3]: https://github.com/030/n3dr/compare/6.8.2...6.8.3

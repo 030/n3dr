@@ -20,7 +20,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const chmodDir = 0750
+const chmodDir = 0o750
 
 type Nexus3 struct {
 	*connection.Nexus3
@@ -110,8 +110,35 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 	return nil
 }
 
+func (n *Nexus3) downloadSingleArtifact(asset *models.AssetXO, repo string) {
+	shaType, checksum := artifacts.Checksum(asset)
+
+	log.WithFields(log.Fields{
+		"url":      asset.DownloadURL,
+		"format":   asset.Format,
+		"checksum": checksum,
+	}).Trace("Download artifact")
+	assetPath := asset.Path
+	filesToBeSkipped, err := artifacts.FilesToBeSkipped(assetPath)
+	if err != nil {
+		panic(err)
+	}
+	if !filesToBeSkipped {
+		file := filepath.Join(n.DownloadDirName, repo, assetPath)
+		downloadedFileChecksum, err := artifacts.ChecksumLocalFile(file, shaType)
+		if err != nil {
+			panic(err)
+		}
+
+		if err := n.download(checksum, downloadedFileChecksum, asset); err != nil {
+			panic(err)
+		}
+	}
+}
+
 func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo string) error {
 	var wg sync.WaitGroup
+
 	client := n.Nexus3.Client()
 	c := components.GetComponentsParams{ContinuationToken: &continuationToken, Repository: repo}
 	c.WithTimeout(time.Second * 60)
@@ -122,33 +149,16 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 	continuationToken = resp.GetPayload().ContinuationToken
 	for _, item := range resp.GetPayload().Items {
 		for _, asset := range item.Assets {
-			wg.Add(1)
-			go func(asset *models.AssetXO) {
-				defer wg.Done()
-				shaType, checksum := artifacts.Checksum(asset)
+			if n.WithoutWaitGroups || n.WithoutWaitGroupArtifacts {
+				n.downloadSingleArtifact(asset, repo)
+			} else {
+				wg.Add(1)
+				go func(asset *models.AssetXO) {
+					defer wg.Done()
 
-				log.WithFields(log.Fields{
-					"url":      asset.DownloadURL,
-					"format":   asset.Format,
-					"checksum": checksum,
-				}).Trace("Download artifact")
-				assetPath := asset.Path
-				filesToBeSkipped, err := artifacts.FilesToBeSkipped(assetPath)
-				if err != nil {
-					panic(err)
-				}
-				if !filesToBeSkipped {
-					file := filepath.Join(n.DownloadDirName, repo, assetPath)
-					downloadedFileChecksum, err := artifacts.ChecksumLocalFile(file, shaType)
-					if err != nil {
-						panic(err)
-					}
-
-					if err := n.download(checksum, downloadedFileChecksum, asset); err != nil {
-						panic(err)
-					}
-				}
-			}(asset)
+					n.downloadSingleArtifact(asset, repo)
+				}(asset)
+			}
 		}
 	}
 	wg.Wait()
@@ -199,6 +209,17 @@ func (n *Nexus3) SingleRepoBackup() error {
 	return nil
 }
 
+func (n *Nexus3) repository(repo *models.AbstractAPIRepository) {
+	if repo.Type != "group" {
+		if err := os.MkdirAll(filepath.Join(n.DownloadDirName, repo.Name), chmodDir); err != nil {
+			panic(err)
+		}
+		if err := n.downloadIfChecksumMismatchLocalFile("", repo.Name); err != nil {
+			panic(err)
+		}
+	}
+}
+
 func (n *Nexus3) Backup() error {
 	var wg sync.WaitGroup
 
@@ -217,18 +238,16 @@ func (n *Nexus3) Backup() error {
 				return err
 			}
 		} else {
-			wg.Add(1)
-			go func(repo *models.AbstractAPIRepository) {
-				defer wg.Done()
-				if repo.Type != "group" {
-					if err := os.MkdirAll(filepath.Join(n.DownloadDirName, repo.Name), chmodDir); err != nil {
-						panic(err)
-					}
-					if err := n.downloadIfChecksumMismatchLocalFile("", repo.Name); err != nil {
-						panic(err)
-					}
-				}
-			}(repo)
+			if n.WithoutWaitGroups || n.WithoutWaitGroupRepositories {
+				n.repository(repo)
+			} else {
+				wg.Add(1)
+				go func(repo *models.AbstractAPIRepository) {
+					defer wg.Done()
+
+					n.repository(repo)
+				}(repo)
+			}
 		}
 	}
 	wg.Wait()

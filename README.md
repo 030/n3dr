@@ -71,13 +71,13 @@ The aims of the n3dr tool are:
 
 ## Quickstart
 
-Download the [latest N3DR binary](https://github.com/030/n3dr/releases/tag/7.0.1):
+Download the [latest N3DR binary](https://github.com/030/n3dr/releases/tag/7.0.2):
 
 ```bash
 cd /tmp && \
-curl -L https://github.com/030/n3dr/releases/download/7.0.1/n3dr-ubuntu-20.04 \
+curl -L https://github.com/030/n3dr/releases/download/7.0.2/n3dr-ubuntu-20.04 \
   -o n3dr-ubuntu-20.04 && \
-curl -L https://github.com/030/n3dr/releases/download/7.0.1/\
+curl -L https://github.com/030/n3dr/releases/download/7.0.2/\
 n3dr-ubuntu-20.04.sha512.txt \
   -o n3dr-ubuntu-20.04.sha512.txt && \
 sha512sum -c n3dr-ubuntu-20.04.sha512.txt && \
