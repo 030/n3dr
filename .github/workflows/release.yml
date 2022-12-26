@@ -8,11 +8,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-10.15
+          - os: macos-latest
             shasum: shasum -a 512
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             shasum: sha512sum
-          - os: windows-2019
+          - os: windows-latest
             shasum: sha512sum
     steps:
       - uses: actions/checkout@v3
@@ -58,7 +58,6 @@ jobs:
           go build -buildvcs=false -ldflags "-X main.Version=${{ github.ref }}" -o "${{ env.n3dr-deliverable }}"
           sha512sum "${{ env.n3dr-deliverable }}" > "${{ env.n3dr-deliverable }}.sha512.txt"
           chmod +x "${{ env.n3dr-deliverable }}"
-          ls n3dr-windows-2019
         if: ${{ startsWith(matrix.os, 'windows') }}
         # yamllint enable rule:line-length
       - name: Upload binaries to release
