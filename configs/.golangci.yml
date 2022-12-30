@@ -64,7 +64,6 @@ issues:
 linters:
   enable-all: true
   disable:
-    - bodyclose
     - cyclop
     - durationcheck
     - errorlint
