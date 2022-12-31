@@ -97,7 +97,7 @@ func n3drHiddenHome() (string, error) {
 		return "", err
 	}
 	n3drHomeDir := filepath.Join(home, cli.HiddenN3DR)
-	log.Infof("n3drHomeDir: '%v'", n3drHomeDir)
+	log.Debugf("n3drHomeDir: '%v'", n3drHomeDir)
 	return n3drHomeDir, nil
 }
 
@@ -214,7 +214,7 @@ func parseVarsFromConfig() error {
 
 func parseConfig(cfgFile string) error {
 	if err := viper.ReadInConfig(); err == nil {
-		log.Infof("Using config file: '%v'", viper.ConfigFileUsed())
+		log.Debugf("Using config file: '%v'", viper.ConfigFileUsed())
 		if err := parseVarsFromConfig(); err != nil {
 			return err
 		}

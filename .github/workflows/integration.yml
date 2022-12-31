@@ -3,18 +3,7 @@ name: Integration
 'on': push
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            nexus-version: 3.44.0
-            nexus-api-version: v1
-            shasum: sha512sum
-          - os: ubuntu-latest
-            nexus-version: 3.9.0
-            nexus-api-version: beta
-            shasum: sha512sum
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up Go
@@ -32,5 +21,4 @@ jobs:
         env:
           N3DR_DELIVERABLE: ${{ env.n3dr-deliverable }}
           NEXUS_VERSION: ${{ matrix.nexus-version }}
-          NEXUS_API_VERSION: ${{ matrix.nexus-api-version }}
           N3DR_APT_GPG_SECRET: ${{ secrets.N3DR_APT_GPG_SECRET }}

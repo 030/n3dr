@@ -2,5 +2,9 @@
 
 cmd/n3dr/n3dr
 cmd/n3dr/n3dr.sha512.txt
+cmd/n3dr/start.sh
 
 dip
+
+test/gpg/my_rsa_key
+test/rproxy-nginx-nexus3.conf.tmp

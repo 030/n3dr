@@ -3,10 +3,6 @@ issues:
   exclude-rules:
     - linters:
         - gochecknoinits
-      path: cmd/n3dr/backup.go
-      text: "don't use `init` function"
-    - linters:
-        - gochecknoinits
       path: cmd/n3dr/config.go
       text: "don't use `init` function"
     - linters:
@@ -23,7 +19,7 @@ issues:
       text: "don't use `init` function"
     - linters:
         - gochecknoinits
-      path: cmd/n3dr/repositories.go
+      path: cmd/n3dr/count.go
       text: "don't use `init` function"
     - linters:
         - gochecknoinits
@@ -37,22 +33,6 @@ issues:
         - gochecknoinits
       path: cmd/n3dr/sync.go
       text: "don't use `init` function"
-    - linters:
-        - gochecknoinits
-      path: cmd/n3dr/upload.go
-      text: "don't use `init` function"
-    - linters:
-        - unparam
-      path: internal/app/n3dr/artifacts/npm.go
-      text: '`body` is unused'
-    - linters:
-        - containedctx
-      path: internal/app/n3dr/artifacts/oci.go
-      text: found a struct that contains a context.Context field
-    - linters:
-        - funlen
-      path: internal/app/n3dr/artifacts/backup.go
-      text: Function 'createArtifact' is too long
     - linters:
         - funlen
       path: internal/app/n3dr/artifactsv2/upload/upload.go

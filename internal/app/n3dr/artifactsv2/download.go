@@ -26,30 +26,6 @@ type Nexus3 struct {
 	*connection.Nexus3
 }
 
-func (n *Nexus3) RepositoryNamesV2() error {
-	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS}
-	a := artifacts.Nexus3{Nexus3: &cn}
-	repos, err := a.Repos()
-	if err != nil {
-		return err
-	}
-	for _, repo := range repos {
-		fmt.Println(repo.Name)
-	}
-	return nil
-}
-
-func (n *Nexus3) CountRepositoriesV2() error {
-	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS}
-	a := artifacts.Nexus3{Nexus3: &cn}
-	repos, err := a.Repos()
-	if err != nil {
-		return err
-	}
-	fmt.Println(len(repos))
-	return nil
-}
-
 func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models.AssetXO) error {
 	if checksum != downloadedFileChecksum {
 		log.WithFields(log.Fields{
