@@ -232,6 +232,10 @@ func (n *Nexus3) Backup() error {
 	for _, repo := range repos {
 		log.Infof("backing up '%s', '%s', %s", repo.Name, repo.Type, repo.Format)
 		if repo.Format == "docker" {
+			if n.DockerHost == "" || n.DockerPort == 0 {
+				return fmt.Errorf("please ensure that the dockerPort and host have been specified, e.g.: --dockerPort 9001 --dockerHost http://localhost")
+			}
+
 			h := n.DockerHost + ":" + fmt.Sprint(n.DockerPort)
 			pdr := p2iwd.DockerRegistry{Dir: filepath.Join(n.DownloadDirName, "p2iwd"), Host: h, Pass: n.Pass, User: n.User}
 			if err := pdr.Backup(); err != nil {
