@@ -10,6 +10,7 @@
 ### Fix
 - [[#238](https://github.com/030/n3dr/issues/238)] Validate docker params.
 - [[#309](https://github.com/030/n3dr/issues/309)] Enable bodyclose check and autoupdate gosec.
+- **snap:** [[#238](https://github.com/030/n3dr/issues/238)] Artifact download failed due to renaming.
 
 
 <a name="7.0.2"></a>
