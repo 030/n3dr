@@ -177,10 +177,6 @@ uploadDocker() {
   fi
 }
 
-
-
-
-
 uploadYumArtifact() {
   curl -X 'POST' \
     ${URL_NEXUS_A}/service/rest/v1/components?repository=${HOSTED_REPO_YUM} \

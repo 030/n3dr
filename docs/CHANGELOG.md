@@ -2,6 +2,16 @@
 ## [Unreleased]
 
 
+<a name="7.0.3"></a>
+## [7.0.3] - 2023-01-03
+### Build
+- Update CI images to latest.
+
+### Fix
+- [[#238](https://github.com/030/n3dr/issues/238)] Validate docker params.
+- [[#309](https://github.com/030/n3dr/issues/309)] Enable bodyclose check and autoupdate gosec.
+
+
 <a name="7.0.2"></a>
 ## [7.0.2] - 2022-12-25
 ### Fix
@@ -311,7 +321,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.0.2...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.0.3...HEAD
+[7.0.3]: https://github.com/030/n3dr/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/030/n3dr/compare/7.0.1...7.0.2
 [7.0.1]: https://github.com/030/n3dr/compare/7.0.0...7.0.1
 [7.0.0]: https://github.com/030/n3dr/compare/6.8.3...7.0.0
