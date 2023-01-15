@@ -35,7 +35,7 @@ func uploadStatus(err error) (int, error) {
 	re := regexp.MustCompile(`status (\d{3})`)
 	match := re.FindStringSubmatch(err.Error())
 	if len(match) != 2 {
-		return 0, fmt.Errorf("http status code not found in error message: '%v'", err)
+		return 0, fmt.Errorf("http status code not found in error message: '%w'", err)
 	}
 	statusCode := match[1]
 	statusCodeInt, err := strconv.Atoi(statusCode)
@@ -252,7 +252,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 			return nil
 		}
 
-		return fmt.Errorf("cannot upload component: '%s', error: '%v'", path, err)
+		return fmt.Errorf("cannot upload component: '%s', error: '%w'", path, err)
 	}
 
 	files := []*os.File{f, f2, f3}

@@ -72,7 +72,7 @@ func (n *Nexus3) artifact(continuationToken string, repositoriesTotalArtifacts *
 	c.WithTimeout(time.Second * 60)
 	resp, err := client.Components.GetComponents(&c)
 	if err != nil {
-		return fmt.Errorf("cannot get components: '%v'", err)
+		return fmt.Errorf("cannot get components: '%w'", err)
 	}
 
 	rgpl := resp.GetPayload()

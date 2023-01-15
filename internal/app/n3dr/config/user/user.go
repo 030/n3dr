@@ -41,7 +41,7 @@ func (u *User) Create() error {
 			log.Infof("user: '%s' has already been created", u.UserID)
 			return nil
 		}
-		return fmt.Errorf("could not create user: '%v'", err)
+		return fmt.Errorf("could not create user: '%w'", err)
 	}
 	log.Infof("created the following user: '%v'", resp.Payload)
 
@@ -66,7 +66,7 @@ func (r *Role) CreateRole() error {
 			return nil
 		}
 
-		return fmt.Errorf("could not create role: '%v', perhaps the role already exists?", err)
+		return fmt.Errorf("could not create role: '%w', perhaps the role already exists?", err)
 	}
 	log.Infof("created the following role: '%v'", resp.Payload)
 

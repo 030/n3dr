@@ -46,7 +46,6 @@ linters:
   disable:
     - cyclop
     - durationcheck
-    - errorlint
     - exhaustruct
     - forbidigo
     - forcetypeassert

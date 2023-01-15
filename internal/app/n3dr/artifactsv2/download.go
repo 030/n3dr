@@ -120,7 +120,7 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 	c.WithTimeout(time.Second * 60)
 	resp, err := client.Components.GetComponents(&c)
 	if err != nil {
-		return fmt.Errorf("cannot get components: '%v'", err)
+		return fmt.Errorf("cannot get components: '%w'", err)
 	}
 	continuationToken = resp.GetPayload().ContinuationToken
 	for _, item := range resp.GetPayload().Items {

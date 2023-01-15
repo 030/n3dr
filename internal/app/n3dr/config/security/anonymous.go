@@ -26,7 +26,7 @@ func (s *Security) Anonymous(enabled bool) error {
 
 	resp, err := client.SecurityManagementAnonymousAccess.Update(&anonymousAccess)
 	if err != nil {
-		return fmt.Errorf("could not change anonymous access mode: '%v'", err)
+		return fmt.Errorf("could not change anonymous access mode: '%w'", err)
 	}
 	if resp.Payload.Enabled {
 		log.Info("anonymous access enabled")

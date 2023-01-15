@@ -20,7 +20,7 @@ func (n *Nexus3) Repos() ([]*models.AbstractAPIRepository, error) {
 
 	resp, err := client.RepositoryManagement.GetRepositories(&r)
 	if err != nil {
-		return nil, fmt.Errorf("cannot get repository names: '%v'", err)
+		return nil, fmt.Errorf("cannot get repository names: '%w'", err)
 	}
 
 	return resp.Payload, nil
