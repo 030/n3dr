@@ -2,6 +2,12 @@
 ## [Unreleased]
 
 
+<a name="7.1.0"></a>
+## [7.1.0] - 2022-12-31
+### Feat
+- [[#99](https://github.com/030/n3dr/issues/99)][[#297](https://github.com/030/n3dr/issues/297)] Count number of artifacts and save info to a CSV file.
+
+
 <a name="7.0.3"></a>
 ## [7.0.3] - 2023-01-03
 ### Build
@@ -322,7 +328,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.0.3...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.1.0...HEAD
+[7.1.0]: https://github.com/030/n3dr/compare/7.0.3...7.1.0
 [7.0.3]: https://github.com/030/n3dr/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/030/n3dr/compare/7.0.1...7.0.2
 [7.0.1]: https://github.com/030/n3dr/compare/7.0.0...7.0.1

@@ -105,11 +105,26 @@ artifact() {
   mkdir -p "maven-releases/some/group${1}/File_${1}/1.0.0-2"
   echo someContent >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.jar"
   echo someContentZIP >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.zip"
-  echo -e " <project >\n <modelVersion >4.0.0 </modelVersion >\n <groupId >some.group${1} </groupId >\n <artifactId >File_${1} </artifactId >\n <version >1.0.0-2 </version >\n </project >" >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.pom"
+  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>File_${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.pom"
 }
 
 files() {
   for a in $(seq 100); do artifact "${a}"; done
+}
+
+upload() {
+  echo " #134 archetype-catalog download issue"
+  echo "URL: '${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml'"
+  echo "does not seem to contain a Maven artifact"
+  curl -f ${URL_NEXUS_A}/repository/maven-releases/archetype-catalog.xml
+
+  echo "Testing upload..."
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositoriesV2 \
+    --upload \
+    --n3drRepo maven-releases \
+    --directory-prefix "${PWD}" \
+    --https=false
+  echo
 }
 
 createHostedAPT() {
@@ -209,25 +224,33 @@ uploadYum() {
 }
 
 backupHelper() {
-  if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-    count_downloads 301 "${1}"
-    test_zip 132 "${1}"
-  else
-    count_downloads 401 "${1}"
-    test_zip 172 "${1}"
-  fi
+  count_downloads 301 "${1}"
+  test_zip 132 "${1}"
+
   cleanup_downloads
 }
 
 backupRegexHelper() {
-  if [ "${NEXUS_VERSION}" == "3.9.0" ]; then
-    count_downloads 4 "${1}"
-    test_zip 4 "${1}"
-  else
-    count_downloads 5 "${1}"
-    test_zip 4 "${1}"
-  fi
+  count_downloads 5 "${1}"
+  test_zip 4 "${1}"
+
   cleanup_downloads
+}
+
+anonymous() {
+  echo "Testing backup by anonymous user..."
+  local downloadDir="${DOWNLOAD_LOCATION}/anonymous/"
+  ${N3DR_DELIVERABLE} repositoriesV2 \
+    --backup \
+    -n "${URL_NEXUS_A_V2}" \
+    --n3drRepo maven-releases \
+    -v "${NEXUS_API_VERSION}" \
+    -z \
+    --anonymous \
+    --directory-prefix="${downloadDir}" \
+    --directory-prefix-zip="${downloadDir}" \
+    --https=false
+  backupHelper "${downloadDir}"
 }
 
 clean() {
@@ -298,6 +321,26 @@ rproxy() {
   fi
 }
 
+count() {
+  echo "Counting artifacts..."
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} count \
+    -p "${PASSWORD_NEXUS_A}" \
+    -n "${URL_NEXUS_A_V2}" \
+    --https=false | grep 1500
+}
+
+countCSV() {
+  local f=/tmp/helloworld
+
+  echo "Counting artifacts and write to a CSV file..."
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} count \
+    -p "${PASSWORD_NEXUS_A}" \
+    -n "${URL_NEXUS_A_V2}" \
+    --https=false \
+    --csv "${f}"
+  du "${f}.csv" | grep 1488
+}
+
 main() {
   validate
   build
@@ -306,10 +349,22 @@ main() {
 
   export PASSWORD=${PASSWORD_NEXUS_A}
   readonly N3DR_DELIVERABLE_WITH_BASE_OPTIONS="${N3DR_DELIVERABLE} -u admin --showLogo=false"
+  readonly N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A="${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} -p ${PASSWORD} -n ${URL_NEXUS_A_V2} -v ${NEXUS_API_VERSION}"
+  upload
+  anonymous
+  # backup
+  # uploadDeb
   uploadDocker
+  # uploadNPM
+  # uploadNuget
   uploadYum
+  # repositories
+  # regex
+  # zipName
   version
   rproxy
+  count
+  countCSV
   bats --tap ../../test/tests.bats
   echo "
 In order to debug, issue:

@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/030/n3dr/internal/app/n3dr/artifactsv2"
+	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/count"
+	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/name"
 	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload"
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	log "github.com/sirupsen/logrus"
@@ -69,16 +71,21 @@ Examples:
 		}
 		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
 		a := artifactsv2.Nexus3{Nexus3: &n}
+		c := count.Nexus3{Nexus3: &n, CsvFile: csv}
+		nn := name.Nexus3{Nexus3: &n}
+
 		if namesV2 {
-			if err := a.RepositoryNamesV2(); err != nil {
+			if err := nn.Repositories(); err != nil {
 				log.Fatal(err)
 			}
 		}
+
 		if countV2 {
-			if err := a.CountRepositoriesV2(); err != nil {
+			if err := c.Repositories(); err != nil {
 				log.Fatal(err)
 			}
 		}
+
 		if backupV2 {
 			if n.RepoName != "" {
 				if err := a.SingleRepoBackup(); err != nil {
@@ -90,6 +97,7 @@ Examples:
 				}
 			}
 		}
+
 		if uploadV2 {
 			u := upload.Nexus3{Nexus3: &n}
 			if err := u.Upload(); err != nil {
