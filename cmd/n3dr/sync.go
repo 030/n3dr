@@ -11,9 +11,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var otherDockerHosts, otherNexus3URLs, otherNexus3Users, otherNexus3Passwords []string
-var otherDockerPorts []int32
-var otherDockerSecurePorts []bool
+var (
+	otherDockerHosts, otherNexus3URLs, otherNexus3Users, otherNexus3Passwords []string
+	otherDockerPorts                                                          []int32
+	otherDockerSecurePorts                                                    []bool
+)
 
 // syncCmd represents the sync command
 var syncCmd = &cobra.Command{
