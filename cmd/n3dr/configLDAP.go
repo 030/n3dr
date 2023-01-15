@@ -10,9 +10,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var configLDAPConnectionRetryDelaySeconds, configLDAPConnectionTimeoutSeconds, configLDAPMaxIncidentsCount, configLDAPPort int32
-var configLDAPGroupsAsRoles bool
-var configLDAPAuthPassword, configLDAPAuthScheme, configLDAPAuthUsername, configLDAPGroupType, configLDAPHost, configLDAPName, configLDAPProtocol, configLDAPSearchBase, configLDAPUserBaseDn, configLDAPUserEmailAddressAttribute, configLDAPUserIDAttribute, configLDAPUserMemberOfAttribute, configLDAPUserObjectClass, configLDAPUserRealNameAttribute string
+var (
+	configLDAPConnectionRetryDelaySeconds, configLDAPConnectionTimeoutSeconds, configLDAPMaxIncidentsCount, configLDAPPort                                                                                                                                                                                                                                 int32
+	configLDAPGroupsAsRoles                                                                                                                                                                                                                                                                                                                                bool
+	configLDAPAuthPassword, configLDAPAuthScheme, configLDAPAuthUsername, configLDAPGroupType, configLDAPHost, configLDAPName, configLDAPProtocol, configLDAPSearchBase, configLDAPUserBaseDn, configLDAPUserEmailAddressAttribute, configLDAPUserIDAttribute, configLDAPUserMemberOfAttribute, configLDAPUserObjectClass, configLDAPUserRealNameAttribute string
+)
 
 // configLDAPCmd represents the configLDAP command
 var configLDAPCmd = &cobra.Command{
