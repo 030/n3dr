@@ -26,7 +26,7 @@ func created(name string, err error) error {
 		return nil
 	}
 
-	return fmt.Errorf("could not create repository: '%v', err: '%v'", name, err)
+	return fmt.Errorf("could not create repository: '%v', err: '%w'", name, err)
 }
 
 func (r *Repository) CreateAptProxied(name string) error {
@@ -109,8 +109,8 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 	writePolicy := "allow_once"
 	dhsa := models.DockerHostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
 
-	var forceBasicAuth = true
-	var v1Enabled = false
+	forceBasicAuth := true
+	v1Enabled := false
 	docker := models.DockerAttributes{ForceBasicAuth: &forceBasicAuth, V1Enabled: &v1Enabled}
 	if secure {
 		docker.HTTPSPort = port
@@ -253,7 +253,7 @@ func (r *Repository) Delete(name string) error {
 			return nil
 		}
 
-		return fmt.Errorf("could not delete repository: '%v', err: '%v'", name, err)
+		return fmt.Errorf("could not delete repository: '%v', err: '%w'", name, err)
 	}
 	log.Infof("deleted the following repository: '%v'", name)
 
