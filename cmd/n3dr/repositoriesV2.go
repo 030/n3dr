@@ -12,7 +12,7 @@ import (
 
 var countV2, namesV2, backupV2, uploadV2, withoutWaitGroups, withoutWaitGroupArtifacts, withoutWaitGroupRepositories bool
 
-// repositoriesCmd represents the repositories command
+// repositoriesCmd represents the repositories command.
 var repositoriesV2Cmd = &cobra.Command{
 	Use:   "repositoriesV2",
 	Short: "Count the number of repositories or return their names.",

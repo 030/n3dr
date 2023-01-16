@@ -17,7 +17,7 @@ var (
 	otherDockerSecurePorts                                                    []bool
 )
 
-// syncCmd represents the sync command
+// syncCmd represents the sync command.
 var syncCmd = &cobra.Command{
 	Use:   "sync",
 	Short: "sync",

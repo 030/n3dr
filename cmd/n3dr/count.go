@@ -9,7 +9,7 @@ import (
 
 var csv string
 
-// repositoriesCmd represents the repositories command
+// repositoriesCmd represents the repositories command.
 var countCmd = &cobra.Command{
 	Use:   "count",
 	Short: "Count the number of artifacts.",

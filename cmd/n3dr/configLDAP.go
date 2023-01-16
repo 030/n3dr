@@ -16,7 +16,7 @@ var (
 	configLDAPAuthPassword, configLDAPAuthScheme, configLDAPAuthUsername, configLDAPGroupType, configLDAPHost, configLDAPName, configLDAPProtocol, configLDAPSearchBase, configLDAPUserBaseDn, configLDAPUserEmailAddressAttribute, configLDAPUserIDAttribute, configLDAPUserMemberOfAttribute, configLDAPUserObjectClass, configLDAPUserRealNameAttribute string
 )
 
-// configLDAPCmd represents the configLDAP command
+// configLDAPCmd represents the configLDAP command.
 var configLDAPCmd = &cobra.Command{
 	Use:   "configLDAP",
 	Short: "configLDAP",
