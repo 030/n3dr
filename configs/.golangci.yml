@@ -51,7 +51,6 @@ linters:
     - gochecknoglobals
     - goconst
     - gocritic
-    - godot
     - goerr113
     - golint
     - gomnd

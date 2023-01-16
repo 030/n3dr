@@ -15,7 +15,7 @@ var (
 	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL string
 )
 
-// configRepositoryCmd represents the configRepository command
+// configRepositoryCmd represents the configRepository command.
 var configRepositoryCmd = &cobra.Command{
 	Use:   "configRepository",
 	Short: "Configure repositories",

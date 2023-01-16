@@ -15,7 +15,7 @@ var (
 	email, firstName, id, lastName, pass        string
 )
 
-// configUserCmd represents the configUser command
+// configUserCmd represents the configUser command.
 var configUserCmd = &cobra.Command{
 	Use:   "configUser",
 	Short: "A brief description of your command",
