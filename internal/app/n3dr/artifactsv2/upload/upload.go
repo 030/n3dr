@@ -46,7 +46,7 @@ func uploadStatus(err error) (int, error) {
 	return statusCodeInt, nil
 }
 
-func (n *Nexus3) reposOnDisk() (localDiskRepos []string, err error) {
+func (n *Nexus3) reposOnDisk() ([]string, error) {
 	file, err := os.Open(n.DownloadDirName)
 	if err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ func (n *Nexus3) reposOnDisk() (localDiskRepos []string, err error) {
 			panic(err)
 		}
 	}()
-	localDiskRepos, err = file.Readdirnames(0)
+	localDiskRepos, err := file.Readdirnames(0)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
 	return repoFormat, nil
 }
 
-func maven(path string, skipErrors bool) (mp mavenParts, err error) {
+func maven(path string, skipErrors bool) (mavenParts, error) {
 	regexBase := `^.*\/([\w\-\.]+)\/`
 
 	if runtime.GOOS == "windows" {
@@ -116,7 +116,7 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 			if skipErrors {
 				log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
 			} else {
-				return mp, err
+				return mavenParts{}, err
 			}
 		}
 
@@ -135,7 +135,7 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 		if skipErrors {
 			log.Errorf("skipErrors: '%v'. Error: '%v'", skipErrors, err)
 		} else {
-			return mp, err
+			return mavenParts{}, err
 		}
 	}
 	return mavenParts{classifier: classifier, ext: ext}, nil
