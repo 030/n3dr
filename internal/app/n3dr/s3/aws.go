@@ -13,11 +13,11 @@ import (
 )
 
 type Nexus3 struct {
-	AwsBucket, AwsId, AwsRegion, AwsSecret, ZipFilename string
+	AwsBucket, AwsID, AwsRegion, AwsSecret, ZipFilename string
 }
 
 func (n *Nexus3) Upload() error {
-	sess, err := session.NewSession(&aws.Config{Region: aws.String(n.AwsRegion), Credentials: credentials.NewStaticCredentials(n.AwsId, n.AwsSecret, "")})
+	sess, err := session.NewSession(&aws.Config{Region: aws.String(n.AwsRegion), Credentials: credentials.NewStaticCredentials(n.AwsID, n.AwsSecret, "")})
 	if err != nil {
 		return fmt.Errorf("session.NewSession - filename: %v, err: %w", n.ZipFilename, err)
 	}

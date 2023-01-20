@@ -69,7 +69,7 @@ Examples:
 			}
 			log.Fatal("One of the required flags \"names\", \"count\" or \"backup\" not set")
 		}
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
+		n := connection.Nexus3{AwsBucket: awsBucket, AwsID: awsID, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
 		a := artifactsv2.Nexus3{Nexus3: &n}
 		c := count.Nexus3{Nexus3: &n, CsvFile: csv}
 		nn := name.Nexus3{Nexus3: &n}

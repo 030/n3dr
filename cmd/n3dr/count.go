@@ -23,7 +23,7 @@ Examples:
   n3dr count --csv /tmp/helloworld
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsId: awsId, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
+		n := connection.Nexus3{AwsBucket: awsBucket, AwsID: awsID, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
 		c := count.Nexus3{Nexus3: &n, CsvFile: csv}
 
 		if err := c.Artifacts(); err != nil {

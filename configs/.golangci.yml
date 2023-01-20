@@ -61,7 +61,6 @@ linters:
     - nonamedreturns
     - paralleltest
     - revive
-    - stylecheck
     - testpackage
     - usestdlibvars
     - varnamelen

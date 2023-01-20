@@ -8,7 +8,7 @@ import (
 )
 
 type Nexus3 struct {
-	AwsBucket, AwsId, AwsRegion, AwsSecret, BasePathPrefix, DockerHost, DownloadDirName, DownloadDirNameZip, FQDN, Pass, RepoName, User string
+	AwsBucket, AwsID, AwsRegion, AwsSecret, BasePathPrefix, DockerHost, DownloadDirName, DownloadDirNameZip, FQDN, Pass, RepoName, User string
 	DockerPort                                                                                                                          int32
 	DockerPortSecure, HTTPS, SkipErrors, WithoutWaitGroups, WithoutWaitGroupArtifacts, WithoutWaitGroupRepositories, ZIP                bool
 }
