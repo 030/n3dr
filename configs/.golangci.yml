@@ -63,10 +63,8 @@ linters:
     - revive
     - stylecheck
     - testpackage
-    - unused
     - usestdlibvars
     - varnamelen
-    - whitespace
     - wrapcheck
     - wsl
     #
