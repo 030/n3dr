@@ -23,7 +23,7 @@ var logo string
 var regex string
 
 var (
-	apiVersion, awsBucket, awsId, awsRegion, awsSecret, basePathPrefix, cfgFile, dockerHost, downloadDirName, downloadDirNameZip, logFile, logLevel, n3drPass, n3drRepo, n3drURL, n3drUser, Version, zipName string
+	apiVersion, awsBucket, awsID, awsRegion, awsSecret, basePathPrefix, cfgFile, dockerHost, downloadDirName, downloadDirNameZip, logFile, logLevel, n3drPass, n3drRepo, n3drURL, n3drUser, Version, zipName string
 	anonymous, awsS3, dockerPortSecure, https, insecureSkipVerify, showLogo, skipErrors, syslog, zip                                                                                                         bool
 	dockerPort                                                                                                                                                                                               int32
 )
@@ -195,7 +195,7 @@ func parseVarsFromConfig() error {
 		if err != nil {
 			return err
 		}
-		awsId, err = valueInConfigFile("awsId")
+		awsID, err = valueInConfigFile("awsId")
 		if err != nil {
 			return err
 		}

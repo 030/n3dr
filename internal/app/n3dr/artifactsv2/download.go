@@ -161,7 +161,7 @@ func (n *Nexus3) zipFile() error {
 	}
 
 	if n.AwsBucket != "" {
-		nS3 := s3.Nexus3{AwsBucket: n.AwsBucket, AwsId: n.AwsId, AwsRegion: n.AwsRegion, AwsSecret: n.AwsSecret, ZipFilename: zipFilenamePath}
+		nS3 := s3.Nexus3{AwsBucket: n.AwsBucket, AwsID: n.AwsID, AwsRegion: n.AwsRegion, AwsSecret: n.AwsSecret, ZipFilename: zipFilenamePath}
 		if err := nS3.Upload(); err != nil {
 			return err
 		}
