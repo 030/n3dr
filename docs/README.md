@@ -441,33 +441,6 @@ a single command.
 | npm    | x      | x      | `*`   |
 | nuget  |        | x      |       |
 
-### repositoriesV2
-
-| type      | backup | upload | label |
-| --------- | ------ | ------ | ----- |
-| apt       | x      | x      | `^`   |
-| bower     |        |        |       |
-| cocoapods |        |        |       |
-| composer  |        |        |       |
-| conan     |        |        |       |
-| conda     |        |        |       |
-| cpan      |        |        |       |
-| docker    | x      | x      | ``    |
-| elpa      |        |        |       |
-| gitlfs    |        |        |       |
-| go        |        |        |       |
-| helm      |        |        |       |
-| maven2    | x      | x      | `+`   |
-| npm       | x      | x      | `*`   |
-| nuget     | x      | x      | `$`   |
-| p2        |        |        |       |
-| pypi      |        |        |       |
-| r         |        |        |       |
-| raw       | x      | x      | `%`   |
-| rubygems  |        |        |       |
-| yum       | x      | x      | `#`   |
-| unknown   | x      | x      | `?`   |
-
 #### backup
 
 `repositoriesV2` command in conjunction with the `--backup` subcommand ensures

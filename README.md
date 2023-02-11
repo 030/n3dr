@@ -150,6 +150,33 @@ docker stop nexus3-n3dr
 
 - [snap](./docs/instructions/snap.md)
 
+## Supported
+
+| type      | backup | upload | label |
+| --------- | ------ | ------ | ----- |
+| apt       | x      | x      | `^`   |
+| bower     |        |        |       |
+| cocoapods |        |        |       |
+| composer  |        |        |       |
+| conan     |        |        |       |
+| conda     |        |        |       |
+| cpan      |        |        |       |
+| docker    | x      | x      | ``    |
+| elpa      |        |        |       |
+| gitlfs    |        |        |       |
+| go        |        |        |       |
+| helm      |        |        |       |
+| maven2    | x      | x      | `+`   |
+| npm       | x      | x      | `*`   |
+| nuget     | x      | x      | `$`   |
+| p2        |        |        |       |
+| pypi      |        |        |       |
+| r         |        |        |       |
+| raw       | x      | x      | `%`   |
+| rubygems  |        |        |       |
+| yum       | x      | x      | `#`   |
+| unknown   | x      | x      | `?`   |
+
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/030/n3dr.svg)](https://starchart.cc/030/n3dr)
