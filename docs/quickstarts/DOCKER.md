@@ -93,7 +93,7 @@ Create a repository in the other nexus server:
 ./n3dr configRepository \
   -u admin \
   -p $(docker exec -it nexus3-n3dr-dest cat /nexus-data/admin.password) \
-  -n localhost:9000 \
+  -n localhost:9001 \
   --https=false \
   --configRepoName docker-images \
   --configRepoType docker
