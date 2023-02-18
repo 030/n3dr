@@ -9,8 +9,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build image
         run: docker build -t utrecht/n3dr:${{ github.sha }} .
-      - name: Dive
-        uses: yuichielectric/dive-action@0.0.4
+      - uses: 030/dive-action@v0.1.0
         with:
           image: utrecht/n3dr:${{ github.sha }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -253,6 +253,20 @@ anonymous() {
   backupHelper "${downloadDir}"
 }
 
+
+backup() {
+  echo "Testing backup..."
+  local downloadDir="${DOWNLOAD_LOCATION}/backup/"
+  ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositoriesV2 \
+    --backup \
+    --n3drRepo maven-releases \
+    -z \
+    --directory-prefix="${downloadDir}" \
+    --directory-prefix-zip="${downloadDir}" \
+    --https=false
+  backupHelper "${downloadDir}"
+}
+
 clean() {
   for r in a b c; do docker stop nexus-${r} || true; done
   docker stop rproxy-nginx-nexus3 || true
@@ -352,7 +366,7 @@ main() {
   readonly N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A="${N3DR_DELIVERABLE_WITH_BASE_OPTIONS} -p ${PASSWORD} -n ${URL_NEXUS_A_V2} -v ${NEXUS_API_VERSION}"
   upload
   anonymous
-  # backup
+  backup
   # uploadDeb
   uploadDocker
   # uploadNPM
