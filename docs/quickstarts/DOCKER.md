@@ -25,7 +25,7 @@ docker run \
   -p 8081:8081 \
   -p 8082:8082 \
   --name ${nexus_docker_name} \
-  sonatype/nexus3:3.47.1
+  sonatype/nexus3:3.47.1 && \
 until docker logs ${nexus_docker_name} | grep -q 'Started Sonatype Nexus OSS'; do
   sleep 10
 done
@@ -81,7 +81,7 @@ docker run \
   -p 9000:8081 \
   -p 9001:8082 \
   --name ${nexus_docker_name} \
-  sonatype/nexus3:3.47.1
+  sonatype/nexus3:3.47.1 && \
 until docker logs ${nexus_docker_name} | grep -q 'Started Sonatype Nexus OSS'; do
   sleep 10
 done
