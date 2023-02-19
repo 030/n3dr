@@ -141,6 +141,42 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 	return mavenParts{classifier: classifier, ext: ext}, nil
 }
 
+func mavenJarAndZip(c *components.UploadComponentParams, path string, f2, f3 *os.File) error {
+	dir := filepath.Dir(path)
+	if err := filepath.WalkDir(dir,
+		func(path string, info fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if filepath.Ext(path) == ".jar" {
+				f2, err = os.Open(filepath.Clean(path))
+				if err != nil {
+					return err
+				}
+				mp, err := maven(path, false)
+				if err != nil {
+					return err
+				}
+				c.Maven2Asset2 = f2
+				c.Maven2Asset2Extension = &mp.ext
+				c.Maven2Asset2Classifier = &mp.classifier
+			}
+			if filepath.Ext(path) == ".zip" {
+				f3, err = os.Open(filepath.Clean(path))
+				if err != nil {
+					return err
+				}
+				c.Maven2Asset3 = f3
+				ext3 := "zip"
+				c.Maven2Asset3Extension = &ext3
+			}
+			return nil
+		}); err != nil {
+		return err
+	}
+	return nil
+}
+
 func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string) error {
 	dir := strings.Replace(filepath.Dir(path), localDiskRepoHome+"/", "", -1)
 	filename := filepath.Base(path)
@@ -167,38 +203,11 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 			ext1 := "pom"
 			c.Maven2Asset1Extension = &ext1
 
-			dir = filepath.Dir(path)
-			if err := filepath.WalkDir(dir,
-				func(path string, info fs.DirEntry, err error) error {
-					if err != nil {
-						return err
-					}
-					if filepath.Ext(path) == ".jar" {
-						f2, err = os.Open(filepath.Clean(path))
-						if err != nil {
-							return err
-						}
-						mp, err := maven(path, false)
-						if err != nil {
-							return err
-						}
-						c.Maven2Asset2 = f2
-						c.Maven2Asset2Extension = &mp.ext
-						c.Maven2Asset2Classifier = &mp.classifier
-					}
-					if filepath.Ext(path) == ".zip" {
-						f3, err = os.Open(filepath.Clean(path))
-						if err != nil {
-							return err
-						}
-						c.Maven2Asset3 = f3
-						ext3 := "zip"
-						c.Maven2Asset3Extension = &ext3
-					}
-					return nil
-				}); err != nil {
+			if err := mavenJarAndZip(&c, path, f2, f3); err != nil {
 				return err
 			}
+
+			log.Tracef("Maven2Asset1Name: '%v',Maven2Asset2Name: '%v',Maven2Asset3Name: '%v'", c.Maven2Asset1, c.Maven2Asset2, c.Maven2Asset3)
 		}
 	case "npm":
 		c.Repository = localDiskRepo
@@ -223,6 +232,16 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		c.RawAsset1 = f
 		c.RawDirectory = &dir
 		c.RawAsset1Filename = &filename
+	case "rubygems":
+		// Uploading files from the quick folder resulted in 500 issues
+		if !strings.Contains(path, "/quick/") {
+			c.Repository = localDiskRepo
+			f, err := os.Open(filepath.Clean(path))
+			if err != nil {
+				return err
+			}
+			c.RubygemsAsset = f
+		}
 	case "yum":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
@@ -235,6 +254,15 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		return nil
 	}
 
+	files := []*os.File{f, f2, f3}
+	if err := upload(c, client, path, files); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func upload(c components.UploadComponentParams, client *client.Nexus3, path string, files []*os.File) error {
 	if reflect.ValueOf(c).IsZero() {
 		log.Debug("no files to be uploaded")
 		return nil
@@ -255,12 +283,12 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		return fmt.Errorf("cannot upload component: '%s', error: '%w'", path, err)
 	}
 
-	files := []*os.File{f, f2, f3}
 	for _, file := range files {
 		if err := closeFileObjectIfNeeded(file); err != nil {
 			return err
 		}
 	}
+
 	return nil
 }
 

@@ -130,6 +130,31 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 	return nil
 }
 
+func (r *Repository) CreateGemHosted(name string) error {
+	log.Infof("creating gem hosted repository: '%s'...", name)
+	client := r.Nexus3.Client()
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	online := true
+	strictContentTypeValidation := true
+	writePolicy := "allow_once"
+
+	rhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mr := models.RubyGemsHostedRepositoryAPIRequest{Name: &name, Online: &online, Storage: &rhsa}
+	createRubyGemsHosted := repository_management.CreateRepository15Params{Body: &mr}
+	createRubyGemsHosted.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository15(&createRubyGemsHosted); err != nil {
+		if err := created(name, err); err != nil {
+			return err
+		}
+	}
+	log.Infof("created the following repository: '%v'", name)
+
+	return nil
+}
+
 func (r *Repository) CreateMavenHosted(name string, snapshot bool) error {
 	log.Infof("creating maven hosted repository: '%s'...", name)
 	client := r.Nexus3.Client()

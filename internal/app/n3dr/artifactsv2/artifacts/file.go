@@ -54,6 +54,8 @@ func PrintType(assetFormat string) {
 		fmt.Print("$")
 	case "raw":
 		fmt.Print("%")
+	case "rubygems":
+		fmt.Print("-")
 	case "yum":
 		fmt.Print("#")
 	default:

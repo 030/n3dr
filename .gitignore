@@ -3,6 +3,7 @@
 cmd/n3dr/n3dr
 cmd/n3dr/n3dr.sha512.txt
 cmd/n3dr/start.sh
+cmd/n3dr/REPO_NAME_HOSTED_*
 
 dip
 
