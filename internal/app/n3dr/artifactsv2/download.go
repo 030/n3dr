@@ -142,11 +142,8 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 	if continuationToken == "" {
 		return nil
 	}
-	if err := n.downloadIfChecksumMismatchLocalFile(continuationToken, repo); err != nil {
-		return err
-	}
 
-	return nil
+	return n.downloadIfChecksumMismatchLocalFile(continuationToken, repo)
 }
 
 func (n *Nexus3) zipFile() error {

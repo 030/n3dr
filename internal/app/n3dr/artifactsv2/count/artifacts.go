@@ -82,15 +82,11 @@ func (n *Nexus3) artifact(continuationToken string, repositoriesTotalArtifacts *
 	n.items(rgpl.Items, repositoriesTotalArtifacts)
 
 	if continuationToken == "" {
-		fmt.Printf("%d\t\t%s\t%s\t%s\n", *repositoriesTotalArtifacts, repo.Format, repo.Type, repo.Name)
+		fmt.Printf("%d\t\t%s\t\t%s\t%s\n", *repositoriesTotalArtifacts, repo.Format, repo.Type, repo.Name)
 		return nil
 	}
 
-	if err := n.artifact(continuationToken, repositoriesTotalArtifacts, repo); err != nil {
-		return err
-	}
-
-	return nil
+	return n.artifact(continuationToken, repositoriesTotalArtifacts, repo)
 }
 
 func (n *Nexus3) csvWriter() (csvWriter, error) {
@@ -129,17 +125,16 @@ func (n *Nexus3) Artifacts() error {
 	}
 
 	var wg sync.WaitGroup
-	fmt.Printf("COUNT\t\tFORMAT\tTYPE\tNAME\n")
+	fmt.Printf("COUNT\t\tFORMAT\t\tTYPE\tNAME\n")
 	for _, repo := range repos {
 		wg.Add(1)
 		go func(repo *models.AbstractAPIRepository) {
 			defer wg.Done()
 
 			repositoriesTotalArtifacts := 0
-			repositoriesTotalArtifactsPointer := &repositoriesTotalArtifacts
-			log.Debugf("repositoriesTotalArtifactsPointer: '%d'", *repositoriesTotalArtifactsPointer)
+			log.Debugf("repositoriesTotalArtifacts: '%d'", repositoriesTotalArtifacts)
 
-			if err := n.artifact("", repositoriesTotalArtifactsPointer, repo); err != nil {
+			if err := n.artifact("", &repositoriesTotalArtifacts, repo); err != nil {
 				panic(err)
 			}
 		}(repo)

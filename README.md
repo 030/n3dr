@@ -55,23 +55,52 @@ UI after restore. It could also be possible that some steps were not issued as
 they have should been. Apart from that, the restore is capable of restoring the
 Nexus configuration.
 
-N3DR excludes the backup of group repositories and is able to backup all Maven2
-and NPM repositories and migrate and/or restore Maven2 artifacts to another
-Nexus server.
+N3DR excludes the backup of group repositories and is able to backup various
+repositories, configure them, restore artifacts or migrate them to another
+Nexus3 server. Table 1 indicates what is supported by N3DR.
 
-Note: uploads to proxy repositories are not supported by Nexus itself. As a
+Note: uploads to proxy repositories are not supported by Nexus3 itself. As a
 workaround one could create a hosted repository in Nexus and upload the backed
 up proxy content to it.
 
 The aims of the n3dr tool are:
 
-- to backup all artifacts from a certain Nexus maven repository.
-- to migrate all artifacts from NexusA to NexusB.
-- configuration-as-code.
+- to backup artifacts from a certain Nexus3 repository.
+- to migrate and/or restore them to another Nexus3 server.
+- configuration-as-code (cac).
+
+| type      | backup | upload | label | cac |
+| --------- | ------ | ------ | ----- | --- |
+| apt       | x      | x      | `^`   | x   |
+| bower     |        |        |       |     |
+| cocoapods |        |        |       |     |
+| composer  |        |        |       |     |
+| conan     |        |        |       |     |
+| conda     |        |        |       |     |
+| cpan      |        |        |       |     |
+| docker    | x      | x      | ``    | x   |
+| elpa      |        |        |       |     |
+| gitlfs    |        |        |       |     |
+| go        |        |        |       |     |
+| helm      |        |        |       |     |
+| maven2    | x      | x      | `+`   | x   |
+| npm       | x      | x      | `*`   | x   |
+| nuget     | x      | x      | `$`   | x   |
+| p2        |        |        |       |     |
+| pypi      |        |        |       |     |
+| r         |        |        |       |     |
+| raw       | x      | x      | `%`   | x   |
+| rubygems  | x      | x      | `-`   | x   |
+| yum       | x      | x      | `#`   | x   |
+| unknown   | n/a    | n/a    | `?`   |     |
+
+**Table 1**: Overview of Nexus3 types that can be downloaded, uploaded and/or
+configured by N3DR.
 
 ## Quickstarts
 
 - [docker](./docs/quickstarts/DOCKER.md)
+- [rubygems](./docs/quickstarts/RUBYGEMS.md)
 
 ## Instructions
 

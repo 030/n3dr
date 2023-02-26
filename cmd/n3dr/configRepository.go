@@ -34,6 +34,9 @@ Examples:
 
   # Create a NPM repository:
   n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-npm --configRepoType npm
+
+  # Create a Rubygems repository:
+  n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-rubygems --configRepoType gem
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
@@ -67,6 +70,12 @@ Examples:
 		case "docker":
 			if configRepoRecipe == "hosted" {
 				if err := r.CreateDockerHosted(configRepoDockerPortSecure, configRepoDockerPort, configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			}
+		case "gem":
+			if configRepoRecipe == "hosted" {
+				if err := r.CreateGemHosted(configRepoName); err != nil {
 					log.Fatal(err)
 				}
 			}

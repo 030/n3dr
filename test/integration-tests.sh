@@ -48,6 +48,7 @@ readonly DOWNLOAD_LOCATION_SYNC_A=${DOWNLOAD_LOCATION_SYNC}-a
 readonly DOWNLOAD_LOCATION_SYNC_B=${DOWNLOAD_LOCATION_SYNC}-b
 readonly DOWNLOAD_LOCATION_SYNC_C=${DOWNLOAD_LOCATION_SYNC}-c
 readonly HOSTED_REPO_DOCKER=REPO_NAME_HOSTED_DOCKER
+readonly HOSTED_REPO_GEM=REPO_NAME_HOSTED_GEM
 readonly HOSTED_REPO_YUM=REPO_NAME_HOSTED_YUM
 readonly PORT_NEXUS_A=9999
 readonly PORT_NEXUS_B=9998
@@ -81,11 +82,11 @@ build() {
 startNexus() {
   # shellcheck disable=SC1091
   # as nexus-docker.sh is retrieved remotely
-  source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}" "nexus-${1}" "${2}" "${DOWNLOAD_LOCATION_PASS}" "${3}" "${DOCKER_REGISTRY_HTTP_CONNECTOR_INTERNAL}" &>/dev/null
+  source ./start.sh "${NEXUS_VERSION}" "${NEXUS_API_VERSION}" "nexus-${1}" "${2}" "${DOWNLOAD_LOCATION_PASS}" "${3}" "${DOCKER_REGISTRY_HTTP_CONNECTOR_INTERNAL}"
 }
 
 nexus() {
-  curl -sL https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/6dd6ce267cba17139d4da0ece908b8c67c14bd21/nexus-docker.sh -o start.sh
+  curl -sL https://gist.githubusercontent.com/030/666c99d8fc86e9f1cc0ad216e0190574/raw/48cc41199c55a98c2a0b6f0fbaf47cc83ef3c659/nexus-docker.sh -o start.sh
   chmod +x start.sh
 
   startNexus a ${PORT_NEXUS_A} ${DOCKER_REGISTRY_HTTP_CONNECTOR_A} &
@@ -355,6 +356,62 @@ countCSV() {
   du "${f}.csv" | grep 1488
 }
 
+uploadGem() {
+  ${N3DR_DELIVERABLE} configRepository \
+    -u admin \
+    -p "${PASSWORD_NEXUS_A}" \
+    -n "${URL_NEXUS_A_V2}" \
+    --https=false \
+    --configRepoName "${HOSTED_REPO_GEM}" \
+    --configRepoType gem
+
+  echo "Downloading some gems from rubygems.org..."
+  local downloadDir="${DOWNLOAD_LOCATION}/gem-upload"
+  mkdir -p "${downloadDir}"
+
+  echo "Uploading some rubygems to Nexus3..."
+  for f in chef-17.4.25 chef-18.1.0 puppet-7.23.0 rack-3.0.4.1; do
+    curl -L https://rubygems.org/downloads/${f}.gem > ${downloadDir}/${f}.gem
+    curl -X 'POST' \
+      ${URL_NEXUS_A}/service/rest/v1/components?repository=${HOSTED_REPO_GEM} \
+      -s \
+      -f \
+      -u "admin:${PASSWORD_NEXUS_A}" \
+      -H 'accept: application/json' \
+      -H 'Content-Type: multipart/form-data' \
+      -F "rubygems.asset=@${downloadDir}/${f}.gem;type=application/x-tar"
+  done
+}
+
+repositories() {
+  local cmd="${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositoriesV2 --https=false"
+
+  echo "Testing repositories..."
+  $cmd --names | grep maven-releases
+
+  echo "> Counting number of repositories..."
+  expected_number=10
+
+  actual_number="$($cmd --count | tail -n1)"
+  echo -n "Number of repositories. Expected: ${expected_number}. Actual: ${actual_number}"
+  [ "${actual_number}" == "${expected_number}" ]
+
+  echo "> Testing zip functionality..."
+  testZipSizeDir=${DOWNLOAD_LOCATION}/testZipSize/
+  $cmd \
+    --backup \
+    --zip \
+    --directory-prefix ${testZipSizeDir} \
+    --directory-prefix-zip ${testZipSizeDir} \
+    --dockerPort ${DOCKER_REGISTRY_HTTP_CONNECTOR_A} \
+    --dockerHost ${DOCKER_URL}
+
+  count_downloads 359 ${testZipSizeDir}
+  test_zip 1399 ${testZipSizeDir}
+
+  cleanup_downloads
+}
+
 main() {
   validate
   build
@@ -369,10 +426,11 @@ main() {
   backup
   # uploadDeb
   uploadDocker
+  uploadGem
   # uploadNPM
   # uploadNuget
   uploadYum
-  # repositories
+  repositories
   # regex
   # zipName
   version
