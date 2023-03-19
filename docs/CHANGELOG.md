@@ -2,11 +2,23 @@
 ## [Unreleased]
 
 
+<a name="7.2.1"></a>
+## [7.2.1] - 2023-03-19
+### Build
+- **deps:** Update versions.
+
+
 <a name="7.2.0"></a>
-## [7.2.0] - 2023-02-19
+## [7.2.0] - 2023-02-26
 ### Feat
 - [[#363](https://github.com/030/n3dr/issues/363)] Backup and upload of Ruby gems.
 
+### Fix
+- [[#363](https://github.com/030/n3dr/issues/363)] Remove version update check old README.
+
+
+<a name="7.1.1"></a>
+## [7.1.1] - 2023-02-19
 ### Fix
 - Missing &&'s in Docker quickstarts doc.
 - [[#342](https://github.com/030/n3dr/issues/342)] Backup integration test.
@@ -346,8 +358,10 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.2.0...HEAD
-[7.2.0]: https://github.com/030/n3dr/compare/7.1.0...7.2.0
+[Unreleased]: https://github.com/030/n3dr/compare/7.2.1...HEAD
+[7.2.1]: https://github.com/030/n3dr/compare/7.2.0...7.2.1
+[7.2.0]: https://github.com/030/n3dr/compare/7.1.1...7.2.0
+[7.1.1]: https://github.com/030/n3dr/compare/7.1.0...7.1.1
 [7.1.0]: https://github.com/030/n3dr/compare/7.0.3...7.1.0
 [7.0.3]: https://github.com/030/n3dr/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/030/n3dr/compare/7.0.1...7.0.2

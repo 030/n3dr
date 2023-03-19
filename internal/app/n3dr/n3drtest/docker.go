@@ -52,7 +52,7 @@ func Image(port int) mij.DockerImage {
 		Name:                     "sonatype/nexus3",
 		PortExternal:             port,
 		PortInternal:             8081,
-		Version:                  "3.47.1",
+		Version:                  "3.49.0",
 		ContainerName:            "nexus" + strconv.Itoa(port),
 		LogFile:                  "/nexus-data/log/nexus.log",
 		LogFileStringHealthCheck: "Started Sonatype Nexus OSS",
