@@ -52,10 +52,12 @@ func NewDeletePrivilegeParamsWithHTTPClient(client *http.Client) *DeletePrivileg
 	}
 }
 
-/* DeletePrivilegeParams contains all the parameters to send to the API endpoint
-   for the delete privilege operation.
+/*
+DeletePrivilegeParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete privilege operation.
+
+	Typically these are written to a http.Request.
 */
 type DeletePrivilegeParams struct {
 

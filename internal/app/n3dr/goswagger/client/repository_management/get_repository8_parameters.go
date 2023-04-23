@@ -52,10 +52,12 @@ func NewGetRepository8ParamsWithHTTPClient(client *http.Client) *GetRepository8P
 	}
 }
 
-/* GetRepository8Params contains all the parameters to send to the API endpoint
-   for the get repository 8 operation.
+/*
+GetRepository8Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get repository 8 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRepository8Params struct {
 

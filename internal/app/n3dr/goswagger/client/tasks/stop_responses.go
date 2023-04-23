@@ -48,14 +48,49 @@ func NewStopNoContent() *StopNoContent {
 	return &StopNoContent{}
 }
 
-/* StopNoContent describes a response with status code 204, with default header values.
+/*
+StopNoContent describes a response with status code 204, with default header values.
 
 Task was stopped
 */
 type StopNoContent struct {
 }
 
+// IsSuccess returns true when this stop no content response has a 2xx status code
+func (o *StopNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this stop no content response has a 3xx status code
+func (o *StopNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stop no content response has a 4xx status code
+func (o *StopNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this stop no content response has a 5xx status code
+func (o *StopNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stop no content response a status code equal to that given
+func (o *StopNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the stop no content response
+func (o *StopNoContent) Code() int {
+	return 204
+}
+
 func (o *StopNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/tasks/{id}/stop][%d] stopNoContent ", 204)
+}
+
+func (o *StopNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/tasks/{id}/stop][%d] stopNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewStopNotFound() *StopNotFound {
 	return &StopNotFound{}
 }
 
-/* StopNotFound describes a response with status code 404, with default header values.
+/*
+StopNotFound describes a response with status code 404, with default header values.
 
 Task not found
 */
 type StopNotFound struct {
 }
 
+// IsSuccess returns true when this stop not found response has a 2xx status code
+func (o *StopNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this stop not found response has a 3xx status code
+func (o *StopNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stop not found response has a 4xx status code
+func (o *StopNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this stop not found response has a 5xx status code
+func (o *StopNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stop not found response a status code equal to that given
+func (o *StopNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the stop not found response
+func (o *StopNotFound) Code() int {
+	return 404
+}
+
 func (o *StopNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/tasks/{id}/stop][%d] stopNotFound ", 404)
+}
+
+func (o *StopNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/tasks/{id}/stop][%d] stopNotFound ", 404)
 }
 
@@ -90,14 +160,49 @@ func NewStopConflict() *StopConflict {
 	return &StopConflict{}
 }
 
-/* StopConflict describes a response with status code 409, with default header values.
+/*
+StopConflict describes a response with status code 409, with default header values.
 
 Unable to stop task
 */
 type StopConflict struct {
 }
 
+// IsSuccess returns true when this stop conflict response has a 2xx status code
+func (o *StopConflict) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this stop conflict response has a 3xx status code
+func (o *StopConflict) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stop conflict response has a 4xx status code
+func (o *StopConflict) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this stop conflict response has a 5xx status code
+func (o *StopConflict) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stop conflict response a status code equal to that given
+func (o *StopConflict) IsCode(code int) bool {
+	return code == 409
+}
+
+// Code gets the status code for the stop conflict response
+func (o *StopConflict) Code() int {
+	return 409
+}
+
 func (o *StopConflict) Error() string {
+	return fmt.Sprintf("[POST /v1/tasks/{id}/stop][%d] stopConflict ", 409)
+}
+
+func (o *StopConflict) String() string {
 	return fmt.Sprintf("[POST /v1/tasks/{id}/stop][%d] stopConflict ", 409)
 }
 

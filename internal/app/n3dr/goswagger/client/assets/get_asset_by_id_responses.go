@@ -57,7 +57,8 @@ func NewGetAssetByIDOK() *GetAssetByIDOK {
 	return &GetAssetByIDOK{}
 }
 
-/* GetAssetByIDOK describes a response with status code 200, with default header values.
+/*
+GetAssetByIDOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -65,9 +66,44 @@ type GetAssetByIDOK struct {
 	Payload *models.AssetXO
 }
 
+// IsSuccess returns true when this get asset by Id o k response has a 2xx status code
+func (o *GetAssetByIDOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get asset by Id o k response has a 3xx status code
+func (o *GetAssetByIDOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get asset by Id o k response has a 4xx status code
+func (o *GetAssetByIDOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get asset by Id o k response has a 5xx status code
+func (o *GetAssetByIDOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get asset by Id o k response a status code equal to that given
+func (o *GetAssetByIDOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get asset by Id o k response
+func (o *GetAssetByIDOK) Code() int {
+	return 200
+}
+
 func (o *GetAssetByIDOK) Error() string {
 	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdOK  %+v", 200, o.Payload)
 }
+
+func (o *GetAssetByIDOK) String() string {
+	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdOK  %+v", 200, o.Payload)
+}
+
 func (o *GetAssetByIDOK) GetPayload() *models.AssetXO {
 	return o.Payload
 }
@@ -89,14 +125,49 @@ func NewGetAssetByIDForbidden() *GetAssetByIDForbidden {
 	return &GetAssetByIDForbidden{}
 }
 
-/* GetAssetByIDForbidden describes a response with status code 403, with default header values.
+/*
+GetAssetByIDForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to get asset
 */
 type GetAssetByIDForbidden struct {
 }
 
+// IsSuccess returns true when this get asset by Id forbidden response has a 2xx status code
+func (o *GetAssetByIDForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get asset by Id forbidden response has a 3xx status code
+func (o *GetAssetByIDForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get asset by Id forbidden response has a 4xx status code
+func (o *GetAssetByIDForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get asset by Id forbidden response has a 5xx status code
+func (o *GetAssetByIDForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get asset by Id forbidden response a status code equal to that given
+func (o *GetAssetByIDForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get asset by Id forbidden response
+func (o *GetAssetByIDForbidden) Code() int {
+	return 403
+}
+
 func (o *GetAssetByIDForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdForbidden ", 403)
+}
+
+func (o *GetAssetByIDForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdForbidden ", 403)
 }
 
@@ -110,14 +181,49 @@ func NewGetAssetByIDNotFound() *GetAssetByIDNotFound {
 	return &GetAssetByIDNotFound{}
 }
 
-/* GetAssetByIDNotFound describes a response with status code 404, with default header values.
+/*
+GetAssetByIDNotFound describes a response with status code 404, with default header values.
 
 Asset not found
 */
 type GetAssetByIDNotFound struct {
 }
 
+// IsSuccess returns true when this get asset by Id not found response has a 2xx status code
+func (o *GetAssetByIDNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get asset by Id not found response has a 3xx status code
+func (o *GetAssetByIDNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get asset by Id not found response has a 4xx status code
+func (o *GetAssetByIDNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get asset by Id not found response has a 5xx status code
+func (o *GetAssetByIDNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get asset by Id not found response a status code equal to that given
+func (o *GetAssetByIDNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get asset by Id not found response
+func (o *GetAssetByIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetAssetByIDNotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdNotFound ", 404)
+}
+
+func (o *GetAssetByIDNotFound) String() string {
 	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdNotFound ", 404)
 }
 
@@ -131,14 +237,49 @@ func NewGetAssetByIDUnprocessableEntity() *GetAssetByIDUnprocessableEntity {
 	return &GetAssetByIDUnprocessableEntity{}
 }
 
-/* GetAssetByIDUnprocessableEntity describes a response with status code 422, with default header values.
+/*
+GetAssetByIDUnprocessableEntity describes a response with status code 422, with default header values.
 
 Malformed ID
 */
 type GetAssetByIDUnprocessableEntity struct {
 }
 
+// IsSuccess returns true when this get asset by Id unprocessable entity response has a 2xx status code
+func (o *GetAssetByIDUnprocessableEntity) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get asset by Id unprocessable entity response has a 3xx status code
+func (o *GetAssetByIDUnprocessableEntity) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get asset by Id unprocessable entity response has a 4xx status code
+func (o *GetAssetByIDUnprocessableEntity) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get asset by Id unprocessable entity response has a 5xx status code
+func (o *GetAssetByIDUnprocessableEntity) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get asset by Id unprocessable entity response a status code equal to that given
+func (o *GetAssetByIDUnprocessableEntity) IsCode(code int) bool {
+	return code == 422
+}
+
+// Code gets the status code for the get asset by Id unprocessable entity response
+func (o *GetAssetByIDUnprocessableEntity) Code() int {
+	return 422
+}
+
 func (o *GetAssetByIDUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdUnprocessableEntity ", 422)
+}
+
+func (o *GetAssetByIDUnprocessableEntity) String() string {
 	return fmt.Sprintf("[GET /v1/assets/{id}][%d] getAssetByIdUnprocessableEntity ", 422)
 }
 

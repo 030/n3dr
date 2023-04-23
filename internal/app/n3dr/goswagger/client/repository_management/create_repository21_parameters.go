@@ -54,10 +54,12 @@ func NewCreateRepository21ParamsWithHTTPClient(client *http.Client) *CreateRepos
 	}
 }
 
-/* CreateRepository21Params contains all the parameters to send to the API endpoint
-   for the create repository 21 operation.
+/*
+CreateRepository21Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create repository 21 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateRepository21Params struct {
 

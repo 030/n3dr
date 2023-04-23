@@ -52,10 +52,12 @@ func NewAddCertificateParamsWithHTTPClient(client *http.Client) *AddCertificateP
 	}
 }
 
-/* AddCertificateParams contains all the parameters to send to the API endpoint
-   for the add certificate operation.
+/*
+AddCertificateParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the add certificate operation.
+
+	Typically these are written to a http.Request.
 */
 type AddCertificateParams struct {
 

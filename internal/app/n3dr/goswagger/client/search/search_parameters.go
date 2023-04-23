@@ -53,10 +53,12 @@ func NewSearchParamsWithHTTPClient(client *http.Client) *SearchParams {
 	}
 }
 
-/* SearchParams contains all the parameters to send to the API endpoint
-   for the search operation.
+/*
+SearchParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the search operation.
+
+	Typically these are written to a http.Request.
 */
 type SearchParams struct {
 
@@ -71,6 +73,12 @@ type SearchParams struct {
 	   Conan channel
 	*/
 	ConanChannel *string
+
+	/* ConanRevision.
+
+	   Conan recipe revision
+	*/
+	ConanRevision *string
 
 	/* ContinuationToken.
 
@@ -113,6 +121,12 @@ type SearchParams struct {
 	   Query by format
 	*/
 	Format *string
+
+	/* Gavec.
+
+	   Group asset version extension classifier
+	*/
+	Gavec *string
 
 	/* Group.
 
@@ -162,11 +176,59 @@ type SearchParams struct {
 	*/
 	Name *string
 
+	/* NpmAuthor.
+
+	   npm author
+	*/
+	NpmAuthor *string
+
+	/* NpmDescription.
+
+	   npm description
+	*/
+	NpmDescription *string
+
+	/* NpmKeywords.
+
+	   npm keywords
+	*/
+	NpmKeywords *string
+
+	/* NpmLicense.
+
+	   npm license
+	*/
+	NpmLicense *string
+
 	/* NpmScope.
 
 	   npm scope
 	*/
 	NpmScope *string
+
+	/* NpmTaggedIs.
+
+	   npm tagged is
+	*/
+	NpmTaggedIs *string
+
+	/* NpmTaggedNot.
+
+	   npm tagged not
+	*/
+	NpmTaggedNot *string
+
+	/* NugetAuthors.
+
+	   NuGet authors
+	*/
+	NugetAuthors *string
+
+	/* NugetDescription.
+
+	   NuGet description
+	*/
+	NugetDescription *string
 
 	/* NugetID.
 
@@ -174,11 +236,23 @@ type SearchParams struct {
 	*/
 	NugetID *string
 
+	/* NugetSummary.
+
+	   NuGet summary
+	*/
+	NugetSummary *string
+
 	/* NugetTags.
 
 	   NuGet tags
 	*/
 	NugetTags *string
+
+	/* NugetTitle.
+
+	   NuGet title
+	*/
+	NugetTitle *string
 
 	/* P2PluginName.
 
@@ -290,6 +364,12 @@ type SearchParams struct {
 	*/
 	YumArchitecture *string
 
+	/* YumName.
+
+	   Yum package name
+	*/
+	YumName *string
+
 	requestTimeout time.Duration
 	Context        context.Context
 	HTTPClient     *http.Client
@@ -363,6 +443,17 @@ func (o *SearchParams) WithConanChannel(conanChannel *string) *SearchParams {
 // SetConanChannel adds the conanChannel to the search params
 func (o *SearchParams) SetConanChannel(conanChannel *string) {
 	o.ConanChannel = conanChannel
+}
+
+// WithConanRevision adds the conanRevision to the search params
+func (o *SearchParams) WithConanRevision(conanRevision *string) *SearchParams {
+	o.SetConanRevision(conanRevision)
+	return o
+}
+
+// SetConanRevision adds the conanRevision to the search params
+func (o *SearchParams) SetConanRevision(conanRevision *string) {
+	o.ConanRevision = conanRevision
 }
 
 // WithContinuationToken adds the continuationToken to the search params
@@ -440,6 +531,17 @@ func (o *SearchParams) WithFormat(format *string) *SearchParams {
 // SetFormat adds the format to the search params
 func (o *SearchParams) SetFormat(format *string) {
 	o.Format = format
+}
+
+// WithGavec adds the gavec to the search params
+func (o *SearchParams) WithGavec(gavec *string) *SearchParams {
+	o.SetGavec(gavec)
+	return o
+}
+
+// SetGavec adds the gavec to the search params
+func (o *SearchParams) SetGavec(gavec *string) {
+	o.Gavec = gavec
 }
 
 // WithGroup adds the group to the search params
@@ -530,6 +632,50 @@ func (o *SearchParams) SetName(name *string) {
 	o.Name = name
 }
 
+// WithNpmAuthor adds the npmAuthor to the search params
+func (o *SearchParams) WithNpmAuthor(npmAuthor *string) *SearchParams {
+	o.SetNpmAuthor(npmAuthor)
+	return o
+}
+
+// SetNpmAuthor adds the npmAuthor to the search params
+func (o *SearchParams) SetNpmAuthor(npmAuthor *string) {
+	o.NpmAuthor = npmAuthor
+}
+
+// WithNpmDescription adds the npmDescription to the search params
+func (o *SearchParams) WithNpmDescription(npmDescription *string) *SearchParams {
+	o.SetNpmDescription(npmDescription)
+	return o
+}
+
+// SetNpmDescription adds the npmDescription to the search params
+func (o *SearchParams) SetNpmDescription(npmDescription *string) {
+	o.NpmDescription = npmDescription
+}
+
+// WithNpmKeywords adds the npmKeywords to the search params
+func (o *SearchParams) WithNpmKeywords(npmKeywords *string) *SearchParams {
+	o.SetNpmKeywords(npmKeywords)
+	return o
+}
+
+// SetNpmKeywords adds the npmKeywords to the search params
+func (o *SearchParams) SetNpmKeywords(npmKeywords *string) {
+	o.NpmKeywords = npmKeywords
+}
+
+// WithNpmLicense adds the npmLicense to the search params
+func (o *SearchParams) WithNpmLicense(npmLicense *string) *SearchParams {
+	o.SetNpmLicense(npmLicense)
+	return o
+}
+
+// SetNpmLicense adds the npmLicense to the search params
+func (o *SearchParams) SetNpmLicense(npmLicense *string) {
+	o.NpmLicense = npmLicense
+}
+
 // WithNpmScope adds the npmScope to the search params
 func (o *SearchParams) WithNpmScope(npmScope *string) *SearchParams {
 	o.SetNpmScope(npmScope)
@@ -539,6 +685,50 @@ func (o *SearchParams) WithNpmScope(npmScope *string) *SearchParams {
 // SetNpmScope adds the npmScope to the search params
 func (o *SearchParams) SetNpmScope(npmScope *string) {
 	o.NpmScope = npmScope
+}
+
+// WithNpmTaggedIs adds the npmTaggedIs to the search params
+func (o *SearchParams) WithNpmTaggedIs(npmTaggedIs *string) *SearchParams {
+	o.SetNpmTaggedIs(npmTaggedIs)
+	return o
+}
+
+// SetNpmTaggedIs adds the npmTaggedIs to the search params
+func (o *SearchParams) SetNpmTaggedIs(npmTaggedIs *string) {
+	o.NpmTaggedIs = npmTaggedIs
+}
+
+// WithNpmTaggedNot adds the npmTaggedNot to the search params
+func (o *SearchParams) WithNpmTaggedNot(npmTaggedNot *string) *SearchParams {
+	o.SetNpmTaggedNot(npmTaggedNot)
+	return o
+}
+
+// SetNpmTaggedNot adds the npmTaggedNot to the search params
+func (o *SearchParams) SetNpmTaggedNot(npmTaggedNot *string) {
+	o.NpmTaggedNot = npmTaggedNot
+}
+
+// WithNugetAuthors adds the nugetAuthors to the search params
+func (o *SearchParams) WithNugetAuthors(nugetAuthors *string) *SearchParams {
+	o.SetNugetAuthors(nugetAuthors)
+	return o
+}
+
+// SetNugetAuthors adds the nugetAuthors to the search params
+func (o *SearchParams) SetNugetAuthors(nugetAuthors *string) {
+	o.NugetAuthors = nugetAuthors
+}
+
+// WithNugetDescription adds the nugetDescription to the search params
+func (o *SearchParams) WithNugetDescription(nugetDescription *string) *SearchParams {
+	o.SetNugetDescription(nugetDescription)
+	return o
+}
+
+// SetNugetDescription adds the nugetDescription to the search params
+func (o *SearchParams) SetNugetDescription(nugetDescription *string) {
+	o.NugetDescription = nugetDescription
 }
 
 // WithNugetID adds the nugetID to the search params
@@ -552,6 +742,17 @@ func (o *SearchParams) SetNugetID(nugetID *string) {
 	o.NugetID = nugetID
 }
 
+// WithNugetSummary adds the nugetSummary to the search params
+func (o *SearchParams) WithNugetSummary(nugetSummary *string) *SearchParams {
+	o.SetNugetSummary(nugetSummary)
+	return o
+}
+
+// SetNugetSummary adds the nugetSummary to the search params
+func (o *SearchParams) SetNugetSummary(nugetSummary *string) {
+	o.NugetSummary = nugetSummary
+}
+
 // WithNugetTags adds the nugetTags to the search params
 func (o *SearchParams) WithNugetTags(nugetTags *string) *SearchParams {
 	o.SetNugetTags(nugetTags)
@@ -561,6 +762,17 @@ func (o *SearchParams) WithNugetTags(nugetTags *string) *SearchParams {
 // SetNugetTags adds the nugetTags to the search params
 func (o *SearchParams) SetNugetTags(nugetTags *string) {
 	o.NugetTags = nugetTags
+}
+
+// WithNugetTitle adds the nugetTitle to the search params
+func (o *SearchParams) WithNugetTitle(nugetTitle *string) *SearchParams {
+	o.SetNugetTitle(nugetTitle)
+	return o
+}
+
+// SetNugetTitle adds the nugetTitle to the search params
+func (o *SearchParams) SetNugetTitle(nugetTitle *string) {
+	o.NugetTitle = nugetTitle
 }
 
 // WithP2PluginName adds the p2PluginName to the search params
@@ -761,6 +973,17 @@ func (o *SearchParams) SetYumArchitecture(yumArchitecture *string) {
 	o.YumArchitecture = yumArchitecture
 }
 
+// WithYumName adds the yumName to the search params
+func (o *SearchParams) WithYumName(yumName *string) *SearchParams {
+	o.SetYumName(yumName)
+	return o
+}
+
+// SetYumName adds the yumName to the search params
+func (o *SearchParams) SetYumName(yumName *string) {
+	o.YumName = yumName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -798,6 +1021,23 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		if qConanChannel != "" {
 
 			if err := r.SetQueryParam("conan.channel", qConanChannel); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.ConanRevision != nil {
+
+		// query param conan.revision
+		var qrConanRevision string
+
+		if o.ConanRevision != nil {
+			qrConanRevision = *o.ConanRevision
+		}
+		qConanRevision := qrConanRevision
+		if qConanRevision != "" {
+
+			if err := r.SetQueryParam("conan.revision", qConanRevision); err != nil {
 				return err
 			}
 		}
@@ -899,6 +1139,23 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		if qFormat != "" {
 
 			if err := r.SetQueryParam("format", qFormat); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Gavec != nil {
+
+		// query param gavec
+		var qrGavec string
+
+		if o.Gavec != nil {
+			qrGavec = *o.Gavec
+		}
+		qGavec := qrGavec
+		if qGavec != "" {
+
+			if err := r.SetQueryParam("gavec", qGavec); err != nil {
 				return err
 			}
 		}
@@ -1040,6 +1297,74 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		}
 	}
 
+	if o.NpmAuthor != nil {
+
+		// query param npm.author
+		var qrNpmAuthor string
+
+		if o.NpmAuthor != nil {
+			qrNpmAuthor = *o.NpmAuthor
+		}
+		qNpmAuthor := qrNpmAuthor
+		if qNpmAuthor != "" {
+
+			if err := r.SetQueryParam("npm.author", qNpmAuthor); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmDescription != nil {
+
+		// query param npm.description
+		var qrNpmDescription string
+
+		if o.NpmDescription != nil {
+			qrNpmDescription = *o.NpmDescription
+		}
+		qNpmDescription := qrNpmDescription
+		if qNpmDescription != "" {
+
+			if err := r.SetQueryParam("npm.description", qNpmDescription); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmKeywords != nil {
+
+		// query param npm.keywords
+		var qrNpmKeywords string
+
+		if o.NpmKeywords != nil {
+			qrNpmKeywords = *o.NpmKeywords
+		}
+		qNpmKeywords := qrNpmKeywords
+		if qNpmKeywords != "" {
+
+			if err := r.SetQueryParam("npm.keywords", qNpmKeywords); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmLicense != nil {
+
+		// query param npm.license
+		var qrNpmLicense string
+
+		if o.NpmLicense != nil {
+			qrNpmLicense = *o.NpmLicense
+		}
+		qNpmLicense := qrNpmLicense
+		if qNpmLicense != "" {
+
+			if err := r.SetQueryParam("npm.license", qNpmLicense); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NpmScope != nil {
 
 		// query param npm.scope
@@ -1052,6 +1377,74 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		if qNpmScope != "" {
 
 			if err := r.SetQueryParam("npm.scope", qNpmScope); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmTaggedIs != nil {
+
+		// query param npm.tagged_is
+		var qrNpmTaggedIs string
+
+		if o.NpmTaggedIs != nil {
+			qrNpmTaggedIs = *o.NpmTaggedIs
+		}
+		qNpmTaggedIs := qrNpmTaggedIs
+		if qNpmTaggedIs != "" {
+
+			if err := r.SetQueryParam("npm.tagged_is", qNpmTaggedIs); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmTaggedNot != nil {
+
+		// query param npm.tagged_not
+		var qrNpmTaggedNot string
+
+		if o.NpmTaggedNot != nil {
+			qrNpmTaggedNot = *o.NpmTaggedNot
+		}
+		qNpmTaggedNot := qrNpmTaggedNot
+		if qNpmTaggedNot != "" {
+
+			if err := r.SetQueryParam("npm.tagged_not", qNpmTaggedNot); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NugetAuthors != nil {
+
+		// query param nuget.authors
+		var qrNugetAuthors string
+
+		if o.NugetAuthors != nil {
+			qrNugetAuthors = *o.NugetAuthors
+		}
+		qNugetAuthors := qrNugetAuthors
+		if qNugetAuthors != "" {
+
+			if err := r.SetQueryParam("nuget.authors", qNugetAuthors); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NugetDescription != nil {
+
+		// query param nuget.description
+		var qrNugetDescription string
+
+		if o.NugetDescription != nil {
+			qrNugetDescription = *o.NugetDescription
+		}
+		qNugetDescription := qrNugetDescription
+		if qNugetDescription != "" {
+
+			if err := r.SetQueryParam("nuget.description", qNugetDescription); err != nil {
 				return err
 			}
 		}
@@ -1074,6 +1467,23 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		}
 	}
 
+	if o.NugetSummary != nil {
+
+		// query param nuget.summary
+		var qrNugetSummary string
+
+		if o.NugetSummary != nil {
+			qrNugetSummary = *o.NugetSummary
+		}
+		qNugetSummary := qrNugetSummary
+		if qNugetSummary != "" {
+
+			if err := r.SetQueryParam("nuget.summary", qNugetSummary); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NugetTags != nil {
 
 		// query param nuget.tags
@@ -1086,6 +1496,23 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		if qNugetTags != "" {
 
 			if err := r.SetQueryParam("nuget.tags", qNugetTags); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NugetTitle != nil {
+
+		// query param nuget.title
+		var qrNugetTitle string
+
+		if o.NugetTitle != nil {
+			qrNugetTitle = *o.NugetTitle
+		}
+		qNugetTitle := qrNugetTitle
+		if qNugetTitle != "" {
+
+			if err := r.SetQueryParam("nuget.title", qNugetTitle); err != nil {
 				return err
 			}
 		}
@@ -1374,6 +1801,23 @@ func (o *SearchParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regist
 		if qYumArchitecture != "" {
 
 			if err := r.SetQueryParam("yum.architecture", qYumArchitecture); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.YumName != nil {
+
+		// query param yum.name
+		var qrYumName string
+
+		if o.YumName != nil {
+			qrYumName = *o.YumName
+		}
+		qYumName := qrYumName
+		if qYumName != "" {
+
+			if err := r.SetQueryParam("yum.name", qYumName); err != nil {
 				return err
 			}
 		}

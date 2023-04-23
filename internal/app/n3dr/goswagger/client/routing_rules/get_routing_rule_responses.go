@@ -51,7 +51,8 @@ func NewGetRoutingRuleOK() *GetRoutingRuleOK {
 	return &GetRoutingRuleOK{}
 }
 
-/* GetRoutingRuleOK describes a response with status code 200, with default header values.
+/*
+GetRoutingRuleOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -59,9 +60,44 @@ type GetRoutingRuleOK struct {
 	Payload *models.RoutingRuleXO
 }
 
+// IsSuccess returns true when this get routing rule o k response has a 2xx status code
+func (o *GetRoutingRuleOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get routing rule o k response has a 3xx status code
+func (o *GetRoutingRuleOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get routing rule o k response has a 4xx status code
+func (o *GetRoutingRuleOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get routing rule o k response has a 5xx status code
+func (o *GetRoutingRuleOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get routing rule o k response a status code equal to that given
+func (o *GetRoutingRuleOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get routing rule o k response
+func (o *GetRoutingRuleOK) Code() int {
+	return 200
+}
+
 func (o *GetRoutingRuleOK) Error() string {
 	return fmt.Sprintf("[GET /v1/routing-rules/{name}][%d] getRoutingRuleOK  %+v", 200, o.Payload)
 }
+
+func (o *GetRoutingRuleOK) String() string {
+	return fmt.Sprintf("[GET /v1/routing-rules/{name}][%d] getRoutingRuleOK  %+v", 200, o.Payload)
+}
+
 func (o *GetRoutingRuleOK) GetPayload() *models.RoutingRuleXO {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewGetRoutingRuleForbidden() *GetRoutingRuleForbidden {
 	return &GetRoutingRuleForbidden{}
 }
 
-/* GetRoutingRuleForbidden describes a response with status code 403, with default header values.
+/*
+GetRoutingRuleForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to read routing rules
 */
 type GetRoutingRuleForbidden struct {
 }
 
+// IsSuccess returns true when this get routing rule forbidden response has a 2xx status code
+func (o *GetRoutingRuleForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get routing rule forbidden response has a 3xx status code
+func (o *GetRoutingRuleForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get routing rule forbidden response has a 4xx status code
+func (o *GetRoutingRuleForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get routing rule forbidden response has a 5xx status code
+func (o *GetRoutingRuleForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get routing rule forbidden response a status code equal to that given
+func (o *GetRoutingRuleForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get routing rule forbidden response
+func (o *GetRoutingRuleForbidden) Code() int {
+	return 403
+}
+
 func (o *GetRoutingRuleForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/routing-rules/{name}][%d] getRoutingRuleForbidden ", 403)
+}
+
+func (o *GetRoutingRuleForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/routing-rules/{name}][%d] getRoutingRuleForbidden ", 403)
 }
 
@@ -104,14 +175,49 @@ func NewGetRoutingRuleNotFound() *GetRoutingRuleNotFound {
 	return &GetRoutingRuleNotFound{}
 }
 
-/* GetRoutingRuleNotFound describes a response with status code 404, with default header values.
+/*
+GetRoutingRuleNotFound describes a response with status code 404, with default header values.
 
 Routing rule not found
 */
 type GetRoutingRuleNotFound struct {
 }
 
+// IsSuccess returns true when this get routing rule not found response has a 2xx status code
+func (o *GetRoutingRuleNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get routing rule not found response has a 3xx status code
+func (o *GetRoutingRuleNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get routing rule not found response has a 4xx status code
+func (o *GetRoutingRuleNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get routing rule not found response has a 5xx status code
+func (o *GetRoutingRuleNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get routing rule not found response a status code equal to that given
+func (o *GetRoutingRuleNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get routing rule not found response
+func (o *GetRoutingRuleNotFound) Code() int {
+	return 404
+}
+
 func (o *GetRoutingRuleNotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/routing-rules/{name}][%d] getRoutingRuleNotFound ", 404)
+}
+
+func (o *GetRoutingRuleNotFound) String() string {
 	return fmt.Sprintf("[GET /v1/routing-rules/{name}][%d] getRoutingRuleNotFound ", 404)
 }
 

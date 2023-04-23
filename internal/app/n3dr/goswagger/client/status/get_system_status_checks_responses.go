@@ -39,7 +39,8 @@ func NewGetSystemStatusChecksOK() *GetSystemStatusChecksOK {
 	return &GetSystemStatusChecksOK{}
 }
 
-/* GetSystemStatusChecksOK describes a response with status code 200, with default header values.
+/*
+GetSystemStatusChecksOK describes a response with status code 200, with default header values.
 
 The system status check results
 */
@@ -47,9 +48,44 @@ type GetSystemStatusChecksOK struct {
 	Payload map[string]models.Result
 }
 
+// IsSuccess returns true when this get system status checks o k response has a 2xx status code
+func (o *GetSystemStatusChecksOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get system status checks o k response has a 3xx status code
+func (o *GetSystemStatusChecksOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get system status checks o k response has a 4xx status code
+func (o *GetSystemStatusChecksOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get system status checks o k response has a 5xx status code
+func (o *GetSystemStatusChecksOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get system status checks o k response a status code equal to that given
+func (o *GetSystemStatusChecksOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get system status checks o k response
+func (o *GetSystemStatusChecksOK) Code() int {
+	return 200
+}
+
 func (o *GetSystemStatusChecksOK) Error() string {
 	return fmt.Sprintf("[GET /v1/status/check][%d] getSystemStatusChecksOK  %+v", 200, o.Payload)
 }
+
+func (o *GetSystemStatusChecksOK) String() string {
+	return fmt.Sprintf("[GET /v1/status/check][%d] getSystemStatusChecksOK  %+v", 200, o.Payload)
+}
+
 func (o *GetSystemStatusChecksOK) GetPayload() map[string]models.Result {
 	return o.Payload
 }

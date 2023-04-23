@@ -54,14 +54,49 @@ func NewUpdateBlobStoreNoContent() *UpdateBlobStoreNoContent {
 	return &UpdateBlobStoreNoContent{}
 }
 
-/* UpdateBlobStoreNoContent describes a response with status code 204, with default header values.
+/*
+UpdateBlobStoreNoContent describes a response with status code 204, with default header values.
 
 S3 blob store updated
 */
 type UpdateBlobStoreNoContent struct {
 }
 
+// IsSuccess returns true when this update blob store no content response has a 2xx status code
+func (o *UpdateBlobStoreNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update blob store no content response has a 3xx status code
+func (o *UpdateBlobStoreNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store no content response has a 4xx status code
+func (o *UpdateBlobStoreNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update blob store no content response has a 5xx status code
+func (o *UpdateBlobStoreNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store no content response a status code equal to that given
+func (o *UpdateBlobStoreNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update blob store no content response
+func (o *UpdateBlobStoreNoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateBlobStoreNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreNoContent ", 204)
+}
+
+func (o *UpdateBlobStoreNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewUpdateBlobStoreBadRequest() *UpdateBlobStoreBadRequest {
 	return &UpdateBlobStoreBadRequest{}
 }
 
-/* UpdateBlobStoreBadRequest describes a response with status code 400, with default header values.
+/*
+UpdateBlobStoreBadRequest describes a response with status code 400, with default header values.
 
 Specified S3 blob store doesn't exist
 */
 type UpdateBlobStoreBadRequest struct {
 }
 
+// IsSuccess returns true when this update blob store bad request response has a 2xx status code
+func (o *UpdateBlobStoreBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update blob store bad request response has a 3xx status code
+func (o *UpdateBlobStoreBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store bad request response has a 4xx status code
+func (o *UpdateBlobStoreBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update blob store bad request response has a 5xx status code
+func (o *UpdateBlobStoreBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store bad request response a status code equal to that given
+func (o *UpdateBlobStoreBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update blob store bad request response
+func (o *UpdateBlobStoreBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateBlobStoreBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreBadRequest ", 400)
+}
+
+func (o *UpdateBlobStoreBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreBadRequest ", 400)
 }
 
@@ -96,14 +166,49 @@ func NewUpdateBlobStoreUnauthorized() *UpdateBlobStoreUnauthorized {
 	return &UpdateBlobStoreUnauthorized{}
 }
 
-/* UpdateBlobStoreUnauthorized describes a response with status code 401, with default header values.
+/*
+UpdateBlobStoreUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateBlobStoreUnauthorized struct {
 }
 
+// IsSuccess returns true when this update blob store unauthorized response has a 2xx status code
+func (o *UpdateBlobStoreUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update blob store unauthorized response has a 3xx status code
+func (o *UpdateBlobStoreUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store unauthorized response has a 4xx status code
+func (o *UpdateBlobStoreUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update blob store unauthorized response has a 5xx status code
+func (o *UpdateBlobStoreUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store unauthorized response a status code equal to that given
+func (o *UpdateBlobStoreUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update blob store unauthorized response
+func (o *UpdateBlobStoreUnauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateBlobStoreUnauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreUnauthorized ", 401)
+}
+
+func (o *UpdateBlobStoreUnauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreUnauthorized ", 401)
 }
 
@@ -117,14 +222,49 @@ func NewUpdateBlobStoreForbidden() *UpdateBlobStoreForbidden {
 	return &UpdateBlobStoreForbidden{}
 }
 
-/* UpdateBlobStoreForbidden describes a response with status code 403, with default header values.
+/*
+UpdateBlobStoreForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateBlobStoreForbidden struct {
 }
 
+// IsSuccess returns true when this update blob store forbidden response has a 2xx status code
+func (o *UpdateBlobStoreForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update blob store forbidden response has a 3xx status code
+func (o *UpdateBlobStoreForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store forbidden response has a 4xx status code
+func (o *UpdateBlobStoreForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update blob store forbidden response has a 5xx status code
+func (o *UpdateBlobStoreForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store forbidden response a status code equal to that given
+func (o *UpdateBlobStoreForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update blob store forbidden response
+func (o *UpdateBlobStoreForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateBlobStoreForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreForbidden ", 403)
+}
+
+func (o *UpdateBlobStoreForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/s3/{name}][%d] updateBlobStoreForbidden ", 403)
 }
 

@@ -52,10 +52,12 @@ func NewChangePasswordParamsWithHTTPClient(client *http.Client) *ChangePasswordP
 	}
 }
 
-/* ChangePasswordParams contains all the parameters to send to the API endpoint
-   for the change password operation.
+/*
+ChangePasswordParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the change password operation.
+
+	Typically these are written to a http.Request.
 */
 type ChangePasswordParams struct {
 

@@ -39,7 +39,8 @@ func NewGetRepository20OK() *GetRepository20OK {
 	return &GetRepository20OK{}
 }
 
-/* GetRepository20OK describes a response with status code 200, with default header values.
+/*
+GetRepository20OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository20OK struct {
 	Payload *models.DockerProxyAPIRepository
 }
 
+// IsSuccess returns true when this get repository20 o k response has a 2xx status code
+func (o *GetRepository20OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository20 o k response has a 3xx status code
+func (o *GetRepository20OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository20 o k response has a 4xx status code
+func (o *GetRepository20OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository20 o k response has a 5xx status code
+func (o *GetRepository20OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository20 o k response a status code equal to that given
+func (o *GetRepository20OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository20 o k response
+func (o *GetRepository20OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository20OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/docker/proxy/{repositoryName}][%d] getRepository20OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository20OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/docker/proxy/{repositoryName}][%d] getRepository20OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository20OK) GetPayload() *models.DockerProxyAPIRepository {
 	return o.Payload
 }

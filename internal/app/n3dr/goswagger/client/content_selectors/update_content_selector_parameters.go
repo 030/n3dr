@@ -54,10 +54,12 @@ func NewUpdateContentSelectorParamsWithHTTPClient(client *http.Client) *UpdateCo
 	}
 }
 
-/* UpdateContentSelectorParams contains all the parameters to send to the API endpoint
-   for the update content selector operation.
+/*
+UpdateContentSelectorParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update content selector operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateContentSelectorParams struct {
 

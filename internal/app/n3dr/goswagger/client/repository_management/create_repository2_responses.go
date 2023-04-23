@@ -48,14 +48,49 @@ func NewCreateRepository2Created() *CreateRepository2Created {
 	return &CreateRepository2Created{}
 }
 
-/* CreateRepository2Created describes a response with status code 201, with default header values.
+/*
+CreateRepository2Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository2Created struct {
 }
 
+// IsSuccess returns true when this create repository2 created response has a 2xx status code
+func (o *CreateRepository2Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository2 created response has a 3xx status code
+func (o *CreateRepository2Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository2 created response has a 4xx status code
+func (o *CreateRepository2Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository2 created response has a 5xx status code
+func (o *CreateRepository2Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository2 created response a status code equal to that given
+func (o *CreateRepository2Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository2 created response
+func (o *CreateRepository2Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository2Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/maven/proxy][%d] createRepository2Created ", 201)
+}
+
+func (o *CreateRepository2Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/maven/proxy][%d] createRepository2Created ", 201)
 }
 
@@ -69,14 +104,49 @@ func NewCreateRepository2Unauthorized() *CreateRepository2Unauthorized {
 	return &CreateRepository2Unauthorized{}
 }
 
-/* CreateRepository2Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository2Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository2Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository2 unauthorized response has a 2xx status code
+func (o *CreateRepository2Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository2 unauthorized response has a 3xx status code
+func (o *CreateRepository2Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository2 unauthorized response has a 4xx status code
+func (o *CreateRepository2Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository2 unauthorized response has a 5xx status code
+func (o *CreateRepository2Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository2 unauthorized response a status code equal to that given
+func (o *CreateRepository2Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository2 unauthorized response
+func (o *CreateRepository2Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository2Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/maven/proxy][%d] createRepository2Unauthorized ", 401)
+}
+
+func (o *CreateRepository2Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/maven/proxy][%d] createRepository2Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewCreateRepository2Forbidden() *CreateRepository2Forbidden {
 	return &CreateRepository2Forbidden{}
 }
 
-/* CreateRepository2Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository2Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository2Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository2 forbidden response has a 2xx status code
+func (o *CreateRepository2Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository2 forbidden response has a 3xx status code
+func (o *CreateRepository2Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository2 forbidden response has a 4xx status code
+func (o *CreateRepository2Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository2 forbidden response has a 5xx status code
+func (o *CreateRepository2Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository2 forbidden response a status code equal to that given
+func (o *CreateRepository2Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository2 forbidden response
+func (o *CreateRepository2Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository2Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/maven/proxy][%d] createRepository2Forbidden ", 403)
+}
+
+func (o *CreateRepository2Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/maven/proxy][%d] createRepository2Forbidden ", 403)
 }
 

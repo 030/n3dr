@@ -39,7 +39,8 @@ func NewListBlobStoresOK() *ListBlobStoresOK {
 	return &ListBlobStoresOK{}
 }
 
-/* ListBlobStoresOK describes a response with status code 200, with default header values.
+/*
+ListBlobStoresOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type ListBlobStoresOK struct {
 	Payload []*models.GenericBlobStoreAPIResponse
 }
 
+// IsSuccess returns true when this list blob stores o k response has a 2xx status code
+func (o *ListBlobStoresOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this list blob stores o k response has a 3xx status code
+func (o *ListBlobStoresOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this list blob stores o k response has a 4xx status code
+func (o *ListBlobStoresOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this list blob stores o k response has a 5xx status code
+func (o *ListBlobStoresOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this list blob stores o k response a status code equal to that given
+func (o *ListBlobStoresOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the list blob stores o k response
+func (o *ListBlobStoresOK) Code() int {
+	return 200
+}
+
 func (o *ListBlobStoresOK) Error() string {
 	return fmt.Sprintf("[GET /v1/blobstores][%d] listBlobStoresOK  %+v", 200, o.Payload)
 }
+
+func (o *ListBlobStoresOK) String() string {
+	return fmt.Sprintf("[GET /v1/blobstores][%d] listBlobStoresOK  %+v", 200, o.Payload)
+}
+
 func (o *ListBlobStoresOK) GetPayload() []*models.GenericBlobStoreAPIResponse {
 	return o.Payload
 }

@@ -54,10 +54,12 @@ func NewUpdatePrivilege4ParamsWithHTTPClient(client *http.Client) *UpdatePrivile
 	}
 }
 
-/* UpdatePrivilege4Params contains all the parameters to send to the API endpoint
-   for the update privilege 4 operation.
+/*
+UpdatePrivilege4Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update privilege 4 operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdatePrivilege4Params struct {
 

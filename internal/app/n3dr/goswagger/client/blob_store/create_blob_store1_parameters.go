@@ -54,10 +54,12 @@ func NewCreateBlobStore1ParamsWithHTTPClient(client *http.Client) *CreateBlobSto
 	}
 }
 
-/* CreateBlobStore1Params contains all the parameters to send to the API endpoint
-   for the create blob store 1 operation.
+/*
+CreateBlobStore1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create blob store 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateBlobStore1Params struct {
 

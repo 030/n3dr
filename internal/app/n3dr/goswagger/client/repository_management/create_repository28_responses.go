@@ -48,14 +48,49 @@ func NewCreateRepository28Created() *CreateRepository28Created {
 	return &CreateRepository28Created{}
 }
 
-/* CreateRepository28Created describes a response with status code 201, with default header values.
+/*
+CreateRepository28Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository28Created struct {
 }
 
+// IsSuccess returns true when this create repository28 created response has a 2xx status code
+func (o *CreateRepository28Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository28 created response has a 3xx status code
+func (o *CreateRepository28Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository28 created response has a 4xx status code
+func (o *CreateRepository28Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository28 created response has a 5xx status code
+func (o *CreateRepository28Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository28 created response a status code equal to that given
+func (o *CreateRepository28Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository28 created response
+func (o *CreateRepository28Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository28Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/pypi/proxy][%d] createRepository28Created ", 201)
+}
+
+func (o *CreateRepository28Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/pypi/proxy][%d] createRepository28Created ", 201)
 }
 
@@ -69,14 +104,49 @@ func NewCreateRepository28Unauthorized() *CreateRepository28Unauthorized {
 	return &CreateRepository28Unauthorized{}
 }
 
-/* CreateRepository28Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository28Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository28Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository28 unauthorized response has a 2xx status code
+func (o *CreateRepository28Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository28 unauthorized response has a 3xx status code
+func (o *CreateRepository28Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository28 unauthorized response has a 4xx status code
+func (o *CreateRepository28Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository28 unauthorized response has a 5xx status code
+func (o *CreateRepository28Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository28 unauthorized response a status code equal to that given
+func (o *CreateRepository28Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository28 unauthorized response
+func (o *CreateRepository28Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository28Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/pypi/proxy][%d] createRepository28Unauthorized ", 401)
+}
+
+func (o *CreateRepository28Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/pypi/proxy][%d] createRepository28Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewCreateRepository28Forbidden() *CreateRepository28Forbidden {
 	return &CreateRepository28Forbidden{}
 }
 
-/* CreateRepository28Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository28Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository28Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository28 forbidden response has a 2xx status code
+func (o *CreateRepository28Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository28 forbidden response has a 3xx status code
+func (o *CreateRepository28Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository28 forbidden response has a 4xx status code
+func (o *CreateRepository28Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository28 forbidden response has a 5xx status code
+func (o *CreateRepository28Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository28 forbidden response a status code equal to that given
+func (o *CreateRepository28Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository28 forbidden response
+func (o *CreateRepository28Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository28Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/pypi/proxy][%d] createRepository28Forbidden ", 403)
+}
+
+func (o *CreateRepository28Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/pypi/proxy][%d] createRepository28Forbidden ", 403)
 }
 

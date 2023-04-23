@@ -54,10 +54,12 @@ func NewCreatePrivilege5ParamsWithHTTPClient(client *http.Client) *CreatePrivile
 	}
 }
 
-/* CreatePrivilege5Params contains all the parameters to send to the API endpoint
-   for the create privilege 5 operation.
+/*
+CreatePrivilege5Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create privilege 5 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreatePrivilege5Params struct {
 

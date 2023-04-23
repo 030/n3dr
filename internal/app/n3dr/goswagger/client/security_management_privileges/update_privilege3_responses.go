@@ -48,14 +48,49 @@ func NewUpdatePrivilege3BadRequest() *UpdatePrivilege3BadRequest {
 	return &UpdatePrivilege3BadRequest{}
 }
 
-/* UpdatePrivilege3BadRequest describes a response with status code 400, with default header values.
+/*
+UpdatePrivilege3BadRequest describes a response with status code 400, with default header values.
 
 Privilege object not configured properly.
 */
 type UpdatePrivilege3BadRequest struct {
 }
 
+// IsSuccess returns true when this update privilege3 bad request response has a 2xx status code
+func (o *UpdatePrivilege3BadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege3 bad request response has a 3xx status code
+func (o *UpdatePrivilege3BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege3 bad request response has a 4xx status code
+func (o *UpdatePrivilege3BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege3 bad request response has a 5xx status code
+func (o *UpdatePrivilege3BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege3 bad request response a status code equal to that given
+func (o *UpdatePrivilege3BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update privilege3 bad request response
+func (o *UpdatePrivilege3BadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdatePrivilege3BadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege3BadRequest ", 400)
+}
+
+func (o *UpdatePrivilege3BadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege3BadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewUpdatePrivilege3Forbidden() *UpdatePrivilege3Forbidden {
 	return &UpdatePrivilege3Forbidden{}
 }
 
-/* UpdatePrivilege3Forbidden describes a response with status code 403, with default header values.
+/*
+UpdatePrivilege3Forbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type UpdatePrivilege3Forbidden struct {
 }
 
+// IsSuccess returns true when this update privilege3 forbidden response has a 2xx status code
+func (o *UpdatePrivilege3Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege3 forbidden response has a 3xx status code
+func (o *UpdatePrivilege3Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege3 forbidden response has a 4xx status code
+func (o *UpdatePrivilege3Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege3 forbidden response has a 5xx status code
+func (o *UpdatePrivilege3Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege3 forbidden response a status code equal to that given
+func (o *UpdatePrivilege3Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update privilege3 forbidden response
+func (o *UpdatePrivilege3Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdatePrivilege3Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege3Forbidden ", 403)
+}
+
+func (o *UpdatePrivilege3Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege3Forbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewUpdatePrivilege3NotFound() *UpdatePrivilege3NotFound {
 	return &UpdatePrivilege3NotFound{}
 }
 
-/* UpdatePrivilege3NotFound describes a response with status code 404, with default header values.
+/*
+UpdatePrivilege3NotFound describes a response with status code 404, with default header values.
 
 Privilege not found in the system.
 */
 type UpdatePrivilege3NotFound struct {
 }
 
+// IsSuccess returns true when this update privilege3 not found response has a 2xx status code
+func (o *UpdatePrivilege3NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege3 not found response has a 3xx status code
+func (o *UpdatePrivilege3NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege3 not found response has a 4xx status code
+func (o *UpdatePrivilege3NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege3 not found response has a 5xx status code
+func (o *UpdatePrivilege3NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege3 not found response a status code equal to that given
+func (o *UpdatePrivilege3NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update privilege3 not found response
+func (o *UpdatePrivilege3NotFound) Code() int {
+	return 404
+}
+
 func (o *UpdatePrivilege3NotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege3NotFound ", 404)
+}
+
+func (o *UpdatePrivilege3NotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/repository-admin/{privilegeName}][%d] updatePrivilege3NotFound ", 404)
 }
 

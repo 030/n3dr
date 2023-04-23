@@ -52,10 +52,12 @@ func NewDisableIqParamsWithHTTPClient(client *http.Client) *DisableIqParams {
 	}
 }
 
-/* DisableIqParams contains all the parameters to send to the API endpoint
-   for the disable iq operation.
+/*
+DisableIqParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the disable iq operation.
+
+	Typically these are written to a http.Request.
 */
 type DisableIqParams struct {
 	timeout    time.Duration

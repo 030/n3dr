@@ -60,14 +60,49 @@ func NewEnableRepositoryHealthCheckNoContent() *EnableRepositoryHealthCheckNoCon
 	return &EnableRepositoryHealthCheckNoContent{}
 }
 
-/* EnableRepositoryHealthCheckNoContent describes a response with status code 204, with default header values.
+/*
+EnableRepositoryHealthCheckNoContent describes a response with status code 204, with default header values.
 
 Repository Health Check enabled
 */
 type EnableRepositoryHealthCheckNoContent struct {
 }
 
+// IsSuccess returns true when this enable repository health check no content response has a 2xx status code
+func (o *EnableRepositoryHealthCheckNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this enable repository health check no content response has a 3xx status code
+func (o *EnableRepositoryHealthCheckNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable repository health check no content response has a 4xx status code
+func (o *EnableRepositoryHealthCheckNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this enable repository health check no content response has a 5xx status code
+func (o *EnableRepositoryHealthCheckNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable repository health check no content response a status code equal to that given
+func (o *EnableRepositoryHealthCheckNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the enable repository health check no content response
+func (o *EnableRepositoryHealthCheckNoContent) Code() int {
+	return 204
+}
+
 func (o *EnableRepositoryHealthCheckNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckNoContent ", 204)
+}
+
+func (o *EnableRepositoryHealthCheckNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckNoContent ", 204)
 }
 
@@ -81,14 +116,49 @@ func NewEnableRepositoryHealthCheckUnauthorized() *EnableRepositoryHealthCheckUn
 	return &EnableRepositoryHealthCheckUnauthorized{}
 }
 
-/* EnableRepositoryHealthCheckUnauthorized describes a response with status code 401, with default header values.
+/*
+EnableRepositoryHealthCheckUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type EnableRepositoryHealthCheckUnauthorized struct {
 }
 
+// IsSuccess returns true when this enable repository health check unauthorized response has a 2xx status code
+func (o *EnableRepositoryHealthCheckUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable repository health check unauthorized response has a 3xx status code
+func (o *EnableRepositoryHealthCheckUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable repository health check unauthorized response has a 4xx status code
+func (o *EnableRepositoryHealthCheckUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable repository health check unauthorized response has a 5xx status code
+func (o *EnableRepositoryHealthCheckUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable repository health check unauthorized response a status code equal to that given
+func (o *EnableRepositoryHealthCheckUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the enable repository health check unauthorized response
+func (o *EnableRepositoryHealthCheckUnauthorized) Code() int {
+	return 401
+}
+
 func (o *EnableRepositoryHealthCheckUnauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckUnauthorized ", 401)
+}
+
+func (o *EnableRepositoryHealthCheckUnauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckUnauthorized ", 401)
 }
 
@@ -102,14 +172,49 @@ func NewEnableRepositoryHealthCheckForbidden() *EnableRepositoryHealthCheckForbi
 	return &EnableRepositoryHealthCheckForbidden{}
 }
 
-/* EnableRepositoryHealthCheckForbidden describes a response with status code 403, with default header values.
+/*
+EnableRepositoryHealthCheckForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type EnableRepositoryHealthCheckForbidden struct {
 }
 
+// IsSuccess returns true when this enable repository health check forbidden response has a 2xx status code
+func (o *EnableRepositoryHealthCheckForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable repository health check forbidden response has a 3xx status code
+func (o *EnableRepositoryHealthCheckForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable repository health check forbidden response has a 4xx status code
+func (o *EnableRepositoryHealthCheckForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable repository health check forbidden response has a 5xx status code
+func (o *EnableRepositoryHealthCheckForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable repository health check forbidden response a status code equal to that given
+func (o *EnableRepositoryHealthCheckForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the enable repository health check forbidden response
+func (o *EnableRepositoryHealthCheckForbidden) Code() int {
+	return 403
+}
+
 func (o *EnableRepositoryHealthCheckForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckForbidden ", 403)
+}
+
+func (o *EnableRepositoryHealthCheckForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckForbidden ", 403)
 }
 
@@ -123,14 +228,49 @@ func NewEnableRepositoryHealthCheckNotFound() *EnableRepositoryHealthCheckNotFou
 	return &EnableRepositoryHealthCheckNotFound{}
 }
 
-/* EnableRepositoryHealthCheckNotFound describes a response with status code 404, with default header values.
+/*
+EnableRepositoryHealthCheckNotFound describes a response with status code 404, with default header values.
 
 Repository not found
 */
 type EnableRepositoryHealthCheckNotFound struct {
 }
 
+// IsSuccess returns true when this enable repository health check not found response has a 2xx status code
+func (o *EnableRepositoryHealthCheckNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable repository health check not found response has a 3xx status code
+func (o *EnableRepositoryHealthCheckNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable repository health check not found response has a 4xx status code
+func (o *EnableRepositoryHealthCheckNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable repository health check not found response has a 5xx status code
+func (o *EnableRepositoryHealthCheckNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable repository health check not found response a status code equal to that given
+func (o *EnableRepositoryHealthCheckNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the enable repository health check not found response
+func (o *EnableRepositoryHealthCheckNotFound) Code() int {
+	return 404
+}
+
 func (o *EnableRepositoryHealthCheckNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckNotFound ", 404)
+}
+
+func (o *EnableRepositoryHealthCheckNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckNotFound ", 404)
 }
 
@@ -144,14 +284,49 @@ func NewEnableRepositoryHealthCheckConflict() *EnableRepositoryHealthCheckConfli
 	return &EnableRepositoryHealthCheckConflict{}
 }
 
-/* EnableRepositoryHealthCheckConflict describes a response with status code 409, with default header values.
+/*
+EnableRepositoryHealthCheckConflict describes a response with status code 409, with default header values.
 
 EULA not accepted or Repository Health Check capability not active
 */
 type EnableRepositoryHealthCheckConflict struct {
 }
 
+// IsSuccess returns true when this enable repository health check conflict response has a 2xx status code
+func (o *EnableRepositoryHealthCheckConflict) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable repository health check conflict response has a 3xx status code
+func (o *EnableRepositoryHealthCheckConflict) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable repository health check conflict response has a 4xx status code
+func (o *EnableRepositoryHealthCheckConflict) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable repository health check conflict response has a 5xx status code
+func (o *EnableRepositoryHealthCheckConflict) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable repository health check conflict response a status code equal to that given
+func (o *EnableRepositoryHealthCheckConflict) IsCode(code int) bool {
+	return code == 409
+}
+
+// Code gets the status code for the enable repository health check conflict response
+func (o *EnableRepositoryHealthCheckConflict) Code() int {
+	return 409
+}
+
 func (o *EnableRepositoryHealthCheckConflict) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckConflict ", 409)
+}
+
+func (o *EnableRepositoryHealthCheckConflict) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/health-check][%d] enableRepositoryHealthCheckConflict ", 409)
 }
 

@@ -48,14 +48,49 @@ func NewUpdateRepository8NoContent() *UpdateRepository8NoContent {
 	return &UpdateRepository8NoContent{}
 }
 
-/* UpdateRepository8NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository8NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository8NoContent struct {
 }
 
+// IsSuccess returns true when this update repository8 no content response has a 2xx status code
+func (o *UpdateRepository8NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository8 no content response has a 3xx status code
+func (o *UpdateRepository8NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository8 no content response has a 4xx status code
+func (o *UpdateRepository8NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository8 no content response has a 5xx status code
+func (o *UpdateRepository8NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository8 no content response a status code equal to that given
+func (o *UpdateRepository8NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository8 no content response
+func (o *UpdateRepository8NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository8NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/npm/group/{repositoryName}][%d] updateRepository8NoContent ", 204)
+}
+
+func (o *UpdateRepository8NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/npm/group/{repositoryName}][%d] updateRepository8NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository8Unauthorized() *UpdateRepository8Unauthorized {
 	return &UpdateRepository8Unauthorized{}
 }
 
-/* UpdateRepository8Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository8Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository8Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository8 unauthorized response has a 2xx status code
+func (o *UpdateRepository8Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository8 unauthorized response has a 3xx status code
+func (o *UpdateRepository8Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository8 unauthorized response has a 4xx status code
+func (o *UpdateRepository8Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository8 unauthorized response has a 5xx status code
+func (o *UpdateRepository8Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository8 unauthorized response a status code equal to that given
+func (o *UpdateRepository8Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository8 unauthorized response
+func (o *UpdateRepository8Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository8Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/npm/group/{repositoryName}][%d] updateRepository8Unauthorized ", 401)
+}
+
+func (o *UpdateRepository8Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/npm/group/{repositoryName}][%d] updateRepository8Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository8Forbidden() *UpdateRepository8Forbidden {
 	return &UpdateRepository8Forbidden{}
 }
 
-/* UpdateRepository8Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository8Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository8Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository8 forbidden response has a 2xx status code
+func (o *UpdateRepository8Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository8 forbidden response has a 3xx status code
+func (o *UpdateRepository8Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository8 forbidden response has a 4xx status code
+func (o *UpdateRepository8Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository8 forbidden response has a 5xx status code
+func (o *UpdateRepository8Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository8 forbidden response a status code equal to that given
+func (o *UpdateRepository8Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository8 forbidden response
+func (o *UpdateRepository8Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository8Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/npm/group/{repositoryName}][%d] updateRepository8Forbidden ", 403)
+}
+
+func (o *UpdateRepository8Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/npm/group/{repositoryName}][%d] updateRepository8Forbidden ", 403)
 }
 

@@ -42,7 +42,7 @@ type ClientService interface {
 }
 
 /*
-  GetTaskByID gets a single task by id
+GetTaskByID gets a single task by id
 */
 func (a *Client) GetTaskByID(params *GetTaskByIDParams, opts ...ClientOption) (*GetTaskByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -80,7 +80,7 @@ func (a *Client) GetTaskByID(params *GetTaskByIDParams, opts ...ClientOption) (*
 }
 
 /*
-  GetTasks lists tasks
+GetTasks lists tasks
 */
 func (a *Client) GetTasks(params *GetTasksParams, opts ...ClientOption) (*GetTasksOK, error) {
 	// TODO: Validate the params before sending
@@ -118,7 +118,7 @@ func (a *Client) GetTasks(params *GetTasksParams, opts ...ClientOption) (*GetTas
 }
 
 /*
-  Run runs task
+Run runs task
 */
 func (a *Client) Run(params *RunParams, opts ...ClientOption) (*RunNoContent, error) {
 	// TODO: Validate the params before sending
@@ -156,7 +156,7 @@ func (a *Client) Run(params *RunParams, opts ...ClientOption) (*RunNoContent, er
 }
 
 /*
-  Stop stops task
+Stop stops task
 */
 func (a *Client) Stop(params *StopParams, opts ...ClientOption) (*StopNoContent, error) {
 	// TODO: Validate the params before sending

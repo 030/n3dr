@@ -45,7 +45,8 @@ func NewCreateOK() *CreateOK {
 	return &CreateOK{}
 }
 
-/* CreateOK describes a response with status code 200, with default header values.
+/*
+CreateOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type CreateOK struct {
 	Payload *models.RoleXOResponse
 }
 
+// IsSuccess returns true when this create o k response has a 2xx status code
+func (o *CreateOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create o k response has a 3xx status code
+func (o *CreateOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create o k response has a 4xx status code
+func (o *CreateOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create o k response has a 5xx status code
+func (o *CreateOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create o k response a status code equal to that given
+func (o *CreateOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the create o k response
+func (o *CreateOK) Code() int {
+	return 200
+}
+
 func (o *CreateOK) Error() string {
 	return fmt.Sprintf("[POST /v1/security/roles][%d] createOK  %+v", 200, o.Payload)
 }
+
+func (o *CreateOK) String() string {
+	return fmt.Sprintf("[POST /v1/security/roles][%d] createOK  %+v", 200, o.Payload)
+}
+
 func (o *CreateOK) GetPayload() *models.RoleXOResponse {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewCreateForbidden() *CreateForbidden {
 	return &CreateForbidden{}
 }
 
-/* CreateForbidden describes a response with status code 403, with default header values.
+/*
+CreateForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to create role
 */
 type CreateForbidden struct {
 }
 
+// IsSuccess returns true when this create forbidden response has a 2xx status code
+func (o *CreateForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create forbidden response has a 3xx status code
+func (o *CreateForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create forbidden response has a 4xx status code
+func (o *CreateForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create forbidden response has a 5xx status code
+func (o *CreateForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create forbidden response a status code equal to that given
+func (o *CreateForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create forbidden response
+func (o *CreateForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/security/roles][%d] createForbidden ", 403)
+}
+
+func (o *CreateForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/security/roles][%d] createForbidden ", 403)
 }
 

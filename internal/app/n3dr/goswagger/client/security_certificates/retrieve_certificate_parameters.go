@@ -53,10 +53,12 @@ func NewRetrieveCertificateParamsWithHTTPClient(client *http.Client) *RetrieveCe
 	}
 }
 
-/* RetrieveCertificateParams contains all the parameters to send to the API endpoint
-   for the retrieve certificate operation.
+/*
+RetrieveCertificateParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the retrieve certificate operation.
+
+	Typically these are written to a http.Request.
 */
 type RetrieveCertificateParams struct {
 

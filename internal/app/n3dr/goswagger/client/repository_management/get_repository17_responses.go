@@ -39,7 +39,8 @@ func NewGetRepository17OK() *GetRepository17OK {
 	return &GetRepository17OK{}
 }
 
-/* GetRepository17OK describes a response with status code 200, with default header values.
+/*
+GetRepository17OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository17OK struct {
 	Payload *models.SimpleAPIProxyRepository
 }
 
+// IsSuccess returns true when this get repository17 o k response has a 2xx status code
+func (o *GetRepository17OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository17 o k response has a 3xx status code
+func (o *GetRepository17OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository17 o k response has a 4xx status code
+func (o *GetRepository17OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository17 o k response has a 5xx status code
+func (o *GetRepository17OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository17 o k response a status code equal to that given
+func (o *GetRepository17OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository17 o k response
+func (o *GetRepository17OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository17OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/rubygems/proxy/{repositoryName}][%d] getRepository17OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository17OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/rubygems/proxy/{repositoryName}][%d] getRepository17OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository17OK) GetPayload() *models.SimpleAPIProxyRepository {
 	return o.Payload
 }

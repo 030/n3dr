@@ -52,10 +52,12 @@ func NewGetRealmsParamsWithHTTPClient(client *http.Client) *GetRealmsParams {
 	}
 }
 
-/* GetRealmsParams contains all the parameters to send to the API endpoint
-   for the get realms operation.
+/*
+GetRealmsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get realms operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRealmsParams struct {
 	timeout    time.Duration

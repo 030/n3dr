@@ -48,14 +48,49 @@ func NewRunNoContent() *RunNoContent {
 	return &RunNoContent{}
 }
 
-/* RunNoContent describes a response with status code 204, with default header values.
+/*
+RunNoContent describes a response with status code 204, with default header values.
 
 Task was run
 */
 type RunNoContent struct {
 }
 
+// IsSuccess returns true when this run no content response has a 2xx status code
+func (o *RunNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this run no content response has a 3xx status code
+func (o *RunNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this run no content response has a 4xx status code
+func (o *RunNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this run no content response has a 5xx status code
+func (o *RunNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this run no content response a status code equal to that given
+func (o *RunNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the run no content response
+func (o *RunNoContent) Code() int {
+	return 204
+}
+
 func (o *RunNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/tasks/{id}/run][%d] runNoContent ", 204)
+}
+
+func (o *RunNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/tasks/{id}/run][%d] runNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewRunNotFound() *RunNotFound {
 	return &RunNotFound{}
 }
 
-/* RunNotFound describes a response with status code 404, with default header values.
+/*
+RunNotFound describes a response with status code 404, with default header values.
 
 Task not found
 */
 type RunNotFound struct {
 }
 
+// IsSuccess returns true when this run not found response has a 2xx status code
+func (o *RunNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this run not found response has a 3xx status code
+func (o *RunNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this run not found response has a 4xx status code
+func (o *RunNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this run not found response has a 5xx status code
+func (o *RunNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this run not found response a status code equal to that given
+func (o *RunNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the run not found response
+func (o *RunNotFound) Code() int {
+	return 404
+}
+
 func (o *RunNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/tasks/{id}/run][%d] runNotFound ", 404)
+}
+
+func (o *RunNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/tasks/{id}/run][%d] runNotFound ", 404)
 }
 
@@ -90,14 +160,49 @@ func NewRunMethodNotAllowed() *RunMethodNotAllowed {
 	return &RunMethodNotAllowed{}
 }
 
-/* RunMethodNotAllowed describes a response with status code 405, with default header values.
+/*
+RunMethodNotAllowed describes a response with status code 405, with default header values.
 
 Task is disabled
 */
 type RunMethodNotAllowed struct {
 }
 
+// IsSuccess returns true when this run method not allowed response has a 2xx status code
+func (o *RunMethodNotAllowed) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this run method not allowed response has a 3xx status code
+func (o *RunMethodNotAllowed) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this run method not allowed response has a 4xx status code
+func (o *RunMethodNotAllowed) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this run method not allowed response has a 5xx status code
+func (o *RunMethodNotAllowed) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this run method not allowed response a status code equal to that given
+func (o *RunMethodNotAllowed) IsCode(code int) bool {
+	return code == 405
+}
+
+// Code gets the status code for the run method not allowed response
+func (o *RunMethodNotAllowed) Code() int {
+	return 405
+}
+
 func (o *RunMethodNotAllowed) Error() string {
+	return fmt.Sprintf("[POST /v1/tasks/{id}/run][%d] runMethodNotAllowed ", 405)
+}
+
+func (o *RunMethodNotAllowed) String() string {
 	return fmt.Sprintf("[POST /v1/tasks/{id}/run][%d] runMethodNotAllowed ", 405)
 }
 

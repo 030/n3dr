@@ -58,7 +58,7 @@ type ClientService interface {
 }
 
 /*
-  CreateBlobStore creates an s3 blob store
+CreateBlobStore creates an s3 blob store
 */
 func (a *Client) CreateBlobStore(params *CreateBlobStoreParams, opts ...ClientOption) (*CreateBlobStoreCreated, error) {
 	// TODO: Validate the params before sending
@@ -96,7 +96,7 @@ func (a *Client) CreateBlobStore(params *CreateBlobStoreParams, opts ...ClientOp
 }
 
 /*
-  CreateBlobStore1 creates an azure blob store
+CreateBlobStore1 creates an azure blob store
 */
 func (a *Client) CreateBlobStore1(params *CreateBlobStore1Params, opts ...ClientOption) (*CreateBlobStore1Created, error) {
 	// TODO: Validate the params before sending
@@ -134,7 +134,7 @@ func (a *Client) CreateBlobStore1(params *CreateBlobStore1Params, opts ...Client
 }
 
 /*
-  CreateFileBlobStore creates a file blob store
+CreateFileBlobStore creates a file blob store
 */
 func (a *Client) CreateFileBlobStore(params *CreateFileBlobStoreParams, opts ...ClientOption) (*CreateFileBlobStoreNoContent, error) {
 	// TODO: Validate the params before sending
@@ -172,7 +172,7 @@ func (a *Client) CreateFileBlobStore(params *CreateFileBlobStoreParams, opts ...
 }
 
 /*
-  DeleteBlobStore deletes a blob store by name
+DeleteBlobStore deletes a blob store by name
 */
 func (a *Client) DeleteBlobStore(params *DeleteBlobStoreParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -203,7 +203,7 @@ func (a *Client) DeleteBlobStore(params *DeleteBlobStoreParams, opts ...ClientOp
 }
 
 /*
-  GetBlobStore gets a s3 blob store configuration by name
+GetBlobStore gets a s3 blob store configuration by name
 */
 func (a *Client) GetBlobStore(params *GetBlobStoreParams, opts ...ClientOption) (*GetBlobStoreOK, error) {
 	// TODO: Validate the params before sending
@@ -241,7 +241,7 @@ func (a *Client) GetBlobStore(params *GetBlobStoreParams, opts ...ClientOption) 
 }
 
 /*
-  GetBlobStore1 gets an azure blob store configuration by name
+GetBlobStore1 gets an azure blob store configuration by name
 */
 func (a *Client) GetBlobStore1(params *GetBlobStore1Params, opts ...ClientOption) (*GetBlobStore1OK, error) {
 	// TODO: Validate the params before sending
@@ -279,7 +279,7 @@ func (a *Client) GetBlobStore1(params *GetBlobStore1Params, opts ...ClientOption
 }
 
 /*
-  GetFileBlobStoreConfiguration gets a file blob store configuration by name
+GetFileBlobStoreConfiguration gets a file blob store configuration by name
 */
 func (a *Client) GetFileBlobStoreConfiguration(params *GetFileBlobStoreConfigurationParams, opts ...ClientOption) (*GetFileBlobStoreConfigurationOK, error) {
 	// TODO: Validate the params before sending
@@ -317,7 +317,7 @@ func (a *Client) GetFileBlobStoreConfiguration(params *GetFileBlobStoreConfigura
 }
 
 /*
-  ListBlobStores lists the blob stores
+ListBlobStores lists the blob stores
 */
 func (a *Client) ListBlobStores(params *ListBlobStoresParams, opts ...ClientOption) (*ListBlobStoresOK, error) {
 	// TODO: Validate the params before sending
@@ -355,7 +355,7 @@ func (a *Client) ListBlobStores(params *ListBlobStoresParams, opts ...ClientOpti
 }
 
 /*
-  QuotaStatus gets quota status for a given blob store
+QuotaStatus gets quota status for a given blob store
 */
 func (a *Client) QuotaStatus(params *QuotaStatusParams, opts ...ClientOption) (*QuotaStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -393,7 +393,7 @@ func (a *Client) QuotaStatus(params *QuotaStatusParams, opts ...ClientOption) (*
 }
 
 /*
-  UpdateBlobStore updates an s3 blob store configuration by name
+UpdateBlobStore updates an s3 blob store configuration by name
 */
 func (a *Client) UpdateBlobStore(params *UpdateBlobStoreParams, opts ...ClientOption) (*UpdateBlobStoreNoContent, error) {
 	// TODO: Validate the params before sending
@@ -431,7 +431,7 @@ func (a *Client) UpdateBlobStore(params *UpdateBlobStoreParams, opts ...ClientOp
 }
 
 /*
-  UpdateBlobStore1 updates an azure blob store configuration by name
+UpdateBlobStore1 updates an azure blob store configuration by name
 */
 func (a *Client) UpdateBlobStore1(params *UpdateBlobStore1Params, opts ...ClientOption) (*UpdateBlobStore1NoContent, error) {
 	// TODO: Validate the params before sending
@@ -469,7 +469,7 @@ func (a *Client) UpdateBlobStore1(params *UpdateBlobStore1Params, opts ...Client
 }
 
 /*
-  UpdateFileBlobStore updates a file blob store configuration by name
+UpdateFileBlobStore updates a file blob store configuration by name
 */
 func (a *Client) UpdateFileBlobStore(params *UpdateFileBlobStoreParams, opts ...ClientOption) (*UpdateFileBlobStoreNoContent, error) {
 	// TODO: Validate the params before sending

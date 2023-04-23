@@ -52,10 +52,12 @@ func NewRebuildIndexParamsWithHTTPClient(client *http.Client) *RebuildIndexParam
 	}
 }
 
-/* RebuildIndexParams contains all the parameters to send to the API endpoint
-   for the rebuild index operation.
+/*
+RebuildIndexParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the rebuild index operation.
+
+	Typically these are written to a http.Request.
 */
 type RebuildIndexParams struct {
 

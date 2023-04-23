@@ -38,7 +38,7 @@ type ClientService interface {
 }
 
 /*
-  Get1 gets upload field requirements for the desired format
+Get1 gets upload field requirements for the desired format
 */
 func (a *Client) Get1(params *Get1Params, opts ...ClientOption) (*Get1OK, error) {
 	// TODO: Validate the params before sending
@@ -76,7 +76,7 @@ func (a *Client) Get1(params *Get1Params, opts ...ClientOption) (*Get1OK, error)
 }
 
 /*
-  Get2 gets upload field requirements for each supported format
+Get2 gets upload field requirements for each supported format
 */
 func (a *Client) Get2(params *Get2Params, opts ...ClientOption) (*Get2OK, error) {
 	// TODO: Validate the params before sending

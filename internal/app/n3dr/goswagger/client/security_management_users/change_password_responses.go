@@ -48,14 +48,49 @@ func NewChangePasswordBadRequest() *ChangePasswordBadRequest {
 	return &ChangePasswordBadRequest{}
 }
 
-/* ChangePasswordBadRequest describes a response with status code 400, with default header values.
+/*
+ChangePasswordBadRequest describes a response with status code 400, with default header values.
 
 Password was not supplied in the body of the request
 */
 type ChangePasswordBadRequest struct {
 }
 
+// IsSuccess returns true when this change password bad request response has a 2xx status code
+func (o *ChangePasswordBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this change password bad request response has a 3xx status code
+func (o *ChangePasswordBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this change password bad request response has a 4xx status code
+func (o *ChangePasswordBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this change password bad request response has a 5xx status code
+func (o *ChangePasswordBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this change password bad request response a status code equal to that given
+func (o *ChangePasswordBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the change password bad request response
+func (o *ChangePasswordBadRequest) Code() int {
+	return 400
+}
+
 func (o *ChangePasswordBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/users/{userId}/change-password][%d] changePasswordBadRequest ", 400)
+}
+
+func (o *ChangePasswordBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/security/users/{userId}/change-password][%d] changePasswordBadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewChangePasswordForbidden() *ChangePasswordForbidden {
 	return &ChangePasswordForbidden{}
 }
 
-/* ChangePasswordForbidden describes a response with status code 403, with default header values.
+/*
+ChangePasswordForbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type ChangePasswordForbidden struct {
 }
 
+// IsSuccess returns true when this change password forbidden response has a 2xx status code
+func (o *ChangePasswordForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this change password forbidden response has a 3xx status code
+func (o *ChangePasswordForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this change password forbidden response has a 4xx status code
+func (o *ChangePasswordForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this change password forbidden response has a 5xx status code
+func (o *ChangePasswordForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this change password forbidden response a status code equal to that given
+func (o *ChangePasswordForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the change password forbidden response
+func (o *ChangePasswordForbidden) Code() int {
+	return 403
+}
+
 func (o *ChangePasswordForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/users/{userId}/change-password][%d] changePasswordForbidden ", 403)
+}
+
+func (o *ChangePasswordForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/users/{userId}/change-password][%d] changePasswordForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewChangePasswordNotFound() *ChangePasswordNotFound {
 	return &ChangePasswordNotFound{}
 }
 
-/* ChangePasswordNotFound describes a response with status code 404, with default header values.
+/*
+ChangePasswordNotFound describes a response with status code 404, with default header values.
 
 User not found in the system.
 */
 type ChangePasswordNotFound struct {
 }
 
+// IsSuccess returns true when this change password not found response has a 2xx status code
+func (o *ChangePasswordNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this change password not found response has a 3xx status code
+func (o *ChangePasswordNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this change password not found response has a 4xx status code
+func (o *ChangePasswordNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this change password not found response has a 5xx status code
+func (o *ChangePasswordNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this change password not found response a status code equal to that given
+func (o *ChangePasswordNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the change password not found response
+func (o *ChangePasswordNotFound) Code() int {
+	return 404
+}
+
 func (o *ChangePasswordNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/users/{userId}/change-password][%d] changePasswordNotFound ", 404)
+}
+
+func (o *ChangePasswordNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/users/{userId}/change-password][%d] changePasswordNotFound ", 404)
 }
 

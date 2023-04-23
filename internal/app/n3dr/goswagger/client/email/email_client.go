@@ -42,7 +42,7 @@ type ClientService interface {
 }
 
 /*
-  DeleteEmailConfiguration disables and clear the email configuration
+DeleteEmailConfiguration disables and clear the email configuration
 */
 func (a *Client) DeleteEmailConfiguration(params *DeleteEmailConfigurationParams, opts ...ClientOption) (*DeleteEmailConfigurationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -80,7 +80,7 @@ func (a *Client) DeleteEmailConfiguration(params *DeleteEmailConfigurationParams
 }
 
 /*
-  GetEmailConfiguration retrieves the current email configuration
+GetEmailConfiguration retrieves the current email configuration
 */
 func (a *Client) GetEmailConfiguration(params *GetEmailConfigurationParams, opts ...ClientOption) (*GetEmailConfigurationOK, error) {
 	// TODO: Validate the params before sending
@@ -118,7 +118,7 @@ func (a *Client) GetEmailConfiguration(params *GetEmailConfigurationParams, opts
 }
 
 /*
-  SetEmailConfiguration sets the current email configuration
+SetEmailConfiguration sets the current email configuration
 */
 func (a *Client) SetEmailConfiguration(params *SetEmailConfigurationParams, opts ...ClientOption) (*SetEmailConfigurationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -156,7 +156,7 @@ func (a *Client) SetEmailConfiguration(params *SetEmailConfigurationParams, opts
 }
 
 /*
-  TestEmailConfiguration sends a test email to the email address provided in the request body
+TestEmailConfiguration sends a test email to the email address provided in the request body
 */
 func (a *Client) TestEmailConfiguration(params *TestEmailConfigurationParams, opts ...ClientOption) (*TestEmailConfigurationOK, error) {
 	// TODO: Validate the params before sending

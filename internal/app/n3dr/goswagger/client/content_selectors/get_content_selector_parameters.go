@@ -52,10 +52,12 @@ func NewGetContentSelectorParamsWithHTTPClient(client *http.Client) *GetContentS
 	}
 }
 
-/* GetContentSelectorParams contains all the parameters to send to the API endpoint
-   for the get content selector operation.
+/*
+GetContentSelectorParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get content selector operation.
+
+	Typically these are written to a http.Request.
 */
 type GetContentSelectorParams struct {
 

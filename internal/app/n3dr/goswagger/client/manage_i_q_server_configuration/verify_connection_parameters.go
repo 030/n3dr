@@ -52,10 +52,12 @@ func NewVerifyConnectionParamsWithHTTPClient(client *http.Client) *VerifyConnect
 	}
 }
 
-/* VerifyConnectionParams contains all the parameters to send to the API endpoint
-   for the verify connection operation.
+/*
+VerifyConnectionParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the verify connection operation.
+
+	Typically these are written to a http.Request.
 */
 type VerifyConnectionParams struct {
 	timeout    time.Duration

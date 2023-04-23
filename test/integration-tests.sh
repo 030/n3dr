@@ -17,7 +17,7 @@ fi
 
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
-  NEXUS_VERSION=3.52.0
+  NEXUS_VERSION=3.49.0
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
@@ -409,7 +409,7 @@ repositories() {
   count_downloads 359 ${testZipSizeDir}
   test_zip 1399 ${testZipSizeDir}
 
-  cleanup_downloads
+  # cleanup_downloads
 }
 
 main() {

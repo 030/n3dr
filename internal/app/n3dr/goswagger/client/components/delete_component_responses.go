@@ -54,14 +54,49 @@ func NewDeleteComponentNoContent() *DeleteComponentNoContent {
 	return &DeleteComponentNoContent{}
 }
 
-/* DeleteComponentNoContent describes a response with status code 204, with default header values.
+/*
+DeleteComponentNoContent describes a response with status code 204, with default header values.
 
 Component was successfully deleted
 */
 type DeleteComponentNoContent struct {
 }
 
+// IsSuccess returns true when this delete component no content response has a 2xx status code
+func (o *DeleteComponentNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete component no content response has a 3xx status code
+func (o *DeleteComponentNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete component no content response has a 4xx status code
+func (o *DeleteComponentNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete component no content response has a 5xx status code
+func (o *DeleteComponentNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete component no content response a status code equal to that given
+func (o *DeleteComponentNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete component no content response
+func (o *DeleteComponentNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteComponentNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentNoContent ", 204)
+}
+
+func (o *DeleteComponentNoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewDeleteComponentForbidden() *DeleteComponentForbidden {
 	return &DeleteComponentForbidden{}
 }
 
-/* DeleteComponentForbidden describes a response with status code 403, with default header values.
+/*
+DeleteComponentForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to delete component
 */
 type DeleteComponentForbidden struct {
 }
 
+// IsSuccess returns true when this delete component forbidden response has a 2xx status code
+func (o *DeleteComponentForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete component forbidden response has a 3xx status code
+func (o *DeleteComponentForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete component forbidden response has a 4xx status code
+func (o *DeleteComponentForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete component forbidden response has a 5xx status code
+func (o *DeleteComponentForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete component forbidden response a status code equal to that given
+func (o *DeleteComponentForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete component forbidden response
+func (o *DeleteComponentForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteComponentForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentForbidden ", 403)
+}
+
+func (o *DeleteComponentForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentForbidden ", 403)
 }
 
@@ -96,14 +166,49 @@ func NewDeleteComponentNotFound() *DeleteComponentNotFound {
 	return &DeleteComponentNotFound{}
 }
 
-/* DeleteComponentNotFound describes a response with status code 404, with default header values.
+/*
+DeleteComponentNotFound describes a response with status code 404, with default header values.
 
 Component not found
 */
 type DeleteComponentNotFound struct {
 }
 
+// IsSuccess returns true when this delete component not found response has a 2xx status code
+func (o *DeleteComponentNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete component not found response has a 3xx status code
+func (o *DeleteComponentNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete component not found response has a 4xx status code
+func (o *DeleteComponentNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete component not found response has a 5xx status code
+func (o *DeleteComponentNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete component not found response a status code equal to that given
+func (o *DeleteComponentNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete component not found response
+func (o *DeleteComponentNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteComponentNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentNotFound ", 404)
+}
+
+func (o *DeleteComponentNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentNotFound ", 404)
 }
 
@@ -117,14 +222,49 @@ func NewDeleteComponentUnprocessableEntity() *DeleteComponentUnprocessableEntity
 	return &DeleteComponentUnprocessableEntity{}
 }
 
-/* DeleteComponentUnprocessableEntity describes a response with status code 422, with default header values.
+/*
+DeleteComponentUnprocessableEntity describes a response with status code 422, with default header values.
 
 Malformed ID
 */
 type DeleteComponentUnprocessableEntity struct {
 }
 
+// IsSuccess returns true when this delete component unprocessable entity response has a 2xx status code
+func (o *DeleteComponentUnprocessableEntity) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete component unprocessable entity response has a 3xx status code
+func (o *DeleteComponentUnprocessableEntity) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete component unprocessable entity response has a 4xx status code
+func (o *DeleteComponentUnprocessableEntity) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete component unprocessable entity response has a 5xx status code
+func (o *DeleteComponentUnprocessableEntity) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete component unprocessable entity response a status code equal to that given
+func (o *DeleteComponentUnprocessableEntity) IsCode(code int) bool {
+	return code == 422
+}
+
+// Code gets the status code for the delete component unprocessable entity response
+func (o *DeleteComponentUnprocessableEntity) Code() int {
+	return 422
+}
+
 func (o *DeleteComponentUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentUnprocessableEntity ", 422)
+}
+
+func (o *DeleteComponentUnprocessableEntity) String() string {
 	return fmt.Sprintf("[DELETE /v1/components/{id}][%d] deleteComponentUnprocessableEntity ", 422)
 }
 

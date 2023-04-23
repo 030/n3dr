@@ -36,14 +36,49 @@ func NewUpdateConfigurationNoContent() *UpdateConfigurationNoContent {
 	return &UpdateConfigurationNoContent{}
 }
 
-/* UpdateConfigurationNoContent describes a response with status code 204, with default header values.
+/*
+UpdateConfigurationNoContent describes a response with status code 204, with default header values.
 
 IQ server configuration has been updated
 */
 type UpdateConfigurationNoContent struct {
 }
 
+// IsSuccess returns true when this update configuration no content response has a 2xx status code
+func (o *UpdateConfigurationNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update configuration no content response has a 3xx status code
+func (o *UpdateConfigurationNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update configuration no content response has a 4xx status code
+func (o *UpdateConfigurationNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update configuration no content response has a 5xx status code
+func (o *UpdateConfigurationNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update configuration no content response a status code equal to that given
+func (o *UpdateConfigurationNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update configuration no content response
+func (o *UpdateConfigurationNoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateConfigurationNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/iq][%d] updateConfigurationNoContent ", 204)
+}
+
+func (o *UpdateConfigurationNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/iq][%d] updateConfigurationNoContent ", 204)
 }
 

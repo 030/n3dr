@@ -51,7 +51,8 @@ func NewGetRolesOK() *GetRolesOK {
 	return &GetRolesOK{}
 }
 
-/* GetRolesOK describes a response with status code 200, with default header values.
+/*
+GetRolesOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -59,9 +60,44 @@ type GetRolesOK struct {
 	Payload []*models.RoleXOResponse
 }
 
+// IsSuccess returns true when this get roles o k response has a 2xx status code
+func (o *GetRolesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get roles o k response has a 3xx status code
+func (o *GetRolesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get roles o k response has a 4xx status code
+func (o *GetRolesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get roles o k response has a 5xx status code
+func (o *GetRolesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get roles o k response a status code equal to that given
+func (o *GetRolesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get roles o k response
+func (o *GetRolesOK) Code() int {
+	return 200
+}
+
 func (o *GetRolesOK) Error() string {
 	return fmt.Sprintf("[GET /v1/security/roles][%d] getRolesOK  %+v", 200, o.Payload)
 }
+
+func (o *GetRolesOK) String() string {
+	return fmt.Sprintf("[GET /v1/security/roles][%d] getRolesOK  %+v", 200, o.Payload)
+}
+
 func (o *GetRolesOK) GetPayload() []*models.RoleXOResponse {
 	return o.Payload
 }
@@ -81,14 +117,49 @@ func NewGetRolesBadRequest() *GetRolesBadRequest {
 	return &GetRolesBadRequest{}
 }
 
-/* GetRolesBadRequest describes a response with status code 400, with default header values.
+/*
+GetRolesBadRequest describes a response with status code 400, with default header values.
 
 The specified source does not exist
 */
 type GetRolesBadRequest struct {
 }
 
+// IsSuccess returns true when this get roles bad request response has a 2xx status code
+func (o *GetRolesBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get roles bad request response has a 3xx status code
+func (o *GetRolesBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get roles bad request response has a 4xx status code
+func (o *GetRolesBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get roles bad request response has a 5xx status code
+func (o *GetRolesBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get roles bad request response a status code equal to that given
+func (o *GetRolesBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get roles bad request response
+func (o *GetRolesBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetRolesBadRequest) Error() string {
+	return fmt.Sprintf("[GET /v1/security/roles][%d] getRolesBadRequest ", 400)
+}
+
+func (o *GetRolesBadRequest) String() string {
 	return fmt.Sprintf("[GET /v1/security/roles][%d] getRolesBadRequest ", 400)
 }
 
@@ -102,14 +173,49 @@ func NewGetRolesForbidden() *GetRolesForbidden {
 	return &GetRolesForbidden{}
 }
 
-/* GetRolesForbidden describes a response with status code 403, with default header values.
+/*
+GetRolesForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to read roles
 */
 type GetRolesForbidden struct {
 }
 
+// IsSuccess returns true when this get roles forbidden response has a 2xx status code
+func (o *GetRolesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get roles forbidden response has a 3xx status code
+func (o *GetRolesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get roles forbidden response has a 4xx status code
+func (o *GetRolesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get roles forbidden response has a 5xx status code
+func (o *GetRolesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get roles forbidden response a status code equal to that given
+func (o *GetRolesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get roles forbidden response
+func (o *GetRolesForbidden) Code() int {
+	return 403
+}
+
 func (o *GetRolesForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/security/roles][%d] getRolesForbidden ", 403)
+}
+
+func (o *GetRolesForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/security/roles][%d] getRolesForbidden ", 403)
 }
 

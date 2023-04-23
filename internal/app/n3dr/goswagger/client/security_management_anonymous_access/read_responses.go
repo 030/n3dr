@@ -45,7 +45,8 @@ func NewReadOK() *ReadOK {
 	return &ReadOK{}
 }
 
-/* ReadOK describes a response with status code 200, with default header values.
+/*
+ReadOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type ReadOK struct {
 	Payload *models.AnonymousAccessSettingsXO
 }
 
+// IsSuccess returns true when this read o k response has a 2xx status code
+func (o *ReadOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this read o k response has a 3xx status code
+func (o *ReadOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this read o k response has a 4xx status code
+func (o *ReadOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this read o k response has a 5xx status code
+func (o *ReadOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this read o k response a status code equal to that given
+func (o *ReadOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the read o k response
+func (o *ReadOK) Code() int {
+	return 200
+}
+
 func (o *ReadOK) Error() string {
 	return fmt.Sprintf("[GET /v1/security/anonymous][%d] readOK  %+v", 200, o.Payload)
 }
+
+func (o *ReadOK) String() string {
+	return fmt.Sprintf("[GET /v1/security/anonymous][%d] readOK  %+v", 200, o.Payload)
+}
+
 func (o *ReadOK) GetPayload() *models.AnonymousAccessSettingsXO {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewReadForbidden() *ReadForbidden {
 	return &ReadForbidden{}
 }
 
-/* ReadForbidden describes a response with status code 403, with default header values.
+/*
+ReadForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to update settings
 */
 type ReadForbidden struct {
 }
 
+// IsSuccess returns true when this read forbidden response has a 2xx status code
+func (o *ReadForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this read forbidden response has a 3xx status code
+func (o *ReadForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this read forbidden response has a 4xx status code
+func (o *ReadForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this read forbidden response has a 5xx status code
+func (o *ReadForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this read forbidden response a status code equal to that given
+func (o *ReadForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the read forbidden response
+func (o *ReadForbidden) Code() int {
+	return 403
+}
+
 func (o *ReadForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/security/anonymous][%d] readForbidden ", 403)
+}
+
+func (o *ReadForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/security/anonymous][%d] readForbidden ", 403)
 }
 

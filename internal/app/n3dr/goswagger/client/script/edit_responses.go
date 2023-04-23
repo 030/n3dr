@@ -48,14 +48,49 @@ func NewEditNoContent() *EditNoContent {
 	return &EditNoContent{}
 }
 
-/* EditNoContent describes a response with status code 204, with default header values.
+/*
+EditNoContent describes a response with status code 204, with default header values.
 
 Script was updated
 */
 type EditNoContent struct {
 }
 
+// IsSuccess returns true when this edit no content response has a 2xx status code
+func (o *EditNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this edit no content response has a 3xx status code
+func (o *EditNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this edit no content response has a 4xx status code
+func (o *EditNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this edit no content response has a 5xx status code
+func (o *EditNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this edit no content response a status code equal to that given
+func (o *EditNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the edit no content response
+func (o *EditNoContent) Code() int {
+	return 204
+}
+
 func (o *EditNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/script/{name}][%d] editNoContent ", 204)
+}
+
+func (o *EditNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/script/{name}][%d] editNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewEditNotFound() *EditNotFound {
 	return &EditNotFound{}
 }
 
-/* EditNotFound describes a response with status code 404, with default header values.
+/*
+EditNotFound describes a response with status code 404, with default header values.
 
 No script with the specified name
 */
 type EditNotFound struct {
 }
 
+// IsSuccess returns true when this edit not found response has a 2xx status code
+func (o *EditNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this edit not found response has a 3xx status code
+func (o *EditNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this edit not found response has a 4xx status code
+func (o *EditNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this edit not found response has a 5xx status code
+func (o *EditNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this edit not found response a status code equal to that given
+func (o *EditNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the edit not found response
+func (o *EditNotFound) Code() int {
+	return 404
+}
+
 func (o *EditNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/script/{name}][%d] editNotFound ", 404)
+}
+
+func (o *EditNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/script/{name}][%d] editNotFound ", 404)
 }
 
@@ -90,14 +160,49 @@ func NewEditGone() *EditGone {
 	return &EditGone{}
 }
 
-/* EditGone describes a response with status code 410, with default header values.
+/*
+EditGone describes a response with status code 410, with default header values.
 
 Script updating is disabled
 */
 type EditGone struct {
 }
 
+// IsSuccess returns true when this edit gone response has a 2xx status code
+func (o *EditGone) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this edit gone response has a 3xx status code
+func (o *EditGone) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this edit gone response has a 4xx status code
+func (o *EditGone) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this edit gone response has a 5xx status code
+func (o *EditGone) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this edit gone response a status code equal to that given
+func (o *EditGone) IsCode(code int) bool {
+	return code == 410
+}
+
+// Code gets the status code for the edit gone response
+func (o *EditGone) Code() int {
+	return 410
+}
+
 func (o *EditGone) Error() string {
+	return fmt.Sprintf("[PUT /v1/script/{name}][%d] editGone ", 410)
+}
+
+func (o *EditGone) String() string {
 	return fmt.Sprintf("[PUT /v1/script/{name}][%d] editGone ", 410)
 }
 

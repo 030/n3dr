@@ -37,7 +37,8 @@ func NewGetPhaseOK() *GetPhaseOK {
 	return &GetPhaseOK{}
 }
 
-/* GetPhaseOK describes a response with status code 200, with default header values.
+/*
+GetPhaseOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -45,9 +46,44 @@ type GetPhaseOK struct {
 	Payload string
 }
 
+// IsSuccess returns true when this get phase o k response has a 2xx status code
+func (o *GetPhaseOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get phase o k response has a 3xx status code
+func (o *GetPhaseOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get phase o k response has a 4xx status code
+func (o *GetPhaseOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get phase o k response has a 5xx status code
+func (o *GetPhaseOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get phase o k response a status code equal to that given
+func (o *GetPhaseOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get phase o k response
+func (o *GetPhaseOK) Code() int {
+	return 200
+}
+
 func (o *GetPhaseOK) Error() string {
 	return fmt.Sprintf("[GET /v1/lifecycle/phase][%d] getPhaseOK  %+v", 200, o.Payload)
 }
+
+func (o *GetPhaseOK) String() string {
+	return fmt.Sprintf("[GET /v1/lifecycle/phase][%d] getPhaseOK  %+v", 200, o.Payload)
+}
+
 func (o *GetPhaseOK) GetPayload() string {
 	return o.Payload
 }

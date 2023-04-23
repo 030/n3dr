@@ -54,10 +54,12 @@ func NewSetEmailConfigurationParamsWithHTTPClient(client *http.Client) *SetEmail
 	}
 }
 
-/* SetEmailConfigurationParams contains all the parameters to send to the API endpoint
-   for the set email configuration operation.
+/*
+SetEmailConfigurationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the set email configuration operation.
+
+	Typically these are written to a http.Request.
 */
 type SetEmailConfigurationParams struct {
 

@@ -54,10 +54,12 @@ func NewCreatePrivilege2ParamsWithHTTPClient(client *http.Client) *CreatePrivile
 	}
 }
 
-/* CreatePrivilege2Params contains all the parameters to send to the API endpoint
-   for the create privilege 2 operation.
+/*
+CreatePrivilege2Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create privilege 2 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreatePrivilege2Params struct {
 

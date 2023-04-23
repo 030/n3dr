@@ -48,14 +48,49 @@ func NewUpdateUserBadRequest() *UpdateUserBadRequest {
 	return &UpdateUserBadRequest{}
 }
 
-/* UpdateUserBadRequest describes a response with status code 400, with default header values.
+/*
+UpdateUserBadRequest describes a response with status code 400, with default header values.
 
 Password was not supplied in the body of the request
 */
 type UpdateUserBadRequest struct {
 }
 
+// IsSuccess returns true when this update user bad request response has a 2xx status code
+func (o *UpdateUserBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update user bad request response has a 3xx status code
+func (o *UpdateUserBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update user bad request response has a 4xx status code
+func (o *UpdateUserBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update user bad request response has a 5xx status code
+func (o *UpdateUserBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update user bad request response a status code equal to that given
+func (o *UpdateUserBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update user bad request response
+func (o *UpdateUserBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateUserBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/users/{userId}][%d] updateUserBadRequest ", 400)
+}
+
+func (o *UpdateUserBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/security/users/{userId}][%d] updateUserBadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateUserForbidden() *UpdateUserForbidden {
 	return &UpdateUserForbidden{}
 }
 
-/* UpdateUserForbidden describes a response with status code 403, with default header values.
+/*
+UpdateUserForbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type UpdateUserForbidden struct {
 }
 
+// IsSuccess returns true when this update user forbidden response has a 2xx status code
+func (o *UpdateUserForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update user forbidden response has a 3xx status code
+func (o *UpdateUserForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update user forbidden response has a 4xx status code
+func (o *UpdateUserForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update user forbidden response has a 5xx status code
+func (o *UpdateUserForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update user forbidden response a status code equal to that given
+func (o *UpdateUserForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update user forbidden response
+func (o *UpdateUserForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateUserForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/users/{userId}][%d] updateUserForbidden ", 403)
+}
+
+func (o *UpdateUserForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/users/{userId}][%d] updateUserForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateUserNotFound() *UpdateUserNotFound {
 	return &UpdateUserNotFound{}
 }
 
-/* UpdateUserNotFound describes a response with status code 404, with default header values.
+/*
+UpdateUserNotFound describes a response with status code 404, with default header values.
 
 User or user source not found in the system.
 */
 type UpdateUserNotFound struct {
 }
 
+// IsSuccess returns true when this update user not found response has a 2xx status code
+func (o *UpdateUserNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update user not found response has a 3xx status code
+func (o *UpdateUserNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update user not found response has a 4xx status code
+func (o *UpdateUserNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update user not found response has a 5xx status code
+func (o *UpdateUserNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update user not found response a status code equal to that given
+func (o *UpdateUserNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update user not found response
+func (o *UpdateUserNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateUserNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/users/{userId}][%d] updateUserNotFound ", 404)
+}
+
+func (o *UpdateUserNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/users/{userId}][%d] updateUserNotFound ", 404)
 }
 

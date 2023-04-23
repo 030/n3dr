@@ -45,7 +45,8 @@ func NewGetContentSelectorOK() *GetContentSelectorOK {
 	return &GetContentSelectorOK{}
 }
 
-/* GetContentSelectorOK describes a response with status code 200, with default header values.
+/*
+GetContentSelectorOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type GetContentSelectorOK struct {
 	Payload *models.ContentSelectorAPIResponse
 }
 
+// IsSuccess returns true when this get content selector o k response has a 2xx status code
+func (o *GetContentSelectorOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get content selector o k response has a 3xx status code
+func (o *GetContentSelectorOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get content selector o k response has a 4xx status code
+func (o *GetContentSelectorOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get content selector o k response has a 5xx status code
+func (o *GetContentSelectorOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get content selector o k response a status code equal to that given
+func (o *GetContentSelectorOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get content selector o k response
+func (o *GetContentSelectorOK) Code() int {
+	return 200
+}
+
 func (o *GetContentSelectorOK) Error() string {
 	return fmt.Sprintf("[GET /v1/security/content-selectors/{name}][%d] getContentSelectorOK  %+v", 200, o.Payload)
 }
+
+func (o *GetContentSelectorOK) String() string {
+	return fmt.Sprintf("[GET /v1/security/content-selectors/{name}][%d] getContentSelectorOK  %+v", 200, o.Payload)
+}
+
 func (o *GetContentSelectorOK) GetPayload() *models.ContentSelectorAPIResponse {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewGetContentSelectorForbidden() *GetContentSelectorForbidden {
 	return &GetContentSelectorForbidden{}
 }
 
-/* GetContentSelectorForbidden describes a response with status code 403, with default header values.
+/*
+GetContentSelectorForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to read the content selector
 */
 type GetContentSelectorForbidden struct {
 }
 
+// IsSuccess returns true when this get content selector forbidden response has a 2xx status code
+func (o *GetContentSelectorForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get content selector forbidden response has a 3xx status code
+func (o *GetContentSelectorForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get content selector forbidden response has a 4xx status code
+func (o *GetContentSelectorForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get content selector forbidden response has a 5xx status code
+func (o *GetContentSelectorForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get content selector forbidden response a status code equal to that given
+func (o *GetContentSelectorForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get content selector forbidden response
+func (o *GetContentSelectorForbidden) Code() int {
+	return 403
+}
+
 func (o *GetContentSelectorForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/security/content-selectors/{name}][%d] getContentSelectorForbidden ", 403)
+}
+
+func (o *GetContentSelectorForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/security/content-selectors/{name}][%d] getContentSelectorForbidden ", 403)
 }
 

@@ -48,14 +48,49 @@ func NewDeletePrivilegeBadRequest() *DeletePrivilegeBadRequest {
 	return &DeletePrivilegeBadRequest{}
 }
 
-/* DeletePrivilegeBadRequest describes a response with status code 400, with default header values.
+/*
+DeletePrivilegeBadRequest describes a response with status code 400, with default header values.
 
 The privilege is internal and may not be altered.
 */
 type DeletePrivilegeBadRequest struct {
 }
 
+// IsSuccess returns true when this delete privilege bad request response has a 2xx status code
+func (o *DeletePrivilegeBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete privilege bad request response has a 3xx status code
+func (o *DeletePrivilegeBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete privilege bad request response has a 4xx status code
+func (o *DeletePrivilegeBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete privilege bad request response has a 5xx status code
+func (o *DeletePrivilegeBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete privilege bad request response a status code equal to that given
+func (o *DeletePrivilegeBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the delete privilege bad request response
+func (o *DeletePrivilegeBadRequest) Code() int {
+	return 400
+}
+
 func (o *DeletePrivilegeBadRequest) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeBadRequest ", 400)
+}
+
+func (o *DeletePrivilegeBadRequest) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeBadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewDeletePrivilegeForbidden() *DeletePrivilegeForbidden {
 	return &DeletePrivilegeForbidden{}
 }
 
-/* DeletePrivilegeForbidden describes a response with status code 403, with default header values.
+/*
+DeletePrivilegeForbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type DeletePrivilegeForbidden struct {
 }
 
+// IsSuccess returns true when this delete privilege forbidden response has a 2xx status code
+func (o *DeletePrivilegeForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete privilege forbidden response has a 3xx status code
+func (o *DeletePrivilegeForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete privilege forbidden response has a 4xx status code
+func (o *DeletePrivilegeForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete privilege forbidden response has a 5xx status code
+func (o *DeletePrivilegeForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete privilege forbidden response a status code equal to that given
+func (o *DeletePrivilegeForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete privilege forbidden response
+func (o *DeletePrivilegeForbidden) Code() int {
+	return 403
+}
+
 func (o *DeletePrivilegeForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeForbidden ", 403)
+}
+
+func (o *DeletePrivilegeForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewDeletePrivilegeNotFound() *DeletePrivilegeNotFound {
 	return &DeletePrivilegeNotFound{}
 }
 
-/* DeletePrivilegeNotFound describes a response with status code 404, with default header values.
+/*
+DeletePrivilegeNotFound describes a response with status code 404, with default header values.
 
 Privilege not found in the system.
 */
 type DeletePrivilegeNotFound struct {
 }
 
+// IsSuccess returns true when this delete privilege not found response has a 2xx status code
+func (o *DeletePrivilegeNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete privilege not found response has a 3xx status code
+func (o *DeletePrivilegeNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete privilege not found response has a 4xx status code
+func (o *DeletePrivilegeNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete privilege not found response has a 5xx status code
+func (o *DeletePrivilegeNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete privilege not found response a status code equal to that given
+func (o *DeletePrivilegeNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete privilege not found response
+func (o *DeletePrivilegeNotFound) Code() int {
+	return 404
+}
+
 func (o *DeletePrivilegeNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeNotFound ", 404)
+}
+
+func (o *DeletePrivilegeNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/privileges/{privilegeName}][%d] deletePrivilegeNotFound ", 404)
 }
 

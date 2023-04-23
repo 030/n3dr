@@ -52,10 +52,12 @@ func NewGetAssetsParamsWithHTTPClient(client *http.Client) *GetAssetsParams {
 	}
 }
 
-/* GetAssetsParams contains all the parameters to send to the API endpoint
-   for the get assets operation.
+/*
+GetAssetsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get assets operation.
+
+	Typically these are written to a http.Request.
 */
 type GetAssetsParams struct {
 

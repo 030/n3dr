@@ -54,10 +54,12 @@ func NewUpdateRoutingRuleParamsWithHTTPClient(client *http.Client) *UpdateRoutin
 	}
 }
 
-/* UpdateRoutingRuleParams contains all the parameters to send to the API endpoint
-   for the update routing rule operation.
+/*
+UpdateRoutingRuleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update routing rule operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateRoutingRuleParams struct {
 

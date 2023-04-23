@@ -40,7 +40,7 @@ type ClientService interface {
 }
 
 /*
-  DeleteAsset deletes a single asset
+DeleteAsset deletes a single asset
 */
 func (a *Client) DeleteAsset(params *DeleteAssetParams, opts ...ClientOption) (*DeleteAssetNoContent, error) {
 	// TODO: Validate the params before sending
@@ -78,7 +78,7 @@ func (a *Client) DeleteAsset(params *DeleteAssetParams, opts ...ClientOption) (*
 }
 
 /*
-  GetAssetByID gets a single asset
+GetAssetByID gets a single asset
 */
 func (a *Client) GetAssetByID(params *GetAssetByIDParams, opts ...ClientOption) (*GetAssetByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -116,7 +116,7 @@ func (a *Client) GetAssetByID(params *GetAssetByIDParams, opts ...ClientOption) 
 }
 
 /*
-  GetAssets lists assets
+GetAssets lists assets
 */
 func (a *Client) GetAssets(params *GetAssetsParams, opts ...ClientOption) (*GetAssetsOK, error) {
 	// TODO: Validate the params before sending

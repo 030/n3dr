@@ -42,14 +42,49 @@ func NewDisableIqNoContent() *DisableIqNoContent {
 	return &DisableIqNoContent{}
 }
 
-/* DisableIqNoContent describes a response with status code 204, with default header values.
+/*
+DisableIqNoContent describes a response with status code 204, with default header values.
 
 IQ server has been disabled
 */
 type DisableIqNoContent struct {
 }
 
+// IsSuccess returns true when this disable iq no content response has a 2xx status code
+func (o *DisableIqNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this disable iq no content response has a 3xx status code
+func (o *DisableIqNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable iq no content response has a 4xx status code
+func (o *DisableIqNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this disable iq no content response has a 5xx status code
+func (o *DisableIqNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this disable iq no content response a status code equal to that given
+func (o *DisableIqNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the disable iq no content response
+func (o *DisableIqNoContent) Code() int {
+	return 204
+}
+
 func (o *DisableIqNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/iq/disable][%d] disableIqNoContent ", 204)
+}
+
+func (o *DisableIqNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/iq/disable][%d] disableIqNoContent ", 204)
 }
 
@@ -63,14 +98,49 @@ func NewDisableIqBadRequest() *DisableIqBadRequest {
 	return &DisableIqBadRequest{}
 }
 
-/* DisableIqBadRequest describes a response with status code 400, with default header values.
+/*
+DisableIqBadRequest describes a response with status code 400, with default header values.
 
 IQ server connection not configured
 */
 type DisableIqBadRequest struct {
 }
 
+// IsSuccess returns true when this disable iq bad request response has a 2xx status code
+func (o *DisableIqBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this disable iq bad request response has a 3xx status code
+func (o *DisableIqBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable iq bad request response has a 4xx status code
+func (o *DisableIqBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this disable iq bad request response has a 5xx status code
+func (o *DisableIqBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this disable iq bad request response a status code equal to that given
+func (o *DisableIqBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the disable iq bad request response
+func (o *DisableIqBadRequest) Code() int {
+	return 400
+}
+
 func (o *DisableIqBadRequest) Error() string {
+	return fmt.Sprintf("[POST /v1/iq/disable][%d] disableIqBadRequest ", 400)
+}
+
+func (o *DisableIqBadRequest) String() string {
 	return fmt.Sprintf("[POST /v1/iq/disable][%d] disableIqBadRequest ", 400)
 }
 

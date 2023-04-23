@@ -45,7 +45,8 @@ func NewGetRoutingRulesOK() *GetRoutingRulesOK {
 	return &GetRoutingRulesOK{}
 }
 
-/* GetRoutingRulesOK describes a response with status code 200, with default header values.
+/*
+GetRoutingRulesOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type GetRoutingRulesOK struct {
 	Payload []*models.RoutingRuleXO
 }
 
+// IsSuccess returns true when this get routing rules o k response has a 2xx status code
+func (o *GetRoutingRulesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get routing rules o k response has a 3xx status code
+func (o *GetRoutingRulesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get routing rules o k response has a 4xx status code
+func (o *GetRoutingRulesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get routing rules o k response has a 5xx status code
+func (o *GetRoutingRulesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get routing rules o k response a status code equal to that given
+func (o *GetRoutingRulesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get routing rules o k response
+func (o *GetRoutingRulesOK) Code() int {
+	return 200
+}
+
 func (o *GetRoutingRulesOK) Error() string {
 	return fmt.Sprintf("[GET /v1/routing-rules][%d] getRoutingRulesOK  %+v", 200, o.Payload)
 }
+
+func (o *GetRoutingRulesOK) String() string {
+	return fmt.Sprintf("[GET /v1/routing-rules][%d] getRoutingRulesOK  %+v", 200, o.Payload)
+}
+
 func (o *GetRoutingRulesOK) GetPayload() []*models.RoutingRuleXO {
 	return o.Payload
 }
@@ -75,14 +111,49 @@ func NewGetRoutingRulesForbidden() *GetRoutingRulesForbidden {
 	return &GetRoutingRulesForbidden{}
 }
 
-/* GetRoutingRulesForbidden describes a response with status code 403, with default header values.
+/*
+GetRoutingRulesForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to read routing rules
 */
 type GetRoutingRulesForbidden struct {
 }
 
+// IsSuccess returns true when this get routing rules forbidden response has a 2xx status code
+func (o *GetRoutingRulesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get routing rules forbidden response has a 3xx status code
+func (o *GetRoutingRulesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get routing rules forbidden response has a 4xx status code
+func (o *GetRoutingRulesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get routing rules forbidden response has a 5xx status code
+func (o *GetRoutingRulesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get routing rules forbidden response a status code equal to that given
+func (o *GetRoutingRulesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get routing rules forbidden response
+func (o *GetRoutingRulesForbidden) Code() int {
+	return 403
+}
+
 func (o *GetRoutingRulesForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/routing-rules][%d] getRoutingRulesForbidden ", 403)
+}
+
+func (o *GetRoutingRulesForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/routing-rules][%d] getRoutingRulesForbidden ", 403)
 }
 

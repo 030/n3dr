@@ -45,7 +45,8 @@ func NewGetEmailConfigurationOK() *GetEmailConfigurationOK {
 	return &GetEmailConfigurationOK{}
 }
 
-/* GetEmailConfigurationOK describes a response with status code 200, with default header values.
+/*
+GetEmailConfigurationOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type GetEmailConfigurationOK struct {
 	Payload *models.APIEmailConfiguration
 }
 
+// IsSuccess returns true when this get email configuration o k response has a 2xx status code
+func (o *GetEmailConfigurationOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get email configuration o k response has a 3xx status code
+func (o *GetEmailConfigurationOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get email configuration o k response has a 4xx status code
+func (o *GetEmailConfigurationOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get email configuration o k response has a 5xx status code
+func (o *GetEmailConfigurationOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get email configuration o k response a status code equal to that given
+func (o *GetEmailConfigurationOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get email configuration o k response
+func (o *GetEmailConfigurationOK) Code() int {
+	return 200
+}
+
 func (o *GetEmailConfigurationOK) Error() string {
 	return fmt.Sprintf("[GET /v1/email][%d] getEmailConfigurationOK  %+v", 200, o.Payload)
 }
+
+func (o *GetEmailConfigurationOK) String() string {
+	return fmt.Sprintf("[GET /v1/email][%d] getEmailConfigurationOK  %+v", 200, o.Payload)
+}
+
 func (o *GetEmailConfigurationOK) GetPayload() *models.APIEmailConfiguration {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewGetEmailConfigurationForbidden() *GetEmailConfigurationForbidden {
 	return &GetEmailConfigurationForbidden{}
 }
 
-/* GetEmailConfigurationForbidden describes a response with status code 403, with default header values.
+/*
+GetEmailConfigurationForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to retrieve the email configuration
 */
 type GetEmailConfigurationForbidden struct {
 }
 
+// IsSuccess returns true when this get email configuration forbidden response has a 2xx status code
+func (o *GetEmailConfigurationForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get email configuration forbidden response has a 3xx status code
+func (o *GetEmailConfigurationForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get email configuration forbidden response has a 4xx status code
+func (o *GetEmailConfigurationForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get email configuration forbidden response has a 5xx status code
+func (o *GetEmailConfigurationForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get email configuration forbidden response a status code equal to that given
+func (o *GetEmailConfigurationForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get email configuration forbidden response
+func (o *GetEmailConfigurationForbidden) Code() int {
+	return 403
+}
+
 func (o *GetEmailConfigurationForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/email][%d] getEmailConfigurationForbidden ", 403)
+}
+
+func (o *GetEmailConfigurationForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/email][%d] getEmailConfigurationForbidden ", 403)
 }
 

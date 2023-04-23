@@ -44,7 +44,7 @@ type ClientService interface {
 }
 
 /*
-  CreateContentSelector creates a new content selector
+CreateContentSelector creates a new content selector
 */
 func (a *Client) CreateContentSelector(params *CreateContentSelectorParams, opts ...ClientOption) (*CreateContentSelectorNoContent, error) {
 	// TODO: Validate the params before sending
@@ -82,7 +82,7 @@ func (a *Client) CreateContentSelector(params *CreateContentSelectorParams, opts
 }
 
 /*
-  DeleteContentSelector deletes a content selector
+DeleteContentSelector deletes a content selector
 */
 func (a *Client) DeleteContentSelector(params *DeleteContentSelectorParams, opts ...ClientOption) (*DeleteContentSelectorNoContent, error) {
 	// TODO: Validate the params before sending
@@ -120,7 +120,7 @@ func (a *Client) DeleteContentSelector(params *DeleteContentSelectorParams, opts
 }
 
 /*
-  GetContentSelector gets a content selector by name
+GetContentSelector gets a content selector by name
 */
 func (a *Client) GetContentSelector(params *GetContentSelectorParams, opts ...ClientOption) (*GetContentSelectorOK, error) {
 	// TODO: Validate the params before sending
@@ -158,7 +158,7 @@ func (a *Client) GetContentSelector(params *GetContentSelectorParams, opts ...Cl
 }
 
 /*
-  GetContentSelectors lists content selectors
+GetContentSelectors lists content selectors
 */
 func (a *Client) GetContentSelectors(params *GetContentSelectorsParams, opts ...ClientOption) (*GetContentSelectorsOK, error) {
 	// TODO: Validate the params before sending
@@ -196,7 +196,7 @@ func (a *Client) GetContentSelectors(params *GetContentSelectorsParams, opts ...
 }
 
 /*
-  UpdateContentSelector updates a content selector
+UpdateContentSelector updates a content selector
 */
 func (a *Client) UpdateContentSelector(params *UpdateContentSelectorParams, opts ...ClientOption) (*UpdateContentSelectorNoContent, error) {
 	// TODO: Validate the params before sending

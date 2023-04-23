@@ -48,14 +48,49 @@ func NewUpdateRepository16NoContent() *UpdateRepository16NoContent {
 	return &UpdateRepository16NoContent{}
 }
 
-/* UpdateRepository16NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository16NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository16NoContent struct {
 }
 
+// IsSuccess returns true when this update repository16 no content response has a 2xx status code
+func (o *UpdateRepository16NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository16 no content response has a 3xx status code
+func (o *UpdateRepository16NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository16 no content response has a 4xx status code
+func (o *UpdateRepository16NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository16 no content response has a 5xx status code
+func (o *UpdateRepository16NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository16 no content response a status code equal to that given
+func (o *UpdateRepository16NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository16 no content response
+func (o *UpdateRepository16NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository16NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/rubygems/proxy/{repositoryName}][%d] updateRepository16NoContent ", 204)
+}
+
+func (o *UpdateRepository16NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/rubygems/proxy/{repositoryName}][%d] updateRepository16NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository16Unauthorized() *UpdateRepository16Unauthorized {
 	return &UpdateRepository16Unauthorized{}
 }
 
-/* UpdateRepository16Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository16Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository16Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository16 unauthorized response has a 2xx status code
+func (o *UpdateRepository16Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository16 unauthorized response has a 3xx status code
+func (o *UpdateRepository16Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository16 unauthorized response has a 4xx status code
+func (o *UpdateRepository16Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository16 unauthorized response has a 5xx status code
+func (o *UpdateRepository16Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository16 unauthorized response a status code equal to that given
+func (o *UpdateRepository16Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository16 unauthorized response
+func (o *UpdateRepository16Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository16Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/rubygems/proxy/{repositoryName}][%d] updateRepository16Unauthorized ", 401)
+}
+
+func (o *UpdateRepository16Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/rubygems/proxy/{repositoryName}][%d] updateRepository16Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository16Forbidden() *UpdateRepository16Forbidden {
 	return &UpdateRepository16Forbidden{}
 }
 
-/* UpdateRepository16Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository16Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository16Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository16 forbidden response has a 2xx status code
+func (o *UpdateRepository16Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository16 forbidden response has a 3xx status code
+func (o *UpdateRepository16Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository16 forbidden response has a 4xx status code
+func (o *UpdateRepository16Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository16 forbidden response has a 5xx status code
+func (o *UpdateRepository16Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository16 forbidden response a status code equal to that given
+func (o *UpdateRepository16Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository16 forbidden response
+func (o *UpdateRepository16Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository16Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/rubygems/proxy/{repositoryName}][%d] updateRepository16Forbidden ", 403)
+}
+
+func (o *UpdateRepository16Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/rubygems/proxy/{repositoryName}][%d] updateRepository16Forbidden ", 403)
 }
 

@@ -52,10 +52,12 @@ func NewGetComponentsParamsWithHTTPClient(client *http.Client) *GetComponentsPar
 	}
 }
 
-/* GetComponentsParams contains all the parameters to send to the API endpoint
-   for the get components operation.
+/*
+GetComponentsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get components operation.
+
+	Typically these are written to a http.Request.
 */
 type GetComponentsParams struct {
 

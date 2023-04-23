@@ -52,10 +52,12 @@ func NewGetLdapServersParamsWithHTTPClient(client *http.Client) *GetLdapServersP
 	}
 }
 
-/* GetLdapServersParams contains all the parameters to send to the API endpoint
-   for the get ldap servers operation.
+/*
+GetLdapServersParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get ldap servers operation.
+
+	Typically these are written to a http.Request.
 */
 type GetLdapServersParams struct {
 	timeout    time.Duration

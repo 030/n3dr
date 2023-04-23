@@ -48,14 +48,49 @@ func NewUpdateRepository25NoContent() *UpdateRepository25NoContent {
 	return &UpdateRepository25NoContent{}
 }
 
-/* UpdateRepository25NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository25NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository25NoContent struct {
 }
 
+// IsSuccess returns true when this update repository25 no content response has a 2xx status code
+func (o *UpdateRepository25NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository25 no content response has a 3xx status code
+func (o *UpdateRepository25NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository25 no content response has a 4xx status code
+func (o *UpdateRepository25NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository25 no content response has a 5xx status code
+func (o *UpdateRepository25NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository25 no content response a status code equal to that given
+func (o *UpdateRepository25NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository25 no content response
+func (o *UpdateRepository25NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository25NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/gitlfs/hosted/{repositoryName}][%d] updateRepository25NoContent ", 204)
+}
+
+func (o *UpdateRepository25NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/gitlfs/hosted/{repositoryName}][%d] updateRepository25NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository25Unauthorized() *UpdateRepository25Unauthorized {
 	return &UpdateRepository25Unauthorized{}
 }
 
-/* UpdateRepository25Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository25Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository25Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository25 unauthorized response has a 2xx status code
+func (o *UpdateRepository25Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository25 unauthorized response has a 3xx status code
+func (o *UpdateRepository25Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository25 unauthorized response has a 4xx status code
+func (o *UpdateRepository25Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository25 unauthorized response has a 5xx status code
+func (o *UpdateRepository25Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository25 unauthorized response a status code equal to that given
+func (o *UpdateRepository25Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository25 unauthorized response
+func (o *UpdateRepository25Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository25Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/gitlfs/hosted/{repositoryName}][%d] updateRepository25Unauthorized ", 401)
+}
+
+func (o *UpdateRepository25Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/gitlfs/hosted/{repositoryName}][%d] updateRepository25Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository25Forbidden() *UpdateRepository25Forbidden {
 	return &UpdateRepository25Forbidden{}
 }
 
-/* UpdateRepository25Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository25Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository25Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository25 forbidden response has a 2xx status code
+func (o *UpdateRepository25Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository25 forbidden response has a 3xx status code
+func (o *UpdateRepository25Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository25 forbidden response has a 4xx status code
+func (o *UpdateRepository25Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository25 forbidden response has a 5xx status code
+func (o *UpdateRepository25Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository25 forbidden response a status code equal to that given
+func (o *UpdateRepository25Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository25 forbidden response
+func (o *UpdateRepository25Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository25Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/gitlfs/hosted/{repositoryName}][%d] updateRepository25Forbidden ", 403)
+}
+
+func (o *UpdateRepository25Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/gitlfs/hosted/{repositoryName}][%d] updateRepository25Forbidden ", 403)
 }
 

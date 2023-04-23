@@ -54,10 +54,12 @@ func NewVerifyConnection1ParamsWithHTTPClient(client *http.Client) *VerifyConnec
 	}
 }
 
-/* VerifyConnection1Params contains all the parameters to send to the API endpoint
-   for the verify connection 1 operation.
+/*
+VerifyConnection1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the verify connection 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type VerifyConnection1Params struct {
 

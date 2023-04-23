@@ -42,14 +42,49 @@ func NewIsAvailableOK() *IsAvailableOK {
 	return &IsAvailableOK{}
 }
 
-/* IsAvailableOK describes a response with status code 200, with default header values.
+/*
+IsAvailableOK describes a response with status code 200, with default header values.
 
 Available to service requests
 */
 type IsAvailableOK struct {
 }
 
+// IsSuccess returns true when this is available o k response has a 2xx status code
+func (o *IsAvailableOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this is available o k response has a 3xx status code
+func (o *IsAvailableOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this is available o k response has a 4xx status code
+func (o *IsAvailableOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this is available o k response has a 5xx status code
+func (o *IsAvailableOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this is available o k response a status code equal to that given
+func (o *IsAvailableOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the is available o k response
+func (o *IsAvailableOK) Code() int {
+	return 200
+}
+
 func (o *IsAvailableOK) Error() string {
+	return fmt.Sprintf("[GET /v1/status][%d] isAvailableOK ", 200)
+}
+
+func (o *IsAvailableOK) String() string {
 	return fmt.Sprintf("[GET /v1/status][%d] isAvailableOK ", 200)
 }
 
@@ -63,14 +98,49 @@ func NewIsAvailableServiceUnavailable() *IsAvailableServiceUnavailable {
 	return &IsAvailableServiceUnavailable{}
 }
 
-/* IsAvailableServiceUnavailable describes a response with status code 503, with default header values.
+/*
+IsAvailableServiceUnavailable describes a response with status code 503, with default header values.
 
 Unavailable to service requests
 */
 type IsAvailableServiceUnavailable struct {
 }
 
+// IsSuccess returns true when this is available service unavailable response has a 2xx status code
+func (o *IsAvailableServiceUnavailable) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this is available service unavailable response has a 3xx status code
+func (o *IsAvailableServiceUnavailable) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this is available service unavailable response has a 4xx status code
+func (o *IsAvailableServiceUnavailable) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this is available service unavailable response has a 5xx status code
+func (o *IsAvailableServiceUnavailable) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this is available service unavailable response a status code equal to that given
+func (o *IsAvailableServiceUnavailable) IsCode(code int) bool {
+	return code == 503
+}
+
+// Code gets the status code for the is available service unavailable response
+func (o *IsAvailableServiceUnavailable) Code() int {
+	return 503
+}
+
 func (o *IsAvailableServiceUnavailable) Error() string {
+	return fmt.Sprintf("[GET /v1/status][%d] isAvailableServiceUnavailable ", 503)
+}
+
+func (o *IsAvailableServiceUnavailable) String() string {
 	return fmt.Sprintf("[GET /v1/status][%d] isAvailableServiceUnavailable ", 503)
 }
 

@@ -48,14 +48,49 @@ func NewUpdateRepository34NoContent() *UpdateRepository34NoContent {
 	return &UpdateRepository34NoContent{}
 }
 
-/* UpdateRepository34NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository34NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository34NoContent struct {
 }
 
+// IsSuccess returns true when this update repository34 no content response has a 2xx status code
+func (o *UpdateRepository34NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository34 no content response has a 3xx status code
+func (o *UpdateRepository34NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository34 no content response has a 4xx status code
+func (o *UpdateRepository34NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository34 no content response has a 5xx status code
+func (o *UpdateRepository34NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository34 no content response a status code equal to that given
+func (o *UpdateRepository34NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository34 no content response
+func (o *UpdateRepository34NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository34NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/cocoapods/proxy/{repositoryName}][%d] updateRepository34NoContent ", 204)
+}
+
+func (o *UpdateRepository34NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/cocoapods/proxy/{repositoryName}][%d] updateRepository34NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository34Unauthorized() *UpdateRepository34Unauthorized {
 	return &UpdateRepository34Unauthorized{}
 }
 
-/* UpdateRepository34Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository34Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository34Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository34 unauthorized response has a 2xx status code
+func (o *UpdateRepository34Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository34 unauthorized response has a 3xx status code
+func (o *UpdateRepository34Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository34 unauthorized response has a 4xx status code
+func (o *UpdateRepository34Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository34 unauthorized response has a 5xx status code
+func (o *UpdateRepository34Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository34 unauthorized response a status code equal to that given
+func (o *UpdateRepository34Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository34 unauthorized response
+func (o *UpdateRepository34Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository34Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/cocoapods/proxy/{repositoryName}][%d] updateRepository34Unauthorized ", 401)
+}
+
+func (o *UpdateRepository34Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/cocoapods/proxy/{repositoryName}][%d] updateRepository34Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository34Forbidden() *UpdateRepository34Forbidden {
 	return &UpdateRepository34Forbidden{}
 }
 
-/* UpdateRepository34Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository34Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository34Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository34 forbidden response has a 2xx status code
+func (o *UpdateRepository34Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository34 forbidden response has a 3xx status code
+func (o *UpdateRepository34Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository34 forbidden response has a 4xx status code
+func (o *UpdateRepository34Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository34 forbidden response has a 5xx status code
+func (o *UpdateRepository34Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository34 forbidden response a status code equal to that given
+func (o *UpdateRepository34Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository34 forbidden response
+func (o *UpdateRepository34Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository34Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/cocoapods/proxy/{repositoryName}][%d] updateRepository34Forbidden ", 403)
+}
+
+func (o *UpdateRepository34Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/cocoapods/proxy/{repositoryName}][%d] updateRepository34Forbidden ", 403)
 }
 

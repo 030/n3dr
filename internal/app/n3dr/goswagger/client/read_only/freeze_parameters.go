@@ -52,10 +52,12 @@ func NewFreezeParamsWithHTTPClient(client *http.Client) *FreezeParams {
 	}
 }
 
-/* FreezeParams contains all the parameters to send to the API endpoint
-   for the freeze operation.
+/*
+FreezeParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the freeze operation.
+
+	Typically these are written to a http.Request.
 */
 type FreezeParams struct {
 	timeout    time.Duration

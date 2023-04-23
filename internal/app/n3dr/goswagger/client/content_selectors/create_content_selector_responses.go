@@ -48,14 +48,49 @@ func NewCreateContentSelectorNoContent() *CreateContentSelectorNoContent {
 	return &CreateContentSelectorNoContent{}
 }
 
-/* CreateContentSelectorNoContent describes a response with status code 204, with default header values.
+/*
+CreateContentSelectorNoContent describes a response with status code 204, with default header values.
 
 Content selector successfully created
 */
 type CreateContentSelectorNoContent struct {
 }
 
+// IsSuccess returns true when this create content selector no content response has a 2xx status code
+func (o *CreateContentSelectorNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create content selector no content response has a 3xx status code
+func (o *CreateContentSelectorNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create content selector no content response has a 4xx status code
+func (o *CreateContentSelectorNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create content selector no content response has a 5xx status code
+func (o *CreateContentSelectorNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create content selector no content response a status code equal to that given
+func (o *CreateContentSelectorNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the create content selector no content response
+func (o *CreateContentSelectorNoContent) Code() int {
+	return 204
+}
+
 func (o *CreateContentSelectorNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/security/content-selectors][%d] createContentSelectorNoContent ", 204)
+}
+
+func (o *CreateContentSelectorNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/security/content-selectors][%d] createContentSelectorNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewCreateContentSelectorBadRequest() *CreateContentSelectorBadRequest {
 	return &CreateContentSelectorBadRequest{}
 }
 
-/* CreateContentSelectorBadRequest describes a response with status code 400, with default header values.
+/*
+CreateContentSelectorBadRequest describes a response with status code 400, with default header values.
 
 Invalid request
 */
 type CreateContentSelectorBadRequest struct {
 }
 
+// IsSuccess returns true when this create content selector bad request response has a 2xx status code
+func (o *CreateContentSelectorBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create content selector bad request response has a 3xx status code
+func (o *CreateContentSelectorBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create content selector bad request response has a 4xx status code
+func (o *CreateContentSelectorBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create content selector bad request response has a 5xx status code
+func (o *CreateContentSelectorBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create content selector bad request response a status code equal to that given
+func (o *CreateContentSelectorBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create content selector bad request response
+func (o *CreateContentSelectorBadRequest) Code() int {
+	return 400
+}
+
 func (o *CreateContentSelectorBadRequest) Error() string {
+	return fmt.Sprintf("[POST /v1/security/content-selectors][%d] createContentSelectorBadRequest ", 400)
+}
+
+func (o *CreateContentSelectorBadRequest) String() string {
 	return fmt.Sprintf("[POST /v1/security/content-selectors][%d] createContentSelectorBadRequest ", 400)
 }
 
@@ -90,14 +160,49 @@ func NewCreateContentSelectorForbidden() *CreateContentSelectorForbidden {
 	return &CreateContentSelectorForbidden{}
 }
 
-/* CreateContentSelectorForbidden describes a response with status code 403, with default header values.
+/*
+CreateContentSelectorForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to create content selectors
 */
 type CreateContentSelectorForbidden struct {
 }
 
+// IsSuccess returns true when this create content selector forbidden response has a 2xx status code
+func (o *CreateContentSelectorForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create content selector forbidden response has a 3xx status code
+func (o *CreateContentSelectorForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create content selector forbidden response has a 4xx status code
+func (o *CreateContentSelectorForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create content selector forbidden response has a 5xx status code
+func (o *CreateContentSelectorForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create content selector forbidden response a status code equal to that given
+func (o *CreateContentSelectorForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create content selector forbidden response
+func (o *CreateContentSelectorForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateContentSelectorForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/security/content-selectors][%d] createContentSelectorForbidden ", 403)
+}
+
+func (o *CreateContentSelectorForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/security/content-selectors][%d] createContentSelectorForbidden ", 403)
 }
 

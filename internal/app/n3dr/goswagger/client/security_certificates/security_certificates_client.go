@@ -42,7 +42,7 @@ type ClientService interface {
 }
 
 /*
-  AddCertificate adds a certificate to the trust store
+AddCertificate adds a certificate to the trust store
 */
 func (a *Client) AddCertificate(params *AddCertificateParams, opts ...ClientOption) (*AddCertificateCreated, error) {
 	// TODO: Validate the params before sending
@@ -80,7 +80,7 @@ func (a *Client) AddCertificate(params *AddCertificateParams, opts ...ClientOpti
 }
 
 /*
-  GetTrustStoreCertificates retrieves a list of certificates added to the trust store
+GetTrustStoreCertificates retrieves a list of certificates added to the trust store
 */
 func (a *Client) GetTrustStoreCertificates(params *GetTrustStoreCertificatesParams, opts ...ClientOption) (*GetTrustStoreCertificatesOK, error) {
 	// TODO: Validate the params before sending
@@ -118,7 +118,7 @@ func (a *Client) GetTrustStoreCertificates(params *GetTrustStoreCertificatesPara
 }
 
 /*
-  RemoveCertificate removes a certificate in the trust store
+RemoveCertificate removes a certificate in the trust store
 */
 func (a *Client) RemoveCertificate(params *RemoveCertificateParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -149,7 +149,7 @@ func (a *Client) RemoveCertificate(params *RemoveCertificateParams, opts ...Clie
 }
 
 /*
-  RetrieveCertificate helpers method to retrieve certificate details from a remote system
+RetrieveCertificate helpers method to retrieve certificate details from a remote system
 */
 func (a *Client) RetrieveCertificate(params *RetrieveCertificateParams, opts ...ClientOption) (*RetrieveCertificateOK, error) {
 	// TODO: Validate the params before sending

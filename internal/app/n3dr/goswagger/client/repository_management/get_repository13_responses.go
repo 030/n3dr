@@ -39,7 +39,8 @@ func NewGetRepository13OK() *GetRepository13OK {
 	return &GetRepository13OK{}
 }
 
-/* GetRepository13OK describes a response with status code 200, with default header values.
+/*
+GetRepository13OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository13OK struct {
 	Payload *models.SimpleAPIHostedRepository
 }
 
+// IsSuccess returns true when this get repository13 o k response has a 2xx status code
+func (o *GetRepository13OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository13 o k response has a 3xx status code
+func (o *GetRepository13OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository13 o k response has a 4xx status code
+func (o *GetRepository13OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository13 o k response has a 5xx status code
+func (o *GetRepository13OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository13 o k response a status code equal to that given
+func (o *GetRepository13OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository13 o k response
+func (o *GetRepository13OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository13OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/nuget/hosted/{repositoryName}][%d] getRepository13OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository13OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/nuget/hosted/{repositoryName}][%d] getRepository13OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository13OK) GetPayload() *models.SimpleAPIHostedRepository {
 	return o.Payload
 }
