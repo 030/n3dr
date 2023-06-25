@@ -2,11 +2,17 @@
 ## [Unreleased]
 
 
-<a name="7.2.1"></a>
-## [7.2.1] - 2023-03-19
+<a name="7.2.2"></a>
+## [7.2.2] - 2023-06-25
 ### Build
 - **deps:** Update versions.
 
+### Fix
+- [[GH-371](https://github.com/030/n3dr/issues/371)] Resolve indentation issue in count table formatting.
+
+
+<a name="7.2.1"></a>
+## [7.2.1] - 2023-03-19
 
 <a name="7.2.0"></a>
 ## [7.2.0] - 2023-02-26
@@ -358,7 +364,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.2.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.2.2...HEAD
+[7.2.2]: https://github.com/030/n3dr/compare/7.2.1...7.2.2
 [7.2.1]: https://github.com/030/n3dr/compare/7.2.0...7.2.1
 [7.2.0]: https://github.com/030/n3dr/compare/7.1.1...7.2.0
 [7.1.1]: https://github.com/030/n3dr/compare/7.1.0...7.1.1
