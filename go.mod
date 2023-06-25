@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/030/logging v0.1.2
 	github.com/030/mij v1.0.2
-	github.com/030/p2iwd v1.0.2
+	github.com/030/p2iwd v1.0.3
 	github.com/aws/aws-sdk-go v1.44.224
 	github.com/go-openapi/errors v0.20.3
 	github.com/go-openapi/runtime v0.25.0

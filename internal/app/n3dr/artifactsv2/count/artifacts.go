@@ -82,7 +82,13 @@ func (n *Nexus3) artifact(continuationToken string, repositoriesTotalArtifacts *
 	n.items(rgpl.Items, repositoriesTotalArtifacts)
 
 	if continuationToken == "" {
-		fmt.Printf("%d\t\t%s\t\t%s\t%s\n", *repositoriesTotalArtifacts, repo.Format, repo.Type, repo.Name)
+		format := repo.Format
+
+		for len(format) < 8 {
+			format = format + " "
+		}
+
+		fmt.Printf("%d\t\t%s\t%s\t\t%s\n", *repositoriesTotalArtifacts, format, repo.Type, repo.Name)
 		return nil
 	}
 
@@ -125,7 +131,7 @@ func (n *Nexus3) Artifacts() error {
 	}
 
 	var wg sync.WaitGroup
-	fmt.Printf("COUNT\t\tFORMAT\t\tTYPE\tNAME\n")
+	fmt.Printf("COUNT\t\tFORMAT\t\tTYPE\t\tNAME\n")
 	for _, repo := range repos {
 		wg.Add(1)
 		go func(repo *models.AbstractAPIRepository) {
