@@ -17,7 +17,7 @@ fi
 
 if [ -z "${NEXUS_VERSION}" ]; then
   echo "NEXUS_VERSION empty, setting it to the default value"
-  NEXUS_VERSION=3.49.0
+  NEXUS_VERSION=3.56.0
 fi
 
 if [ -z "${NEXUS_API_VERSION}" ]; then
@@ -406,7 +406,7 @@ repositories() {
     --dockerPort ${DOCKER_REGISTRY_HTTP_CONNECTOR_A} \
     --dockerHost ${DOCKER_URL}
 
-  count_downloads 359 ${testZipSizeDir}
+  count_downloads 354 ${testZipSizeDir}
   test_zip 1399 ${testZipSizeDir}
 
   cleanup_downloads
