@@ -106,7 +106,7 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 
 	classifier := ""
 	ext := ""
-	if re.Match([]byte(path)) {
+	if re.MatchString(path) {
 		result := re.FindAllStringSubmatch(path, -1)
 		artifactElements := result[0]
 		artifactElementsLength := len(result[0])

@@ -78,3 +78,78 @@ linters:
     - nosnakecase
     - interfacer
     - varcheck
+linters-settings:
+  depguard:
+    # Rules to apply.
+    #
+    # Variables:
+    # - File Variables
+    #   you can still use and exclamation mark ! in front of a variable to say not to use it.
+    #   Example !$test will match any file that is not a go test file.
+    #
+    #   `$all` - matches all go files
+    #   `$test` - matches all go test files
+    #
+    # - Package Variables
+    #
+    #  `$gostd` - matches all of go's standard library (Pulled from `GOROOT`)
+    #
+    # Default: Only allow $gostd in all files.
+    rules:
+      # Name of a rule.
+      main:
+        # List of file globs that will match this list of settings to compare against.
+        # Default: $all
+        files:
+          - '!**/*_a _file.go'
+        # List of allowed packages.
+        allow:
+          - $gostd
+          - github.com/030/logging/pkg/logging
+          - github.com/030/mij
+          - github.com/030/n3dr/internal/app/n3dr/artifactsv2
+          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/count
+          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/name
+          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload
+          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload/maven2/snapshot
+          - github.com/030/n3dr/internal/app/n3dr/config/repository
+          - github.com/030/n3dr/internal/app/n3dr/config/security
+          - github.com/030/n3dr/internal/app/n3dr/config/user
+          - github.com/030/n3dr/internal/app/n3dr/connection
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/components
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/repository_management
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_anonymous_access
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_l_d_a_p
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_roles
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_users
+          - github.com/030/n3dr/internal/app/n3dr/goswagger/models
+          - github.com/030/n3dr/internal/app/n3dr/n3drtest
+          - github.com/030/n3dr/internal/app/n3dr/s3
+          - github.com/030/n3dr/internaln3dr/artifactsv2
+          - github.com/030/n3dr/internaln3dr/connection
+          - github.com/030/n3dr/internaln3dr/goswagger/client/security_management_roles
+          - github.com/030/n3dr/internaln3dr/goswagger/client/security_management_users
+          - github.com/030/n3dr/internaln3dr/goswagger/models
+          - github.com/030/n3dr/internaln3dr/s3
+          - github.com/030/p2iwd/pkg/p2iwd
+          - github.com/aws/aws-sdk-go/aws
+          - github.com/aws/aws-sdk-go/aws/credentials
+          - github.com/aws/aws-sdk-go/aws/session
+          - github.com/aws/aws-sdk-go/service/s3/s3manager
+          - github.com/go-openapi/runtime/client
+          - github.com/go-openapi/strfmt
+          - github.com/hashicorp/go-retryablehttp
+          - github.com/mholt/archiver
+          - github.com/mitchellh/go-homedir
+          - github.com/OpenPeeDeeP
+          - github.com/sirupsen/logrus
+          - github.com/spf13/cobra
+          - github.com/spf13/viper
+          - github.com/stretchr/testify/assert
+        # Packages that are not allowed where the value is a suggestion.
+        deny:
+          # - pkg: 'github.com/sirupsen/logrus'
+          #   desc: not allowed
+          - pkg: 'github.com/pkg/errors'
+            desc: Should be replaced by standard lib errors package
