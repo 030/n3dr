@@ -84,7 +84,8 @@ linters-settings:
     #
     # Variables:
     # - File Variables
-    #   you can still use and exclamation mark ! in front of a variable to say not to use it.
+    #   you can still use and exclamation mark ! in front of a variable to say
+    #   not to use it.
     #   Example !$test will match any file that is not a go test file.
     #
     #   `$all` - matches all go files
@@ -98,7 +99,8 @@ linters-settings:
     rules:
       # Name of a rule.
       main:
-        # List of file globs that will match this list of settings to compare against.
+        # List of file globs that will match this list of settings to compare
+        # against.
         # Default: $all
         files:
           - '!**/*_a _file.go'
