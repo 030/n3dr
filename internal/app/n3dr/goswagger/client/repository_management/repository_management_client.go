@@ -296,7 +296,7 @@ type ClientService interface {
 }
 
 /*
-  CreateRepository creates maven group repository
+CreateRepository creates maven group repository
 */
 func (a *Client) CreateRepository(params *CreateRepositoryParams, opts ...ClientOption) (*CreateRepositoryCreated, error) {
 	// TODO: Validate the params before sending
@@ -334,7 +334,7 @@ func (a *Client) CreateRepository(params *CreateRepositoryParams, opts ...Client
 }
 
 /*
-  CreateRepository1 creates maven hosted repository
+CreateRepository1 creates maven hosted repository
 */
 func (a *Client) CreateRepository1(params *CreateRepository1Params, opts ...ClientOption) (*CreateRepository1Created, error) {
 	// TODO: Validate the params before sending
@@ -372,7 +372,7 @@ func (a *Client) CreateRepository1(params *CreateRepository1Params, opts ...Clie
 }
 
 /*
-  CreateRepository10 creates npm proxy repository
+CreateRepository10 creates npm proxy repository
 */
 func (a *Client) CreateRepository10(params *CreateRepository10Params, opts ...ClientOption) (*CreateRepository10Created, error) {
 	// TODO: Validate the params before sending
@@ -410,7 +410,7 @@ func (a *Client) CreateRepository10(params *CreateRepository10Params, opts ...Cl
 }
 
 /*
-  CreateRepository11 creates nu get group repository
+CreateRepository11 creates nu get group repository
 */
 func (a *Client) CreateRepository11(params *CreateRepository11Params, opts ...ClientOption) (*CreateRepository11Created, error) {
 	// TODO: Validate the params before sending
@@ -448,7 +448,7 @@ func (a *Client) CreateRepository11(params *CreateRepository11Params, opts ...Cl
 }
 
 /*
-  CreateRepository12 creates nu get hosted repository
+CreateRepository12 creates nu get hosted repository
 */
 func (a *Client) CreateRepository12(params *CreateRepository12Params, opts ...ClientOption) (*CreateRepository12Created, error) {
 	// TODO: Validate the params before sending
@@ -486,7 +486,7 @@ func (a *Client) CreateRepository12(params *CreateRepository12Params, opts ...Cl
 }
 
 /*
-  CreateRepository13 creates nu get proxy repository
+CreateRepository13 creates nu get proxy repository
 */
 func (a *Client) CreateRepository13(params *CreateRepository13Params, opts ...ClientOption) (*CreateRepository13Created, error) {
 	// TODO: Validate the params before sending
@@ -524,7 +524,7 @@ func (a *Client) CreateRepository13(params *CreateRepository13Params, opts ...Cl
 }
 
 /*
-  CreateRepository14 creates ruby gems group repository
+CreateRepository14 creates ruby gems group repository
 */
 func (a *Client) CreateRepository14(params *CreateRepository14Params, opts ...ClientOption) (*CreateRepository14Created, error) {
 	// TODO: Validate the params before sending
@@ -562,7 +562,7 @@ func (a *Client) CreateRepository14(params *CreateRepository14Params, opts ...Cl
 }
 
 /*
-  CreateRepository15 creates ruby gems hosted repository
+CreateRepository15 creates ruby gems hosted repository
 */
 func (a *Client) CreateRepository15(params *CreateRepository15Params, opts ...ClientOption) (*CreateRepository15Created, error) {
 	// TODO: Validate the params before sending
@@ -600,7 +600,7 @@ func (a *Client) CreateRepository15(params *CreateRepository15Params, opts ...Cl
 }
 
 /*
-  CreateRepository16 creates ruby gems proxy repository
+CreateRepository16 creates ruby gems proxy repository
 */
 func (a *Client) CreateRepository16(params *CreateRepository16Params, opts ...ClientOption) (*CreateRepository16Created, error) {
 	// TODO: Validate the params before sending
@@ -638,7 +638,7 @@ func (a *Client) CreateRepository16(params *CreateRepository16Params, opts ...Cl
 }
 
 /*
-  CreateRepository17 creates docker group repository
+CreateRepository17 creates docker group repository
 */
 func (a *Client) CreateRepository17(params *CreateRepository17Params, opts ...ClientOption) (*CreateRepository17Created, error) {
 	// TODO: Validate the params before sending
@@ -676,7 +676,7 @@ func (a *Client) CreateRepository17(params *CreateRepository17Params, opts ...Cl
 }
 
 /*
-  CreateRepository18 creates docker hosted repository
+CreateRepository18 creates docker hosted repository
 */
 func (a *Client) CreateRepository18(params *CreateRepository18Params, opts ...ClientOption) (*CreateRepository18Created, error) {
 	// TODO: Validate the params before sending
@@ -714,7 +714,7 @@ func (a *Client) CreateRepository18(params *CreateRepository18Params, opts ...Cl
 }
 
 /*
-  CreateRepository19 creates docker proxy repository
+CreateRepository19 creates docker proxy repository
 */
 func (a *Client) CreateRepository19(params *CreateRepository19Params, opts ...ClientOption) (*CreateRepository19Created, error) {
 	// TODO: Validate the params before sending
@@ -752,7 +752,7 @@ func (a *Client) CreateRepository19(params *CreateRepository19Params, opts ...Cl
 }
 
 /*
-  CreateRepository2 creates maven proxy repository
+CreateRepository2 creates maven proxy repository
 */
 func (a *Client) CreateRepository2(params *CreateRepository2Params, opts ...ClientOption) (*CreateRepository2Created, error) {
 	// TODO: Validate the params before sending
@@ -790,7 +790,7 @@ func (a *Client) CreateRepository2(params *CreateRepository2Params, opts ...Clie
 }
 
 /*
-  CreateRepository20 creates yum group repository
+CreateRepository20 creates yum group repository
 */
 func (a *Client) CreateRepository20(params *CreateRepository20Params, opts ...ClientOption) (*CreateRepository20Created, error) {
 	// TODO: Validate the params before sending
@@ -828,7 +828,7 @@ func (a *Client) CreateRepository20(params *CreateRepository20Params, opts ...Cl
 }
 
 /*
-  CreateRepository21 creates yum hosted repository
+CreateRepository21 creates yum hosted repository
 */
 func (a *Client) CreateRepository21(params *CreateRepository21Params, opts ...ClientOption) (*CreateRepository21Created, error) {
 	// TODO: Validate the params before sending
@@ -866,7 +866,7 @@ func (a *Client) CreateRepository21(params *CreateRepository21Params, opts ...Cl
 }
 
 /*
-  CreateRepository22 creates yum proxy repository
+CreateRepository22 creates yum proxy repository
 */
 func (a *Client) CreateRepository22(params *CreateRepository22Params, opts ...ClientOption) (*CreateRepository22Created, error) {
 	// TODO: Validate the params before sending
@@ -904,7 +904,7 @@ func (a *Client) CreateRepository22(params *CreateRepository22Params, opts ...Cl
 }
 
 /*
-  CreateRepository23 creates helm hosted repository
+CreateRepository23 creates helm hosted repository
 */
 func (a *Client) CreateRepository23(params *CreateRepository23Params, opts ...ClientOption) (*CreateRepository23Created, error) {
 	// TODO: Validate the params before sending
@@ -942,7 +942,7 @@ func (a *Client) CreateRepository23(params *CreateRepository23Params, opts ...Cl
 }
 
 /*
-  CreateRepository24 creates helm proxy repository
+CreateRepository24 creates helm proxy repository
 */
 func (a *Client) CreateRepository24(params *CreateRepository24Params, opts ...ClientOption) (*CreateRepository24Created, error) {
 	// TODO: Validate the params before sending
@@ -980,7 +980,7 @@ func (a *Client) CreateRepository24(params *CreateRepository24Params, opts ...Cl
 }
 
 /*
-  CreateRepository25 creates git l f s hosted repository
+CreateRepository25 creates git l f s hosted repository
 */
 func (a *Client) CreateRepository25(params *CreateRepository25Params, opts ...ClientOption) (*CreateRepository25Created, error) {
 	// TODO: Validate the params before sending
@@ -1018,7 +1018,7 @@ func (a *Client) CreateRepository25(params *CreateRepository25Params, opts ...Cl
 }
 
 /*
-  CreateRepository26 creates py p i group repository
+CreateRepository26 creates py p i group repository
 */
 func (a *Client) CreateRepository26(params *CreateRepository26Params, opts ...ClientOption) (*CreateRepository26Created, error) {
 	// TODO: Validate the params before sending
@@ -1056,7 +1056,7 @@ func (a *Client) CreateRepository26(params *CreateRepository26Params, opts ...Cl
 }
 
 /*
-  CreateRepository27 creates py p i hosted repository
+CreateRepository27 creates py p i hosted repository
 */
 func (a *Client) CreateRepository27(params *CreateRepository27Params, opts ...ClientOption) (*CreateRepository27Created, error) {
 	// TODO: Validate the params before sending
@@ -1094,7 +1094,7 @@ func (a *Client) CreateRepository27(params *CreateRepository27Params, opts ...Cl
 }
 
 /*
-  CreateRepository28 creates py p i proxy repository
+CreateRepository28 creates py p i proxy repository
 */
 func (a *Client) CreateRepository28(params *CreateRepository28Params, opts ...ClientOption) (*CreateRepository28Created, error) {
 	// TODO: Validate the params before sending
@@ -1132,7 +1132,7 @@ func (a *Client) CreateRepository28(params *CreateRepository28Params, opts ...Cl
 }
 
 /*
-  CreateRepository29 creates conda proxy repository
+CreateRepository29 creates conda proxy repository
 */
 func (a *Client) CreateRepository29(params *CreateRepository29Params, opts ...ClientOption) (*CreateRepository29Created, error) {
 	// TODO: Validate the params before sending
@@ -1170,7 +1170,7 @@ func (a *Client) CreateRepository29(params *CreateRepository29Params, opts ...Cl
 }
 
 /*
-  CreateRepository3 creates a p t hosted repository
+CreateRepository3 creates a p t hosted repository
 */
 func (a *Client) CreateRepository3(params *CreateRepository3Params, opts ...ClientOption) (*CreateRepository3Created, error) {
 	// TODO: Validate the params before sending
@@ -1208,7 +1208,7 @@ func (a *Client) CreateRepository3(params *CreateRepository3Params, opts ...Clie
 }
 
 /*
-  CreateRepository30 creates conan proxy repository
+CreateRepository30 creates conan proxy repository
 */
 func (a *Client) CreateRepository30(params *CreateRepository30Params, opts ...ClientOption) (*CreateRepository30Created, error) {
 	// TODO: Validate the params before sending
@@ -1246,7 +1246,7 @@ func (a *Client) CreateRepository30(params *CreateRepository30Params, opts ...Cl
 }
 
 /*
-  CreateRepository31 creates r group repository
+CreateRepository31 creates r group repository
 */
 func (a *Client) CreateRepository31(params *CreateRepository31Params, opts ...ClientOption) (*CreateRepository31Created, error) {
 	// TODO: Validate the params before sending
@@ -1284,7 +1284,7 @@ func (a *Client) CreateRepository31(params *CreateRepository31Params, opts ...Cl
 }
 
 /*
-  CreateRepository32 creates r hosted repository
+CreateRepository32 creates r hosted repository
 */
 func (a *Client) CreateRepository32(params *CreateRepository32Params, opts ...ClientOption) (*CreateRepository32Created, error) {
 	// TODO: Validate the params before sending
@@ -1322,7 +1322,7 @@ func (a *Client) CreateRepository32(params *CreateRepository32Params, opts ...Cl
 }
 
 /*
-  CreateRepository33 creates r proxy repository
+CreateRepository33 creates r proxy repository
 */
 func (a *Client) CreateRepository33(params *CreateRepository33Params, opts ...ClientOption) (*CreateRepository33Created, error) {
 	// TODO: Validate the params before sending
@@ -1360,7 +1360,7 @@ func (a *Client) CreateRepository33(params *CreateRepository33Params, opts ...Cl
 }
 
 /*
-  CreateRepository34 creates cocoapods proxy repository
+CreateRepository34 creates cocoapods proxy repository
 */
 func (a *Client) CreateRepository34(params *CreateRepository34Params, opts ...ClientOption) (*CreateRepository34Created, error) {
 	// TODO: Validate the params before sending
@@ -1398,7 +1398,7 @@ func (a *Client) CreateRepository34(params *CreateRepository34Params, opts ...Cl
 }
 
 /*
-  CreateRepository35 creates a go group repository
+CreateRepository35 creates a go group repository
 */
 func (a *Client) CreateRepository35(params *CreateRepository35Params, opts ...ClientOption) (*CreateRepository35Created, error) {
 	// TODO: Validate the params before sending
@@ -1436,7 +1436,7 @@ func (a *Client) CreateRepository35(params *CreateRepository35Params, opts ...Cl
 }
 
 /*
-  CreateRepository36 creates a go proxy repository
+CreateRepository36 creates a go proxy repository
 */
 func (a *Client) CreateRepository36(params *CreateRepository36Params, opts ...ClientOption) (*CreateRepository36Created, error) {
 	// TODO: Validate the params before sending
@@ -1474,7 +1474,7 @@ func (a *Client) CreateRepository36(params *CreateRepository36Params, opts ...Cl
 }
 
 /*
-  CreateRepository37 creates p2 proxy repository
+CreateRepository37 creates p2 proxy repository
 */
 func (a *Client) CreateRepository37(params *CreateRepository37Params, opts ...ClientOption) (*CreateRepository37Created, error) {
 	// TODO: Validate the params before sending
@@ -1512,7 +1512,7 @@ func (a *Client) CreateRepository37(params *CreateRepository37Params, opts ...Cl
 }
 
 /*
-  CreateRepository38 creates bower group repository
+CreateRepository38 creates bower group repository
 */
 func (a *Client) CreateRepository38(params *CreateRepository38Params, opts ...ClientOption) (*CreateRepository38Created, error) {
 	// TODO: Validate the params before sending
@@ -1550,7 +1550,7 @@ func (a *Client) CreateRepository38(params *CreateRepository38Params, opts ...Cl
 }
 
 /*
-  CreateRepository39 creates bower hosted repository
+CreateRepository39 creates bower hosted repository
 */
 func (a *Client) CreateRepository39(params *CreateRepository39Params, opts ...ClientOption) (*CreateRepository39Created, error) {
 	// TODO: Validate the params before sending
@@ -1588,7 +1588,7 @@ func (a *Client) CreateRepository39(params *CreateRepository39Params, opts ...Cl
 }
 
 /*
-  CreateRepository4 creates a p t proxy repository
+CreateRepository4 creates a p t proxy repository
 */
 func (a *Client) CreateRepository4(params *CreateRepository4Params, opts ...ClientOption) (*CreateRepository4Created, error) {
 	// TODO: Validate the params before sending
@@ -1626,7 +1626,7 @@ func (a *Client) CreateRepository4(params *CreateRepository4Params, opts ...Clie
 }
 
 /*
-  CreateRepository40 creates bower proxy repository
+CreateRepository40 creates bower proxy repository
 */
 func (a *Client) CreateRepository40(params *CreateRepository40Params, opts ...ClientOption) (*CreateRepository40Created, error) {
 	// TODO: Validate the params before sending
@@ -1664,7 +1664,7 @@ func (a *Client) CreateRepository40(params *CreateRepository40Params, opts ...Cl
 }
 
 /*
-  CreateRepository5 creates raw group repository
+CreateRepository5 creates raw group repository
 */
 func (a *Client) CreateRepository5(params *CreateRepository5Params, opts ...ClientOption) (*CreateRepository5Created, error) {
 	// TODO: Validate the params before sending
@@ -1702,7 +1702,7 @@ func (a *Client) CreateRepository5(params *CreateRepository5Params, opts ...Clie
 }
 
 /*
-  CreateRepository6 creates raw hosted repository
+CreateRepository6 creates raw hosted repository
 */
 func (a *Client) CreateRepository6(params *CreateRepository6Params, opts ...ClientOption) (*CreateRepository6Created, error) {
 	// TODO: Validate the params before sending
@@ -1740,7 +1740,7 @@ func (a *Client) CreateRepository6(params *CreateRepository6Params, opts ...Clie
 }
 
 /*
-  CreateRepository7 creates raw proxy repository
+CreateRepository7 creates raw proxy repository
 */
 func (a *Client) CreateRepository7(params *CreateRepository7Params, opts ...ClientOption) (*CreateRepository7Created, error) {
 	// TODO: Validate the params before sending
@@ -1778,7 +1778,7 @@ func (a *Client) CreateRepository7(params *CreateRepository7Params, opts ...Clie
 }
 
 /*
-  CreateRepository8 creates npm group repository
+CreateRepository8 creates npm group repository
 */
 func (a *Client) CreateRepository8(params *CreateRepository8Params, opts ...ClientOption) (*CreateRepository8Created, error) {
 	// TODO: Validate the params before sending
@@ -1816,7 +1816,7 @@ func (a *Client) CreateRepository8(params *CreateRepository8Params, opts ...Clie
 }
 
 /*
-  CreateRepository9 creates npm hosted repository
+CreateRepository9 creates npm hosted repository
 */
 func (a *Client) CreateRepository9(params *CreateRepository9Params, opts ...ClientOption) (*CreateRepository9Created, error) {
 	// TODO: Validate the params before sending
@@ -1854,7 +1854,7 @@ func (a *Client) CreateRepository9(params *CreateRepository9Params, opts ...Clie
 }
 
 /*
-  DeleteRepository deletes repository of any format
+DeleteRepository deletes repository of any format
 */
 func (a *Client) DeleteRepository(params *DeleteRepositoryParams, opts ...ClientOption) (*DeleteRepositoryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1892,7 +1892,7 @@ func (a *Client) DeleteRepository(params *DeleteRepositoryParams, opts ...Client
 }
 
 /*
-  DisableRepositoryHealthCheck disables repository health check proxy repositories only
+DisableRepositoryHealthCheck disables repository health check proxy repositories only
 */
 func (a *Client) DisableRepositoryHealthCheck(params *DisableRepositoryHealthCheckParams, opts ...ClientOption) (*DisableRepositoryHealthCheckNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1930,7 +1930,7 @@ func (a *Client) DisableRepositoryHealthCheck(params *DisableRepositoryHealthChe
 }
 
 /*
-  EnableRepositoryHealthCheck enables repository health check proxy repositories only
+EnableRepositoryHealthCheck enables repository health check proxy repositories only
 */
 func (a *Client) EnableRepositoryHealthCheck(params *EnableRepositoryHealthCheckParams, opts ...ClientOption) (*EnableRepositoryHealthCheckNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1968,7 +1968,7 @@ func (a *Client) EnableRepositoryHealthCheck(params *EnableRepositoryHealthCheck
 }
 
 /*
-  GetRepositories lists repositories
+GetRepositories lists repositories
 */
 func (a *Client) GetRepositories(params *GetRepositoriesParams, opts ...ClientOption) (*GetRepositoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -2006,7 +2006,7 @@ func (a *Client) GetRepositories(params *GetRepositoriesParams, opts ...ClientOp
 }
 
 /*
-  GetRepositories1 lists repositories
+GetRepositories1 lists repositories
 */
 func (a *Client) GetRepositories1(params *GetRepositories1Params, opts ...ClientOption) (*GetRepositories1OK, error) {
 	// TODO: Validate the params before sending
@@ -2044,7 +2044,7 @@ func (a *Client) GetRepositories1(params *GetRepositories1Params, opts ...Client
 }
 
 /*
-  GetRepository gets repository details
+GetRepository gets repository details
 */
 func (a *Client) GetRepository(params *GetRepositoryParams, opts ...ClientOption) (*GetRepositoryOK, error) {
 	// TODO: Validate the params before sending
@@ -2082,7 +2082,7 @@ func (a *Client) GetRepository(params *GetRepositoryParams, opts ...ClientOption
 }
 
 /*
-  GetRepository1 gets repository
+GetRepository1 gets repository
 */
 func (a *Client) GetRepository1(params *GetRepository1Params, opts ...ClientOption) (*GetRepository1OK, error) {
 	// TODO: Validate the params before sending
@@ -2120,7 +2120,7 @@ func (a *Client) GetRepository1(params *GetRepository1Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository10 gets repository
+GetRepository10 gets repository
 */
 func (a *Client) GetRepository10(params *GetRepository10Params, opts ...ClientOption) (*GetRepository10OK, error) {
 	// TODO: Validate the params before sending
@@ -2158,7 +2158,7 @@ func (a *Client) GetRepository10(params *GetRepository10Params, opts ...ClientOp
 }
 
 /*
-  GetRepository11 gets repository
+GetRepository11 gets repository
 */
 func (a *Client) GetRepository11(params *GetRepository11Params, opts ...ClientOption) (*GetRepository11OK, error) {
 	// TODO: Validate the params before sending
@@ -2196,7 +2196,7 @@ func (a *Client) GetRepository11(params *GetRepository11Params, opts ...ClientOp
 }
 
 /*
-  GetRepository12 gets repository
+GetRepository12 gets repository
 */
 func (a *Client) GetRepository12(params *GetRepository12Params, opts ...ClientOption) (*GetRepository12OK, error) {
 	// TODO: Validate the params before sending
@@ -2234,7 +2234,7 @@ func (a *Client) GetRepository12(params *GetRepository12Params, opts ...ClientOp
 }
 
 /*
-  GetRepository13 gets repository
+GetRepository13 gets repository
 */
 func (a *Client) GetRepository13(params *GetRepository13Params, opts ...ClientOption) (*GetRepository13OK, error) {
 	// TODO: Validate the params before sending
@@ -2272,7 +2272,7 @@ func (a *Client) GetRepository13(params *GetRepository13Params, opts ...ClientOp
 }
 
 /*
-  GetRepository14 gets repository
+GetRepository14 gets repository
 */
 func (a *Client) GetRepository14(params *GetRepository14Params, opts ...ClientOption) (*GetRepository14OK, error) {
 	// TODO: Validate the params before sending
@@ -2310,7 +2310,7 @@ func (a *Client) GetRepository14(params *GetRepository14Params, opts ...ClientOp
 }
 
 /*
-  GetRepository15 gets repository
+GetRepository15 gets repository
 */
 func (a *Client) GetRepository15(params *GetRepository15Params, opts ...ClientOption) (*GetRepository15OK, error) {
 	// TODO: Validate the params before sending
@@ -2348,7 +2348,7 @@ func (a *Client) GetRepository15(params *GetRepository15Params, opts ...ClientOp
 }
 
 /*
-  GetRepository16 gets repository
+GetRepository16 gets repository
 */
 func (a *Client) GetRepository16(params *GetRepository16Params, opts ...ClientOption) (*GetRepository16OK, error) {
 	// TODO: Validate the params before sending
@@ -2386,7 +2386,7 @@ func (a *Client) GetRepository16(params *GetRepository16Params, opts ...ClientOp
 }
 
 /*
-  GetRepository17 gets repository
+GetRepository17 gets repository
 */
 func (a *Client) GetRepository17(params *GetRepository17Params, opts ...ClientOption) (*GetRepository17OK, error) {
 	// TODO: Validate the params before sending
@@ -2424,7 +2424,7 @@ func (a *Client) GetRepository17(params *GetRepository17Params, opts ...ClientOp
 }
 
 /*
-  GetRepository18 gets repository
+GetRepository18 gets repository
 */
 func (a *Client) GetRepository18(params *GetRepository18Params, opts ...ClientOption) (*GetRepository18OK, error) {
 	// TODO: Validate the params before sending
@@ -2462,7 +2462,7 @@ func (a *Client) GetRepository18(params *GetRepository18Params, opts ...ClientOp
 }
 
 /*
-  GetRepository19 gets repository
+GetRepository19 gets repository
 */
 func (a *Client) GetRepository19(params *GetRepository19Params, opts ...ClientOption) (*GetRepository19OK, error) {
 	// TODO: Validate the params before sending
@@ -2500,7 +2500,7 @@ func (a *Client) GetRepository19(params *GetRepository19Params, opts ...ClientOp
 }
 
 /*
-  GetRepository2 gets repository
+GetRepository2 gets repository
 */
 func (a *Client) GetRepository2(params *GetRepository2Params, opts ...ClientOption) (*GetRepository2OK, error) {
 	// TODO: Validate the params before sending
@@ -2538,7 +2538,7 @@ func (a *Client) GetRepository2(params *GetRepository2Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository20 gets repository
+GetRepository20 gets repository
 */
 func (a *Client) GetRepository20(params *GetRepository20Params, opts ...ClientOption) (*GetRepository20OK, error) {
 	// TODO: Validate the params before sending
@@ -2576,7 +2576,7 @@ func (a *Client) GetRepository20(params *GetRepository20Params, opts ...ClientOp
 }
 
 /*
-  GetRepository21 gets repository
+GetRepository21 gets repository
 */
 func (a *Client) GetRepository21(params *GetRepository21Params, opts ...ClientOption) (*GetRepository21OK, error) {
 	// TODO: Validate the params before sending
@@ -2614,7 +2614,7 @@ func (a *Client) GetRepository21(params *GetRepository21Params, opts ...ClientOp
 }
 
 /*
-  GetRepository22 gets repository
+GetRepository22 gets repository
 */
 func (a *Client) GetRepository22(params *GetRepository22Params, opts ...ClientOption) (*GetRepository22OK, error) {
 	// TODO: Validate the params before sending
@@ -2652,7 +2652,7 @@ func (a *Client) GetRepository22(params *GetRepository22Params, opts ...ClientOp
 }
 
 /*
-  GetRepository23 gets repository
+GetRepository23 gets repository
 */
 func (a *Client) GetRepository23(params *GetRepository23Params, opts ...ClientOption) (*GetRepository23OK, error) {
 	// TODO: Validate the params before sending
@@ -2690,7 +2690,7 @@ func (a *Client) GetRepository23(params *GetRepository23Params, opts ...ClientOp
 }
 
 /*
-  GetRepository24 gets repository
+GetRepository24 gets repository
 */
 func (a *Client) GetRepository24(params *GetRepository24Params, opts ...ClientOption) (*GetRepository24OK, error) {
 	// TODO: Validate the params before sending
@@ -2728,7 +2728,7 @@ func (a *Client) GetRepository24(params *GetRepository24Params, opts ...ClientOp
 }
 
 /*
-  GetRepository25 gets repository
+GetRepository25 gets repository
 */
 func (a *Client) GetRepository25(params *GetRepository25Params, opts ...ClientOption) (*GetRepository25OK, error) {
 	// TODO: Validate the params before sending
@@ -2766,7 +2766,7 @@ func (a *Client) GetRepository25(params *GetRepository25Params, opts ...ClientOp
 }
 
 /*
-  GetRepository26 gets repository
+GetRepository26 gets repository
 */
 func (a *Client) GetRepository26(params *GetRepository26Params, opts ...ClientOption) (*GetRepository26OK, error) {
 	// TODO: Validate the params before sending
@@ -2804,7 +2804,7 @@ func (a *Client) GetRepository26(params *GetRepository26Params, opts ...ClientOp
 }
 
 /*
-  GetRepository27 gets repository
+GetRepository27 gets repository
 */
 func (a *Client) GetRepository27(params *GetRepository27Params, opts ...ClientOption) (*GetRepository27OK, error) {
 	// TODO: Validate the params before sending
@@ -2842,7 +2842,7 @@ func (a *Client) GetRepository27(params *GetRepository27Params, opts ...ClientOp
 }
 
 /*
-  GetRepository28 gets repository
+GetRepository28 gets repository
 */
 func (a *Client) GetRepository28(params *GetRepository28Params, opts ...ClientOption) (*GetRepository28OK, error) {
 	// TODO: Validate the params before sending
@@ -2880,7 +2880,7 @@ func (a *Client) GetRepository28(params *GetRepository28Params, opts ...ClientOp
 }
 
 /*
-  GetRepository29 gets repository
+GetRepository29 gets repository
 */
 func (a *Client) GetRepository29(params *GetRepository29Params, opts ...ClientOption) (*GetRepository29OK, error) {
 	// TODO: Validate the params before sending
@@ -2918,7 +2918,7 @@ func (a *Client) GetRepository29(params *GetRepository29Params, opts ...ClientOp
 }
 
 /*
-  GetRepository3 gets repository
+GetRepository3 gets repository
 */
 func (a *Client) GetRepository3(params *GetRepository3Params, opts ...ClientOption) (*GetRepository3OK, error) {
 	// TODO: Validate the params before sending
@@ -2956,7 +2956,7 @@ func (a *Client) GetRepository3(params *GetRepository3Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository30 gets repository
+GetRepository30 gets repository
 */
 func (a *Client) GetRepository30(params *GetRepository30Params, opts ...ClientOption) (*GetRepository30OK, error) {
 	// TODO: Validate the params before sending
@@ -2994,7 +2994,7 @@ func (a *Client) GetRepository30(params *GetRepository30Params, opts ...ClientOp
 }
 
 /*
-  GetRepository31 gets repository
+GetRepository31 gets repository
 */
 func (a *Client) GetRepository31(params *GetRepository31Params, opts ...ClientOption) (*GetRepository31OK, error) {
 	// TODO: Validate the params before sending
@@ -3032,7 +3032,7 @@ func (a *Client) GetRepository31(params *GetRepository31Params, opts ...ClientOp
 }
 
 /*
-  GetRepository32 gets repository
+GetRepository32 gets repository
 */
 func (a *Client) GetRepository32(params *GetRepository32Params, opts ...ClientOption) (*GetRepository32OK, error) {
 	// TODO: Validate the params before sending
@@ -3070,7 +3070,7 @@ func (a *Client) GetRepository32(params *GetRepository32Params, opts ...ClientOp
 }
 
 /*
-  GetRepository33 gets repository
+GetRepository33 gets repository
 */
 func (a *Client) GetRepository33(params *GetRepository33Params, opts ...ClientOption) (*GetRepository33OK, error) {
 	// TODO: Validate the params before sending
@@ -3108,7 +3108,7 @@ func (a *Client) GetRepository33(params *GetRepository33Params, opts ...ClientOp
 }
 
 /*
-  GetRepository34 gets repository
+GetRepository34 gets repository
 */
 func (a *Client) GetRepository34(params *GetRepository34Params, opts ...ClientOption) (*GetRepository34OK, error) {
 	// TODO: Validate the params before sending
@@ -3146,7 +3146,7 @@ func (a *Client) GetRepository34(params *GetRepository34Params, opts ...ClientOp
 }
 
 /*
-  GetRepository35 gets repository
+GetRepository35 gets repository
 */
 func (a *Client) GetRepository35(params *GetRepository35Params, opts ...ClientOption) (*GetRepository35OK, error) {
 	// TODO: Validate the params before sending
@@ -3184,7 +3184,7 @@ func (a *Client) GetRepository35(params *GetRepository35Params, opts ...ClientOp
 }
 
 /*
-  GetRepository36 gets repository
+GetRepository36 gets repository
 */
 func (a *Client) GetRepository36(params *GetRepository36Params, opts ...ClientOption) (*GetRepository36OK, error) {
 	// TODO: Validate the params before sending
@@ -3222,7 +3222,7 @@ func (a *Client) GetRepository36(params *GetRepository36Params, opts ...ClientOp
 }
 
 /*
-  GetRepository37 gets repository
+GetRepository37 gets repository
 */
 func (a *Client) GetRepository37(params *GetRepository37Params, opts ...ClientOption) (*GetRepository37OK, error) {
 	// TODO: Validate the params before sending
@@ -3260,7 +3260,7 @@ func (a *Client) GetRepository37(params *GetRepository37Params, opts ...ClientOp
 }
 
 /*
-  GetRepository38 gets repository
+GetRepository38 gets repository
 */
 func (a *Client) GetRepository38(params *GetRepository38Params, opts ...ClientOption) (*GetRepository38OK, error) {
 	// TODO: Validate the params before sending
@@ -3298,7 +3298,7 @@ func (a *Client) GetRepository38(params *GetRepository38Params, opts ...ClientOp
 }
 
 /*
-  GetRepository39 gets repository
+GetRepository39 gets repository
 */
 func (a *Client) GetRepository39(params *GetRepository39Params, opts ...ClientOption) (*GetRepository39OK, error) {
 	// TODO: Validate the params before sending
@@ -3336,7 +3336,7 @@ func (a *Client) GetRepository39(params *GetRepository39Params, opts ...ClientOp
 }
 
 /*
-  GetRepository4 gets repository
+GetRepository4 gets repository
 */
 func (a *Client) GetRepository4(params *GetRepository4Params, opts ...ClientOption) (*GetRepository4OK, error) {
 	// TODO: Validate the params before sending
@@ -3374,7 +3374,7 @@ func (a *Client) GetRepository4(params *GetRepository4Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository40 gets repository
+GetRepository40 gets repository
 */
 func (a *Client) GetRepository40(params *GetRepository40Params, opts ...ClientOption) (*GetRepository40OK, error) {
 	// TODO: Validate the params before sending
@@ -3412,7 +3412,7 @@ func (a *Client) GetRepository40(params *GetRepository40Params, opts ...ClientOp
 }
 
 /*
-  GetRepository41 gets repository
+GetRepository41 gets repository
 */
 func (a *Client) GetRepository41(params *GetRepository41Params, opts ...ClientOption) (*GetRepository41OK, error) {
 	// TODO: Validate the params before sending
@@ -3450,7 +3450,7 @@ func (a *Client) GetRepository41(params *GetRepository41Params, opts ...ClientOp
 }
 
 /*
-  GetRepository5 gets repository
+GetRepository5 gets repository
 */
 func (a *Client) GetRepository5(params *GetRepository5Params, opts ...ClientOption) (*GetRepository5OK, error) {
 	// TODO: Validate the params before sending
@@ -3488,7 +3488,7 @@ func (a *Client) GetRepository5(params *GetRepository5Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository6 gets repository
+GetRepository6 gets repository
 */
 func (a *Client) GetRepository6(params *GetRepository6Params, opts ...ClientOption) (*GetRepository6OK, error) {
 	// TODO: Validate the params before sending
@@ -3526,7 +3526,7 @@ func (a *Client) GetRepository6(params *GetRepository6Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository7 gets repository
+GetRepository7 gets repository
 */
 func (a *Client) GetRepository7(params *GetRepository7Params, opts ...ClientOption) (*GetRepository7OK, error) {
 	// TODO: Validate the params before sending
@@ -3564,7 +3564,7 @@ func (a *Client) GetRepository7(params *GetRepository7Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository8 gets repository
+GetRepository8 gets repository
 */
 func (a *Client) GetRepository8(params *GetRepository8Params, opts ...ClientOption) (*GetRepository8OK, error) {
 	// TODO: Validate the params before sending
@@ -3602,7 +3602,7 @@ func (a *Client) GetRepository8(params *GetRepository8Params, opts ...ClientOpti
 }
 
 /*
-  GetRepository9 gets repository
+GetRepository9 gets repository
 */
 func (a *Client) GetRepository9(params *GetRepository9Params, opts ...ClientOption) (*GetRepository9OK, error) {
 	// TODO: Validate the params before sending
@@ -3640,7 +3640,7 @@ func (a *Client) GetRepository9(params *GetRepository9Params, opts ...ClientOpti
 }
 
 /*
-  InvalidateCache invalidates repository cache proxy or group repositories only
+InvalidateCache invalidates repository cache proxy or group repositories only
 */
 func (a *Client) InvalidateCache(params *InvalidateCacheParams, opts ...ClientOption) (*InvalidateCacheNoContent, error) {
 	// TODO: Validate the params before sending
@@ -3678,7 +3678,7 @@ func (a *Client) InvalidateCache(params *InvalidateCacheParams, opts ...ClientOp
 }
 
 /*
-  RebuildIndex schedules a repair rebuild repository search task hosted or proxy repositories only
+RebuildIndex schedules a repair rebuild repository search task hosted or proxy repositories only
 */
 func (a *Client) RebuildIndex(params *RebuildIndexParams, opts ...ClientOption) (*RebuildIndexNoContent, error) {
 	// TODO: Validate the params before sending
@@ -3716,7 +3716,7 @@ func (a *Client) RebuildIndex(params *RebuildIndexParams, opts ...ClientOption) 
 }
 
 /*
-  UpdateRepository updates maven group repository
+UpdateRepository updates maven group repository
 */
 func (a *Client) UpdateRepository(params *UpdateRepositoryParams, opts ...ClientOption) (*UpdateRepositoryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -3754,7 +3754,7 @@ func (a *Client) UpdateRepository(params *UpdateRepositoryParams, opts ...Client
 }
 
 /*
-  UpdateRepository1 updates maven hosted repository
+UpdateRepository1 updates maven hosted repository
 */
 func (a *Client) UpdateRepository1(params *UpdateRepository1Params, opts ...ClientOption) (*UpdateRepository1NoContent, error) {
 	// TODO: Validate the params before sending
@@ -3792,7 +3792,7 @@ func (a *Client) UpdateRepository1(params *UpdateRepository1Params, opts ...Clie
 }
 
 /*
-  UpdateRepository10 updates npm proxy repository
+UpdateRepository10 updates npm proxy repository
 */
 func (a *Client) UpdateRepository10(params *UpdateRepository10Params, opts ...ClientOption) (*UpdateRepository10NoContent, error) {
 	// TODO: Validate the params before sending
@@ -3830,7 +3830,7 @@ func (a *Client) UpdateRepository10(params *UpdateRepository10Params, opts ...Cl
 }
 
 /*
-  UpdateRepository11 updates nu get group repository
+UpdateRepository11 updates nu get group repository
 */
 func (a *Client) UpdateRepository11(params *UpdateRepository11Params, opts ...ClientOption) (*UpdateRepository11NoContent, error) {
 	// TODO: Validate the params before sending
@@ -3868,7 +3868,7 @@ func (a *Client) UpdateRepository11(params *UpdateRepository11Params, opts ...Cl
 }
 
 /*
-  UpdateRepository12 updates nu get hosted repository
+UpdateRepository12 updates nu get hosted repository
 */
 func (a *Client) UpdateRepository12(params *UpdateRepository12Params, opts ...ClientOption) (*UpdateRepository12NoContent, error) {
 	// TODO: Validate the params before sending
@@ -3906,7 +3906,7 @@ func (a *Client) UpdateRepository12(params *UpdateRepository12Params, opts ...Cl
 }
 
 /*
-  UpdateRepository13 updates nu get proxy repository
+UpdateRepository13 updates nu get proxy repository
 */
 func (a *Client) UpdateRepository13(params *UpdateRepository13Params, opts ...ClientOption) (*UpdateRepository13NoContent, error) {
 	// TODO: Validate the params before sending
@@ -3944,7 +3944,7 @@ func (a *Client) UpdateRepository13(params *UpdateRepository13Params, opts ...Cl
 }
 
 /*
-  UpdateRepository14 updates ruby gems group repository
+UpdateRepository14 updates ruby gems group repository
 */
 func (a *Client) UpdateRepository14(params *UpdateRepository14Params, opts ...ClientOption) (*UpdateRepository14NoContent, error) {
 	// TODO: Validate the params before sending
@@ -3982,7 +3982,7 @@ func (a *Client) UpdateRepository14(params *UpdateRepository14Params, opts ...Cl
 }
 
 /*
-  UpdateRepository15 updates ruby gems hosted repository
+UpdateRepository15 updates ruby gems hosted repository
 */
 func (a *Client) UpdateRepository15(params *UpdateRepository15Params, opts ...ClientOption) (*UpdateRepository15NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4020,7 +4020,7 @@ func (a *Client) UpdateRepository15(params *UpdateRepository15Params, opts ...Cl
 }
 
 /*
-  UpdateRepository16 updates ruby gems proxy repository
+UpdateRepository16 updates ruby gems proxy repository
 */
 func (a *Client) UpdateRepository16(params *UpdateRepository16Params, opts ...ClientOption) (*UpdateRepository16NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4058,7 +4058,7 @@ func (a *Client) UpdateRepository16(params *UpdateRepository16Params, opts ...Cl
 }
 
 /*
-  UpdateRepository17 updates docker group repository
+UpdateRepository17 updates docker group repository
 */
 func (a *Client) UpdateRepository17(params *UpdateRepository17Params, opts ...ClientOption) (*UpdateRepository17NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4096,7 +4096,7 @@ func (a *Client) UpdateRepository17(params *UpdateRepository17Params, opts ...Cl
 }
 
 /*
-  UpdateRepository18 updates docker hosted repository
+UpdateRepository18 updates docker hosted repository
 */
 func (a *Client) UpdateRepository18(params *UpdateRepository18Params, opts ...ClientOption) (*UpdateRepository18NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4134,7 +4134,7 @@ func (a *Client) UpdateRepository18(params *UpdateRepository18Params, opts ...Cl
 }
 
 /*
-  UpdateRepository19 updates docker group repository
+UpdateRepository19 updates docker group repository
 */
 func (a *Client) UpdateRepository19(params *UpdateRepository19Params, opts ...ClientOption) (*UpdateRepository19NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4172,7 +4172,7 @@ func (a *Client) UpdateRepository19(params *UpdateRepository19Params, opts ...Cl
 }
 
 /*
-  UpdateRepository2 updates maven proxy repository
+UpdateRepository2 updates maven proxy repository
 */
 func (a *Client) UpdateRepository2(params *UpdateRepository2Params, opts ...ClientOption) (*UpdateRepository2NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4210,7 +4210,7 @@ func (a *Client) UpdateRepository2(params *UpdateRepository2Params, opts ...Clie
 }
 
 /*
-  UpdateRepository20 updates yum group repository
+UpdateRepository20 updates yum group repository
 */
 func (a *Client) UpdateRepository20(params *UpdateRepository20Params, opts ...ClientOption) (*UpdateRepository20NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4248,7 +4248,7 @@ func (a *Client) UpdateRepository20(params *UpdateRepository20Params, opts ...Cl
 }
 
 /*
-  UpdateRepository21 updates yum hosted repository
+UpdateRepository21 updates yum hosted repository
 */
 func (a *Client) UpdateRepository21(params *UpdateRepository21Params, opts ...ClientOption) (*UpdateRepository21NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4286,7 +4286,7 @@ func (a *Client) UpdateRepository21(params *UpdateRepository21Params, opts ...Cl
 }
 
 /*
-  UpdateRepository22 updates yum proxy repository
+UpdateRepository22 updates yum proxy repository
 */
 func (a *Client) UpdateRepository22(params *UpdateRepository22Params, opts ...ClientOption) (*UpdateRepository22NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4324,7 +4324,7 @@ func (a *Client) UpdateRepository22(params *UpdateRepository22Params, opts ...Cl
 }
 
 /*
-  UpdateRepository23 updates helm hosted repository
+UpdateRepository23 updates helm hosted repository
 */
 func (a *Client) UpdateRepository23(params *UpdateRepository23Params, opts ...ClientOption) (*UpdateRepository23NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4362,7 +4362,7 @@ func (a *Client) UpdateRepository23(params *UpdateRepository23Params, opts ...Cl
 }
 
 /*
-  UpdateRepository24 updates helm proxy repository
+UpdateRepository24 updates helm proxy repository
 */
 func (a *Client) UpdateRepository24(params *UpdateRepository24Params, opts ...ClientOption) (*UpdateRepository24NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4400,7 +4400,7 @@ func (a *Client) UpdateRepository24(params *UpdateRepository24Params, opts ...Cl
 }
 
 /*
-  UpdateRepository25 updates git l f s hosted repository
+UpdateRepository25 updates git l f s hosted repository
 */
 func (a *Client) UpdateRepository25(params *UpdateRepository25Params, opts ...ClientOption) (*UpdateRepository25NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4438,7 +4438,7 @@ func (a *Client) UpdateRepository25(params *UpdateRepository25Params, opts ...Cl
 }
 
 /*
-  UpdateRepository26 updates py p i group repository
+UpdateRepository26 updates py p i group repository
 */
 func (a *Client) UpdateRepository26(params *UpdateRepository26Params, opts ...ClientOption) (*UpdateRepository26NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4476,7 +4476,7 @@ func (a *Client) UpdateRepository26(params *UpdateRepository26Params, opts ...Cl
 }
 
 /*
-  UpdateRepository27 updates py p i hosted repository
+UpdateRepository27 updates py p i hosted repository
 */
 func (a *Client) UpdateRepository27(params *UpdateRepository27Params, opts ...ClientOption) (*UpdateRepository27NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4514,7 +4514,7 @@ func (a *Client) UpdateRepository27(params *UpdateRepository27Params, opts ...Cl
 }
 
 /*
-  UpdateRepository28 updates py p i proxy repository
+UpdateRepository28 updates py p i proxy repository
 */
 func (a *Client) UpdateRepository28(params *UpdateRepository28Params, opts ...ClientOption) (*UpdateRepository28NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4552,7 +4552,7 @@ func (a *Client) UpdateRepository28(params *UpdateRepository28Params, opts ...Cl
 }
 
 /*
-  UpdateRepository29 updates conda proxy repository
+UpdateRepository29 updates conda proxy repository
 */
 func (a *Client) UpdateRepository29(params *UpdateRepository29Params, opts ...ClientOption) (*UpdateRepository29NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4590,7 +4590,7 @@ func (a *Client) UpdateRepository29(params *UpdateRepository29Params, opts ...Cl
 }
 
 /*
-  UpdateRepository3 updates a p t hosted repository
+UpdateRepository3 updates a p t hosted repository
 */
 func (a *Client) UpdateRepository3(params *UpdateRepository3Params, opts ...ClientOption) (*UpdateRepository3NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4628,7 +4628,7 @@ func (a *Client) UpdateRepository3(params *UpdateRepository3Params, opts ...Clie
 }
 
 /*
-  UpdateRepository30 updates conan proxy repository
+UpdateRepository30 updates conan proxy repository
 */
 func (a *Client) UpdateRepository30(params *UpdateRepository30Params, opts ...ClientOption) (*UpdateRepository30NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4666,7 +4666,7 @@ func (a *Client) UpdateRepository30(params *UpdateRepository30Params, opts ...Cl
 }
 
 /*
-  UpdateRepository31 updates r group repository
+UpdateRepository31 updates r group repository
 */
 func (a *Client) UpdateRepository31(params *UpdateRepository31Params, opts ...ClientOption) (*UpdateRepository31NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4704,7 +4704,7 @@ func (a *Client) UpdateRepository31(params *UpdateRepository31Params, opts ...Cl
 }
 
 /*
-  UpdateRepository32 updates r hosted repository
+UpdateRepository32 updates r hosted repository
 */
 func (a *Client) UpdateRepository32(params *UpdateRepository32Params, opts ...ClientOption) (*UpdateRepository32NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4742,7 +4742,7 @@ func (a *Client) UpdateRepository32(params *UpdateRepository32Params, opts ...Cl
 }
 
 /*
-  UpdateRepository33 updates r proxy repository
+UpdateRepository33 updates r proxy repository
 */
 func (a *Client) UpdateRepository33(params *UpdateRepository33Params, opts ...ClientOption) (*UpdateRepository33NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4780,7 +4780,7 @@ func (a *Client) UpdateRepository33(params *UpdateRepository33Params, opts ...Cl
 }
 
 /*
-  UpdateRepository34 updates cocoapods proxy repository
+UpdateRepository34 updates cocoapods proxy repository
 */
 func (a *Client) UpdateRepository34(params *UpdateRepository34Params, opts ...ClientOption) (*UpdateRepository34NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4818,7 +4818,7 @@ func (a *Client) UpdateRepository34(params *UpdateRepository34Params, opts ...Cl
 }
 
 /*
-  UpdateRepository35 updates a go group repository
+UpdateRepository35 updates a go group repository
 */
 func (a *Client) UpdateRepository35(params *UpdateRepository35Params, opts ...ClientOption) (*UpdateRepository35NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4856,7 +4856,7 @@ func (a *Client) UpdateRepository35(params *UpdateRepository35Params, opts ...Cl
 }
 
 /*
-  UpdateRepository36 updates a go proxy repository
+UpdateRepository36 updates a go proxy repository
 */
 func (a *Client) UpdateRepository36(params *UpdateRepository36Params, opts ...ClientOption) (*UpdateRepository36NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4894,7 +4894,7 @@ func (a *Client) UpdateRepository36(params *UpdateRepository36Params, opts ...Cl
 }
 
 /*
-  UpdateRepository37 updates p2 proxy repository
+UpdateRepository37 updates p2 proxy repository
 */
 func (a *Client) UpdateRepository37(params *UpdateRepository37Params, opts ...ClientOption) (*UpdateRepository37NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4932,7 +4932,7 @@ func (a *Client) UpdateRepository37(params *UpdateRepository37Params, opts ...Cl
 }
 
 /*
-  UpdateRepository38 updates bower group repository
+UpdateRepository38 updates bower group repository
 */
 func (a *Client) UpdateRepository38(params *UpdateRepository38Params, opts ...ClientOption) (*UpdateRepository38NoContent, error) {
 	// TODO: Validate the params before sending
@@ -4970,7 +4970,7 @@ func (a *Client) UpdateRepository38(params *UpdateRepository38Params, opts ...Cl
 }
 
 /*
-  UpdateRepository39 updates bower hosted repository
+UpdateRepository39 updates bower hosted repository
 */
 func (a *Client) UpdateRepository39(params *UpdateRepository39Params, opts ...ClientOption) (*UpdateRepository39NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5008,7 +5008,7 @@ func (a *Client) UpdateRepository39(params *UpdateRepository39Params, opts ...Cl
 }
 
 /*
-  UpdateRepository4 updates a p t proxy repository
+UpdateRepository4 updates a p t proxy repository
 */
 func (a *Client) UpdateRepository4(params *UpdateRepository4Params, opts ...ClientOption) (*UpdateRepository4NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5046,7 +5046,7 @@ func (a *Client) UpdateRepository4(params *UpdateRepository4Params, opts ...Clie
 }
 
 /*
-  UpdateRepository40 updates bower proxy repository
+UpdateRepository40 updates bower proxy repository
 */
 func (a *Client) UpdateRepository40(params *UpdateRepository40Params, opts ...ClientOption) (*UpdateRepository40NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5084,7 +5084,7 @@ func (a *Client) UpdateRepository40(params *UpdateRepository40Params, opts ...Cl
 }
 
 /*
-  UpdateRepository5 updates raw group repository
+UpdateRepository5 updates raw group repository
 */
 func (a *Client) UpdateRepository5(params *UpdateRepository5Params, opts ...ClientOption) (*UpdateRepository5NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5122,7 +5122,7 @@ func (a *Client) UpdateRepository5(params *UpdateRepository5Params, opts ...Clie
 }
 
 /*
-  UpdateRepository6 updates raw hosted repository
+UpdateRepository6 updates raw hosted repository
 */
 func (a *Client) UpdateRepository6(params *UpdateRepository6Params, opts ...ClientOption) (*UpdateRepository6NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5160,7 +5160,7 @@ func (a *Client) UpdateRepository6(params *UpdateRepository6Params, opts ...Clie
 }
 
 /*
-  UpdateRepository7 updates raw proxy repository
+UpdateRepository7 updates raw proxy repository
 */
 func (a *Client) UpdateRepository7(params *UpdateRepository7Params, opts ...ClientOption) (*UpdateRepository7NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5198,7 +5198,7 @@ func (a *Client) UpdateRepository7(params *UpdateRepository7Params, opts ...Clie
 }
 
 /*
-  UpdateRepository8 updates npm group repository
+UpdateRepository8 updates npm group repository
 */
 func (a *Client) UpdateRepository8(params *UpdateRepository8Params, opts ...ClientOption) (*UpdateRepository8NoContent, error) {
 	// TODO: Validate the params before sending
@@ -5236,7 +5236,7 @@ func (a *Client) UpdateRepository8(params *UpdateRepository8Params, opts ...Clie
 }
 
 /*
-  UpdateRepository9 updates npm hosted repository
+UpdateRepository9 updates npm hosted repository
 */
 func (a *Client) UpdateRepository9(params *UpdateRepository9Params, opts ...ClientOption) (*UpdateRepository9NoContent, error) {
 	// TODO: Validate the params before sending

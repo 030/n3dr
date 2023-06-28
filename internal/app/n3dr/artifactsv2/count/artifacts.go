@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"sync"
 	"time"
 
@@ -19,6 +20,49 @@ var (
 	mu    sync.Mutex
 	total int = 0
 )
+
+func (n *Nexus3) sort() error {
+	input, err := os.Open(filepath.Clean(n.CsvFile + ".csv"))
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err := input.Close(); err != nil {
+			panic(err)
+		}
+	}()
+
+	reader := csv.NewReader(input)
+	rows, err := reader.ReadAll()
+	if err != nil {
+		return err
+	}
+
+	pathColumn := 1 // Sort by second column
+	sortByPath := func(i, j int) bool {
+		return rows[i][pathColumn] < rows[j][pathColumn]
+	}
+
+	sort.Slice(rows, sortByPath)
+
+	output, err := os.Create(filepath.Clean(n.CsvFile + "-sorted.csv"))
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err := output.Close(); err != nil {
+			panic(err)
+		}
+	}()
+
+	writer := csv.NewWriter(output)
+	if err := writer.WriteAll(rows); err != nil {
+		return err
+	}
+	writer.Flush()
+
+	return nil
+}
 
 func (n *Nexus3) write(asset *models.AssetXO, repositoriesTotalArtifacts *int) {
 	record := []string{asset.Repository, asset.Path, asset.DownloadURL, asset.Format, asset.ContentType, asset.LastDownloaded.String(), asset.LastModified.String()}
@@ -147,8 +191,11 @@ func (n *Nexus3) Artifacts() error {
 	}
 	wg.Wait()
 
-	fmt.Println("---------- +")
-	fmt.Println(total)
+	if n.Sort {
+		if err := n.sort(); err != nil {
+			panic(err)
+		}
+	}
 
 	return nil
 }

@@ -100,6 +100,7 @@ configured by N3DR.
 ## Quickstarts
 
 - [docker](./docs/quickstarts/DOCKER.md)
+- [maven2](./docs/quickstarts/MAVEN2.md)
 - [rubygems](./docs/quickstarts/RUBYGEMS.md)
 
 ## Instructions

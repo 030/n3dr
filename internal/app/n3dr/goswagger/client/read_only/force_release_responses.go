@@ -48,14 +48,49 @@ func NewForceReleaseNoContent() *ForceReleaseNoContent {
 	return &ForceReleaseNoContent{}
 }
 
-/* ForceReleaseNoContent describes a response with status code 204, with default header values.
+/*
+ForceReleaseNoContent describes a response with status code 204, with default header values.
 
 System is no longer read-only
 */
 type ForceReleaseNoContent struct {
 }
 
+// IsSuccess returns true when this force release no content response has a 2xx status code
+func (o *ForceReleaseNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this force release no content response has a 3xx status code
+func (o *ForceReleaseNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this force release no content response has a 4xx status code
+func (o *ForceReleaseNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this force release no content response has a 5xx status code
+func (o *ForceReleaseNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this force release no content response a status code equal to that given
+func (o *ForceReleaseNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the force release no content response
+func (o *ForceReleaseNoContent) Code() int {
+	return 204
+}
+
 func (o *ForceReleaseNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/force-release][%d] forceReleaseNoContent ", 204)
+}
+
+func (o *ForceReleaseNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/force-release][%d] forceReleaseNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewForceReleaseForbidden() *ForceReleaseForbidden {
 	return &ForceReleaseForbidden{}
 }
 
-/* ForceReleaseForbidden describes a response with status code 403, with default header values.
+/*
+ForceReleaseForbidden describes a response with status code 403, with default header values.
 
 Authentication required
 */
 type ForceReleaseForbidden struct {
 }
 
+// IsSuccess returns true when this force release forbidden response has a 2xx status code
+func (o *ForceReleaseForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this force release forbidden response has a 3xx status code
+func (o *ForceReleaseForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this force release forbidden response has a 4xx status code
+func (o *ForceReleaseForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this force release forbidden response has a 5xx status code
+func (o *ForceReleaseForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this force release forbidden response a status code equal to that given
+func (o *ForceReleaseForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the force release forbidden response
+func (o *ForceReleaseForbidden) Code() int {
+	return 403
+}
+
 func (o *ForceReleaseForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/force-release][%d] forceReleaseForbidden ", 403)
+}
+
+func (o *ForceReleaseForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/force-release][%d] forceReleaseForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewForceReleaseNotFound() *ForceReleaseNotFound {
 	return &ForceReleaseNotFound{}
 }
 
-/* ForceReleaseNotFound describes a response with status code 404, with default header values.
+/*
+ForceReleaseNotFound describes a response with status code 404, with default header values.
 
 No change to read-only state
 */
 type ForceReleaseNotFound struct {
 }
 
+// IsSuccess returns true when this force release not found response has a 2xx status code
+func (o *ForceReleaseNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this force release not found response has a 3xx status code
+func (o *ForceReleaseNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this force release not found response has a 4xx status code
+func (o *ForceReleaseNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this force release not found response has a 5xx status code
+func (o *ForceReleaseNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this force release not found response a status code equal to that given
+func (o *ForceReleaseNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the force release not found response
+func (o *ForceReleaseNotFound) Code() int {
+	return 404
+}
+
 func (o *ForceReleaseNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/force-release][%d] forceReleaseNotFound ", 404)
+}
+
+func (o *ForceReleaseNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/force-release][%d] forceReleaseNotFound ", 404)
 }
 

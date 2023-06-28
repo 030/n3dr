@@ -52,10 +52,12 @@ func NewGetPrivilegesParamsWithHTTPClient(client *http.Client) *GetPrivilegesPar
 	}
 }
 
-/* GetPrivilegesParams contains all the parameters to send to the API endpoint
-   for the get privileges operation.
+/*
+GetPrivilegesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get privileges operation.
+
+	Typically these are written to a http.Request.
 */
 type GetPrivilegesParams struct {
 	timeout    time.Duration

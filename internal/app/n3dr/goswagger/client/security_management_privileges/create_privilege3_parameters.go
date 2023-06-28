@@ -54,10 +54,12 @@ func NewCreatePrivilege3ParamsWithHTTPClient(client *http.Client) *CreatePrivile
 	}
 }
 
-/* CreatePrivilege3Params contains all the parameters to send to the API endpoint
-   for the create privilege 3 operation.
+/*
+CreatePrivilege3Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create privilege 3 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreatePrivilege3Params struct {
 
@@ -65,7 +67,7 @@ type CreatePrivilege3Params struct {
 
 	   The privilege to create.
 	*/
-	Body *models.APIPrivilegeRepositoryViewRequest
+	Body *models.APIPrivilegeRepositoryAdminRequest
 
 	timeout    time.Duration
 	Context    context.Context
@@ -121,13 +123,13 @@ func (o *CreatePrivilege3Params) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create privilege 3 params
-func (o *CreatePrivilege3Params) WithBody(body *models.APIPrivilegeRepositoryViewRequest) *CreatePrivilege3Params {
+func (o *CreatePrivilege3Params) WithBody(body *models.APIPrivilegeRepositoryAdminRequest) *CreatePrivilege3Params {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create privilege 3 params
-func (o *CreatePrivilege3Params) SetBody(body *models.APIPrivilegeRepositoryViewRequest) {
+func (o *CreatePrivilege3Params) SetBody(body *models.APIPrivilegeRepositoryAdminRequest) {
 	o.Body = body
 }
 

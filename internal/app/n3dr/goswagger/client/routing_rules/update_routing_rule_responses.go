@@ -54,14 +54,49 @@ func NewUpdateRoutingRuleNoContent() *UpdateRoutingRuleNoContent {
 	return &UpdateRoutingRuleNoContent{}
 }
 
-/* UpdateRoutingRuleNoContent describes a response with status code 204, with default header values.
+/*
+UpdateRoutingRuleNoContent describes a response with status code 204, with default header values.
 
 Routing rule was successfully updated
 */
 type UpdateRoutingRuleNoContent struct {
 }
 
+// IsSuccess returns true when this update routing rule no content response has a 2xx status code
+func (o *UpdateRoutingRuleNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update routing rule no content response has a 3xx status code
+func (o *UpdateRoutingRuleNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update routing rule no content response has a 4xx status code
+func (o *UpdateRoutingRuleNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update routing rule no content response has a 5xx status code
+func (o *UpdateRoutingRuleNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update routing rule no content response a status code equal to that given
+func (o *UpdateRoutingRuleNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update routing rule no content response
+func (o *UpdateRoutingRuleNoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRoutingRuleNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleNoContent ", 204)
+}
+
+func (o *UpdateRoutingRuleNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewUpdateRoutingRuleBadRequest() *UpdateRoutingRuleBadRequest {
 	return &UpdateRoutingRuleBadRequest{}
 }
 
-/* UpdateRoutingRuleBadRequest describes a response with status code 400, with default header values.
+/*
+UpdateRoutingRuleBadRequest describes a response with status code 400, with default header values.
 
 Another routing rule with the same name already exists or required parameters missing
 */
 type UpdateRoutingRuleBadRequest struct {
 }
 
+// IsSuccess returns true when this update routing rule bad request response has a 2xx status code
+func (o *UpdateRoutingRuleBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update routing rule bad request response has a 3xx status code
+func (o *UpdateRoutingRuleBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update routing rule bad request response has a 4xx status code
+func (o *UpdateRoutingRuleBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update routing rule bad request response has a 5xx status code
+func (o *UpdateRoutingRuleBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update routing rule bad request response a status code equal to that given
+func (o *UpdateRoutingRuleBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update routing rule bad request response
+func (o *UpdateRoutingRuleBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateRoutingRuleBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleBadRequest ", 400)
+}
+
+func (o *UpdateRoutingRuleBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleBadRequest ", 400)
 }
 
@@ -96,14 +166,49 @@ func NewUpdateRoutingRuleForbidden() *UpdateRoutingRuleForbidden {
 	return &UpdateRoutingRuleForbidden{}
 }
 
-/* UpdateRoutingRuleForbidden describes a response with status code 403, with default header values.
+/*
+UpdateRoutingRuleForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to edit routing rules
 */
 type UpdateRoutingRuleForbidden struct {
 }
 
+// IsSuccess returns true when this update routing rule forbidden response has a 2xx status code
+func (o *UpdateRoutingRuleForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update routing rule forbidden response has a 3xx status code
+func (o *UpdateRoutingRuleForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update routing rule forbidden response has a 4xx status code
+func (o *UpdateRoutingRuleForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update routing rule forbidden response has a 5xx status code
+func (o *UpdateRoutingRuleForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update routing rule forbidden response a status code equal to that given
+func (o *UpdateRoutingRuleForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update routing rule forbidden response
+func (o *UpdateRoutingRuleForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRoutingRuleForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleForbidden ", 403)
+}
+
+func (o *UpdateRoutingRuleForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleForbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewUpdateRoutingRuleNotFound() *UpdateRoutingRuleNotFound {
 	return &UpdateRoutingRuleNotFound{}
 }
 
-/* UpdateRoutingRuleNotFound describes a response with status code 404, with default header values.
+/*
+UpdateRoutingRuleNotFound describes a response with status code 404, with default header values.
 
 Routing rule not found
 */
 type UpdateRoutingRuleNotFound struct {
 }
 
+// IsSuccess returns true when this update routing rule not found response has a 2xx status code
+func (o *UpdateRoutingRuleNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update routing rule not found response has a 3xx status code
+func (o *UpdateRoutingRuleNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update routing rule not found response has a 4xx status code
+func (o *UpdateRoutingRuleNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update routing rule not found response has a 5xx status code
+func (o *UpdateRoutingRuleNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update routing rule not found response a status code equal to that given
+func (o *UpdateRoutingRuleNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update routing rule not found response
+func (o *UpdateRoutingRuleNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateRoutingRuleNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleNotFound ", 404)
+}
+
+func (o *UpdateRoutingRuleNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/routing-rules/{name}][%d] updateRoutingRuleNotFound ", 404)
 }
 

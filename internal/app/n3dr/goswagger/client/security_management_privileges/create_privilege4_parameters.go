@@ -54,10 +54,12 @@ func NewCreatePrivilege4ParamsWithHTTPClient(client *http.Client) *CreatePrivile
 	}
 }
 
-/* CreatePrivilege4Params contains all the parameters to send to the API endpoint
-   for the create privilege 4 operation.
+/*
+CreatePrivilege4Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create privilege 4 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreatePrivilege4Params struct {
 
@@ -65,7 +67,7 @@ type CreatePrivilege4Params struct {
 
 	   The privilege to create.
 	*/
-	Body *models.APIPrivilegeRepositoryAdminRequest
+	Body *models.APIPrivilegeRepositoryViewRequest
 
 	timeout    time.Duration
 	Context    context.Context
@@ -121,13 +123,13 @@ func (o *CreatePrivilege4Params) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create privilege 4 params
-func (o *CreatePrivilege4Params) WithBody(body *models.APIPrivilegeRepositoryAdminRequest) *CreatePrivilege4Params {
+func (o *CreatePrivilege4Params) WithBody(body *models.APIPrivilegeRepositoryViewRequest) *CreatePrivilege4Params {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create privilege 4 params
-func (o *CreatePrivilege4Params) SetBody(body *models.APIPrivilegeRepositoryAdminRequest) {
+func (o *CreatePrivilege4Params) SetBody(body *models.APIPrivilegeRepositoryViewRequest) {
 	o.Body = body
 }
 

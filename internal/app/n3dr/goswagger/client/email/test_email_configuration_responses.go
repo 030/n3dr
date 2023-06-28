@@ -45,7 +45,8 @@ func NewTestEmailConfigurationOK() *TestEmailConfigurationOK {
 	return &TestEmailConfigurationOK{}
 }
 
-/* TestEmailConfigurationOK describes a response with status code 200, with default header values.
+/*
+TestEmailConfigurationOK describes a response with status code 200, with default header values.
 
 Validation was complete, look at the body to determine success
 */
@@ -53,9 +54,44 @@ type TestEmailConfigurationOK struct {
 	Payload *models.APIEmailValidation
 }
 
+// IsSuccess returns true when this test email configuration o k response has a 2xx status code
+func (o *TestEmailConfigurationOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this test email configuration o k response has a 3xx status code
+func (o *TestEmailConfigurationOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this test email configuration o k response has a 4xx status code
+func (o *TestEmailConfigurationOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this test email configuration o k response has a 5xx status code
+func (o *TestEmailConfigurationOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this test email configuration o k response a status code equal to that given
+func (o *TestEmailConfigurationOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the test email configuration o k response
+func (o *TestEmailConfigurationOK) Code() int {
+	return 200
+}
+
 func (o *TestEmailConfigurationOK) Error() string {
 	return fmt.Sprintf("[POST /v1/email/verify][%d] testEmailConfigurationOK  %+v", 200, o.Payload)
 }
+
+func (o *TestEmailConfigurationOK) String() string {
+	return fmt.Sprintf("[POST /v1/email/verify][%d] testEmailConfigurationOK  %+v", 200, o.Payload)
+}
+
 func (o *TestEmailConfigurationOK) GetPayload() *models.APIEmailValidation {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewTestEmailConfigurationForbidden() *TestEmailConfigurationForbidden {
 	return &TestEmailConfigurationForbidden{}
 }
 
-/* TestEmailConfigurationForbidden describes a response with status code 403, with default header values.
+/*
+TestEmailConfigurationForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to verify the email configuration
 */
 type TestEmailConfigurationForbidden struct {
 }
 
+// IsSuccess returns true when this test email configuration forbidden response has a 2xx status code
+func (o *TestEmailConfigurationForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this test email configuration forbidden response has a 3xx status code
+func (o *TestEmailConfigurationForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this test email configuration forbidden response has a 4xx status code
+func (o *TestEmailConfigurationForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this test email configuration forbidden response has a 5xx status code
+func (o *TestEmailConfigurationForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this test email configuration forbidden response a status code equal to that given
+func (o *TestEmailConfigurationForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the test email configuration forbidden response
+func (o *TestEmailConfigurationForbidden) Code() int {
+	return 403
+}
+
 func (o *TestEmailConfigurationForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/email/verify][%d] testEmailConfigurationForbidden ", 403)
+}
+
+func (o *TestEmailConfigurationForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/email/verify][%d] testEmailConfigurationForbidden ", 403)
 }
 

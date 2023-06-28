@@ -48,14 +48,49 @@ func NewUpdateRepository21NoContent() *UpdateRepository21NoContent {
 	return &UpdateRepository21NoContent{}
 }
 
-/* UpdateRepository21NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository21NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository21NoContent struct {
 }
 
+// IsSuccess returns true when this update repository21 no content response has a 2xx status code
+func (o *UpdateRepository21NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository21 no content response has a 3xx status code
+func (o *UpdateRepository21NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository21 no content response has a 4xx status code
+func (o *UpdateRepository21NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository21 no content response has a 5xx status code
+func (o *UpdateRepository21NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository21 no content response a status code equal to that given
+func (o *UpdateRepository21NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository21 no content response
+func (o *UpdateRepository21NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository21NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/yum/hosted/{repositoryName}][%d] updateRepository21NoContent ", 204)
+}
+
+func (o *UpdateRepository21NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/yum/hosted/{repositoryName}][%d] updateRepository21NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository21Unauthorized() *UpdateRepository21Unauthorized {
 	return &UpdateRepository21Unauthorized{}
 }
 
-/* UpdateRepository21Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository21Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository21Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository21 unauthorized response has a 2xx status code
+func (o *UpdateRepository21Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository21 unauthorized response has a 3xx status code
+func (o *UpdateRepository21Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository21 unauthorized response has a 4xx status code
+func (o *UpdateRepository21Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository21 unauthorized response has a 5xx status code
+func (o *UpdateRepository21Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository21 unauthorized response a status code equal to that given
+func (o *UpdateRepository21Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository21 unauthorized response
+func (o *UpdateRepository21Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository21Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/yum/hosted/{repositoryName}][%d] updateRepository21Unauthorized ", 401)
+}
+
+func (o *UpdateRepository21Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/yum/hosted/{repositoryName}][%d] updateRepository21Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository21Forbidden() *UpdateRepository21Forbidden {
 	return &UpdateRepository21Forbidden{}
 }
 
-/* UpdateRepository21Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository21Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository21Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository21 forbidden response has a 2xx status code
+func (o *UpdateRepository21Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository21 forbidden response has a 3xx status code
+func (o *UpdateRepository21Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository21 forbidden response has a 4xx status code
+func (o *UpdateRepository21Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository21 forbidden response has a 5xx status code
+func (o *UpdateRepository21Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository21 forbidden response a status code equal to that given
+func (o *UpdateRepository21Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository21 forbidden response
+func (o *UpdateRepository21Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository21Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/yum/hosted/{repositoryName}][%d] updateRepository21Forbidden ", 403)
+}
+
+func (o *UpdateRepository21Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/yum/hosted/{repositoryName}][%d] updateRepository21Forbidden ", 403)
 }
 

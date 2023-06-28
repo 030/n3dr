@@ -48,14 +48,49 @@ func NewUpdateRepository12NoContent() *UpdateRepository12NoContent {
 	return &UpdateRepository12NoContent{}
 }
 
-/* UpdateRepository12NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository12NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository12NoContent struct {
 }
 
+// IsSuccess returns true when this update repository12 no content response has a 2xx status code
+func (o *UpdateRepository12NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository12 no content response has a 3xx status code
+func (o *UpdateRepository12NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository12 no content response has a 4xx status code
+func (o *UpdateRepository12NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository12 no content response has a 5xx status code
+func (o *UpdateRepository12NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository12 no content response a status code equal to that given
+func (o *UpdateRepository12NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository12 no content response
+func (o *UpdateRepository12NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository12NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/nuget/hosted/{repositoryName}][%d] updateRepository12NoContent ", 204)
+}
+
+func (o *UpdateRepository12NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/nuget/hosted/{repositoryName}][%d] updateRepository12NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository12Unauthorized() *UpdateRepository12Unauthorized {
 	return &UpdateRepository12Unauthorized{}
 }
 
-/* UpdateRepository12Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository12Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository12Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository12 unauthorized response has a 2xx status code
+func (o *UpdateRepository12Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository12 unauthorized response has a 3xx status code
+func (o *UpdateRepository12Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository12 unauthorized response has a 4xx status code
+func (o *UpdateRepository12Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository12 unauthorized response has a 5xx status code
+func (o *UpdateRepository12Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository12 unauthorized response a status code equal to that given
+func (o *UpdateRepository12Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository12 unauthorized response
+func (o *UpdateRepository12Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository12Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/nuget/hosted/{repositoryName}][%d] updateRepository12Unauthorized ", 401)
+}
+
+func (o *UpdateRepository12Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/nuget/hosted/{repositoryName}][%d] updateRepository12Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository12Forbidden() *UpdateRepository12Forbidden {
 	return &UpdateRepository12Forbidden{}
 }
 
-/* UpdateRepository12Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository12Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository12Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository12 forbidden response has a 2xx status code
+func (o *UpdateRepository12Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository12 forbidden response has a 3xx status code
+func (o *UpdateRepository12Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository12 forbidden response has a 4xx status code
+func (o *UpdateRepository12Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository12 forbidden response has a 5xx status code
+func (o *UpdateRepository12Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository12 forbidden response a status code equal to that given
+func (o *UpdateRepository12Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository12 forbidden response
+func (o *UpdateRepository12Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository12Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/nuget/hosted/{repositoryName}][%d] updateRepository12Forbidden ", 403)
+}
+
+func (o *UpdateRepository12Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/nuget/hosted/{repositoryName}][%d] updateRepository12Forbidden ", 403)
 }
 

@@ -52,10 +52,12 @@ func NewEnableRepositoryHealthCheckParamsWithHTTPClient(client *http.Client) *En
 	}
 }
 
-/* EnableRepositoryHealthCheckParams contains all the parameters to send to the API endpoint
-   for the enable repository health check operation.
+/*
+EnableRepositoryHealthCheckParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the enable repository health check operation.
+
+	Typically these are written to a http.Request.
 */
 type EnableRepositoryHealthCheckParams struct {
 

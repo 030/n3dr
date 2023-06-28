@@ -52,10 +52,12 @@ func NewChangeOrderParamsWithHTTPClient(client *http.Client) *ChangeOrderParams 
 	}
 }
 
-/* ChangeOrderParams contains all the parameters to send to the API endpoint
-   for the change order operation.
+/*
+ChangeOrderParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the change order operation.
+
+	Typically these are written to a http.Request.
 */
 type ChangeOrderParams struct {
 

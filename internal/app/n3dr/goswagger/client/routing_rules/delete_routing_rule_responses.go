@@ -48,14 +48,49 @@ func NewDeleteRoutingRuleNoContent() *DeleteRoutingRuleNoContent {
 	return &DeleteRoutingRuleNoContent{}
 }
 
-/* DeleteRoutingRuleNoContent describes a response with status code 204, with default header values.
+/*
+DeleteRoutingRuleNoContent describes a response with status code 204, with default header values.
 
 Routing rule was successfully deleted
 */
 type DeleteRoutingRuleNoContent struct {
 }
 
+// IsSuccess returns true when this delete routing rule no content response has a 2xx status code
+func (o *DeleteRoutingRuleNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete routing rule no content response has a 3xx status code
+func (o *DeleteRoutingRuleNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete routing rule no content response has a 4xx status code
+func (o *DeleteRoutingRuleNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete routing rule no content response has a 5xx status code
+func (o *DeleteRoutingRuleNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete routing rule no content response a status code equal to that given
+func (o *DeleteRoutingRuleNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete routing rule no content response
+func (o *DeleteRoutingRuleNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteRoutingRuleNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/routing-rules/{name}][%d] deleteRoutingRuleNoContent ", 204)
+}
+
+func (o *DeleteRoutingRuleNoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/routing-rules/{name}][%d] deleteRoutingRuleNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewDeleteRoutingRuleForbidden() *DeleteRoutingRuleForbidden {
 	return &DeleteRoutingRuleForbidden{}
 }
 
-/* DeleteRoutingRuleForbidden describes a response with status code 403, with default header values.
+/*
+DeleteRoutingRuleForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to delete routing rules
 */
 type DeleteRoutingRuleForbidden struct {
 }
 
+// IsSuccess returns true when this delete routing rule forbidden response has a 2xx status code
+func (o *DeleteRoutingRuleForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete routing rule forbidden response has a 3xx status code
+func (o *DeleteRoutingRuleForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete routing rule forbidden response has a 4xx status code
+func (o *DeleteRoutingRuleForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete routing rule forbidden response has a 5xx status code
+func (o *DeleteRoutingRuleForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete routing rule forbidden response a status code equal to that given
+func (o *DeleteRoutingRuleForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete routing rule forbidden response
+func (o *DeleteRoutingRuleForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteRoutingRuleForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/routing-rules/{name}][%d] deleteRoutingRuleForbidden ", 403)
+}
+
+func (o *DeleteRoutingRuleForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/routing-rules/{name}][%d] deleteRoutingRuleForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewDeleteRoutingRuleNotFound() *DeleteRoutingRuleNotFound {
 	return &DeleteRoutingRuleNotFound{}
 }
 
-/* DeleteRoutingRuleNotFound describes a response with status code 404, with default header values.
+/*
+DeleteRoutingRuleNotFound describes a response with status code 404, with default header values.
 
 Routing rule not found
 */
 type DeleteRoutingRuleNotFound struct {
 }
 
+// IsSuccess returns true when this delete routing rule not found response has a 2xx status code
+func (o *DeleteRoutingRuleNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete routing rule not found response has a 3xx status code
+func (o *DeleteRoutingRuleNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete routing rule not found response has a 4xx status code
+func (o *DeleteRoutingRuleNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete routing rule not found response has a 5xx status code
+func (o *DeleteRoutingRuleNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete routing rule not found response a status code equal to that given
+func (o *DeleteRoutingRuleNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete routing rule not found response
+func (o *DeleteRoutingRuleNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteRoutingRuleNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/routing-rules/{name}][%d] deleteRoutingRuleNotFound ", 404)
+}
+
+func (o *DeleteRoutingRuleNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/routing-rules/{name}][%d] deleteRoutingRuleNotFound ", 404)
 }
 

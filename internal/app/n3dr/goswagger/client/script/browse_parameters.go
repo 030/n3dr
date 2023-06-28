@@ -52,10 +52,12 @@ func NewBrowseParamsWithHTTPClient(client *http.Client) *BrowseParams {
 	}
 }
 
-/* BrowseParams contains all the parameters to send to the API endpoint
-   for the browse operation.
+/*
+BrowseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the browse operation.
+
+	Typically these are written to a http.Request.
 */
 type BrowseParams struct {
 	timeout    time.Duration

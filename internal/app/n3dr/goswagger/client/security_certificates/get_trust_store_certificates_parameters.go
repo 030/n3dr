@@ -52,10 +52,12 @@ func NewGetTrustStoreCertificatesParamsWithHTTPClient(client *http.Client) *GetT
 	}
 }
 
-/* GetTrustStoreCertificatesParams contains all the parameters to send to the API endpoint
-   for the get trust store certificates operation.
+/*
+GetTrustStoreCertificatesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get trust store certificates operation.
+
+	Typically these are written to a http.Request.
 */
 type GetTrustStoreCertificatesParams struct {
 	timeout    time.Duration

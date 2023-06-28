@@ -48,14 +48,49 @@ func NewSetEmailConfigurationNoContent() *SetEmailConfigurationNoContent {
 	return &SetEmailConfigurationNoContent{}
 }
 
-/* SetEmailConfigurationNoContent describes a response with status code 204, with default header values.
+/*
+SetEmailConfigurationNoContent describes a response with status code 204, with default header values.
 
 Email configuration was successfully updated
 */
 type SetEmailConfigurationNoContent struct {
 }
 
+// IsSuccess returns true when this set email configuration no content response has a 2xx status code
+func (o *SetEmailConfigurationNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this set email configuration no content response has a 3xx status code
+func (o *SetEmailConfigurationNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this set email configuration no content response has a 4xx status code
+func (o *SetEmailConfigurationNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this set email configuration no content response has a 5xx status code
+func (o *SetEmailConfigurationNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this set email configuration no content response a status code equal to that given
+func (o *SetEmailConfigurationNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the set email configuration no content response
+func (o *SetEmailConfigurationNoContent) Code() int {
+	return 204
+}
+
 func (o *SetEmailConfigurationNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/email][%d] setEmailConfigurationNoContent ", 204)
+}
+
+func (o *SetEmailConfigurationNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/email][%d] setEmailConfigurationNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewSetEmailConfigurationBadRequest() *SetEmailConfigurationBadRequest {
 	return &SetEmailConfigurationBadRequest{}
 }
 
-/* SetEmailConfigurationBadRequest describes a response with status code 400, with default header values.
+/*
+SetEmailConfigurationBadRequest describes a response with status code 400, with default header values.
 
 Invalid request
 */
 type SetEmailConfigurationBadRequest struct {
 }
 
+// IsSuccess returns true when this set email configuration bad request response has a 2xx status code
+func (o *SetEmailConfigurationBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this set email configuration bad request response has a 3xx status code
+func (o *SetEmailConfigurationBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this set email configuration bad request response has a 4xx status code
+func (o *SetEmailConfigurationBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this set email configuration bad request response has a 5xx status code
+func (o *SetEmailConfigurationBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this set email configuration bad request response a status code equal to that given
+func (o *SetEmailConfigurationBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the set email configuration bad request response
+func (o *SetEmailConfigurationBadRequest) Code() int {
+	return 400
+}
+
 func (o *SetEmailConfigurationBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/email][%d] setEmailConfigurationBadRequest ", 400)
+}
+
+func (o *SetEmailConfigurationBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/email][%d] setEmailConfigurationBadRequest ", 400)
 }
 
@@ -90,14 +160,49 @@ func NewSetEmailConfigurationForbidden() *SetEmailConfigurationForbidden {
 	return &SetEmailConfigurationForbidden{}
 }
 
-/* SetEmailConfigurationForbidden describes a response with status code 403, with default header values.
+/*
+SetEmailConfigurationForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to update the email configuration
 */
 type SetEmailConfigurationForbidden struct {
 }
 
+// IsSuccess returns true when this set email configuration forbidden response has a 2xx status code
+func (o *SetEmailConfigurationForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this set email configuration forbidden response has a 3xx status code
+func (o *SetEmailConfigurationForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this set email configuration forbidden response has a 4xx status code
+func (o *SetEmailConfigurationForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this set email configuration forbidden response has a 5xx status code
+func (o *SetEmailConfigurationForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this set email configuration forbidden response a status code equal to that given
+func (o *SetEmailConfigurationForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the set email configuration forbidden response
+func (o *SetEmailConfigurationForbidden) Code() int {
+	return 403
+}
+
 func (o *SetEmailConfigurationForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/email][%d] setEmailConfigurationForbidden ", 403)
+}
+
+func (o *SetEmailConfigurationForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/email][%d] setEmailConfigurationForbidden ", 403)
 }
 

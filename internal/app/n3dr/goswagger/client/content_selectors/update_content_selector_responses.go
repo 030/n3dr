@@ -48,14 +48,49 @@ func NewUpdateContentSelectorNoContent() *UpdateContentSelectorNoContent {
 	return &UpdateContentSelectorNoContent{}
 }
 
-/* UpdateContentSelectorNoContent describes a response with status code 204, with default header values.
+/*
+UpdateContentSelectorNoContent describes a response with status code 204, with default header values.
 
 Content selector updated successfully
 */
 type UpdateContentSelectorNoContent struct {
 }
 
+// IsSuccess returns true when this update content selector no content response has a 2xx status code
+func (o *UpdateContentSelectorNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update content selector no content response has a 3xx status code
+func (o *UpdateContentSelectorNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update content selector no content response has a 4xx status code
+func (o *UpdateContentSelectorNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update content selector no content response has a 5xx status code
+func (o *UpdateContentSelectorNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update content selector no content response a status code equal to that given
+func (o *UpdateContentSelectorNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update content selector no content response
+func (o *UpdateContentSelectorNoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateContentSelectorNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/content-selectors/{name}][%d] updateContentSelectorNoContent ", 204)
+}
+
+func (o *UpdateContentSelectorNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/security/content-selectors/{name}][%d] updateContentSelectorNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateContentSelectorBadRequest() *UpdateContentSelectorBadRequest {
 	return &UpdateContentSelectorBadRequest{}
 }
 
-/* UpdateContentSelectorBadRequest describes a response with status code 400, with default header values.
+/*
+UpdateContentSelectorBadRequest describes a response with status code 400, with default header values.
 
 Invalid request
 */
 type UpdateContentSelectorBadRequest struct {
 }
 
+// IsSuccess returns true when this update content selector bad request response has a 2xx status code
+func (o *UpdateContentSelectorBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update content selector bad request response has a 3xx status code
+func (o *UpdateContentSelectorBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update content selector bad request response has a 4xx status code
+func (o *UpdateContentSelectorBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update content selector bad request response has a 5xx status code
+func (o *UpdateContentSelectorBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update content selector bad request response a status code equal to that given
+func (o *UpdateContentSelectorBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update content selector bad request response
+func (o *UpdateContentSelectorBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateContentSelectorBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/content-selectors/{name}][%d] updateContentSelectorBadRequest ", 400)
+}
+
+func (o *UpdateContentSelectorBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/security/content-selectors/{name}][%d] updateContentSelectorBadRequest ", 400)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateContentSelectorForbidden() *UpdateContentSelectorForbidden {
 	return &UpdateContentSelectorForbidden{}
 }
 
-/* UpdateContentSelectorForbidden describes a response with status code 403, with default header values.
+/*
+UpdateContentSelectorForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to update the content selector
 */
 type UpdateContentSelectorForbidden struct {
 }
 
+// IsSuccess returns true when this update content selector forbidden response has a 2xx status code
+func (o *UpdateContentSelectorForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update content selector forbidden response has a 3xx status code
+func (o *UpdateContentSelectorForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update content selector forbidden response has a 4xx status code
+func (o *UpdateContentSelectorForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update content selector forbidden response has a 5xx status code
+func (o *UpdateContentSelectorForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update content selector forbidden response a status code equal to that given
+func (o *UpdateContentSelectorForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update content selector forbidden response
+func (o *UpdateContentSelectorForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateContentSelectorForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/content-selectors/{name}][%d] updateContentSelectorForbidden ", 403)
+}
+
+func (o *UpdateContentSelectorForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/content-selectors/{name}][%d] updateContentSelectorForbidden ", 403)
 }
 

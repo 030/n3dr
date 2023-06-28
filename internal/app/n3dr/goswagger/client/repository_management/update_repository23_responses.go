@@ -48,14 +48,49 @@ func NewUpdateRepository23NoContent() *UpdateRepository23NoContent {
 	return &UpdateRepository23NoContent{}
 }
 
-/* UpdateRepository23NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository23NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository23NoContent struct {
 }
 
+// IsSuccess returns true when this update repository23 no content response has a 2xx status code
+func (o *UpdateRepository23NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository23 no content response has a 3xx status code
+func (o *UpdateRepository23NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository23 no content response has a 4xx status code
+func (o *UpdateRepository23NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository23 no content response has a 5xx status code
+func (o *UpdateRepository23NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository23 no content response a status code equal to that given
+func (o *UpdateRepository23NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository23 no content response
+func (o *UpdateRepository23NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository23NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/helm/hosted/{repositoryName}][%d] updateRepository23NoContent ", 204)
+}
+
+func (o *UpdateRepository23NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/helm/hosted/{repositoryName}][%d] updateRepository23NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository23Unauthorized() *UpdateRepository23Unauthorized {
 	return &UpdateRepository23Unauthorized{}
 }
 
-/* UpdateRepository23Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository23Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository23Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository23 unauthorized response has a 2xx status code
+func (o *UpdateRepository23Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository23 unauthorized response has a 3xx status code
+func (o *UpdateRepository23Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository23 unauthorized response has a 4xx status code
+func (o *UpdateRepository23Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository23 unauthorized response has a 5xx status code
+func (o *UpdateRepository23Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository23 unauthorized response a status code equal to that given
+func (o *UpdateRepository23Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository23 unauthorized response
+func (o *UpdateRepository23Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository23Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/helm/hosted/{repositoryName}][%d] updateRepository23Unauthorized ", 401)
+}
+
+func (o *UpdateRepository23Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/helm/hosted/{repositoryName}][%d] updateRepository23Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository23Forbidden() *UpdateRepository23Forbidden {
 	return &UpdateRepository23Forbidden{}
 }
 
-/* UpdateRepository23Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository23Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository23Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository23 forbidden response has a 2xx status code
+func (o *UpdateRepository23Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository23 forbidden response has a 3xx status code
+func (o *UpdateRepository23Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository23 forbidden response has a 4xx status code
+func (o *UpdateRepository23Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository23 forbidden response has a 5xx status code
+func (o *UpdateRepository23Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository23 forbidden response a status code equal to that given
+func (o *UpdateRepository23Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository23 forbidden response
+func (o *UpdateRepository23Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository23Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/helm/hosted/{repositoryName}][%d] updateRepository23Forbidden ", 403)
+}
+
+func (o *UpdateRepository23Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/helm/hosted/{repositoryName}][%d] updateRepository23Forbidden ", 403)
 }
 

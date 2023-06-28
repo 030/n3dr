@@ -48,14 +48,49 @@ func NewUpdateRepository1NoContent() *UpdateRepository1NoContent {
 	return &UpdateRepository1NoContent{}
 }
 
-/* UpdateRepository1NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository1NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository1NoContent struct {
 }
 
+// IsSuccess returns true when this update repository1 no content response has a 2xx status code
+func (o *UpdateRepository1NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository1 no content response has a 3xx status code
+func (o *UpdateRepository1NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository1 no content response has a 4xx status code
+func (o *UpdateRepository1NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository1 no content response has a 5xx status code
+func (o *UpdateRepository1NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository1 no content response a status code equal to that given
+func (o *UpdateRepository1NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository1 no content response
+func (o *UpdateRepository1NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository1NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/maven/hosted/{repositoryName}][%d] updateRepository1NoContent ", 204)
+}
+
+func (o *UpdateRepository1NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/maven/hosted/{repositoryName}][%d] updateRepository1NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository1Unauthorized() *UpdateRepository1Unauthorized {
 	return &UpdateRepository1Unauthorized{}
 }
 
-/* UpdateRepository1Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository1Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository1Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository1 unauthorized response has a 2xx status code
+func (o *UpdateRepository1Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository1 unauthorized response has a 3xx status code
+func (o *UpdateRepository1Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository1 unauthorized response has a 4xx status code
+func (o *UpdateRepository1Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository1 unauthorized response has a 5xx status code
+func (o *UpdateRepository1Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository1 unauthorized response a status code equal to that given
+func (o *UpdateRepository1Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository1 unauthorized response
+func (o *UpdateRepository1Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository1Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/maven/hosted/{repositoryName}][%d] updateRepository1Unauthorized ", 401)
+}
+
+func (o *UpdateRepository1Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/maven/hosted/{repositoryName}][%d] updateRepository1Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository1Forbidden() *UpdateRepository1Forbidden {
 	return &UpdateRepository1Forbidden{}
 }
 
-/* UpdateRepository1Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository1Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository1Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository1 forbidden response has a 2xx status code
+func (o *UpdateRepository1Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository1 forbidden response has a 3xx status code
+func (o *UpdateRepository1Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository1 forbidden response has a 4xx status code
+func (o *UpdateRepository1Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository1 forbidden response has a 5xx status code
+func (o *UpdateRepository1Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository1 forbidden response a status code equal to that given
+func (o *UpdateRepository1Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository1 forbidden response
+func (o *UpdateRepository1Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository1Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/maven/hosted/{repositoryName}][%d] updateRepository1Forbidden ", 403)
+}
+
+func (o *UpdateRepository1Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/maven/hosted/{repositoryName}][%d] updateRepository1Forbidden ", 403)
 }
 

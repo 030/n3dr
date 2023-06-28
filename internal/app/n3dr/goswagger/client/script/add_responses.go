@@ -42,14 +42,49 @@ func NewAddNoContent() *AddNoContent {
 	return &AddNoContent{}
 }
 
-/* AddNoContent describes a response with status code 204, with default header values.
+/*
+AddNoContent describes a response with status code 204, with default header values.
 
 Script was added
 */
 type AddNoContent struct {
 }
 
+// IsSuccess returns true when this add no content response has a 2xx status code
+func (o *AddNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this add no content response has a 3xx status code
+func (o *AddNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this add no content response has a 4xx status code
+func (o *AddNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this add no content response has a 5xx status code
+func (o *AddNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this add no content response a status code equal to that given
+func (o *AddNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the add no content response
+func (o *AddNoContent) Code() int {
+	return 204
+}
+
 func (o *AddNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/script][%d] addNoContent ", 204)
+}
+
+func (o *AddNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/script][%d] addNoContent ", 204)
 }
 
@@ -63,14 +98,49 @@ func NewAddGone() *AddGone {
 	return &AddGone{}
 }
 
-/* AddGone describes a response with status code 410, with default header values.
+/*
+AddGone describes a response with status code 410, with default header values.
 
 Script creation is disabled
 */
 type AddGone struct {
 }
 
+// IsSuccess returns true when this add gone response has a 2xx status code
+func (o *AddGone) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this add gone response has a 3xx status code
+func (o *AddGone) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this add gone response has a 4xx status code
+func (o *AddGone) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this add gone response has a 5xx status code
+func (o *AddGone) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this add gone response a status code equal to that given
+func (o *AddGone) IsCode(code int) bool {
+	return code == 410
+}
+
+// Code gets the status code for the add gone response
+func (o *AddGone) Code() int {
+	return 410
+}
+
 func (o *AddGone) Error() string {
+	return fmt.Sprintf("[POST /v1/script][%d] addGone ", 410)
+}
+
+func (o *AddGone) String() string {
 	return fmt.Sprintf("[POST /v1/script][%d] addGone ", 410)
 }
 

@@ -54,14 +54,49 @@ func NewCreateRepository32Created() *CreateRepository32Created {
 	return &CreateRepository32Created{}
 }
 
-/* CreateRepository32Created describes a response with status code 201, with default header values.
+/*
+CreateRepository32Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository32Created struct {
 }
 
+// IsSuccess returns true when this create repository32 created response has a 2xx status code
+func (o *CreateRepository32Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository32 created response has a 3xx status code
+func (o *CreateRepository32Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository32 created response has a 4xx status code
+func (o *CreateRepository32Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository32 created response has a 5xx status code
+func (o *CreateRepository32Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository32 created response a status code equal to that given
+func (o *CreateRepository32Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository32 created response
+func (o *CreateRepository32Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository32Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32Created ", 201)
+}
+
+func (o *CreateRepository32Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32Created ", 201)
 }
 
@@ -75,14 +110,49 @@ func NewCreateRepository32Unauthorized() *CreateRepository32Unauthorized {
 	return &CreateRepository32Unauthorized{}
 }
 
-/* CreateRepository32Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository32Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository32Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository32 unauthorized response has a 2xx status code
+func (o *CreateRepository32Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository32 unauthorized response has a 3xx status code
+func (o *CreateRepository32Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository32 unauthorized response has a 4xx status code
+func (o *CreateRepository32Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository32 unauthorized response has a 5xx status code
+func (o *CreateRepository32Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository32 unauthorized response a status code equal to that given
+func (o *CreateRepository32Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository32 unauthorized response
+func (o *CreateRepository32Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository32Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32Unauthorized ", 401)
+}
+
+func (o *CreateRepository32Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32Unauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewCreateRepository32Forbidden() *CreateRepository32Forbidden {
 	return &CreateRepository32Forbidden{}
 }
 
-/* CreateRepository32Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository32Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository32Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository32 forbidden response has a 2xx status code
+func (o *CreateRepository32Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository32 forbidden response has a 3xx status code
+func (o *CreateRepository32Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository32 forbidden response has a 4xx status code
+func (o *CreateRepository32Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository32 forbidden response has a 5xx status code
+func (o *CreateRepository32Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository32 forbidden response a status code equal to that given
+func (o *CreateRepository32Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository32 forbidden response
+func (o *CreateRepository32Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository32Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32Forbidden ", 403)
+}
+
+func (o *CreateRepository32Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32Forbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewCreateRepository32MethodNotAllowed() *CreateRepository32MethodNotAllowed
 	return &CreateRepository32MethodNotAllowed{}
 }
 
-/* CreateRepository32MethodNotAllowed describes a response with status code 405, with default header values.
+/*
+CreateRepository32MethodNotAllowed describes a response with status code 405, with default header values.
 
 Feature is disabled in High Availability
 */
 type CreateRepository32MethodNotAllowed struct {
 }
 
+// IsSuccess returns true when this create repository32 method not allowed response has a 2xx status code
+func (o *CreateRepository32MethodNotAllowed) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository32 method not allowed response has a 3xx status code
+func (o *CreateRepository32MethodNotAllowed) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository32 method not allowed response has a 4xx status code
+func (o *CreateRepository32MethodNotAllowed) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository32 method not allowed response has a 5xx status code
+func (o *CreateRepository32MethodNotAllowed) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository32 method not allowed response a status code equal to that given
+func (o *CreateRepository32MethodNotAllowed) IsCode(code int) bool {
+	return code == 405
+}
+
+// Code gets the status code for the create repository32 method not allowed response
+func (o *CreateRepository32MethodNotAllowed) Code() int {
+	return 405
+}
+
 func (o *CreateRepository32MethodNotAllowed) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32MethodNotAllowed ", 405)
+}
+
+func (o *CreateRepository32MethodNotAllowed) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/r/hosted][%d] createRepository32MethodNotAllowed ", 405)
 }
 

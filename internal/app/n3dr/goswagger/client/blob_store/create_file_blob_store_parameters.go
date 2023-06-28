@@ -54,10 +54,12 @@ func NewCreateFileBlobStoreParamsWithHTTPClient(client *http.Client) *CreateFile
 	}
 }
 
-/* CreateFileBlobStoreParams contains all the parameters to send to the API endpoint
-   for the create file blob store operation.
+/*
+CreateFileBlobStoreParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create file blob store operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateFileBlobStoreParams struct {
 

@@ -48,14 +48,49 @@ func NewChangeOrderNoContent() *ChangeOrderNoContent {
 	return &ChangeOrderNoContent{}
 }
 
-/* ChangeOrderNoContent describes a response with status code 204, with default header values.
+/*
+ChangeOrderNoContent describes a response with status code 204, with default header values.
 
 LDAP server order changed
 */
 type ChangeOrderNoContent struct {
 }
 
+// IsSuccess returns true when this change order no content response has a 2xx status code
+func (o *ChangeOrderNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this change order no content response has a 3xx status code
+func (o *ChangeOrderNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this change order no content response has a 4xx status code
+func (o *ChangeOrderNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this change order no content response has a 5xx status code
+func (o *ChangeOrderNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this change order no content response a status code equal to that given
+func (o *ChangeOrderNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the change order no content response
+func (o *ChangeOrderNoContent) Code() int {
+	return 204
+}
+
 func (o *ChangeOrderNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ldap/change-order][%d] changeOrderNoContent ", 204)
+}
+
+func (o *ChangeOrderNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/security/ldap/change-order][%d] changeOrderNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewChangeOrderUnauthorized() *ChangeOrderUnauthorized {
 	return &ChangeOrderUnauthorized{}
 }
 
-/* ChangeOrderUnauthorized describes a response with status code 401, with default header values.
+/*
+ChangeOrderUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type ChangeOrderUnauthorized struct {
 }
 
+// IsSuccess returns true when this change order unauthorized response has a 2xx status code
+func (o *ChangeOrderUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this change order unauthorized response has a 3xx status code
+func (o *ChangeOrderUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this change order unauthorized response has a 4xx status code
+func (o *ChangeOrderUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this change order unauthorized response has a 5xx status code
+func (o *ChangeOrderUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this change order unauthorized response a status code equal to that given
+func (o *ChangeOrderUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the change order unauthorized response
+func (o *ChangeOrderUnauthorized) Code() int {
+	return 401
+}
+
 func (o *ChangeOrderUnauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ldap/change-order][%d] changeOrderUnauthorized ", 401)
+}
+
+func (o *ChangeOrderUnauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/security/ldap/change-order][%d] changeOrderUnauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewChangeOrderForbidden() *ChangeOrderForbidden {
 	return &ChangeOrderForbidden{}
 }
 
-/* ChangeOrderForbidden describes a response with status code 403, with default header values.
+/*
+ChangeOrderForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type ChangeOrderForbidden struct {
 }
 
+// IsSuccess returns true when this change order forbidden response has a 2xx status code
+func (o *ChangeOrderForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this change order forbidden response has a 3xx status code
+func (o *ChangeOrderForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this change order forbidden response has a 4xx status code
+func (o *ChangeOrderForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this change order forbidden response has a 5xx status code
+func (o *ChangeOrderForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this change order forbidden response a status code equal to that given
+func (o *ChangeOrderForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the change order forbidden response
+func (o *ChangeOrderForbidden) Code() int {
+	return 403
+}
+
 func (o *ChangeOrderForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ldap/change-order][%d] changeOrderForbidden ", 403)
+}
+
+func (o *ChangeOrderForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/security/ldap/change-order][%d] changeOrderForbidden ", 403)
 }
 

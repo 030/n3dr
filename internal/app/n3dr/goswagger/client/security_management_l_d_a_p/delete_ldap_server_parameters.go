@@ -52,10 +52,12 @@ func NewDeleteLdapServerParamsWithHTTPClient(client *http.Client) *DeleteLdapSer
 	}
 }
 
-/* DeleteLdapServerParams contains all the parameters to send to the API endpoint
-   for the delete ldap server operation.
+/*
+DeleteLdapServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete ldap server operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteLdapServerParams struct {
 

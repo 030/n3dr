@@ -54,10 +54,12 @@ func NewCreateRepository39ParamsWithHTTPClient(client *http.Client) *CreateRepos
 	}
 }
 
-/* CreateRepository39Params contains all the parameters to send to the API endpoint
-   for the create repository 39 operation.
+/*
+CreateRepository39Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create repository 39 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateRepository39Params struct {
 

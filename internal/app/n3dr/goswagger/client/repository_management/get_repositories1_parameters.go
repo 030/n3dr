@@ -52,10 +52,12 @@ func NewGetRepositories1ParamsWithHTTPClient(client *http.Client) *GetRepositori
 	}
 }
 
-/* GetRepositories1Params contains all the parameters to send to the API endpoint
-   for the get repositories 1 operation.
+/*
+GetRepositories1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get repositories 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRepositories1Params struct {
 	timeout    time.Duration

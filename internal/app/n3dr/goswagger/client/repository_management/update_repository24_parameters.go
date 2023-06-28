@@ -54,10 +54,12 @@ func NewUpdateRepository24ParamsWithHTTPClient(client *http.Client) *UpdateRepos
 	}
 }
 
-/* UpdateRepository24Params contains all the parameters to send to the API endpoint
-   for the update repository 24 operation.
+/*
+UpdateRepository24Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update repository 24 operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateRepository24Params struct {
 

@@ -54,14 +54,49 @@ func NewDeleteAssetNoContent() *DeleteAssetNoContent {
 	return &DeleteAssetNoContent{}
 }
 
-/* DeleteAssetNoContent describes a response with status code 204, with default header values.
+/*
+DeleteAssetNoContent describes a response with status code 204, with default header values.
 
 Asset was successfully deleted
 */
 type DeleteAssetNoContent struct {
 }
 
+// IsSuccess returns true when this delete asset no content response has a 2xx status code
+func (o *DeleteAssetNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete asset no content response has a 3xx status code
+func (o *DeleteAssetNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete asset no content response has a 4xx status code
+func (o *DeleteAssetNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete asset no content response has a 5xx status code
+func (o *DeleteAssetNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete asset no content response a status code equal to that given
+func (o *DeleteAssetNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete asset no content response
+func (o *DeleteAssetNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteAssetNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetNoContent ", 204)
+}
+
+func (o *DeleteAssetNoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewDeleteAssetForbidden() *DeleteAssetForbidden {
 	return &DeleteAssetForbidden{}
 }
 
-/* DeleteAssetForbidden describes a response with status code 403, with default header values.
+/*
+DeleteAssetForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to delete asset
 */
 type DeleteAssetForbidden struct {
 }
 
+// IsSuccess returns true when this delete asset forbidden response has a 2xx status code
+func (o *DeleteAssetForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete asset forbidden response has a 3xx status code
+func (o *DeleteAssetForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete asset forbidden response has a 4xx status code
+func (o *DeleteAssetForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete asset forbidden response has a 5xx status code
+func (o *DeleteAssetForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete asset forbidden response a status code equal to that given
+func (o *DeleteAssetForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete asset forbidden response
+func (o *DeleteAssetForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteAssetForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetForbidden ", 403)
+}
+
+func (o *DeleteAssetForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetForbidden ", 403)
 }
 
@@ -96,14 +166,49 @@ func NewDeleteAssetNotFound() *DeleteAssetNotFound {
 	return &DeleteAssetNotFound{}
 }
 
-/* DeleteAssetNotFound describes a response with status code 404, with default header values.
+/*
+DeleteAssetNotFound describes a response with status code 404, with default header values.
 
 Asset not found
 */
 type DeleteAssetNotFound struct {
 }
 
+// IsSuccess returns true when this delete asset not found response has a 2xx status code
+func (o *DeleteAssetNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete asset not found response has a 3xx status code
+func (o *DeleteAssetNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete asset not found response has a 4xx status code
+func (o *DeleteAssetNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete asset not found response has a 5xx status code
+func (o *DeleteAssetNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete asset not found response a status code equal to that given
+func (o *DeleteAssetNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete asset not found response
+func (o *DeleteAssetNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteAssetNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetNotFound ", 404)
+}
+
+func (o *DeleteAssetNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetNotFound ", 404)
 }
 
@@ -117,14 +222,49 @@ func NewDeleteAssetUnprocessableEntity() *DeleteAssetUnprocessableEntity {
 	return &DeleteAssetUnprocessableEntity{}
 }
 
-/* DeleteAssetUnprocessableEntity describes a response with status code 422, with default header values.
+/*
+DeleteAssetUnprocessableEntity describes a response with status code 422, with default header values.
 
 Malformed ID
 */
 type DeleteAssetUnprocessableEntity struct {
 }
 
+// IsSuccess returns true when this delete asset unprocessable entity response has a 2xx status code
+func (o *DeleteAssetUnprocessableEntity) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete asset unprocessable entity response has a 3xx status code
+func (o *DeleteAssetUnprocessableEntity) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete asset unprocessable entity response has a 4xx status code
+func (o *DeleteAssetUnprocessableEntity) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete asset unprocessable entity response has a 5xx status code
+func (o *DeleteAssetUnprocessableEntity) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete asset unprocessable entity response a status code equal to that given
+func (o *DeleteAssetUnprocessableEntity) IsCode(code int) bool {
+	return code == 422
+}
+
+// Code gets the status code for the delete asset unprocessable entity response
+func (o *DeleteAssetUnprocessableEntity) Code() int {
+	return 422
+}
+
 func (o *DeleteAssetUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetUnprocessableEntity ", 422)
+}
+
+func (o *DeleteAssetUnprocessableEntity) String() string {
 	return fmt.Sprintf("[DELETE /v1/assets/{id}][%d] deleteAssetUnprocessableEntity ", 422)
 }
 

@@ -44,7 +44,7 @@ type ClientService interface {
 }
 
 /*
-  Create creates role
+Create creates role
 */
 func (a *Client) Create(params *CreateParams, opts ...ClientOption) (*CreateOK, error) {
 	// TODO: Validate the params before sending
@@ -82,7 +82,7 @@ func (a *Client) Create(params *CreateParams, opts ...ClientOption) (*CreateOK, 
 }
 
 /*
-  Delete deletes role
+Delete deletes role
 */
 func (a *Client) Delete(params *DeleteParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -113,7 +113,7 @@ func (a *Client) Delete(params *DeleteParams, opts ...ClientOption) error {
 }
 
 /*
-  GetRole gets role
+GetRole gets role
 */
 func (a *Client) GetRole(params *GetRoleParams, opts ...ClientOption) (*GetRoleOK, error) {
 	// TODO: Validate the params before sending
@@ -151,7 +151,7 @@ func (a *Client) GetRole(params *GetRoleParams, opts ...ClientOption) (*GetRoleO
 }
 
 /*
-  GetRoles lists roles
+GetRoles lists roles
 */
 func (a *Client) GetRoles(params *GetRolesParams, opts ...ClientOption) (*GetRolesOK, error) {
 	// TODO: Validate the params before sending
@@ -189,7 +189,7 @@ func (a *Client) GetRoles(params *GetRolesParams, opts ...ClientOption) (*GetRol
 }
 
 /*
-  Update1 updates role
+Update1 updates role
 */
 func (a *Client) Update1(params *Update1Params, opts ...ClientOption) error {
 	// TODO: Validate the params before sending

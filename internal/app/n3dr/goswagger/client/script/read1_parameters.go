@@ -52,10 +52,12 @@ func NewRead1ParamsWithHTTPClient(client *http.Client) *Read1Params {
 	}
 }
 
-/* Read1Params contains all the parameters to send to the API endpoint
-   for the read 1 operation.
+/*
+Read1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the read 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type Read1Params struct {
 

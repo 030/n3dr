@@ -45,7 +45,8 @@ func NewGetTrustStoreCertificatesOK() *GetTrustStoreCertificatesOK {
 	return &GetTrustStoreCertificatesOK{}
 }
 
-/* GetTrustStoreCertificatesOK describes a response with status code 200, with default header values.
+/*
+GetTrustStoreCertificatesOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type GetTrustStoreCertificatesOK struct {
 	Payload []*models.APICertificate
 }
 
+// IsSuccess returns true when this get trust store certificates o k response has a 2xx status code
+func (o *GetTrustStoreCertificatesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get trust store certificates o k response has a 3xx status code
+func (o *GetTrustStoreCertificatesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get trust store certificates o k response has a 4xx status code
+func (o *GetTrustStoreCertificatesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get trust store certificates o k response has a 5xx status code
+func (o *GetTrustStoreCertificatesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get trust store certificates o k response a status code equal to that given
+func (o *GetTrustStoreCertificatesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get trust store certificates o k response
+func (o *GetTrustStoreCertificatesOK) Code() int {
+	return 200
+}
+
 func (o *GetTrustStoreCertificatesOK) Error() string {
 	return fmt.Sprintf("[GET /v1/security/ssl/truststore][%d] getTrustStoreCertificatesOK  %+v", 200, o.Payload)
 }
+
+func (o *GetTrustStoreCertificatesOK) String() string {
+	return fmt.Sprintf("[GET /v1/security/ssl/truststore][%d] getTrustStoreCertificatesOK  %+v", 200, o.Payload)
+}
+
 func (o *GetTrustStoreCertificatesOK) GetPayload() []*models.APICertificate {
 	return o.Payload
 }
@@ -75,14 +111,49 @@ func NewGetTrustStoreCertificatesForbidden() *GetTrustStoreCertificatesForbidden
 	return &GetTrustStoreCertificatesForbidden{}
 }
 
-/* GetTrustStoreCertificatesForbidden describes a response with status code 403, with default header values.
+/*
+GetTrustStoreCertificatesForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to list certificates in the trust store.
 */
 type GetTrustStoreCertificatesForbidden struct {
 }
 
+// IsSuccess returns true when this get trust store certificates forbidden response has a 2xx status code
+func (o *GetTrustStoreCertificatesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get trust store certificates forbidden response has a 3xx status code
+func (o *GetTrustStoreCertificatesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get trust store certificates forbidden response has a 4xx status code
+func (o *GetTrustStoreCertificatesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get trust store certificates forbidden response has a 5xx status code
+func (o *GetTrustStoreCertificatesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get trust store certificates forbidden response a status code equal to that given
+func (o *GetTrustStoreCertificatesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get trust store certificates forbidden response
+func (o *GetTrustStoreCertificatesForbidden) Code() int {
+	return 403
+}
+
 func (o *GetTrustStoreCertificatesForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/security/ssl/truststore][%d] getTrustStoreCertificatesForbidden ", 403)
+}
+
+func (o *GetTrustStoreCertificatesForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/security/ssl/truststore][%d] getTrustStoreCertificatesForbidden ", 403)
 }
 

@@ -51,7 +51,8 @@ func NewGetComponentsOK() *GetComponentsOK {
 	return &GetComponentsOK{}
 }
 
-/* GetComponentsOK describes a response with status code 200, with default header values.
+/*
+GetComponentsOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -59,9 +60,44 @@ type GetComponentsOK struct {
 	Payload *models.PageComponentXO
 }
 
+// IsSuccess returns true when this get components o k response has a 2xx status code
+func (o *GetComponentsOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get components o k response has a 3xx status code
+func (o *GetComponentsOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get components o k response has a 4xx status code
+func (o *GetComponentsOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get components o k response has a 5xx status code
+func (o *GetComponentsOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get components o k response a status code equal to that given
+func (o *GetComponentsOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get components o k response
+func (o *GetComponentsOK) Code() int {
+	return 200
+}
+
 func (o *GetComponentsOK) Error() string {
 	return fmt.Sprintf("[GET /v1/components][%d] getComponentsOK  %+v", 200, o.Payload)
 }
+
+func (o *GetComponentsOK) String() string {
+	return fmt.Sprintf("[GET /v1/components][%d] getComponentsOK  %+v", 200, o.Payload)
+}
+
 func (o *GetComponentsOK) GetPayload() *models.PageComponentXO {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewGetComponentsForbidden() *GetComponentsForbidden {
 	return &GetComponentsForbidden{}
 }
 
-/* GetComponentsForbidden describes a response with status code 403, with default header values.
+/*
+GetComponentsForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to list components
 */
 type GetComponentsForbidden struct {
 }
 
+// IsSuccess returns true when this get components forbidden response has a 2xx status code
+func (o *GetComponentsForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get components forbidden response has a 3xx status code
+func (o *GetComponentsForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get components forbidden response has a 4xx status code
+func (o *GetComponentsForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get components forbidden response has a 5xx status code
+func (o *GetComponentsForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get components forbidden response a status code equal to that given
+func (o *GetComponentsForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get components forbidden response
+func (o *GetComponentsForbidden) Code() int {
+	return 403
+}
+
 func (o *GetComponentsForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/components][%d] getComponentsForbidden ", 403)
+}
+
+func (o *GetComponentsForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/components][%d] getComponentsForbidden ", 403)
 }
 
@@ -104,14 +175,49 @@ func NewGetComponentsUnprocessableEntity() *GetComponentsUnprocessableEntity {
 	return &GetComponentsUnprocessableEntity{}
 }
 
-/* GetComponentsUnprocessableEntity describes a response with status code 422, with default header values.
+/*
+GetComponentsUnprocessableEntity describes a response with status code 422, with default header values.
 
 Parameter 'repository' is required
 */
 type GetComponentsUnprocessableEntity struct {
 }
 
+// IsSuccess returns true when this get components unprocessable entity response has a 2xx status code
+func (o *GetComponentsUnprocessableEntity) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get components unprocessable entity response has a 3xx status code
+func (o *GetComponentsUnprocessableEntity) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get components unprocessable entity response has a 4xx status code
+func (o *GetComponentsUnprocessableEntity) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get components unprocessable entity response has a 5xx status code
+func (o *GetComponentsUnprocessableEntity) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get components unprocessable entity response a status code equal to that given
+func (o *GetComponentsUnprocessableEntity) IsCode(code int) bool {
+	return code == 422
+}
+
+// Code gets the status code for the get components unprocessable entity response
+func (o *GetComponentsUnprocessableEntity) Code() int {
+	return 422
+}
+
 func (o *GetComponentsUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[GET /v1/components][%d] getComponentsUnprocessableEntity ", 422)
+}
+
+func (o *GetComponentsUnprocessableEntity) String() string {
 	return fmt.Sprintf("[GET /v1/components][%d] getComponentsUnprocessableEntity ", 422)
 }
 

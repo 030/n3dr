@@ -42,9 +42,9 @@ type ClientService interface {
 }
 
 /*
-  ForceRelease forciblies release read only
+ForceRelease forciblies release read only
 
-  Forcibly release read-only status, including System initiated tasks. Warning: may result in data loss.
+Forcibly release read-only status, including System initiated tasks. Warning: may result in data loss.
 */
 func (a *Client) ForceRelease(params *ForceReleaseParams, opts ...ClientOption) (*ForceReleaseNoContent, error) {
 	// TODO: Validate the params before sending
@@ -82,7 +82,7 @@ func (a *Client) ForceRelease(params *ForceReleaseParams, opts ...ClientOption) 
 }
 
 /*
-  Freeze enables read only
+Freeze enables read only
 */
 func (a *Client) Freeze(params *FreezeParams, opts ...ClientOption) (*FreezeNoContent, error) {
 	// TODO: Validate the params before sending
@@ -120,7 +120,7 @@ func (a *Client) Freeze(params *FreezeParams, opts ...ClientOption) (*FreezeNoCo
 }
 
 /*
-  Get gets read only state
+Get gets read only state
 */
 func (a *Client) Get(params *GetParams, opts ...ClientOption) (*GetOK, error) {
 	// TODO: Validate the params before sending
@@ -158,9 +158,9 @@ func (a *Client) Get(params *GetParams, opts ...ClientOption) (*GetOK, error) {
 }
 
 /*
-  Release releases read only
+Release releases read only
 
-  Release administrator initiated read-only status. Will not release read-only caused by system tasks.
+Release administrator initiated read-only status. Will not release read-only caused by system tasks.
 */
 func (a *Client) Release(params *ReleaseParams, opts ...ClientOption) (*ReleaseNoContent, error) {
 	// TODO: Validate the params before sending

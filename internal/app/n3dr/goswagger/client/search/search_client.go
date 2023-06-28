@@ -40,7 +40,7 @@ type ClientService interface {
 }
 
 /*
-  Search searches components
+Search searches components
 */
 func (a *Client) Search(params *SearchParams, opts ...ClientOption) (*SearchOK, error) {
 	// TODO: Validate the params before sending
@@ -78,9 +78,9 @@ func (a *Client) Search(params *SearchParams, opts ...ClientOption) (*SearchOK, 
 }
 
 /*
-  SearchAndDownloadAssets searches and download asset
+SearchAndDownloadAssets searches and download asset
 
-  Returns a 302 Found with location header field set to download URL. Unless a sort parameter is supplied, the search must return a single asset to receive download URL.
+Returns a 302 Found with location header field set to download URL. Unless a sort parameter is supplied, the search must return a single asset to receive download URL.
 */
 func (a *Client) SearchAndDownloadAssets(params *SearchAndDownloadAssetsParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -111,7 +111,7 @@ func (a *Client) SearchAndDownloadAssets(params *SearchAndDownloadAssetsParams, 
 }
 
 /*
-  SearchAssets searches assets
+SearchAssets searches assets
 */
 func (a *Client) SearchAssets(params *SearchAssetsParams, opts ...ClientOption) (*SearchAssetsOK, error) {
 	// TODO: Validate the params before sending

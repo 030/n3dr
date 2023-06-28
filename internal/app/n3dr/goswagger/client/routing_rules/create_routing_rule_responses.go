@@ -48,14 +48,49 @@ func NewCreateRoutingRuleNoContent() *CreateRoutingRuleNoContent {
 	return &CreateRoutingRuleNoContent{}
 }
 
-/* CreateRoutingRuleNoContent describes a response with status code 204, with default header values.
+/*
+CreateRoutingRuleNoContent describes a response with status code 204, with default header values.
 
 Routing rule was successfully created
 */
 type CreateRoutingRuleNoContent struct {
 }
 
+// IsSuccess returns true when this create routing rule no content response has a 2xx status code
+func (o *CreateRoutingRuleNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create routing rule no content response has a 3xx status code
+func (o *CreateRoutingRuleNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create routing rule no content response has a 4xx status code
+func (o *CreateRoutingRuleNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create routing rule no content response has a 5xx status code
+func (o *CreateRoutingRuleNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create routing rule no content response a status code equal to that given
+func (o *CreateRoutingRuleNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the create routing rule no content response
+func (o *CreateRoutingRuleNoContent) Code() int {
+	return 204
+}
+
 func (o *CreateRoutingRuleNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/routing-rules][%d] createRoutingRuleNoContent ", 204)
+}
+
+func (o *CreateRoutingRuleNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/routing-rules][%d] createRoutingRuleNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewCreateRoutingRuleBadRequest() *CreateRoutingRuleBadRequest {
 	return &CreateRoutingRuleBadRequest{}
 }
 
-/* CreateRoutingRuleBadRequest describes a response with status code 400, with default header values.
+/*
+CreateRoutingRuleBadRequest describes a response with status code 400, with default header values.
 
 A routing rule with the same name already exists or required parameters missing
 */
 type CreateRoutingRuleBadRequest struct {
 }
 
+// IsSuccess returns true when this create routing rule bad request response has a 2xx status code
+func (o *CreateRoutingRuleBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create routing rule bad request response has a 3xx status code
+func (o *CreateRoutingRuleBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create routing rule bad request response has a 4xx status code
+func (o *CreateRoutingRuleBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create routing rule bad request response has a 5xx status code
+func (o *CreateRoutingRuleBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create routing rule bad request response a status code equal to that given
+func (o *CreateRoutingRuleBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create routing rule bad request response
+func (o *CreateRoutingRuleBadRequest) Code() int {
+	return 400
+}
+
 func (o *CreateRoutingRuleBadRequest) Error() string {
+	return fmt.Sprintf("[POST /v1/routing-rules][%d] createRoutingRuleBadRequest ", 400)
+}
+
+func (o *CreateRoutingRuleBadRequest) String() string {
 	return fmt.Sprintf("[POST /v1/routing-rules][%d] createRoutingRuleBadRequest ", 400)
 }
 
@@ -90,14 +160,49 @@ func NewCreateRoutingRuleForbidden() *CreateRoutingRuleForbidden {
 	return &CreateRoutingRuleForbidden{}
 }
 
-/* CreateRoutingRuleForbidden describes a response with status code 403, with default header values.
+/*
+CreateRoutingRuleForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to create routing rule
 */
 type CreateRoutingRuleForbidden struct {
 }
 
+// IsSuccess returns true when this create routing rule forbidden response has a 2xx status code
+func (o *CreateRoutingRuleForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create routing rule forbidden response has a 3xx status code
+func (o *CreateRoutingRuleForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create routing rule forbidden response has a 4xx status code
+func (o *CreateRoutingRuleForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create routing rule forbidden response has a 5xx status code
+func (o *CreateRoutingRuleForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create routing rule forbidden response a status code equal to that given
+func (o *CreateRoutingRuleForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create routing rule forbidden response
+func (o *CreateRoutingRuleForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRoutingRuleForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/routing-rules][%d] createRoutingRuleForbidden ", 403)
+}
+
+func (o *CreateRoutingRuleForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/routing-rules][%d] createRoutingRuleForbidden ", 403)
 }
 

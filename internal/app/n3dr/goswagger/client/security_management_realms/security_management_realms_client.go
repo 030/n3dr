@@ -40,7 +40,7 @@ type ClientService interface {
 }
 
 /*
-  GetActiveRealms lists the active realm i ds in order
+GetActiveRealms lists the active realm i ds in order
 */
 func (a *Client) GetActiveRealms(params *GetActiveRealmsParams, opts ...ClientOption) (*GetActiveRealmsOK, error) {
 	// TODO: Validate the params before sending
@@ -78,7 +78,7 @@ func (a *Client) GetActiveRealms(params *GetActiveRealmsParams, opts ...ClientOp
 }
 
 /*
-  GetRealms lists the available realms
+GetRealms lists the available realms
 */
 func (a *Client) GetRealms(params *GetRealmsParams, opts ...ClientOption) (*GetRealmsOK, error) {
 	// TODO: Validate the params before sending
@@ -116,7 +116,7 @@ func (a *Client) GetRealms(params *GetRealmsParams, opts ...ClientOption) (*GetR
 }
 
 /*
-  SetActiveRealms sets the active security realms in the order they should be used
+SetActiveRealms sets the active security realms in the order they should be used
 */
 func (a *Client) SetActiveRealms(params *SetActiveRealmsParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending

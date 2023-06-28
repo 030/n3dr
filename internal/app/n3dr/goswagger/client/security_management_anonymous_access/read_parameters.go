@@ -52,10 +52,12 @@ func NewReadParamsWithHTTPClient(client *http.Client) *ReadParams {
 	}
 }
 
-/* ReadParams contains all the parameters to send to the API endpoint
-   for the read operation.
+/*
+ReadParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the read operation.
+
+	Typically these are written to a http.Request.
 */
 type ReadParams struct {
 	timeout    time.Duration

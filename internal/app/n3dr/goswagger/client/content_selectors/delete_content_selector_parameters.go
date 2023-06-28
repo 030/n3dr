@@ -52,10 +52,12 @@ func NewDeleteContentSelectorParamsWithHTTPClient(client *http.Client) *DeleteCo
 	}
 }
 
-/* DeleteContentSelectorParams contains all the parameters to send to the API endpoint
-   for the delete content selector operation.
+/*
+DeleteContentSelectorParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete content selector operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteContentSelectorParams struct {
 

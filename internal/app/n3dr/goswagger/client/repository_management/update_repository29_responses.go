@@ -48,14 +48,49 @@ func NewUpdateRepository29NoContent() *UpdateRepository29NoContent {
 	return &UpdateRepository29NoContent{}
 }
 
-/* UpdateRepository29NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository29NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository29NoContent struct {
 }
 
+// IsSuccess returns true when this update repository29 no content response has a 2xx status code
+func (o *UpdateRepository29NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository29 no content response has a 3xx status code
+func (o *UpdateRepository29NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository29 no content response has a 4xx status code
+func (o *UpdateRepository29NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository29 no content response has a 5xx status code
+func (o *UpdateRepository29NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository29 no content response a status code equal to that given
+func (o *UpdateRepository29NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository29 no content response
+func (o *UpdateRepository29NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository29NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/conda/proxy/{repositoryName}][%d] updateRepository29NoContent ", 204)
+}
+
+func (o *UpdateRepository29NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/conda/proxy/{repositoryName}][%d] updateRepository29NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository29Unauthorized() *UpdateRepository29Unauthorized {
 	return &UpdateRepository29Unauthorized{}
 }
 
-/* UpdateRepository29Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository29Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository29Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository29 unauthorized response has a 2xx status code
+func (o *UpdateRepository29Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository29 unauthorized response has a 3xx status code
+func (o *UpdateRepository29Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository29 unauthorized response has a 4xx status code
+func (o *UpdateRepository29Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository29 unauthorized response has a 5xx status code
+func (o *UpdateRepository29Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository29 unauthorized response a status code equal to that given
+func (o *UpdateRepository29Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository29 unauthorized response
+func (o *UpdateRepository29Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository29Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/conda/proxy/{repositoryName}][%d] updateRepository29Unauthorized ", 401)
+}
+
+func (o *UpdateRepository29Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/conda/proxy/{repositoryName}][%d] updateRepository29Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository29Forbidden() *UpdateRepository29Forbidden {
 	return &UpdateRepository29Forbidden{}
 }
 
-/* UpdateRepository29Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository29Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository29Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository29 forbidden response has a 2xx status code
+func (o *UpdateRepository29Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository29 forbidden response has a 3xx status code
+func (o *UpdateRepository29Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository29 forbidden response has a 4xx status code
+func (o *UpdateRepository29Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository29 forbidden response has a 5xx status code
+func (o *UpdateRepository29Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository29 forbidden response a status code equal to that given
+func (o *UpdateRepository29Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository29 forbidden response
+func (o *UpdateRepository29Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository29Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/conda/proxy/{repositoryName}][%d] updateRepository29Forbidden ", 403)
+}
+
+func (o *UpdateRepository29Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/conda/proxy/{repositoryName}][%d] updateRepository29Forbidden ", 403)
 }
 

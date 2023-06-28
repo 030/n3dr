@@ -48,14 +48,49 @@ func NewUpdatePrivilegeBadRequest() *UpdatePrivilegeBadRequest {
 	return &UpdatePrivilegeBadRequest{}
 }
 
-/* UpdatePrivilegeBadRequest describes a response with status code 400, with default header values.
+/*
+UpdatePrivilegeBadRequest describes a response with status code 400, with default header values.
 
 Privilege object not configured properly.
 */
 type UpdatePrivilegeBadRequest struct {
 }
 
+// IsSuccess returns true when this update privilege bad request response has a 2xx status code
+func (o *UpdatePrivilegeBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege bad request response has a 3xx status code
+func (o *UpdatePrivilegeBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege bad request response has a 4xx status code
+func (o *UpdatePrivilegeBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege bad request response has a 5xx status code
+func (o *UpdatePrivilegeBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege bad request response a status code equal to that given
+func (o *UpdatePrivilegeBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update privilege bad request response
+func (o *UpdatePrivilegeBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdatePrivilegeBadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilegeBadRequest ", 400)
+}
+
+func (o *UpdatePrivilegeBadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilegeBadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewUpdatePrivilegeForbidden() *UpdatePrivilegeForbidden {
 	return &UpdatePrivilegeForbidden{}
 }
 
-/* UpdatePrivilegeForbidden describes a response with status code 403, with default header values.
+/*
+UpdatePrivilegeForbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type UpdatePrivilegeForbidden struct {
 }
 
+// IsSuccess returns true when this update privilege forbidden response has a 2xx status code
+func (o *UpdatePrivilegeForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege forbidden response has a 3xx status code
+func (o *UpdatePrivilegeForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege forbidden response has a 4xx status code
+func (o *UpdatePrivilegeForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege forbidden response has a 5xx status code
+func (o *UpdatePrivilegeForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege forbidden response a status code equal to that given
+func (o *UpdatePrivilegeForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update privilege forbidden response
+func (o *UpdatePrivilegeForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdatePrivilegeForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilegeForbidden ", 403)
+}
+
+func (o *UpdatePrivilegeForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilegeForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewUpdatePrivilegeNotFound() *UpdatePrivilegeNotFound {
 	return &UpdatePrivilegeNotFound{}
 }
 
-/* UpdatePrivilegeNotFound describes a response with status code 404, with default header values.
+/*
+UpdatePrivilegeNotFound describes a response with status code 404, with default header values.
 
 Privilege not found in the system.
 */
 type UpdatePrivilegeNotFound struct {
 }
 
+// IsSuccess returns true when this update privilege not found response has a 2xx status code
+func (o *UpdatePrivilegeNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege not found response has a 3xx status code
+func (o *UpdatePrivilegeNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege not found response has a 4xx status code
+func (o *UpdatePrivilegeNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege not found response has a 5xx status code
+func (o *UpdatePrivilegeNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege not found response a status code equal to that given
+func (o *UpdatePrivilegeNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update privilege not found response
+func (o *UpdatePrivilegeNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdatePrivilegeNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilegeNotFound ", 404)
+}
+
+func (o *UpdatePrivilegeNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/wildcard/{privilegeName}][%d] updatePrivilegeNotFound ", 404)
 }
 

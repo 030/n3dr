@@ -51,7 +51,8 @@ func NewGetPrivilegeOK() *GetPrivilegeOK {
 	return &GetPrivilegeOK{}
 }
 
-/* GetPrivilegeOK describes a response with status code 200, with default header values.
+/*
+GetPrivilegeOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -59,9 +60,44 @@ type GetPrivilegeOK struct {
 	Payload *models.APIPrivilege
 }
 
+// IsSuccess returns true when this get privilege o k response has a 2xx status code
+func (o *GetPrivilegeOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get privilege o k response has a 3xx status code
+func (o *GetPrivilegeOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get privilege o k response has a 4xx status code
+func (o *GetPrivilegeOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get privilege o k response has a 5xx status code
+func (o *GetPrivilegeOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get privilege o k response a status code equal to that given
+func (o *GetPrivilegeOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get privilege o k response
+func (o *GetPrivilegeOK) Code() int {
+	return 200
+}
+
 func (o *GetPrivilegeOK) Error() string {
 	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeOK  %+v", 200, o.Payload)
 }
+
+func (o *GetPrivilegeOK) String() string {
+	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeOK  %+v", 200, o.Payload)
+}
+
 func (o *GetPrivilegeOK) GetPayload() *models.APIPrivilege {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewGetPrivilegeForbidden() *GetPrivilegeForbidden {
 	return &GetPrivilegeForbidden{}
 }
 
-/* GetPrivilegeForbidden describes a response with status code 403, with default header values.
+/*
+GetPrivilegeForbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type GetPrivilegeForbidden struct {
 }
 
+// IsSuccess returns true when this get privilege forbidden response has a 2xx status code
+func (o *GetPrivilegeForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get privilege forbidden response has a 3xx status code
+func (o *GetPrivilegeForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get privilege forbidden response has a 4xx status code
+func (o *GetPrivilegeForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get privilege forbidden response has a 5xx status code
+func (o *GetPrivilegeForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get privilege forbidden response a status code equal to that given
+func (o *GetPrivilegeForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get privilege forbidden response
+func (o *GetPrivilegeForbidden) Code() int {
+	return 403
+}
+
 func (o *GetPrivilegeForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeForbidden ", 403)
+}
+
+func (o *GetPrivilegeForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeForbidden ", 403)
 }
 
@@ -104,14 +175,49 @@ func NewGetPrivilegeNotFound() *GetPrivilegeNotFound {
 	return &GetPrivilegeNotFound{}
 }
 
-/* GetPrivilegeNotFound describes a response with status code 404, with default header values.
+/*
+GetPrivilegeNotFound describes a response with status code 404, with default header values.
 
 Privilege not found in the system.
 */
 type GetPrivilegeNotFound struct {
 }
 
+// IsSuccess returns true when this get privilege not found response has a 2xx status code
+func (o *GetPrivilegeNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get privilege not found response has a 3xx status code
+func (o *GetPrivilegeNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get privilege not found response has a 4xx status code
+func (o *GetPrivilegeNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get privilege not found response has a 5xx status code
+func (o *GetPrivilegeNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get privilege not found response a status code equal to that given
+func (o *GetPrivilegeNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get privilege not found response
+func (o *GetPrivilegeNotFound) Code() int {
+	return 404
+}
+
 func (o *GetPrivilegeNotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeNotFound ", 404)
+}
+
+func (o *GetPrivilegeNotFound) String() string {
 	return fmt.Sprintf("[GET /v1/security/privileges/{privilegeName}][%d] getPrivilegeNotFound ", 404)
 }
 

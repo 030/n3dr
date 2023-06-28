@@ -52,10 +52,12 @@ func NewGetRepository17ParamsWithHTTPClient(client *http.Client) *GetRepository1
 	}
 }
 
-/* GetRepository17Params contains all the parameters to send to the API endpoint
-   for the get repository 17 operation.
+/*
+GetRepository17Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get repository 17 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRepository17Params struct {
 

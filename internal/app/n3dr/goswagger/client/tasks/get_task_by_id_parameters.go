@@ -52,10 +52,12 @@ func NewGetTaskByIDParamsWithHTTPClient(client *http.Client) *GetTaskByIDParams 
 	}
 }
 
-/* GetTaskByIDParams contains all the parameters to send to the API endpoint
-   for the get task by Id operation.
+/*
+GetTaskByIDParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get task by Id operation.
+
+	Typically these are written to a http.Request.
 */
 type GetTaskByIDParams struct {
 

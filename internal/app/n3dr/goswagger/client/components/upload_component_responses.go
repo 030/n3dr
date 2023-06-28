@@ -42,14 +42,49 @@ func NewUploadComponentForbidden() *UploadComponentForbidden {
 	return &UploadComponentForbidden{}
 }
 
-/* UploadComponentForbidden describes a response with status code 403, with default header values.
+/*
+UploadComponentForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to upload a component
 */
 type UploadComponentForbidden struct {
 }
 
+// IsSuccess returns true when this upload component forbidden response has a 2xx status code
+func (o *UploadComponentForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this upload component forbidden response has a 3xx status code
+func (o *UploadComponentForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this upload component forbidden response has a 4xx status code
+func (o *UploadComponentForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this upload component forbidden response has a 5xx status code
+func (o *UploadComponentForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this upload component forbidden response a status code equal to that given
+func (o *UploadComponentForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the upload component forbidden response
+func (o *UploadComponentForbidden) Code() int {
+	return 403
+}
+
 func (o *UploadComponentForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/components][%d] uploadComponentForbidden ", 403)
+}
+
+func (o *UploadComponentForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/components][%d] uploadComponentForbidden ", 403)
 }
 
@@ -63,14 +98,49 @@ func NewUploadComponentUnprocessableEntity() *UploadComponentUnprocessableEntity
 	return &UploadComponentUnprocessableEntity{}
 }
 
-/* UploadComponentUnprocessableEntity describes a response with status code 422, with default header values.
+/*
+UploadComponentUnprocessableEntity describes a response with status code 422, with default header values.
 
 Parameter 'repository' is required
 */
 type UploadComponentUnprocessableEntity struct {
 }
 
+// IsSuccess returns true when this upload component unprocessable entity response has a 2xx status code
+func (o *UploadComponentUnprocessableEntity) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this upload component unprocessable entity response has a 3xx status code
+func (o *UploadComponentUnprocessableEntity) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this upload component unprocessable entity response has a 4xx status code
+func (o *UploadComponentUnprocessableEntity) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this upload component unprocessable entity response has a 5xx status code
+func (o *UploadComponentUnprocessableEntity) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this upload component unprocessable entity response a status code equal to that given
+func (o *UploadComponentUnprocessableEntity) IsCode(code int) bool {
+	return code == 422
+}
+
+// Code gets the status code for the upload component unprocessable entity response
+func (o *UploadComponentUnprocessableEntity) Code() int {
+	return 422
+}
+
 func (o *UploadComponentUnprocessableEntity) Error() string {
+	return fmt.Sprintf("[POST /v1/components][%d] uploadComponentUnprocessableEntity ", 422)
+}
+
+func (o *UploadComponentUnprocessableEntity) String() string {
 	return fmt.Sprintf("[POST /v1/components][%d] uploadComponentUnprocessableEntity ", 422)
 }
 

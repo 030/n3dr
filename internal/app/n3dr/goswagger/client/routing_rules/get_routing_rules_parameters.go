@@ -52,10 +52,12 @@ func NewGetRoutingRulesParamsWithHTTPClient(client *http.Client) *GetRoutingRule
 	}
 }
 
-/* GetRoutingRulesParams contains all the parameters to send to the API endpoint
-   for the get routing rules operation.
+/*
+GetRoutingRulesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get routing rules operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRoutingRulesParams struct {
 	timeout    time.Duration

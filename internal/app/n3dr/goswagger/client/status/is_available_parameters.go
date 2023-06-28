@@ -52,10 +52,12 @@ func NewIsAvailableParamsWithHTTPClient(client *http.Client) *IsAvailableParams 
 	}
 }
 
-/* IsAvailableParams contains all the parameters to send to the API endpoint
-   for the is available operation.
+/*
+IsAvailableParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the is available operation.
+
+	Typically these are written to a http.Request.
 */
 type IsAvailableParams struct {
 	timeout    time.Duration

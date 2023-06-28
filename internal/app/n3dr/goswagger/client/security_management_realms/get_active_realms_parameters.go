@@ -52,10 +52,12 @@ func NewGetActiveRealmsParamsWithHTTPClient(client *http.Client) *GetActiveRealm
 	}
 }
 
-/* GetActiveRealmsParams contains all the parameters to send to the API endpoint
-   for the get active realms operation.
+/*
+GetActiveRealmsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get active realms operation.
+
+	Typically these are written to a http.Request.
 */
 type GetActiveRealmsParams struct {
 	timeout    time.Duration

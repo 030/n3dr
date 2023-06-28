@@ -47,6 +47,7 @@ readonly DOWNLOAD_LOCATION_SYNC=${DOWNLOAD_LOCATION}-sync
 readonly DOWNLOAD_LOCATION_SYNC_A=${DOWNLOAD_LOCATION_SYNC}-a
 readonly DOWNLOAD_LOCATION_SYNC_B=${DOWNLOAD_LOCATION_SYNC}-b
 readonly DOWNLOAD_LOCATION_SYNC_C=${DOWNLOAD_LOCATION_SYNC}-c
+readonly FILES_LOCATION=/tmp/n3dr-files
 readonly HOSTED_REPO_DOCKER=REPO_NAME_HOSTED_DOCKER
 readonly HOSTED_REPO_GEM=REPO_NAME_HOSTED_GEM
 readonly HOSTED_REPO_YUM=REPO_NAME_HOSTED_YUM
@@ -103,10 +104,10 @@ nexus() {
 }
 
 artifact() {
-  mkdir -p "maven-releases/some/group${1}/File_${1}/1.0.0-2"
-  echo someContent >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.jar"
-  echo someContentZIP >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.zip"
-  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>File_${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" >"maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.pom"
+  mkdir -p "${FILES_LOCATION}/maven-releases/some/group${1}/File_${1}/1.0.0-2"
+  echo someContent >"${FILES_LOCATION}/maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.jar"
+  echo someContentZIP >"${FILES_LOCATION}/maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.zip"
+  echo -e "<project>\n<modelVersion>4.0.0</modelVersion>\n<groupId>some.group${1}</groupId>\n<artifactId>File_${1}</artifactId>\n<version>1.0.0-2</version>\n</project>" >"${FILES_LOCATION}/maven-releases/some/group${1}/File_${1}/1.0.0-2/File_${1}-1.0.0-2.pom"
 }
 
 files() {
@@ -123,7 +124,7 @@ upload() {
   ${N3DR_DELIVERABLE_WITH_BASE_OPTIONS_A} repositoriesV2 \
     --upload \
     --n3drRepo maven-releases \
-    --directory-prefix "${PWD}" \
+    --directory-prefix "${FILES_LOCATION}" \
     --https=false
   echo
 }
@@ -295,6 +296,7 @@ cleanup_downloads() {
   rm -rf REPO_NAME_HOSTED_APT
   rm -rf REPO_NAME_HOSTED_NPM
   rm -rf ${HOSTED_REPO_YUM}
+  rm -rf ${FILES_LOCATION}
   rm -rf maven-releases
   rm -rf "${DOWNLOAD_LOCATION}"
   rm -rf "${DOWNLOAD_LOCATION_PASS}"

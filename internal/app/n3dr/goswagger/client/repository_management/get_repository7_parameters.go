@@ -52,10 +52,12 @@ func NewGetRepository7ParamsWithHTTPClient(client *http.Client) *GetRepository7P
 	}
 }
 
-/* GetRepository7Params contains all the parameters to send to the API endpoint
-   for the get repository 7 operation.
+/*
+GetRepository7Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get repository 7 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRepository7Params struct {
 

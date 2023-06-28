@@ -45,7 +45,8 @@ func NewRead1OK() *Read1OK {
 	return &Read1OK{}
 }
 
-/* Read1OK describes a response with status code 200, with default header values.
+/*
+Read1OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type Read1OK struct {
 	Payload *models.ScriptXO
 }
 
+// IsSuccess returns true when this read1 o k response has a 2xx status code
+func (o *Read1OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this read1 o k response has a 3xx status code
+func (o *Read1OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this read1 o k response has a 4xx status code
+func (o *Read1OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this read1 o k response has a 5xx status code
+func (o *Read1OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this read1 o k response a status code equal to that given
+func (o *Read1OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the read1 o k response
+func (o *Read1OK) Code() int {
+	return 200
+}
+
 func (o *Read1OK) Error() string {
 	return fmt.Sprintf("[GET /v1/script/{name}][%d] read1OK  %+v", 200, o.Payload)
 }
+
+func (o *Read1OK) String() string {
+	return fmt.Sprintf("[GET /v1/script/{name}][%d] read1OK  %+v", 200, o.Payload)
+}
+
 func (o *Read1OK) GetPayload() *models.ScriptXO {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewRead1NotFound() *Read1NotFound {
 	return &Read1NotFound{}
 }
 
-/* Read1NotFound describes a response with status code 404, with default header values.
+/*
+Read1NotFound describes a response with status code 404, with default header values.
 
 No script with the specified name
 */
 type Read1NotFound struct {
 }
 
+// IsSuccess returns true when this read1 not found response has a 2xx status code
+func (o *Read1NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this read1 not found response has a 3xx status code
+func (o *Read1NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this read1 not found response has a 4xx status code
+func (o *Read1NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this read1 not found response has a 5xx status code
+func (o *Read1NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this read1 not found response a status code equal to that given
+func (o *Read1NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the read1 not found response
+func (o *Read1NotFound) Code() int {
+	return 404
+}
+
 func (o *Read1NotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/script/{name}][%d] read1NotFound ", 404)
+}
+
+func (o *Read1NotFound) String() string {
 	return fmt.Sprintf("[GET /v1/script/{name}][%d] read1NotFound ", 404)
 }
 

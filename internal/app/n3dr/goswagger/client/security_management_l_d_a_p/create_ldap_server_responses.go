@@ -48,14 +48,49 @@ func NewCreateLdapServerCreated() *CreateLdapServerCreated {
 	return &CreateLdapServerCreated{}
 }
 
-/* CreateLdapServerCreated describes a response with status code 201, with default header values.
+/*
+CreateLdapServerCreated describes a response with status code 201, with default header values.
 
 LDAP server created
 */
 type CreateLdapServerCreated struct {
 }
 
+// IsSuccess returns true when this create ldap server created response has a 2xx status code
+func (o *CreateLdapServerCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create ldap server created response has a 3xx status code
+func (o *CreateLdapServerCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create ldap server created response has a 4xx status code
+func (o *CreateLdapServerCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create ldap server created response has a 5xx status code
+func (o *CreateLdapServerCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create ldap server created response a status code equal to that given
+func (o *CreateLdapServerCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create ldap server created response
+func (o *CreateLdapServerCreated) Code() int {
+	return 201
+}
+
 func (o *CreateLdapServerCreated) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ldap][%d] createLdapServerCreated ", 201)
+}
+
+func (o *CreateLdapServerCreated) String() string {
 	return fmt.Sprintf("[POST /v1/security/ldap][%d] createLdapServerCreated ", 201)
 }
 
@@ -69,14 +104,49 @@ func NewCreateLdapServerUnauthorized() *CreateLdapServerUnauthorized {
 	return &CreateLdapServerUnauthorized{}
 }
 
-/* CreateLdapServerUnauthorized describes a response with status code 401, with default header values.
+/*
+CreateLdapServerUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateLdapServerUnauthorized struct {
 }
 
+// IsSuccess returns true when this create ldap server unauthorized response has a 2xx status code
+func (o *CreateLdapServerUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create ldap server unauthorized response has a 3xx status code
+func (o *CreateLdapServerUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create ldap server unauthorized response has a 4xx status code
+func (o *CreateLdapServerUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create ldap server unauthorized response has a 5xx status code
+func (o *CreateLdapServerUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create ldap server unauthorized response a status code equal to that given
+func (o *CreateLdapServerUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create ldap server unauthorized response
+func (o *CreateLdapServerUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateLdapServerUnauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ldap][%d] createLdapServerUnauthorized ", 401)
+}
+
+func (o *CreateLdapServerUnauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/security/ldap][%d] createLdapServerUnauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewCreateLdapServerForbidden() *CreateLdapServerForbidden {
 	return &CreateLdapServerForbidden{}
 }
 
-/* CreateLdapServerForbidden describes a response with status code 403, with default header values.
+/*
+CreateLdapServerForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateLdapServerForbidden struct {
 }
 
+// IsSuccess returns true when this create ldap server forbidden response has a 2xx status code
+func (o *CreateLdapServerForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create ldap server forbidden response has a 3xx status code
+func (o *CreateLdapServerForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create ldap server forbidden response has a 4xx status code
+func (o *CreateLdapServerForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create ldap server forbidden response has a 5xx status code
+func (o *CreateLdapServerForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create ldap server forbidden response a status code equal to that given
+func (o *CreateLdapServerForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create ldap server forbidden response
+func (o *CreateLdapServerForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateLdapServerForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ldap][%d] createLdapServerForbidden ", 403)
+}
+
+func (o *CreateLdapServerForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/security/ldap][%d] createLdapServerForbidden ", 403)
 }
 

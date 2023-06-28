@@ -36,14 +36,49 @@ func NewDeleteEmailConfigurationNoContent() *DeleteEmailConfigurationNoContent {
 	return &DeleteEmailConfigurationNoContent{}
 }
 
-/* DeleteEmailConfigurationNoContent describes a response with status code 204, with default header values.
+/*
+DeleteEmailConfigurationNoContent describes a response with status code 204, with default header values.
 
 Email configuration was successfully cleared
 */
 type DeleteEmailConfigurationNoContent struct {
 }
 
+// IsSuccess returns true when this delete email configuration no content response has a 2xx status code
+func (o *DeleteEmailConfigurationNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete email configuration no content response has a 3xx status code
+func (o *DeleteEmailConfigurationNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete email configuration no content response has a 4xx status code
+func (o *DeleteEmailConfigurationNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete email configuration no content response has a 5xx status code
+func (o *DeleteEmailConfigurationNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete email configuration no content response a status code equal to that given
+func (o *DeleteEmailConfigurationNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete email configuration no content response
+func (o *DeleteEmailConfigurationNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteEmailConfigurationNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/email][%d] deleteEmailConfigurationNoContent ", 204)
+}
+
+func (o *DeleteEmailConfigurationNoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/email][%d] deleteEmailConfigurationNoContent ", 204)
 }
 

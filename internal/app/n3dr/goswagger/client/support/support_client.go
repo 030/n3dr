@@ -38,7 +38,7 @@ type ClientService interface {
 }
 
 /*
-  Supportzip creates and downloads a support zip
+Supportzip creates and downloads a support zip
 */
 func (a *Client) Supportzip(params *SupportzipParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -69,7 +69,7 @@ func (a *Client) Supportzip(params *SupportzipParams, opts ...ClientOption) erro
 }
 
 /*
-  Supportzippath creates a support zip and returns the path
+Supportzippath creates a support zip and returns the path
 */
 func (a *Client) Supportzippath(params *SupportzippathParams, opts ...ClientOption) (*SupportzippathOK, error) {
 	// TODO: Validate the params before sending

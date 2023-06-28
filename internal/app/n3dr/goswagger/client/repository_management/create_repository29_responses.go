@@ -54,14 +54,49 @@ func NewCreateRepository29Created() *CreateRepository29Created {
 	return &CreateRepository29Created{}
 }
 
-/* CreateRepository29Created describes a response with status code 201, with default header values.
+/*
+CreateRepository29Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository29Created struct {
 }
 
+// IsSuccess returns true when this create repository29 created response has a 2xx status code
+func (o *CreateRepository29Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository29 created response has a 3xx status code
+func (o *CreateRepository29Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository29 created response has a 4xx status code
+func (o *CreateRepository29Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository29 created response has a 5xx status code
+func (o *CreateRepository29Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository29 created response a status code equal to that given
+func (o *CreateRepository29Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository29 created response
+func (o *CreateRepository29Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository29Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29Created ", 201)
+}
+
+func (o *CreateRepository29Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29Created ", 201)
 }
 
@@ -75,14 +110,49 @@ func NewCreateRepository29Unauthorized() *CreateRepository29Unauthorized {
 	return &CreateRepository29Unauthorized{}
 }
 
-/* CreateRepository29Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository29Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository29Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository29 unauthorized response has a 2xx status code
+func (o *CreateRepository29Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository29 unauthorized response has a 3xx status code
+func (o *CreateRepository29Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository29 unauthorized response has a 4xx status code
+func (o *CreateRepository29Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository29 unauthorized response has a 5xx status code
+func (o *CreateRepository29Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository29 unauthorized response a status code equal to that given
+func (o *CreateRepository29Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository29 unauthorized response
+func (o *CreateRepository29Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository29Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29Unauthorized ", 401)
+}
+
+func (o *CreateRepository29Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29Unauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewCreateRepository29Forbidden() *CreateRepository29Forbidden {
 	return &CreateRepository29Forbidden{}
 }
 
-/* CreateRepository29Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository29Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository29Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository29 forbidden response has a 2xx status code
+func (o *CreateRepository29Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository29 forbidden response has a 3xx status code
+func (o *CreateRepository29Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository29 forbidden response has a 4xx status code
+func (o *CreateRepository29Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository29 forbidden response has a 5xx status code
+func (o *CreateRepository29Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository29 forbidden response a status code equal to that given
+func (o *CreateRepository29Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository29 forbidden response
+func (o *CreateRepository29Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository29Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29Forbidden ", 403)
+}
+
+func (o *CreateRepository29Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29Forbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewCreateRepository29MethodNotAllowed() *CreateRepository29MethodNotAllowed
 	return &CreateRepository29MethodNotAllowed{}
 }
 
-/* CreateRepository29MethodNotAllowed describes a response with status code 405, with default header values.
+/*
+CreateRepository29MethodNotAllowed describes a response with status code 405, with default header values.
 
 Feature is disabled in High Availability
 */
 type CreateRepository29MethodNotAllowed struct {
 }
 
+// IsSuccess returns true when this create repository29 method not allowed response has a 2xx status code
+func (o *CreateRepository29MethodNotAllowed) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository29 method not allowed response has a 3xx status code
+func (o *CreateRepository29MethodNotAllowed) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository29 method not allowed response has a 4xx status code
+func (o *CreateRepository29MethodNotAllowed) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository29 method not allowed response has a 5xx status code
+func (o *CreateRepository29MethodNotAllowed) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository29 method not allowed response a status code equal to that given
+func (o *CreateRepository29MethodNotAllowed) IsCode(code int) bool {
+	return code == 405
+}
+
+// Code gets the status code for the create repository29 method not allowed response
+func (o *CreateRepository29MethodNotAllowed) Code() int {
+	return 405
+}
+
 func (o *CreateRepository29MethodNotAllowed) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29MethodNotAllowed ", 405)
+}
+
+func (o *CreateRepository29MethodNotAllowed) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/conda/proxy][%d] createRepository29MethodNotAllowed ", 405)
 }
 

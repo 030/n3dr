@@ -53,10 +53,12 @@ func NewUploadComponentParamsWithHTTPClient(client *http.Client) *UploadComponen
 	}
 }
 
-/* UploadComponentParams contains all the parameters to send to the API endpoint
-   for the upload component operation.
+/*
+UploadComponentParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the upload component operation.
+
+	Typically these are written to a http.Request.
 */
 type UploadComponentParams struct {
 
@@ -102,6 +104,24 @@ type UploadComponentParams struct {
 	*/
 	Maven2Asset1Extension *string
 
+	/* Maven2Asset10.
+
+	   maven2 Asset 10
+	*/
+	Maven2Asset10 runtime.NamedReadCloser
+
+	/* Maven2Asset10Classifier.
+
+	   maven2 Asset 10 Classifier
+	*/
+	Maven2Asset10Classifier *string
+
+	/* Maven2Asset10Extension.
+
+	   maven2 Asset 10 Extension
+	*/
+	Maven2Asset10Extension *string
+
 	/* Maven2Asset2.
 
 	   maven2 Asset 2
@@ -137,6 +157,114 @@ type UploadComponentParams struct {
 	   maven2 Asset 3 Extension
 	*/
 	Maven2Asset3Extension *string
+
+	/* Maven2Asset4.
+
+	   maven2 Asset 4
+	*/
+	Maven2Asset4 runtime.NamedReadCloser
+
+	/* Maven2Asset4Classifier.
+
+	   maven2 Asset 4 Classifier
+	*/
+	Maven2Asset4Classifier *string
+
+	/* Maven2Asset4Extension.
+
+	   maven2 Asset 4 Extension
+	*/
+	Maven2Asset4Extension *string
+
+	/* Maven2Asset5.
+
+	   maven2 Asset 5
+	*/
+	Maven2Asset5 runtime.NamedReadCloser
+
+	/* Maven2Asset5Classifier.
+
+	   maven2 Asset 5 Classifier
+	*/
+	Maven2Asset5Classifier *string
+
+	/* Maven2Asset5Extension.
+
+	   maven2 Asset 5 Extension
+	*/
+	Maven2Asset5Extension *string
+
+	/* Maven2Asset6.
+
+	   maven2 Asset 6
+	*/
+	Maven2Asset6 runtime.NamedReadCloser
+
+	/* Maven2Asset6Classifier.
+
+	   maven2 Asset 6 Classifier
+	*/
+	Maven2Asset6Classifier *string
+
+	/* Maven2Asset6Extension.
+
+	   maven2 Asset 6 Extension
+	*/
+	Maven2Asset6Extension *string
+
+	/* Maven2Asset7.
+
+	   maven2 Asset 7
+	*/
+	Maven2Asset7 runtime.NamedReadCloser
+
+	/* Maven2Asset7Classifier.
+
+	   maven2 Asset 7 Classifier
+	*/
+	Maven2Asset7Classifier *string
+
+	/* Maven2Asset7Extension.
+
+	   maven2 Asset 7 Extension
+	*/
+	Maven2Asset7Extension *string
+
+	/* Maven2Asset8.
+
+	   maven2 Asset 8
+	*/
+	Maven2Asset8 runtime.NamedReadCloser
+
+	/* Maven2Asset8Classifier.
+
+	   maven2 Asset 8 Classifier
+	*/
+	Maven2Asset8Classifier *string
+
+	/* Maven2Asset8Extension.
+
+	   maven2 Asset 8 Extension
+	*/
+	Maven2Asset8Extension *string
+
+	/* Maven2Asset9.
+
+	   maven2 Asset 9
+	*/
+	Maven2Asset9 runtime.NamedReadCloser
+
+	/* Maven2Asset9Classifier.
+
+	   maven2 Asset 9 Classifier
+	*/
+	Maven2Asset9Classifier *string
+
+	/* Maven2Asset9Extension.
+
+	   maven2 Asset 9 Extension
+	*/
+	Maven2Asset9Extension *string
 
 	/* Maven2GeneratePom.
 
@@ -394,6 +522,39 @@ func (o *UploadComponentParams) SetMaven2Asset1Extension(maven2Asset1Extension *
 	o.Maven2Asset1Extension = maven2Asset1Extension
 }
 
+// WithMaven2Asset10 adds the maven2Asset10 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset10(maven2Asset10 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset10(maven2Asset10)
+	return o
+}
+
+// SetMaven2Asset10 adds the maven2Asset10 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset10(maven2Asset10 runtime.NamedReadCloser) {
+	o.Maven2Asset10 = maven2Asset10
+}
+
+// WithMaven2Asset10Classifier adds the maven2Asset10Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset10Classifier(maven2Asset10Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset10Classifier(maven2Asset10Classifier)
+	return o
+}
+
+// SetMaven2Asset10Classifier adds the maven2Asset10Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset10Classifier(maven2Asset10Classifier *string) {
+	o.Maven2Asset10Classifier = maven2Asset10Classifier
+}
+
+// WithMaven2Asset10Extension adds the maven2Asset10Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset10Extension(maven2Asset10Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset10Extension(maven2Asset10Extension)
+	return o
+}
+
+// SetMaven2Asset10Extension adds the maven2Asset10Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset10Extension(maven2Asset10Extension *string) {
+	o.Maven2Asset10Extension = maven2Asset10Extension
+}
+
 // WithMaven2Asset2 adds the maven2Asset2 to the upload component params
 func (o *UploadComponentParams) WithMaven2Asset2(maven2Asset2 runtime.NamedReadCloser) *UploadComponentParams {
 	o.SetMaven2Asset2(maven2Asset2)
@@ -458,6 +619,204 @@ func (o *UploadComponentParams) WithMaven2Asset3Extension(maven2Asset3Extension 
 // SetMaven2Asset3Extension adds the maven2Asset3Extension to the upload component params
 func (o *UploadComponentParams) SetMaven2Asset3Extension(maven2Asset3Extension *string) {
 	o.Maven2Asset3Extension = maven2Asset3Extension
+}
+
+// WithMaven2Asset4 adds the maven2Asset4 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset4(maven2Asset4 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset4(maven2Asset4)
+	return o
+}
+
+// SetMaven2Asset4 adds the maven2Asset4 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset4(maven2Asset4 runtime.NamedReadCloser) {
+	o.Maven2Asset4 = maven2Asset4
+}
+
+// WithMaven2Asset4Classifier adds the maven2Asset4Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset4Classifier(maven2Asset4Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset4Classifier(maven2Asset4Classifier)
+	return o
+}
+
+// SetMaven2Asset4Classifier adds the maven2Asset4Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset4Classifier(maven2Asset4Classifier *string) {
+	o.Maven2Asset4Classifier = maven2Asset4Classifier
+}
+
+// WithMaven2Asset4Extension adds the maven2Asset4Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset4Extension(maven2Asset4Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset4Extension(maven2Asset4Extension)
+	return o
+}
+
+// SetMaven2Asset4Extension adds the maven2Asset4Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset4Extension(maven2Asset4Extension *string) {
+	o.Maven2Asset4Extension = maven2Asset4Extension
+}
+
+// WithMaven2Asset5 adds the maven2Asset5 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset5(maven2Asset5 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset5(maven2Asset5)
+	return o
+}
+
+// SetMaven2Asset5 adds the maven2Asset5 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset5(maven2Asset5 runtime.NamedReadCloser) {
+	o.Maven2Asset5 = maven2Asset5
+}
+
+// WithMaven2Asset5Classifier adds the maven2Asset5Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset5Classifier(maven2Asset5Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset5Classifier(maven2Asset5Classifier)
+	return o
+}
+
+// SetMaven2Asset5Classifier adds the maven2Asset5Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset5Classifier(maven2Asset5Classifier *string) {
+	o.Maven2Asset5Classifier = maven2Asset5Classifier
+}
+
+// WithMaven2Asset5Extension adds the maven2Asset5Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset5Extension(maven2Asset5Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset5Extension(maven2Asset5Extension)
+	return o
+}
+
+// SetMaven2Asset5Extension adds the maven2Asset5Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset5Extension(maven2Asset5Extension *string) {
+	o.Maven2Asset5Extension = maven2Asset5Extension
+}
+
+// WithMaven2Asset6 adds the maven2Asset6 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset6(maven2Asset6 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset6(maven2Asset6)
+	return o
+}
+
+// SetMaven2Asset6 adds the maven2Asset6 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset6(maven2Asset6 runtime.NamedReadCloser) {
+	o.Maven2Asset6 = maven2Asset6
+}
+
+// WithMaven2Asset6Classifier adds the maven2Asset6Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset6Classifier(maven2Asset6Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset6Classifier(maven2Asset6Classifier)
+	return o
+}
+
+// SetMaven2Asset6Classifier adds the maven2Asset6Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset6Classifier(maven2Asset6Classifier *string) {
+	o.Maven2Asset6Classifier = maven2Asset6Classifier
+}
+
+// WithMaven2Asset6Extension adds the maven2Asset6Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset6Extension(maven2Asset6Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset6Extension(maven2Asset6Extension)
+	return o
+}
+
+// SetMaven2Asset6Extension adds the maven2Asset6Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset6Extension(maven2Asset6Extension *string) {
+	o.Maven2Asset6Extension = maven2Asset6Extension
+}
+
+// WithMaven2Asset7 adds the maven2Asset7 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset7(maven2Asset7 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset7(maven2Asset7)
+	return o
+}
+
+// SetMaven2Asset7 adds the maven2Asset7 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset7(maven2Asset7 runtime.NamedReadCloser) {
+	o.Maven2Asset7 = maven2Asset7
+}
+
+// WithMaven2Asset7Classifier adds the maven2Asset7Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset7Classifier(maven2Asset7Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset7Classifier(maven2Asset7Classifier)
+	return o
+}
+
+// SetMaven2Asset7Classifier adds the maven2Asset7Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset7Classifier(maven2Asset7Classifier *string) {
+	o.Maven2Asset7Classifier = maven2Asset7Classifier
+}
+
+// WithMaven2Asset7Extension adds the maven2Asset7Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset7Extension(maven2Asset7Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset7Extension(maven2Asset7Extension)
+	return o
+}
+
+// SetMaven2Asset7Extension adds the maven2Asset7Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset7Extension(maven2Asset7Extension *string) {
+	o.Maven2Asset7Extension = maven2Asset7Extension
+}
+
+// WithMaven2Asset8 adds the maven2Asset8 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset8(maven2Asset8 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset8(maven2Asset8)
+	return o
+}
+
+// SetMaven2Asset8 adds the maven2Asset8 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset8(maven2Asset8 runtime.NamedReadCloser) {
+	o.Maven2Asset8 = maven2Asset8
+}
+
+// WithMaven2Asset8Classifier adds the maven2Asset8Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset8Classifier(maven2Asset8Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset8Classifier(maven2Asset8Classifier)
+	return o
+}
+
+// SetMaven2Asset8Classifier adds the maven2Asset8Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset8Classifier(maven2Asset8Classifier *string) {
+	o.Maven2Asset8Classifier = maven2Asset8Classifier
+}
+
+// WithMaven2Asset8Extension adds the maven2Asset8Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset8Extension(maven2Asset8Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset8Extension(maven2Asset8Extension)
+	return o
+}
+
+// SetMaven2Asset8Extension adds the maven2Asset8Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset8Extension(maven2Asset8Extension *string) {
+	o.Maven2Asset8Extension = maven2Asset8Extension
+}
+
+// WithMaven2Asset9 adds the maven2Asset9 to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset9(maven2Asset9 runtime.NamedReadCloser) *UploadComponentParams {
+	o.SetMaven2Asset9(maven2Asset9)
+	return o
+}
+
+// SetMaven2Asset9 adds the maven2Asset9 to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset9(maven2Asset9 runtime.NamedReadCloser) {
+	o.Maven2Asset9 = maven2Asset9
+}
+
+// WithMaven2Asset9Classifier adds the maven2Asset9Classifier to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset9Classifier(maven2Asset9Classifier *string) *UploadComponentParams {
+	o.SetMaven2Asset9Classifier(maven2Asset9Classifier)
+	return o
+}
+
+// SetMaven2Asset9Classifier adds the maven2Asset9Classifier to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset9Classifier(maven2Asset9Classifier *string) {
+	o.Maven2Asset9Classifier = maven2Asset9Classifier
+}
+
+// WithMaven2Asset9Extension adds the maven2Asset9Extension to the upload component params
+func (o *UploadComponentParams) WithMaven2Asset9Extension(maven2Asset9Extension *string) *UploadComponentParams {
+	o.SetMaven2Asset9Extension(maven2Asset9Extension)
+	return o
+}
+
+// SetMaven2Asset9Extension adds the maven2Asset9Extension to the upload component params
+func (o *UploadComponentParams) SetMaven2Asset9Extension(maven2Asset9Extension *string) {
+	o.Maven2Asset9Extension = maven2Asset9Extension
 }
 
 // WithMaven2GeneratePom adds the maven2GeneratePom to the upload component params
@@ -784,6 +1143,46 @@ func (o *UploadComponentParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		}
 	}
 
+	if o.Maven2Asset10 != nil {
+
+		if o.Maven2Asset10 != nil {
+			// form file param maven2.asset10
+			if err := r.SetFileParam("maven2.asset10", o.Maven2Asset10); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset10Classifier != nil {
+
+		// form param maven2.asset10.classifier
+		var frMaven2Asset10Classifier string
+		if o.Maven2Asset10Classifier != nil {
+			frMaven2Asset10Classifier = *o.Maven2Asset10Classifier
+		}
+		fMaven2Asset10Classifier := frMaven2Asset10Classifier
+		if fMaven2Asset10Classifier != "" {
+			if err := r.SetFormParam("maven2.asset10.classifier", fMaven2Asset10Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset10Extension != nil {
+
+		// form param maven2.asset10.extension
+		var frMaven2Asset10Extension string
+		if o.Maven2Asset10Extension != nil {
+			frMaven2Asset10Extension = *o.Maven2Asset10Extension
+		}
+		fMaven2Asset10Extension := frMaven2Asset10Extension
+		if fMaven2Asset10Extension != "" {
+			if err := r.SetFormParam("maven2.asset10.extension", fMaven2Asset10Extension); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.Maven2Asset2 != nil {
 
 		if o.Maven2Asset2 != nil {
@@ -859,6 +1258,246 @@ func (o *UploadComponentParams) WriteToRequest(r runtime.ClientRequest, reg strf
 		fMaven2Asset3Extension := frMaven2Asset3Extension
 		if fMaven2Asset3Extension != "" {
 			if err := r.SetFormParam("maven2.asset3.extension", fMaven2Asset3Extension); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset4 != nil {
+
+		if o.Maven2Asset4 != nil {
+			// form file param maven2.asset4
+			if err := r.SetFileParam("maven2.asset4", o.Maven2Asset4); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset4Classifier != nil {
+
+		// form param maven2.asset4.classifier
+		var frMaven2Asset4Classifier string
+		if o.Maven2Asset4Classifier != nil {
+			frMaven2Asset4Classifier = *o.Maven2Asset4Classifier
+		}
+		fMaven2Asset4Classifier := frMaven2Asset4Classifier
+		if fMaven2Asset4Classifier != "" {
+			if err := r.SetFormParam("maven2.asset4.classifier", fMaven2Asset4Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset4Extension != nil {
+
+		// form param maven2.asset4.extension
+		var frMaven2Asset4Extension string
+		if o.Maven2Asset4Extension != nil {
+			frMaven2Asset4Extension = *o.Maven2Asset4Extension
+		}
+		fMaven2Asset4Extension := frMaven2Asset4Extension
+		if fMaven2Asset4Extension != "" {
+			if err := r.SetFormParam("maven2.asset4.extension", fMaven2Asset4Extension); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset5 != nil {
+
+		if o.Maven2Asset5 != nil {
+			// form file param maven2.asset5
+			if err := r.SetFileParam("maven2.asset5", o.Maven2Asset5); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset5Classifier != nil {
+
+		// form param maven2.asset5.classifier
+		var frMaven2Asset5Classifier string
+		if o.Maven2Asset5Classifier != nil {
+			frMaven2Asset5Classifier = *o.Maven2Asset5Classifier
+		}
+		fMaven2Asset5Classifier := frMaven2Asset5Classifier
+		if fMaven2Asset5Classifier != "" {
+			if err := r.SetFormParam("maven2.asset5.classifier", fMaven2Asset5Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset5Extension != nil {
+
+		// form param maven2.asset5.extension
+		var frMaven2Asset5Extension string
+		if o.Maven2Asset5Extension != nil {
+			frMaven2Asset5Extension = *o.Maven2Asset5Extension
+		}
+		fMaven2Asset5Extension := frMaven2Asset5Extension
+		if fMaven2Asset5Extension != "" {
+			if err := r.SetFormParam("maven2.asset5.extension", fMaven2Asset5Extension); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset6 != nil {
+
+		if o.Maven2Asset6 != nil {
+			// form file param maven2.asset6
+			if err := r.SetFileParam("maven2.asset6", o.Maven2Asset6); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset6Classifier != nil {
+
+		// form param maven2.asset6.classifier
+		var frMaven2Asset6Classifier string
+		if o.Maven2Asset6Classifier != nil {
+			frMaven2Asset6Classifier = *o.Maven2Asset6Classifier
+		}
+		fMaven2Asset6Classifier := frMaven2Asset6Classifier
+		if fMaven2Asset6Classifier != "" {
+			if err := r.SetFormParam("maven2.asset6.classifier", fMaven2Asset6Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset6Extension != nil {
+
+		// form param maven2.asset6.extension
+		var frMaven2Asset6Extension string
+		if o.Maven2Asset6Extension != nil {
+			frMaven2Asset6Extension = *o.Maven2Asset6Extension
+		}
+		fMaven2Asset6Extension := frMaven2Asset6Extension
+		if fMaven2Asset6Extension != "" {
+			if err := r.SetFormParam("maven2.asset6.extension", fMaven2Asset6Extension); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset7 != nil {
+
+		if o.Maven2Asset7 != nil {
+			// form file param maven2.asset7
+			if err := r.SetFileParam("maven2.asset7", o.Maven2Asset7); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset7Classifier != nil {
+
+		// form param maven2.asset7.classifier
+		var frMaven2Asset7Classifier string
+		if o.Maven2Asset7Classifier != nil {
+			frMaven2Asset7Classifier = *o.Maven2Asset7Classifier
+		}
+		fMaven2Asset7Classifier := frMaven2Asset7Classifier
+		if fMaven2Asset7Classifier != "" {
+			if err := r.SetFormParam("maven2.asset7.classifier", fMaven2Asset7Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset7Extension != nil {
+
+		// form param maven2.asset7.extension
+		var frMaven2Asset7Extension string
+		if o.Maven2Asset7Extension != nil {
+			frMaven2Asset7Extension = *o.Maven2Asset7Extension
+		}
+		fMaven2Asset7Extension := frMaven2Asset7Extension
+		if fMaven2Asset7Extension != "" {
+			if err := r.SetFormParam("maven2.asset7.extension", fMaven2Asset7Extension); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset8 != nil {
+
+		if o.Maven2Asset8 != nil {
+			// form file param maven2.asset8
+			if err := r.SetFileParam("maven2.asset8", o.Maven2Asset8); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset8Classifier != nil {
+
+		// form param maven2.asset8.classifier
+		var frMaven2Asset8Classifier string
+		if o.Maven2Asset8Classifier != nil {
+			frMaven2Asset8Classifier = *o.Maven2Asset8Classifier
+		}
+		fMaven2Asset8Classifier := frMaven2Asset8Classifier
+		if fMaven2Asset8Classifier != "" {
+			if err := r.SetFormParam("maven2.asset8.classifier", fMaven2Asset8Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset8Extension != nil {
+
+		// form param maven2.asset8.extension
+		var frMaven2Asset8Extension string
+		if o.Maven2Asset8Extension != nil {
+			frMaven2Asset8Extension = *o.Maven2Asset8Extension
+		}
+		fMaven2Asset8Extension := frMaven2Asset8Extension
+		if fMaven2Asset8Extension != "" {
+			if err := r.SetFormParam("maven2.asset8.extension", fMaven2Asset8Extension); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset9 != nil {
+
+		if o.Maven2Asset9 != nil {
+			// form file param maven2.asset9
+			if err := r.SetFileParam("maven2.asset9", o.Maven2Asset9); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset9Classifier != nil {
+
+		// form param maven2.asset9.classifier
+		var frMaven2Asset9Classifier string
+		if o.Maven2Asset9Classifier != nil {
+			frMaven2Asset9Classifier = *o.Maven2Asset9Classifier
+		}
+		fMaven2Asset9Classifier := frMaven2Asset9Classifier
+		if fMaven2Asset9Classifier != "" {
+			if err := r.SetFormParam("maven2.asset9.classifier", fMaven2Asset9Classifier); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Maven2Asset9Extension != nil {
+
+		// form param maven2.asset9.extension
+		var frMaven2Asset9Extension string
+		if o.Maven2Asset9Extension != nil {
+			frMaven2Asset9Extension = *o.Maven2Asset9Extension
+		}
+		fMaven2Asset9Extension := frMaven2Asset9Extension
+		if fMaven2Asset9Extension != "" {
+			if err := r.SetFormParam("maven2.asset9.extension", fMaven2Asset9Extension); err != nil {
 				return err
 			}
 		}

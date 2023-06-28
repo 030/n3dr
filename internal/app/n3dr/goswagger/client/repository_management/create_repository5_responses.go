@@ -48,14 +48,49 @@ func NewCreateRepository5Created() *CreateRepository5Created {
 	return &CreateRepository5Created{}
 }
 
-/* CreateRepository5Created describes a response with status code 201, with default header values.
+/*
+CreateRepository5Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository5Created struct {
 }
 
+// IsSuccess returns true when this create repository5 created response has a 2xx status code
+func (o *CreateRepository5Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository5 created response has a 3xx status code
+func (o *CreateRepository5Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository5 created response has a 4xx status code
+func (o *CreateRepository5Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository5 created response has a 5xx status code
+func (o *CreateRepository5Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository5 created response a status code equal to that given
+func (o *CreateRepository5Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository5 created response
+func (o *CreateRepository5Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository5Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/raw/group][%d] createRepository5Created ", 201)
+}
+
+func (o *CreateRepository5Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/raw/group][%d] createRepository5Created ", 201)
 }
 
@@ -69,14 +104,49 @@ func NewCreateRepository5Unauthorized() *CreateRepository5Unauthorized {
 	return &CreateRepository5Unauthorized{}
 }
 
-/* CreateRepository5Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository5Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository5Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository5 unauthorized response has a 2xx status code
+func (o *CreateRepository5Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository5 unauthorized response has a 3xx status code
+func (o *CreateRepository5Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository5 unauthorized response has a 4xx status code
+func (o *CreateRepository5Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository5 unauthorized response has a 5xx status code
+func (o *CreateRepository5Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository5 unauthorized response a status code equal to that given
+func (o *CreateRepository5Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository5 unauthorized response
+func (o *CreateRepository5Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository5Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/raw/group][%d] createRepository5Unauthorized ", 401)
+}
+
+func (o *CreateRepository5Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/raw/group][%d] createRepository5Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewCreateRepository5Forbidden() *CreateRepository5Forbidden {
 	return &CreateRepository5Forbidden{}
 }
 
-/* CreateRepository5Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository5Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository5Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository5 forbidden response has a 2xx status code
+func (o *CreateRepository5Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository5 forbidden response has a 3xx status code
+func (o *CreateRepository5Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository5 forbidden response has a 4xx status code
+func (o *CreateRepository5Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository5 forbidden response has a 5xx status code
+func (o *CreateRepository5Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository5 forbidden response a status code equal to that given
+func (o *CreateRepository5Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository5 forbidden response
+func (o *CreateRepository5Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository5Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/raw/group][%d] createRepository5Forbidden ", 403)
+}
+
+func (o *CreateRepository5Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/raw/group][%d] createRepository5Forbidden ", 403)
 }
 

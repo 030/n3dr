@@ -52,10 +52,12 @@ func NewListBlobStoresParamsWithHTTPClient(client *http.Client) *ListBlobStoresP
 	}
 }
 
-/* ListBlobStoresParams contains all the parameters to send to the API endpoint
-   for the list blob stores operation.
+/*
+ListBlobStoresParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the list blob stores operation.
+
+	Typically these are written to a http.Request.
 */
 type ListBlobStoresParams struct {
 	timeout    time.Duration

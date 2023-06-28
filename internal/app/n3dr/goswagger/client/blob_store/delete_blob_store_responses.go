@@ -36,12 +36,38 @@ func NewDeleteBlobStoreDefault(code int) *DeleteBlobStoreDefault {
 	}
 }
 
-/* DeleteBlobStoreDefault describes a response with status code -1, with default header values.
+/*
+DeleteBlobStoreDefault describes a response with status code -1, with default header values.
 
 successful operation
 */
 type DeleteBlobStoreDefault struct {
 	_statusCode int
+}
+
+// IsSuccess returns true when this delete blob store default response has a 2xx status code
+func (o *DeleteBlobStoreDefault) IsSuccess() bool {
+	return o._statusCode/100 == 2
+}
+
+// IsRedirect returns true when this delete blob store default response has a 3xx status code
+func (o *DeleteBlobStoreDefault) IsRedirect() bool {
+	return o._statusCode/100 == 3
+}
+
+// IsClientError returns true when this delete blob store default response has a 4xx status code
+func (o *DeleteBlobStoreDefault) IsClientError() bool {
+	return o._statusCode/100 == 4
+}
+
+// IsServerError returns true when this delete blob store default response has a 5xx status code
+func (o *DeleteBlobStoreDefault) IsServerError() bool {
+	return o._statusCode/100 == 5
+}
+
+// IsCode returns true when this delete blob store default response a status code equal to that given
+func (o *DeleteBlobStoreDefault) IsCode(code int) bool {
+	return o._statusCode == code
 }
 
 // Code gets the status code for the delete blob store default response
@@ -50,6 +76,10 @@ func (o *DeleteBlobStoreDefault) Code() int {
 }
 
 func (o *DeleteBlobStoreDefault) Error() string {
+	return fmt.Sprintf("[DELETE /v1/blobstores/{name}][%d] deleteBlobStore default ", o._statusCode)
+}
+
+func (o *DeleteBlobStoreDefault) String() string {
 	return fmt.Sprintf("[DELETE /v1/blobstores/{name}][%d] deleteBlobStore default ", o._statusCode)
 }
 

@@ -52,10 +52,12 @@ func NewGetRepository36ParamsWithHTTPClient(client *http.Client) *GetRepository3
 	}
 }
 
-/* GetRepository36Params contains all the parameters to send to the API endpoint
-   for the get repository 36 operation.
+/*
+GetRepository36Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get repository 36 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRepository36Params struct {
 

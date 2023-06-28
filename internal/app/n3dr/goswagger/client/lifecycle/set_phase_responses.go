@@ -36,12 +36,38 @@ func NewSetPhaseDefault(code int) *SetPhaseDefault {
 	}
 }
 
-/* SetPhaseDefault describes a response with status code -1, with default header values.
+/*
+SetPhaseDefault describes a response with status code -1, with default header values.
 
 successful operation
 */
 type SetPhaseDefault struct {
 	_statusCode int
+}
+
+// IsSuccess returns true when this set phase default response has a 2xx status code
+func (o *SetPhaseDefault) IsSuccess() bool {
+	return o._statusCode/100 == 2
+}
+
+// IsRedirect returns true when this set phase default response has a 3xx status code
+func (o *SetPhaseDefault) IsRedirect() bool {
+	return o._statusCode/100 == 3
+}
+
+// IsClientError returns true when this set phase default response has a 4xx status code
+func (o *SetPhaseDefault) IsClientError() bool {
+	return o._statusCode/100 == 4
+}
+
+// IsServerError returns true when this set phase default response has a 5xx status code
+func (o *SetPhaseDefault) IsServerError() bool {
+	return o._statusCode/100 == 5
+}
+
+// IsCode returns true when this set phase default response a status code equal to that given
+func (o *SetPhaseDefault) IsCode(code int) bool {
+	return o._statusCode == code
 }
 
 // Code gets the status code for the set phase default response
@@ -50,6 +76,10 @@ func (o *SetPhaseDefault) Code() int {
 }
 
 func (o *SetPhaseDefault) Error() string {
+	return fmt.Sprintf("[PUT /v1/lifecycle/phase][%d] setPhase default ", o._statusCode)
+}
+
+func (o *SetPhaseDefault) String() string {
 	return fmt.Sprintf("[PUT /v1/lifecycle/phase][%d] setPhase default ", o._statusCode)
 }
 

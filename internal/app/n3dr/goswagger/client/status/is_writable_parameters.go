@@ -52,10 +52,12 @@ func NewIsWritableParamsWithHTTPClient(client *http.Client) *IsWritableParams {
 	}
 }
 
-/* IsWritableParams contains all the parameters to send to the API endpoint
-   for the is writable operation.
+/*
+IsWritableParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the is writable operation.
+
+	Typically these are written to a http.Request.
 */
 type IsWritableParams struct {
 	timeout    time.Duration

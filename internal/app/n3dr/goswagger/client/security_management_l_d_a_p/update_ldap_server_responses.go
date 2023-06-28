@@ -54,14 +54,49 @@ func NewUpdateLdapServerNoContent() *UpdateLdapServerNoContent {
 	return &UpdateLdapServerNoContent{}
 }
 
-/* UpdateLdapServerNoContent describes a response with status code 204, with default header values.
+/*
+UpdateLdapServerNoContent describes a response with status code 204, with default header values.
 
 LDAP server updated
 */
 type UpdateLdapServerNoContent struct {
 }
 
+// IsSuccess returns true when this update ldap server no content response has a 2xx status code
+func (o *UpdateLdapServerNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update ldap server no content response has a 3xx status code
+func (o *UpdateLdapServerNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update ldap server no content response has a 4xx status code
+func (o *UpdateLdapServerNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update ldap server no content response has a 5xx status code
+func (o *UpdateLdapServerNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update ldap server no content response a status code equal to that given
+func (o *UpdateLdapServerNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update ldap server no content response
+func (o *UpdateLdapServerNoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateLdapServerNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerNoContent ", 204)
+}
+
+func (o *UpdateLdapServerNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewUpdateLdapServerUnauthorized() *UpdateLdapServerUnauthorized {
 	return &UpdateLdapServerUnauthorized{}
 }
 
-/* UpdateLdapServerUnauthorized describes a response with status code 401, with default header values.
+/*
+UpdateLdapServerUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateLdapServerUnauthorized struct {
 }
 
+// IsSuccess returns true when this update ldap server unauthorized response has a 2xx status code
+func (o *UpdateLdapServerUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update ldap server unauthorized response has a 3xx status code
+func (o *UpdateLdapServerUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update ldap server unauthorized response has a 4xx status code
+func (o *UpdateLdapServerUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update ldap server unauthorized response has a 5xx status code
+func (o *UpdateLdapServerUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update ldap server unauthorized response a status code equal to that given
+func (o *UpdateLdapServerUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update ldap server unauthorized response
+func (o *UpdateLdapServerUnauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateLdapServerUnauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerUnauthorized ", 401)
+}
+
+func (o *UpdateLdapServerUnauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerUnauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewUpdateLdapServerForbidden() *UpdateLdapServerForbidden {
 	return &UpdateLdapServerForbidden{}
 }
 
-/* UpdateLdapServerForbidden describes a response with status code 403, with default header values.
+/*
+UpdateLdapServerForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateLdapServerForbidden struct {
 }
 
+// IsSuccess returns true when this update ldap server forbidden response has a 2xx status code
+func (o *UpdateLdapServerForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update ldap server forbidden response has a 3xx status code
+func (o *UpdateLdapServerForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update ldap server forbidden response has a 4xx status code
+func (o *UpdateLdapServerForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update ldap server forbidden response has a 5xx status code
+func (o *UpdateLdapServerForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update ldap server forbidden response a status code equal to that given
+func (o *UpdateLdapServerForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update ldap server forbidden response
+func (o *UpdateLdapServerForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateLdapServerForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerForbidden ", 403)
+}
+
+func (o *UpdateLdapServerForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerForbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewUpdateLdapServerNotFound() *UpdateLdapServerNotFound {
 	return &UpdateLdapServerNotFound{}
 }
 
-/* UpdateLdapServerNotFound describes a response with status code 404, with default header values.
+/*
+UpdateLdapServerNotFound describes a response with status code 404, with default header values.
 
 LDAP server not found
 */
 type UpdateLdapServerNotFound struct {
 }
 
+// IsSuccess returns true when this update ldap server not found response has a 2xx status code
+func (o *UpdateLdapServerNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update ldap server not found response has a 3xx status code
+func (o *UpdateLdapServerNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update ldap server not found response has a 4xx status code
+func (o *UpdateLdapServerNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update ldap server not found response has a 5xx status code
+func (o *UpdateLdapServerNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update ldap server not found response a status code equal to that given
+func (o *UpdateLdapServerNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update ldap server not found response
+func (o *UpdateLdapServerNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateLdapServerNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerNotFound ", 404)
+}
+
+func (o *UpdateLdapServerNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/ldap/{name}][%d] updateLdapServerNotFound ", 404)
 }
 

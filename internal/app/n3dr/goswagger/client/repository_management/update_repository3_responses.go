@@ -54,14 +54,49 @@ func NewUpdateRepository3NoContent() *UpdateRepository3NoContent {
 	return &UpdateRepository3NoContent{}
 }
 
-/* UpdateRepository3NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository3NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository3NoContent struct {
 }
 
+// IsSuccess returns true when this update repository3 no content response has a 2xx status code
+func (o *UpdateRepository3NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository3 no content response has a 3xx status code
+func (o *UpdateRepository3NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository3 no content response has a 4xx status code
+func (o *UpdateRepository3NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository3 no content response has a 5xx status code
+func (o *UpdateRepository3NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository3 no content response a status code equal to that given
+func (o *UpdateRepository3NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository3 no content response
+func (o *UpdateRepository3NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository3NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3NoContent ", 204)
+}
+
+func (o *UpdateRepository3NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3NoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewUpdateRepository3Unauthorized() *UpdateRepository3Unauthorized {
 	return &UpdateRepository3Unauthorized{}
 }
 
-/* UpdateRepository3Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository3Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository3Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository3 unauthorized response has a 2xx status code
+func (o *UpdateRepository3Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository3 unauthorized response has a 3xx status code
+func (o *UpdateRepository3Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository3 unauthorized response has a 4xx status code
+func (o *UpdateRepository3Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository3 unauthorized response has a 5xx status code
+func (o *UpdateRepository3Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository3 unauthorized response a status code equal to that given
+func (o *UpdateRepository3Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository3 unauthorized response
+func (o *UpdateRepository3Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository3Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3Unauthorized ", 401)
+}
+
+func (o *UpdateRepository3Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3Unauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewUpdateRepository3Forbidden() *UpdateRepository3Forbidden {
 	return &UpdateRepository3Forbidden{}
 }
 
-/* UpdateRepository3Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository3Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository3Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository3 forbidden response has a 2xx status code
+func (o *UpdateRepository3Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository3 forbidden response has a 3xx status code
+func (o *UpdateRepository3Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository3 forbidden response has a 4xx status code
+func (o *UpdateRepository3Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository3 forbidden response has a 5xx status code
+func (o *UpdateRepository3Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository3 forbidden response a status code equal to that given
+func (o *UpdateRepository3Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository3 forbidden response
+func (o *UpdateRepository3Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository3Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3Forbidden ", 403)
+}
+
+func (o *UpdateRepository3Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3Forbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewUpdateRepository3NotFound() *UpdateRepository3NotFound {
 	return &UpdateRepository3NotFound{}
 }
 
-/* UpdateRepository3NotFound describes a response with status code 404, with default header values.
+/*
+UpdateRepository3NotFound describes a response with status code 404, with default header values.
 
 Repository not found
 */
 type UpdateRepository3NotFound struct {
 }
 
+// IsSuccess returns true when this update repository3 not found response has a 2xx status code
+func (o *UpdateRepository3NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository3 not found response has a 3xx status code
+func (o *UpdateRepository3NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository3 not found response has a 4xx status code
+func (o *UpdateRepository3NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository3 not found response has a 5xx status code
+func (o *UpdateRepository3NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository3 not found response a status code equal to that given
+func (o *UpdateRepository3NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update repository3 not found response
+func (o *UpdateRepository3NotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateRepository3NotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3NotFound ", 404)
+}
+
+func (o *UpdateRepository3NotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/apt/hosted/{repositoryName}][%d] updateRepository3NotFound ", 404)
 }
 

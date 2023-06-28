@@ -48,14 +48,49 @@ func NewUpdateFileBlobStoreNoContent() *UpdateFileBlobStoreNoContent {
 	return &UpdateFileBlobStoreNoContent{}
 }
 
-/* UpdateFileBlobStoreNoContent describes a response with status code 204, with default header values.
+/*
+UpdateFileBlobStoreNoContent describes a response with status code 204, with default header values.
 
 Success
 */
 type UpdateFileBlobStoreNoContent struct {
 }
 
+// IsSuccess returns true when this update file blob store no content response has a 2xx status code
+func (o *UpdateFileBlobStoreNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update file blob store no content response has a 3xx status code
+func (o *UpdateFileBlobStoreNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update file blob store no content response has a 4xx status code
+func (o *UpdateFileBlobStoreNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update file blob store no content response has a 5xx status code
+func (o *UpdateFileBlobStoreNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update file blob store no content response a status code equal to that given
+func (o *UpdateFileBlobStoreNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update file blob store no content response
+func (o *UpdateFileBlobStoreNoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateFileBlobStoreNoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/file/{name}][%d] updateFileBlobStoreNoContent ", 204)
+}
+
+func (o *UpdateFileBlobStoreNoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/file/{name}][%d] updateFileBlobStoreNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateFileBlobStoreForbidden() *UpdateFileBlobStoreForbidden {
 	return &UpdateFileBlobStoreForbidden{}
 }
 
-/* UpdateFileBlobStoreForbidden describes a response with status code 403, with default header values.
+/*
+UpdateFileBlobStoreForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateFileBlobStoreForbidden struct {
 }
 
+// IsSuccess returns true when this update file blob store forbidden response has a 2xx status code
+func (o *UpdateFileBlobStoreForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update file blob store forbidden response has a 3xx status code
+func (o *UpdateFileBlobStoreForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update file blob store forbidden response has a 4xx status code
+func (o *UpdateFileBlobStoreForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update file blob store forbidden response has a 5xx status code
+func (o *UpdateFileBlobStoreForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update file blob store forbidden response a status code equal to that given
+func (o *UpdateFileBlobStoreForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update file blob store forbidden response
+func (o *UpdateFileBlobStoreForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateFileBlobStoreForbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/file/{name}][%d] updateFileBlobStoreForbidden ", 403)
+}
+
+func (o *UpdateFileBlobStoreForbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/file/{name}][%d] updateFileBlobStoreForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateFileBlobStoreNotFound() *UpdateFileBlobStoreNotFound {
 	return &UpdateFileBlobStoreNotFound{}
 }
 
-/* UpdateFileBlobStoreNotFound describes a response with status code 404, with default header values.
+/*
+UpdateFileBlobStoreNotFound describes a response with status code 404, with default header values.
 
 Blob store not found
 */
 type UpdateFileBlobStoreNotFound struct {
 }
 
+// IsSuccess returns true when this update file blob store not found response has a 2xx status code
+func (o *UpdateFileBlobStoreNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update file blob store not found response has a 3xx status code
+func (o *UpdateFileBlobStoreNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update file blob store not found response has a 4xx status code
+func (o *UpdateFileBlobStoreNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update file blob store not found response has a 5xx status code
+func (o *UpdateFileBlobStoreNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update file blob store not found response a status code equal to that given
+func (o *UpdateFileBlobStoreNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update file blob store not found response
+func (o *UpdateFileBlobStoreNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateFileBlobStoreNotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/file/{name}][%d] updateFileBlobStoreNotFound ", 404)
+}
+
+func (o *UpdateFileBlobStoreNotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/file/{name}][%d] updateFileBlobStoreNotFound ", 404)
 }
 

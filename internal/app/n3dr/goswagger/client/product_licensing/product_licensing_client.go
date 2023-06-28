@@ -40,7 +40,7 @@ type ClientService interface {
 }
 
 /*
-  GetLicenseStatus gets the current license status
+GetLicenseStatus gets the current license status
 */
 func (a *Client) GetLicenseStatus(params *GetLicenseStatusParams, opts ...ClientOption) (*GetLicenseStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -78,7 +78,7 @@ func (a *Client) GetLicenseStatus(params *GetLicenseStatusParams, opts ...Client
 }
 
 /*
-  RemoveLicense uninstalls license if present
+RemoveLicense uninstalls license if present
 */
 func (a *Client) RemoveLicense(params *RemoveLicenseParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -109,9 +109,9 @@ func (a *Client) RemoveLicense(params *RemoveLicenseParams, opts ...ClientOption
 }
 
 /*
-  SetLicense uploads a new license file
+SetLicense uploads a new license file
 
-  Server must be restarted to take effect
+Server must be restarted to take effect
 */
 func (a *Client) SetLicense(params *SetLicenseParams, opts ...ClientOption) (*SetLicenseOK, error) {
 	// TODO: Validate the params before sending

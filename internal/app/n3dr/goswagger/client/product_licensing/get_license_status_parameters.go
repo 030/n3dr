@@ -52,10 +52,12 @@ func NewGetLicenseStatusParamsWithHTTPClient(client *http.Client) *GetLicenseSta
 	}
 }
 
-/* GetLicenseStatusParams contains all the parameters to send to the API endpoint
-   for the get license status operation.
+/*
+GetLicenseStatusParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get license status operation.
+
+	Typically these are written to a http.Request.
 */
 type GetLicenseStatusParams struct {
 	timeout    time.Duration

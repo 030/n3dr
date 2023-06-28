@@ -54,10 +54,12 @@ func NewUpdateFileBlobStoreParamsWithHTTPClient(client *http.Client) *UpdateFile
 	}
 }
 
-/* UpdateFileBlobStoreParams contains all the parameters to send to the API endpoint
-   for the update file blob store operation.
+/*
+UpdateFileBlobStoreParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update file blob store operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateFileBlobStoreParams struct {
 

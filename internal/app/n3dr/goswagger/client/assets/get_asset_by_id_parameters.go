@@ -52,10 +52,12 @@ func NewGetAssetByIDParamsWithHTTPClient(client *http.Client) *GetAssetByIDParam
 	}
 }
 
-/* GetAssetByIDParams contains all the parameters to send to the API endpoint
-   for the get asset by Id operation.
+/*
+GetAssetByIDParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get asset by Id operation.
+
+	Typically these are written to a http.Request.
 */
 type GetAssetByIDParams struct {
 

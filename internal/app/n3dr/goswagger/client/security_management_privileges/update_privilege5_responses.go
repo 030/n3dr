@@ -48,14 +48,49 @@ func NewUpdatePrivilege5BadRequest() *UpdatePrivilege5BadRequest {
 	return &UpdatePrivilege5BadRequest{}
 }
 
-/* UpdatePrivilege5BadRequest describes a response with status code 400, with default header values.
+/*
+UpdatePrivilege5BadRequest describes a response with status code 400, with default header values.
 
 Privilege object not configured properly.
 */
 type UpdatePrivilege5BadRequest struct {
 }
 
+// IsSuccess returns true when this update privilege5 bad request response has a 2xx status code
+func (o *UpdatePrivilege5BadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege5 bad request response has a 3xx status code
+func (o *UpdatePrivilege5BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege5 bad request response has a 4xx status code
+func (o *UpdatePrivilege5BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege5 bad request response has a 5xx status code
+func (o *UpdatePrivilege5BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege5 bad request response a status code equal to that given
+func (o *UpdatePrivilege5BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update privilege5 bad request response
+func (o *UpdatePrivilege5BadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdatePrivilege5BadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5BadRequest ", 400)
+}
+
+func (o *UpdatePrivilege5BadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5BadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewUpdatePrivilege5Forbidden() *UpdatePrivilege5Forbidden {
 	return &UpdatePrivilege5Forbidden{}
 }
 
-/* UpdatePrivilege5Forbidden describes a response with status code 403, with default header values.
+/*
+UpdatePrivilege5Forbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type UpdatePrivilege5Forbidden struct {
 }
 
+// IsSuccess returns true when this update privilege5 forbidden response has a 2xx status code
+func (o *UpdatePrivilege5Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege5 forbidden response has a 3xx status code
+func (o *UpdatePrivilege5Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege5 forbidden response has a 4xx status code
+func (o *UpdatePrivilege5Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege5 forbidden response has a 5xx status code
+func (o *UpdatePrivilege5Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege5 forbidden response a status code equal to that given
+func (o *UpdatePrivilege5Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update privilege5 forbidden response
+func (o *UpdatePrivilege5Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdatePrivilege5Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5Forbidden ", 403)
+}
+
+func (o *UpdatePrivilege5Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5Forbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewUpdatePrivilege5NotFound() *UpdatePrivilege5NotFound {
 	return &UpdatePrivilege5NotFound{}
 }
 
-/* UpdatePrivilege5NotFound describes a response with status code 404, with default header values.
+/*
+UpdatePrivilege5NotFound describes a response with status code 404, with default header values.
 
 Privilege not found in the system.
 */
 type UpdatePrivilege5NotFound struct {
 }
 
+// IsSuccess returns true when this update privilege5 not found response has a 2xx status code
+func (o *UpdatePrivilege5NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update privilege5 not found response has a 3xx status code
+func (o *UpdatePrivilege5NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update privilege5 not found response has a 4xx status code
+func (o *UpdatePrivilege5NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update privilege5 not found response has a 5xx status code
+func (o *UpdatePrivilege5NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update privilege5 not found response a status code equal to that given
+func (o *UpdatePrivilege5NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update privilege5 not found response
+func (o *UpdatePrivilege5NotFound) Code() int {
+	return 404
+}
+
 func (o *UpdatePrivilege5NotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5NotFound ", 404)
+}
+
+func (o *UpdatePrivilege5NotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/privileges/script/{privilegeName}][%d] updatePrivilege5NotFound ", 404)
 }
 

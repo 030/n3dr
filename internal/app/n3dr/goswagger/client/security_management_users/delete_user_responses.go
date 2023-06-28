@@ -48,14 +48,49 @@ func NewDeleteUserBadRequest() *DeleteUserBadRequest {
 	return &DeleteUserBadRequest{}
 }
 
-/* DeleteUserBadRequest describes a response with status code 400, with default header values.
+/*
+DeleteUserBadRequest describes a response with status code 400, with default header values.
 
 There was problem deleting a user. Consult the response body for more details
 */
 type DeleteUserBadRequest struct {
 }
 
+// IsSuccess returns true when this delete user bad request response has a 2xx status code
+func (o *DeleteUserBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete user bad request response has a 3xx status code
+func (o *DeleteUserBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete user bad request response has a 4xx status code
+func (o *DeleteUserBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete user bad request response has a 5xx status code
+func (o *DeleteUserBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete user bad request response a status code equal to that given
+func (o *DeleteUserBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the delete user bad request response
+func (o *DeleteUserBadRequest) Code() int {
+	return 400
+}
+
 func (o *DeleteUserBadRequest) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/users/{userId}][%d] deleteUserBadRequest ", 400)
+}
+
+func (o *DeleteUserBadRequest) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/users/{userId}][%d] deleteUserBadRequest ", 400)
 }
 
@@ -69,14 +104,49 @@ func NewDeleteUserForbidden() *DeleteUserForbidden {
 	return &DeleteUserForbidden{}
 }
 
-/* DeleteUserForbidden describes a response with status code 403, with default header values.
+/*
+DeleteUserForbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type DeleteUserForbidden struct {
 }
 
+// IsSuccess returns true when this delete user forbidden response has a 2xx status code
+func (o *DeleteUserForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete user forbidden response has a 3xx status code
+func (o *DeleteUserForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete user forbidden response has a 4xx status code
+func (o *DeleteUserForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete user forbidden response has a 5xx status code
+func (o *DeleteUserForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete user forbidden response a status code equal to that given
+func (o *DeleteUserForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete user forbidden response
+func (o *DeleteUserForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteUserForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/users/{userId}][%d] deleteUserForbidden ", 403)
+}
+
+func (o *DeleteUserForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/users/{userId}][%d] deleteUserForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewDeleteUserNotFound() *DeleteUserNotFound {
 	return &DeleteUserNotFound{}
 }
 
-/* DeleteUserNotFound describes a response with status code 404, with default header values.
+/*
+DeleteUserNotFound describes a response with status code 404, with default header values.
 
 User or user source not found in the system.
 */
 type DeleteUserNotFound struct {
 }
 
+// IsSuccess returns true when this delete user not found response has a 2xx status code
+func (o *DeleteUserNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete user not found response has a 3xx status code
+func (o *DeleteUserNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete user not found response has a 4xx status code
+func (o *DeleteUserNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete user not found response has a 5xx status code
+func (o *DeleteUserNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete user not found response a status code equal to that given
+func (o *DeleteUserNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete user not found response
+func (o *DeleteUserNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteUserNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/users/{userId}][%d] deleteUserNotFound ", 404)
+}
+
+func (o *DeleteUserNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/users/{userId}][%d] deleteUserNotFound ", 404)
 }
 

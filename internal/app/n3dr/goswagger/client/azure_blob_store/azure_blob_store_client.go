@@ -36,7 +36,7 @@ type ClientService interface {
 }
 
 /*
-  VerifyConnection1 verifies connection using supplied azure blob store settings
+VerifyConnection1 verifies connection using supplied azure blob store settings
 */
 func (a *Client) VerifyConnection1(params *VerifyConnection1Params, opts ...ClientOption) (*VerifyConnection1NoContent, error) {
 	// TODO: Validate the params before sending

@@ -51,7 +51,8 @@ func NewRun1OK() *Run1OK {
 	return &Run1OK{}
 }
 
-/* Run1OK describes a response with status code 200, with default header values.
+/*
+Run1OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -59,9 +60,44 @@ type Run1OK struct {
 	Payload *models.ScriptResultXO
 }
 
+// IsSuccess returns true when this run1 o k response has a 2xx status code
+func (o *Run1OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this run1 o k response has a 3xx status code
+func (o *Run1OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this run1 o k response has a 4xx status code
+func (o *Run1OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this run1 o k response has a 5xx status code
+func (o *Run1OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this run1 o k response a status code equal to that given
+func (o *Run1OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the run1 o k response
+func (o *Run1OK) Code() int {
+	return 200
+}
+
 func (o *Run1OK) Error() string {
 	return fmt.Sprintf("[POST /v1/script/{name}/run][%d] run1OK  %+v", 200, o.Payload)
 }
+
+func (o *Run1OK) String() string {
+	return fmt.Sprintf("[POST /v1/script/{name}/run][%d] run1OK  %+v", 200, o.Payload)
+}
+
 func (o *Run1OK) GetPayload() *models.ScriptResultXO {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewRun1NotFound() *Run1NotFound {
 	return &Run1NotFound{}
 }
 
-/* Run1NotFound describes a response with status code 404, with default header values.
+/*
+Run1NotFound describes a response with status code 404, with default header values.
 
 No script with the specified name
 */
 type Run1NotFound struct {
 }
 
+// IsSuccess returns true when this run1 not found response has a 2xx status code
+func (o *Run1NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this run1 not found response has a 3xx status code
+func (o *Run1NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this run1 not found response has a 4xx status code
+func (o *Run1NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this run1 not found response has a 5xx status code
+func (o *Run1NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this run1 not found response a status code equal to that given
+func (o *Run1NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the run1 not found response
+func (o *Run1NotFound) Code() int {
+	return 404
+}
+
 func (o *Run1NotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/script/{name}/run][%d] run1NotFound ", 404)
+}
+
+func (o *Run1NotFound) String() string {
 	return fmt.Sprintf("[POST /v1/script/{name}/run][%d] run1NotFound ", 404)
 }
 
@@ -104,14 +175,49 @@ func NewRun1InternalServerError() *Run1InternalServerError {
 	return &Run1InternalServerError{}
 }
 
-/* Run1InternalServerError describes a response with status code 500, with default header values.
+/*
+Run1InternalServerError describes a response with status code 500, with default header values.
 
 Script execution failed with exception
 */
 type Run1InternalServerError struct {
 }
 
+// IsSuccess returns true when this run1 internal server error response has a 2xx status code
+func (o *Run1InternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this run1 internal server error response has a 3xx status code
+func (o *Run1InternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this run1 internal server error response has a 4xx status code
+func (o *Run1InternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this run1 internal server error response has a 5xx status code
+func (o *Run1InternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this run1 internal server error response a status code equal to that given
+func (o *Run1InternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the run1 internal server error response
+func (o *Run1InternalServerError) Code() int {
+	return 500
+}
+
 func (o *Run1InternalServerError) Error() string {
+	return fmt.Sprintf("[POST /v1/script/{name}/run][%d] run1InternalServerError ", 500)
+}
+
+func (o *Run1InternalServerError) String() string {
 	return fmt.Sprintf("[POST /v1/script/{name}/run][%d] run1InternalServerError ", 500)
 }
 

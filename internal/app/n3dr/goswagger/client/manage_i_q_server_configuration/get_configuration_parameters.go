@@ -52,10 +52,12 @@ func NewGetConfigurationParamsWithHTTPClient(client *http.Client) *GetConfigurat
 	}
 }
 
-/* GetConfigurationParams contains all the parameters to send to the API endpoint
-   for the get configuration operation.
+/*
+GetConfigurationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get configuration operation.
+
+	Typically these are written to a http.Request.
 */
 type GetConfigurationParams struct {
 	timeout    time.Duration

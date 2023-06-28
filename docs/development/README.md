@@ -8,26 +8,37 @@ Run:
 N3DR_CLEAN_IN_CASE_OF_SUCCESS_OR_FAILURE=false ./test/integration-tests.sh
 ```
 
-Once Nexus had been started, download the go-swagger, swagger.json and
-generate internal go-swagger code:
+Once Nexus had been started, download the swagger.json:
+
+```bash
+curl http://localhost:8081/service/rest/swagger.json -o \
+  configs/swagger/nexus3.json
+```
+
+Lookup the `maven2.asset3` json snippet, septuple it and change it to:
+`maven2.asset4`, `maven2.asset5`, `maven2.asset6`, `maven2.asset7`,
+`maven2.asset8`, `maven2.asset9` and `maven2.asset10` respectively. After
+adding the seven snippets and renaming them, download go-swagger and generate
+internal go-swagger code:
 
 ```bash
 export GITHUB_URL=https://github.com
 export GS_URI=go-swagger/go-swagger/releases/download
-export GS_VERSION=v0.29.0
+export GS_VERSION=v0.30.4
 export GS_URL=${GITHUB_URL}/${GS_URI}/${GS_VERSION}/swagger_linux_amd64
+export GS_DIR=internal/app/n3dr/goswagger
 curl -L \
   ${GS_URL} \
   -o swagger
 chmod +x swagger
-mkdir -p internal/goswagger
-curl http://localhost:9999/service/rest/swagger.json -o swagger.json
+mkdir -p "${GS_DIR}"
 ./swagger generate client \
   --name=nexus3 \
-  --spec swagger.json \
-  --target=internal/app/n3dr/goswagger \
-  --skip-validation
-go mod tidy
+  --spec configs/swagger/nexus3.json \
+  --target="${GS_DIR}" \
+  --skip-validation && \
+go mod tidy && \
+rm swagger*
 ```
 
 ## Unit Tests

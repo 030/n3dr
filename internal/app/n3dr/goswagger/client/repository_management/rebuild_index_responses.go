@@ -60,14 +60,49 @@ func NewRebuildIndexNoContent() *RebuildIndexNoContent {
 	return &RebuildIndexNoContent{}
 }
 
-/* RebuildIndexNoContent describes a response with status code 204, with default header values.
+/*
+RebuildIndexNoContent describes a response with status code 204, with default header values.
 
 Repository search index rebuild has been scheduled
 */
 type RebuildIndexNoContent struct {
 }
 
+// IsSuccess returns true when this rebuild index no content response has a 2xx status code
+func (o *RebuildIndexNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this rebuild index no content response has a 3xx status code
+func (o *RebuildIndexNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this rebuild index no content response has a 4xx status code
+func (o *RebuildIndexNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this rebuild index no content response has a 5xx status code
+func (o *RebuildIndexNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this rebuild index no content response a status code equal to that given
+func (o *RebuildIndexNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the rebuild index no content response
+func (o *RebuildIndexNoContent) Code() int {
+	return 204
+}
+
 func (o *RebuildIndexNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexNoContent ", 204)
+}
+
+func (o *RebuildIndexNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexNoContent ", 204)
 }
 
@@ -81,14 +116,49 @@ func NewRebuildIndexBadRequest() *RebuildIndexBadRequest {
 	return &RebuildIndexBadRequest{}
 }
 
-/* RebuildIndexBadRequest describes a response with status code 400, with default header values.
+/*
+RebuildIndexBadRequest describes a response with status code 400, with default header values.
 
 Repository is not of hosted or proxy type
 */
 type RebuildIndexBadRequest struct {
 }
 
+// IsSuccess returns true when this rebuild index bad request response has a 2xx status code
+func (o *RebuildIndexBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this rebuild index bad request response has a 3xx status code
+func (o *RebuildIndexBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this rebuild index bad request response has a 4xx status code
+func (o *RebuildIndexBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this rebuild index bad request response has a 5xx status code
+func (o *RebuildIndexBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this rebuild index bad request response a status code equal to that given
+func (o *RebuildIndexBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the rebuild index bad request response
+func (o *RebuildIndexBadRequest) Code() int {
+	return 400
+}
+
 func (o *RebuildIndexBadRequest) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexBadRequest ", 400)
+}
+
+func (o *RebuildIndexBadRequest) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexBadRequest ", 400)
 }
 
@@ -102,14 +172,49 @@ func NewRebuildIndexUnauthorized() *RebuildIndexUnauthorized {
 	return &RebuildIndexUnauthorized{}
 }
 
-/* RebuildIndexUnauthorized describes a response with status code 401, with default header values.
+/*
+RebuildIndexUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type RebuildIndexUnauthorized struct {
 }
 
+// IsSuccess returns true when this rebuild index unauthorized response has a 2xx status code
+func (o *RebuildIndexUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this rebuild index unauthorized response has a 3xx status code
+func (o *RebuildIndexUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this rebuild index unauthorized response has a 4xx status code
+func (o *RebuildIndexUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this rebuild index unauthorized response has a 5xx status code
+func (o *RebuildIndexUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this rebuild index unauthorized response a status code equal to that given
+func (o *RebuildIndexUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the rebuild index unauthorized response
+func (o *RebuildIndexUnauthorized) Code() int {
+	return 401
+}
+
 func (o *RebuildIndexUnauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexUnauthorized ", 401)
+}
+
+func (o *RebuildIndexUnauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexUnauthorized ", 401)
 }
 
@@ -123,14 +228,49 @@ func NewRebuildIndexForbidden() *RebuildIndexForbidden {
 	return &RebuildIndexForbidden{}
 }
 
-/* RebuildIndexForbidden describes a response with status code 403, with default header values.
+/*
+RebuildIndexForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type RebuildIndexForbidden struct {
 }
 
+// IsSuccess returns true when this rebuild index forbidden response has a 2xx status code
+func (o *RebuildIndexForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this rebuild index forbidden response has a 3xx status code
+func (o *RebuildIndexForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this rebuild index forbidden response has a 4xx status code
+func (o *RebuildIndexForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this rebuild index forbidden response has a 5xx status code
+func (o *RebuildIndexForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this rebuild index forbidden response a status code equal to that given
+func (o *RebuildIndexForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the rebuild index forbidden response
+func (o *RebuildIndexForbidden) Code() int {
+	return 403
+}
+
 func (o *RebuildIndexForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexForbidden ", 403)
+}
+
+func (o *RebuildIndexForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexForbidden ", 403)
 }
 
@@ -144,14 +284,49 @@ func NewRebuildIndexNotFound() *RebuildIndexNotFound {
 	return &RebuildIndexNotFound{}
 }
 
-/* RebuildIndexNotFound describes a response with status code 404, with default header values.
+/*
+RebuildIndexNotFound describes a response with status code 404, with default header values.
 
 Repository not found
 */
 type RebuildIndexNotFound struct {
 }
 
+// IsSuccess returns true when this rebuild index not found response has a 2xx status code
+func (o *RebuildIndexNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this rebuild index not found response has a 3xx status code
+func (o *RebuildIndexNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this rebuild index not found response has a 4xx status code
+func (o *RebuildIndexNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this rebuild index not found response has a 5xx status code
+func (o *RebuildIndexNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this rebuild index not found response a status code equal to that given
+func (o *RebuildIndexNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the rebuild index not found response
+func (o *RebuildIndexNotFound) Code() int {
+	return 404
+}
+
 func (o *RebuildIndexNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexNotFound ", 404)
+}
+
+func (o *RebuildIndexNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/{repositoryName}/rebuild-index][%d] rebuildIndexNotFound ", 404)
 }
 

@@ -16,6 +16,8 @@ type Repository struct {
 	ProxyRemoteURL string
 }
 
+var writePolicy string = "ALLOW_ONCE"
+
 func created(name string, err error) error {
 	repositoryCreated, errRegex := regexp.MatchString("status 400", err.Error())
 	if errRegex != nil {
@@ -47,10 +49,9 @@ func (r *Repository) CreateAptProxied(name string) error {
 	remoteURL := r.ProxyRemoteURL
 	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
 	online := true
-	strictContentTypeValidation := true
 	flat := true
 	apt := models.AptProxyRepositoriesAttributes{Distribution: "bionic", Flat: &flat}
-	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation}
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation}
 	ma := models.AptProxyRepositoryAPIRequest{Apt: &apt, Name: &name, Online: &online, Storage: &mhsa, Proxy: &proxy, NegativeCache: &negativeCache, HTTPClient: &httpClient}
 	createAptProxy := repository_management.CreateRepository4Params{Body: &ma}
 	createAptProxy.WithTimeout(time.Second * 30)
@@ -82,8 +83,7 @@ func (r *Repository) CreateYumProxied(name string) error {
 	remoteURL := r.ProxyRemoteURL
 	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
 	online := true
-	strictContentTypeValidation := true
-	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation}
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation}
 	body := models.YumProxyRepositoryAPIRequest{Name: &name, Online: &online, Storage: &mhsa, Proxy: &proxy, NegativeCache: &negativeCache, HTTPClient: &httpClient}
 	createYumProxy := repository_management.CreateRepository22Params{Body: &body}
 	createYumProxy.WithTimeout(time.Second * 30)
@@ -105,9 +105,7 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 	}
 
 	online := true
-	strictContentTypeValidation := true
-	writePolicy := "allow_once"
-	dhsa := models.DockerHostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	dhsa := models.DockerHostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation, WritePolicy: &writePolicy}
 
 	forceBasicAuth := true
 	v1Enabled := false
@@ -138,10 +136,7 @@ func (r *Repository) CreateGemHosted(name string) error {
 	}
 
 	online := true
-	strictContentTypeValidation := true
-	writePolicy := "allow_once"
-
-	rhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	rhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation, WritePolicy: &writePolicy}
 	mr := models.RubyGemsHostedRepositoryAPIRequest{Name: &name, Online: &online, Storage: &rhsa}
 	createRubyGemsHosted := repository_management.CreateRepository15Params{Body: &mr}
 	createRubyGemsHosted.WithTimeout(time.Second * 30)
@@ -163,14 +158,12 @@ func (r *Repository) CreateMavenHosted(name string, snapshot bool) error {
 	}
 
 	online := true
-	strictContentTypeValidation := true
-	writePolicy := "allow_once"
-	mm := models.MavenAttributes{VersionPolicy: "Release", LayoutPolicy: "Strict", ContentDisposition: "Inline"}
+	mm := models.MavenAttributes{VersionPolicy: "RELEASE", LayoutPolicy: "STRICT", ContentDisposition: "INLINE"}
 	if snapshot {
-		mm.VersionPolicy = "Snapshot"
+		mm.VersionPolicy = "SNAPSHOT"
 	}
 
-	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation, WritePolicy: &writePolicy}
 	mr := models.MavenHostedRepositoryAPIRequest{Maven: &mm, Name: &name, Online: &online, Storage: &mhsa}
 	createMavenHosted := repository_management.CreateRepository1Params{Body: &mr}
 	createMavenHosted.WithTimeout(time.Second * 30)
@@ -192,9 +185,7 @@ func (r *Repository) CreateNpmHosted(name string, snapshot bool) error {
 	}
 
 	online := true
-	strictContentTypeValidation := true
-	writePolicy := "allow_once"
-	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation, WritePolicy: &writePolicy}
 	mr := models.NpmHostedRepositoryAPIRequest{Name: &name, Online: &online, Storage: &mhsa}
 	createNpmHosted := repository_management.CreateRepository9Params{Body: &mr}
 	createNpmHosted.WithTimeout(time.Second * 30)
@@ -216,9 +207,7 @@ func (r *Repository) CreateRawHosted(name string) error {
 	}
 
 	online := true
-	strictContentTypeValidation := true
-	writePolicy := "allow_once"
-	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation, WritePolicy: &writePolicy}
 	mr := models.RawHostedRepositoryAPIRequest{Name: &name, Online: &online, Storage: &mhsa}
 	createRawHosted := repository_management.CreateRepository6Params{Body: &mr}
 	createRawHosted.WithTimeout(time.Second * 30)
@@ -240,9 +229,7 @@ func (r *Repository) CreateYumHosted(name string) error {
 	}
 
 	online := true
-	strictContentTypeValidation := true
-	writePolicy := "allow_once"
-	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &strictContentTypeValidation, WritePolicy: &writePolicy}
+	mhsa := models.HostedStorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation, WritePolicy: &writePolicy}
 
 	var repoDataDepth int32 = 0
 	yum := models.YumAttributes{DeployPolicy: models.YumAttributesDeployPolicySTRICT, RepodataDepth: &repoDataDepth}

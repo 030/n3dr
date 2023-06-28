@@ -7,7 +7,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var csv string
+var (
+	csv  string
+	sort bool
+)
 
 // repositoriesCmd represents the repositories command.
 var countCmd = &cobra.Command{
@@ -21,10 +24,13 @@ Examples:
 
   # Return the number of artifacts and write them to a /tmp/helloworld.csv:
   n3dr count --csv /tmp/helloworld
+
+  # Return the number of artifacts, write them to a /tmp/helloworld.csv and sort it:
+  n3dr count --csv /tmp/helloworld --sort
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		n := connection.Nexus3{AwsBucket: awsBucket, AwsID: awsID, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
-		c := count.Nexus3{Nexus3: &n, CsvFile: csv}
+		c := count.Nexus3{Nexus3: &n, CsvFile: csv, Sort: sort}
 
 		if err := c.Artifacts(); err != nil {
 			log.Fatal(err)
@@ -35,6 +41,7 @@ Examples:
 
 func init() {
 	countCmd.Flags().StringVar(&csv, "csv", "", "write to a csvFile")
+	countCmd.Flags().BoolVar(&sort, "sort", false, "sort the csvFile")
 
 	rootCmd.AddCommand(countCmd)
 }

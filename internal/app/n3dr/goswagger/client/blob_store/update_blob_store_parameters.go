@@ -54,10 +54,12 @@ func NewUpdateBlobStoreParamsWithHTTPClient(client *http.Client) *UpdateBlobStor
 	}
 }
 
-/* UpdateBlobStoreParams contains all the parameters to send to the API endpoint
-   for the update blob store operation.
+/*
+UpdateBlobStoreParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update blob store operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateBlobStoreParams struct {
 

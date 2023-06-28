@@ -54,14 +54,49 @@ func NewCreateRepository4Created() *CreateRepository4Created {
 	return &CreateRepository4Created{}
 }
 
-/* CreateRepository4Created describes a response with status code 201, with default header values.
+/*
+CreateRepository4Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository4Created struct {
 }
 
+// IsSuccess returns true when this create repository4 created response has a 2xx status code
+func (o *CreateRepository4Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository4 created response has a 3xx status code
+func (o *CreateRepository4Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository4 created response has a 4xx status code
+func (o *CreateRepository4Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository4 created response has a 5xx status code
+func (o *CreateRepository4Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository4 created response a status code equal to that given
+func (o *CreateRepository4Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository4 created response
+func (o *CreateRepository4Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository4Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4Created ", 201)
+}
+
+func (o *CreateRepository4Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4Created ", 201)
 }
 
@@ -75,14 +110,49 @@ func NewCreateRepository4Unauthorized() *CreateRepository4Unauthorized {
 	return &CreateRepository4Unauthorized{}
 }
 
-/* CreateRepository4Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository4Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository4Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository4 unauthorized response has a 2xx status code
+func (o *CreateRepository4Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository4 unauthorized response has a 3xx status code
+func (o *CreateRepository4Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository4 unauthorized response has a 4xx status code
+func (o *CreateRepository4Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository4 unauthorized response has a 5xx status code
+func (o *CreateRepository4Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository4 unauthorized response a status code equal to that given
+func (o *CreateRepository4Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository4 unauthorized response
+func (o *CreateRepository4Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository4Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4Unauthorized ", 401)
+}
+
+func (o *CreateRepository4Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4Unauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewCreateRepository4Forbidden() *CreateRepository4Forbidden {
 	return &CreateRepository4Forbidden{}
 }
 
-/* CreateRepository4Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository4Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository4Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository4 forbidden response has a 2xx status code
+func (o *CreateRepository4Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository4 forbidden response has a 3xx status code
+func (o *CreateRepository4Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository4 forbidden response has a 4xx status code
+func (o *CreateRepository4Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository4 forbidden response has a 5xx status code
+func (o *CreateRepository4Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository4 forbidden response a status code equal to that given
+func (o *CreateRepository4Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository4 forbidden response
+func (o *CreateRepository4Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository4Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4Forbidden ", 403)
+}
+
+func (o *CreateRepository4Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4Forbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewCreateRepository4MethodNotAllowed() *CreateRepository4MethodNotAllowed {
 	return &CreateRepository4MethodNotAllowed{}
 }
 
-/* CreateRepository4MethodNotAllowed describes a response with status code 405, with default header values.
+/*
+CreateRepository4MethodNotAllowed describes a response with status code 405, with default header values.
 
 Feature is disabled in High Availability
 */
 type CreateRepository4MethodNotAllowed struct {
 }
 
+// IsSuccess returns true when this create repository4 method not allowed response has a 2xx status code
+func (o *CreateRepository4MethodNotAllowed) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository4 method not allowed response has a 3xx status code
+func (o *CreateRepository4MethodNotAllowed) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository4 method not allowed response has a 4xx status code
+func (o *CreateRepository4MethodNotAllowed) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository4 method not allowed response has a 5xx status code
+func (o *CreateRepository4MethodNotAllowed) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository4 method not allowed response a status code equal to that given
+func (o *CreateRepository4MethodNotAllowed) IsCode(code int) bool {
+	return code == 405
+}
+
+// Code gets the status code for the create repository4 method not allowed response
+func (o *CreateRepository4MethodNotAllowed) Code() int {
+	return 405
+}
+
 func (o *CreateRepository4MethodNotAllowed) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4MethodNotAllowed ", 405)
+}
+
+func (o *CreateRepository4MethodNotAllowed) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/apt/proxy][%d] createRepository4MethodNotAllowed ", 405)
 }
 
