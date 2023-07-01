@@ -28,12 +28,16 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-type Nexus3 struct {
-	*connection.Nexus3
+type artifactFiles struct {
+	f2, f3, f4, f5, f6, f7 *os.File
 }
 
 type mavenParts struct {
 	artifact, classifier, ext, version string
+}
+
+type Nexus3 struct {
+	*connection.Nexus3
 }
 
 func uploadStatus(err error) (int, error) {
@@ -149,13 +153,13 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 	return mavenParts{artifact: artifact, classifier: classifier, ext: ext, version: version}, nil
 }
 
-func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWithoutExtIncludingDir string, f2, f3, f4, f5, f6, f7 *os.File, skipErrors bool) error {
+func (af artifactFiles) mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWithoutExtIncludingDir string, skipErrors bool) error {
 	filePathJar := fileNameWithoutExtIncludingDir + ".jar"
 	filePathSourcesJar := fileNameWithoutExtIncludingDir + "-sources.jar"
 	filePathJavadocJar := fileNameWithoutExtIncludingDir + "-javadoc.jar"
 
 	if _, err := os.Stat(filePathSourcesJar); err == nil {
-		f2, err := os.Open(filepath.Clean(filePathSourcesJar))
+		af.f2, err = os.Open(filepath.Clean(filePathSourcesJar))
 		if err != nil {
 			return err
 		}
@@ -163,7 +167,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 		if err != nil {
 			return err
 		}
-		c.Maven2Asset2 = f2
+		c.Maven2Asset2 = af.f2
 		c.Maven2Asset2Extension = &mp.ext
 		c.Maven2Asset2Classifier = &mp.classifier
 
@@ -175,7 +179,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 	}
 
 	if _, err := os.Stat(filePathJavadocJar); err == nil {
-		f7, err := os.Open(filepath.Clean(filePathJavadocJar))
+		af.f7, err = os.Open(filepath.Clean(filePathJavadocJar))
 		if err != nil {
 			return err
 		}
@@ -183,7 +187,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 		if err != nil {
 			return err
 		}
-		c.Maven2Asset7 = f7
+		c.Maven2Asset7 = af.f7
 		c.Maven2Asset7Extension = &mp.ext
 		c.Maven2Asset7Classifier = &mp.classifier
 
@@ -195,7 +199,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 	}
 
 	if _, err := os.Stat(filePathJar); err == nil {
-		f3, err := os.Open(filepath.Clean(filePathJar))
+		af.f3, err = os.Open(filepath.Clean(filePathJar))
 		if err != nil {
 			return err
 		}
@@ -203,7 +207,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 		if err != nil {
 			return err
 		}
-		c.Maven2Asset3 = f3
+		c.Maven2Asset3 = af.f3
 		c.Maven2Asset3Extension = &mp.ext
 		c.Maven2Asset3Classifier = &mp.classifier
 
@@ -216,7 +220,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 
 	filePathWar := fileNameWithoutExtIncludingDir + ".war"
 	if _, err := os.Stat(filePathWar); err == nil {
-		f4, err := os.Open(filepath.Clean(filePathWar))
+		af.f4, err = os.Open(filepath.Clean(filePathWar))
 		if err != nil {
 			return err
 		}
@@ -224,7 +228,7 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 		if err != nil {
 			return err
 		}
-		c.Maven2Asset4 = f4
+		c.Maven2Asset4 = af.f4
 		c.Maven2Asset4Extension = &mp.ext
 		c.Maven2Asset4Classifier = &mp.classifier
 
@@ -237,11 +241,11 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 
 	filePathZip := fileNameWithoutExtIncludingDir + ".zip"
 	if _, err := os.Stat(filePathZip); err == nil {
-		f5, err := os.Open(filepath.Clean(filePathZip))
+		af.f5, err = os.Open(filepath.Clean(filePathZip))
 		if err != nil {
 			return err
 		}
-		c.Maven2Asset5 = f5
+		c.Maven2Asset5 = af.f5
 		ext5 := "zip"
 		c.Maven2Asset5Extension = &ext5
 
@@ -253,11 +257,11 @@ func mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWit
 
 	filePathModule := fileNameWithoutExtIncludingDir + ".module"
 	if _, err := os.Stat(filePathModule); err == nil {
-		f6, err := os.Open(filepath.Clean(filePathModule))
+		af.f6, err = os.Open(filepath.Clean(filePathModule))
 		if err != nil {
 			return err
 		}
-		c.Maven2Asset6 = f6
+		c.Maven2Asset6 = af.f6
 		ext6 := "module"
 		c.Maven2Asset6Extension = &ext6
 
@@ -280,9 +284,8 @@ func removeExtension(fileName string) string {
 
 var checkedMavenFolders = []string{""}
 
-func (n *Nexus3) bla(f, localDiskRepo, dir, filename string) (bool, error) {
-	// sha512
-	// http://localhost:9000/repository/some-maven2/some%2Fgroup%2FSome_Package%2F1.0.0-1%2FSome_Package-1.0.0-1.pom.sha512
+func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, dir, filename string) (bool, error) {
+	identical := false
 
 	downloadedFileChecksum, err := artifacts.ChecksumLocalFile(f, "")
 	if err != nil {
@@ -325,12 +328,10 @@ func (n *Nexus3) bla(f, localDiskRepo, dir, filename string) (bool, error) {
 	}()
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		return identical, err
 	}
 	bodyString := string(bodyBytes)
 	log.Info(bodyString)
-
-	identical := false
 
 	if bodyString == downloadedFileChecksum {
 		identical = true
@@ -343,17 +344,14 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 	dir := strings.Replace(filepath.Dir(path), localDiskRepoHome+"/", "", -1)
 	filename := filepath.Base(path)
 
-	// check local checksum
+	var f *os.File
+	af := artifactFiles{}
 
-	// check checksum in nexus
-
-	// if equals then skip
-	if identical, _ := n.bla(filepath.Clean(path), localDiskRepo, dir, filename); identical {
+	if identical, _ := n.checkLocalChecksumAndCompareWithOneInRemote(filepath.Clean(path), localDiskRepo, dir, filename); identical {
 		log.Info("Already uploaded")
 		return nil
 	}
 
-	var f, f2, f3, f4, f5, f6, f7 *os.File
 	c := components.UploadComponentParams{}
 	switch rf := repoFormat; rf {
 	case "apt":
@@ -378,7 +376,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 
 			c.Repository = localDiskRepo
 
-			if err := mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, f2, f3, f4, f5, f6, f7, skipErrors); err != nil {
+			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
 				return err
 			}
 
@@ -435,7 +433,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 
 			c.Repository = localDiskRepo
 
-			if err := mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, f2, f3, f4, f5, f6, f7, skipErrors); err != nil {
+			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
 				return err
 			}
 
@@ -446,10 +444,12 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			}
 			c.Maven2ArtifactID = &mp.artifact
 			c.Maven2Version = &mp.version
+
 			// Match "/some/group/" and capture the group name.
 			regex := `^` + localDiskRepoHome + `/([\w+\/]+)/` + mp.artifact
 			re := regexp.MustCompile(regex)
 			groupID := ""
+
 			// Extract the group name from the path.
 			match := re.FindStringSubmatch(path)
 			if len(match) >= 2 {
@@ -461,7 +461,6 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Maven2GroupID = &groupID
 			generatePOM := true
 			c.Maven2GeneratePom = &generatePOM
-			//
 
 			maven2Asset1 := "empty"
 			maven2Asset2 := "empty"
@@ -551,7 +550,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		return nil
 	}
 
-	files := []*os.File{f, f2, f3, f4, f5, f6, f7}
+	files := []*os.File{f, af.f2, af.f3, af.f4, af.f5, af.f6, af.f2, af.f7}
 	if err := upload(c, client, path, files); err != nil {
 		return err
 	}
@@ -566,14 +565,14 @@ func upload(c components.UploadComponentParams, client *client.Nexus3, path stri
 	}
 	c.WithTimeout(time.Second * 600)
 	if err := client.Components.UploadComponent(&c); err != nil {
-		log.Tracef("----------------------------------------------------------------------------------err: '%v' while uploading file: '%s'", err, path)
+		log.Tracef("err: '%v' while uploading file: '%s'", err, path)
 		statusCode, uploadStatusErr := uploadStatus(err)
 		if uploadStatusErr != nil {
 			log.Error(path)
 			return uploadStatusErr
 		}
 		if statusCode == 204 {
-			log.Debugf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>artifact: '%v' has been uploaded", path)
+			log.Debugf("artifact: '%v' has been uploaded", path)
 			return nil
 		}
 

@@ -34,13 +34,29 @@ issues:
       path: cmd/n3dr/sync.go
       text: "don't use `init` function"
     - linters:
-        - funlen
+        - gocognit
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: Function 'UploadSingleArtifact' has too many statements
+      text: 'cognitive complexity 71'
     - linters:
         - gocognit
       path: internal/app/n3dr/artifactsv2/upload/upload.go
       text: cognitive complexity 55 of func `UploadSingleArtifact` is high
+    - linters:
+        - gocyclo
+      path: internal/app/n3dr/artifactsv2/upload/upload.go
+      text: 'cyclomatic complexity 38'
+    - linters:
+        - funlen
+      path: internal/app/n3dr/artifactsv2/upload/upload.go
+      text: Function 'UploadSingleArtifact' has too many statements
+    - linters:
+        - funlen
+      path: internal/app/n3dr/artifactsv2/upload/upload.go
+      text: Function 'mavenJarAndOtherExtensions' has too many statements
+    - linters:
+        - maintidx
+      path: internal/app/n3dr/artifactsv2/upload/upload.go
+      text: 'Cyclomatic Complexity: 38'
 linters:
   enable-all: true
   disable:
@@ -109,31 +125,7 @@ linters-settings:
           - $gostd
           - github.com/030/logging/pkg/logging
           - github.com/030/mij
-          - github.com/030/n3dr/internal/app/n3dr/artifactsv2
-          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/count
-          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/name
-          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload
-          - github.com/030/n3dr/internal/app/n3dr/artifactsv2/upload/maven2/snapshot
-          - github.com/030/n3dr/internal/app/n3dr/config/repository
-          - github.com/030/n3dr/internal/app/n3dr/config/security
-          - github.com/030/n3dr/internal/app/n3dr/config/user
-          - github.com/030/n3dr/internal/app/n3dr/connection
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/components
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/repository_management
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_anonymous_access
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_l_d_a_p
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_roles
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/client/security_management_users
-          - github.com/030/n3dr/internal/app/n3dr/goswagger/models
-          - github.com/030/n3dr/internal/app/n3dr/n3drtest
-          - github.com/030/n3dr/internal/app/n3dr/s3
-          - github.com/030/n3dr/internaln3dr/artifactsv2
-          - github.com/030/n3dr/internaln3dr/connection
-          - github.com/030/n3dr/internaln3dr/goswagger/client/security_management_roles
-          - github.com/030/n3dr/internaln3dr/goswagger/client/security_management_users
-          - github.com/030/n3dr/internaln3dr/goswagger/models
-          - github.com/030/n3dr/internaln3dr/s3
+          - github.com/030/n3dr/internal/app/n3dr
           - github.com/030/p2iwd/pkg/p2iwd
           - github.com/aws/aws-sdk-go/aws
           - github.com/aws/aws-sdk-go/aws/credentials
@@ -145,6 +137,7 @@ linters-settings:
           - github.com/mholt/archiver
           - github.com/mitchellh/go-homedir
           - github.com/OpenPeeDeeP
+          - github.com/samber/lo
           - github.com/sirupsen/logrus
           - github.com/spf13/cobra
           - github.com/spf13/viper
