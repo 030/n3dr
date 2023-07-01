@@ -52,10 +52,12 @@ func NewRemoveLicenseParamsWithHTTPClient(client *http.Client) *RemoveLicensePar
 	}
 }
 
-/* RemoveLicenseParams contains all the parameters to send to the API endpoint
-   for the remove license operation.
+/*
+RemoveLicenseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the remove license operation.
+
+	Typically these are written to a http.Request.
 */
 type RemoveLicenseParams struct {
 	timeout    time.Duration

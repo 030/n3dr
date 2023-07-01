@@ -42,14 +42,49 @@ func NewCreateFileBlobStoreNoContent() *CreateFileBlobStoreNoContent {
 	return &CreateFileBlobStoreNoContent{}
 }
 
-/* CreateFileBlobStoreNoContent describes a response with status code 204, with default header values.
+/*
+CreateFileBlobStoreNoContent describes a response with status code 204, with default header values.
 
 Success
 */
 type CreateFileBlobStoreNoContent struct {
 }
 
+// IsSuccess returns true when this create file blob store no content response has a 2xx status code
+func (o *CreateFileBlobStoreNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create file blob store no content response has a 3xx status code
+func (o *CreateFileBlobStoreNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create file blob store no content response has a 4xx status code
+func (o *CreateFileBlobStoreNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create file blob store no content response has a 5xx status code
+func (o *CreateFileBlobStoreNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create file blob store no content response a status code equal to that given
+func (o *CreateFileBlobStoreNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the create file blob store no content response
+func (o *CreateFileBlobStoreNoContent) Code() int {
+	return 204
+}
+
 func (o *CreateFileBlobStoreNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/blobstores/file][%d] createFileBlobStoreNoContent ", 204)
+}
+
+func (o *CreateFileBlobStoreNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/blobstores/file][%d] createFileBlobStoreNoContent ", 204)
 }
 
@@ -63,14 +98,49 @@ func NewCreateFileBlobStoreForbidden() *CreateFileBlobStoreForbidden {
 	return &CreateFileBlobStoreForbidden{}
 }
 
-/* CreateFileBlobStoreForbidden describes a response with status code 403, with default header values.
+/*
+CreateFileBlobStoreForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateFileBlobStoreForbidden struct {
 }
 
+// IsSuccess returns true when this create file blob store forbidden response has a 2xx status code
+func (o *CreateFileBlobStoreForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create file blob store forbidden response has a 3xx status code
+func (o *CreateFileBlobStoreForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create file blob store forbidden response has a 4xx status code
+func (o *CreateFileBlobStoreForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create file blob store forbidden response has a 5xx status code
+func (o *CreateFileBlobStoreForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create file blob store forbidden response a status code equal to that given
+func (o *CreateFileBlobStoreForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create file blob store forbidden response
+func (o *CreateFileBlobStoreForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateFileBlobStoreForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/blobstores/file][%d] createFileBlobStoreForbidden ", 403)
+}
+
+func (o *CreateFileBlobStoreForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/blobstores/file][%d] createFileBlobStoreForbidden ", 403)
 }
 

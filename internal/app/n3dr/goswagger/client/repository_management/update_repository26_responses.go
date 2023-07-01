@@ -48,14 +48,49 @@ func NewUpdateRepository26NoContent() *UpdateRepository26NoContent {
 	return &UpdateRepository26NoContent{}
 }
 
-/* UpdateRepository26NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository26NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository26NoContent struct {
 }
 
+// IsSuccess returns true when this update repository26 no content response has a 2xx status code
+func (o *UpdateRepository26NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository26 no content response has a 3xx status code
+func (o *UpdateRepository26NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository26 no content response has a 4xx status code
+func (o *UpdateRepository26NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository26 no content response has a 5xx status code
+func (o *UpdateRepository26NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository26 no content response a status code equal to that given
+func (o *UpdateRepository26NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository26 no content response
+func (o *UpdateRepository26NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository26NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/pypi/group/{repositoryName}][%d] updateRepository26NoContent ", 204)
+}
+
+func (o *UpdateRepository26NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/pypi/group/{repositoryName}][%d] updateRepository26NoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewUpdateRepository26Unauthorized() *UpdateRepository26Unauthorized {
 	return &UpdateRepository26Unauthorized{}
 }
 
-/* UpdateRepository26Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository26Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository26Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository26 unauthorized response has a 2xx status code
+func (o *UpdateRepository26Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository26 unauthorized response has a 3xx status code
+func (o *UpdateRepository26Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository26 unauthorized response has a 4xx status code
+func (o *UpdateRepository26Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository26 unauthorized response has a 5xx status code
+func (o *UpdateRepository26Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository26 unauthorized response a status code equal to that given
+func (o *UpdateRepository26Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository26 unauthorized response
+func (o *UpdateRepository26Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository26Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/pypi/group/{repositoryName}][%d] updateRepository26Unauthorized ", 401)
+}
+
+func (o *UpdateRepository26Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/pypi/group/{repositoryName}][%d] updateRepository26Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewUpdateRepository26Forbidden() *UpdateRepository26Forbidden {
 	return &UpdateRepository26Forbidden{}
 }
 
-/* UpdateRepository26Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository26Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository26Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository26 forbidden response has a 2xx status code
+func (o *UpdateRepository26Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository26 forbidden response has a 3xx status code
+func (o *UpdateRepository26Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository26 forbidden response has a 4xx status code
+func (o *UpdateRepository26Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository26 forbidden response has a 5xx status code
+func (o *UpdateRepository26Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository26 forbidden response a status code equal to that given
+func (o *UpdateRepository26Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository26 forbidden response
+func (o *UpdateRepository26Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository26Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/pypi/group/{repositoryName}][%d] updateRepository26Forbidden ", 403)
+}
+
+func (o *UpdateRepository26Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/pypi/group/{repositoryName}][%d] updateRepository26Forbidden ", 403)
 }
 

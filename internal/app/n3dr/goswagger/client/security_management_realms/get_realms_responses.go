@@ -39,7 +39,8 @@ func NewGetRealmsOK() *GetRealmsOK {
 	return &GetRealmsOK{}
 }
 
-/* GetRealmsOK describes a response with status code 200, with default header values.
+/*
+GetRealmsOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRealmsOK struct {
 	Payload []*models.RealmAPIXO
 }
 
+// IsSuccess returns true when this get realms o k response has a 2xx status code
+func (o *GetRealmsOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get realms o k response has a 3xx status code
+func (o *GetRealmsOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get realms o k response has a 4xx status code
+func (o *GetRealmsOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get realms o k response has a 5xx status code
+func (o *GetRealmsOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get realms o k response a status code equal to that given
+func (o *GetRealmsOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get realms o k response
+func (o *GetRealmsOK) Code() int {
+	return 200
+}
+
 func (o *GetRealmsOK) Error() string {
 	return fmt.Sprintf("[GET /v1/security/realms/available][%d] getRealmsOK  %+v", 200, o.Payload)
 }
+
+func (o *GetRealmsOK) String() string {
+	return fmt.Sprintf("[GET /v1/security/realms/available][%d] getRealmsOK  %+v", 200, o.Payload)
+}
+
 func (o *GetRealmsOK) GetPayload() []*models.RealmAPIXO {
 	return o.Payload
 }

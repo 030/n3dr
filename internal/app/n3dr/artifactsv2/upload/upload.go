@@ -2,7 +2,9 @@ package upload
 
 import (
 	"fmt"
+	"io"
 	"io/fs"
+	"net/http"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -20,15 +22,22 @@ import (
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client/components"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/client/repository_management"
 	"github.com/030/p2iwd/pkg/p2iwd"
+	"github.com/hashicorp/go-retryablehttp"
+	"github.com/samber/lo"
 	log "github.com/sirupsen/logrus"
+	"golang.org/x/exp/slices"
 )
 
-type Nexus3 struct {
-	*connection.Nexus3
+type artifactFiles struct {
+	f2, f3, f4, f5, f6, f7 *os.File
 }
 
 type mavenParts struct {
-	classifier, ext string
+	artifact, classifier, ext, version string
+}
+
+type Nexus3 struct {
+	*connection.Nexus3
 }
 
 func uploadStatus(err error) (int, error) {
@@ -104,13 +113,16 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 
 	re := regexp.MustCompile(regexBase + regexVersion + regexClassifier + `\.([a-z]+)$`)
 
+	artifact := ""
 	classifier := ""
 	ext := ""
+	version := ""
+
 	if re.MatchString(path) {
 		result := re.FindAllStringSubmatch(path, -1)
 		artifactElements := result[0]
 		artifactElementsLength := len(result[0])
-		log.Debugf("ArtifactElements: '%s'. ArtifactElementLength: '%d'", artifactElements, artifactElementsLength)
+		log.Tracef("ArtifactElements: '%s'. ArtifactElementLength: '%d'", artifactElements, artifactElementsLength)
 		if artifactElementsLength != 11 {
 			err := fmt.Errorf("check whether the regex retrieves ten elements from the artifact. Current: '%s'. Note that element 3 is the artifact itself", artifactElements)
 			if skipErrors {
@@ -120,8 +132,8 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 			}
 		}
 
-		artifact := artifactElements[3]
-		version := artifactElements[1]
+		artifact = artifactElements[3]
+		version = artifactElements[1]
 		ext = artifactElements[10]
 
 		// Check if the 'version' reported in the artifact name is different from the 'real' version
@@ -129,7 +141,7 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 			classifier = artifactElements[9]
 		}
 
-		log.Debugf("Artifact: '%v', Version: '%v', Classifier: '%v', Extension: '%v'.", artifact, version, classifier, ext)
+		log.Tracef("Artifact: '%v', Version: '%v', Classifier: '%v', Extension: '%v'.", artifact, version, classifier, ext)
 	} else {
 		err := fmt.Errorf("check whether regexVersion: '%s' and regexClassifier: '%s' match the artifact: '%s'", regexVersion, regexClassifier, path)
 		if skipErrors {
@@ -138,50 +150,208 @@ func maven(path string, skipErrors bool) (mp mavenParts, err error) {
 			return mp, err
 		}
 	}
-	return mavenParts{classifier: classifier, ext: ext}, nil
+	return mavenParts{artifact: artifact, classifier: classifier, ext: ext, version: version}, nil
 }
 
-func mavenJarAndZip(c *components.UploadComponentParams, path string, f2, f3 *os.File) error {
-	dir := filepath.Dir(path)
-	if err := filepath.WalkDir(dir,
-		func(path string, info fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if filepath.Ext(path) == ".jar" {
-				f2, err = os.Open(filepath.Clean(path))
-				if err != nil {
-					return err
-				}
-				mp, err := maven(path, false)
-				if err != nil {
-					return err
-				}
-				c.Maven2Asset2 = f2
-				c.Maven2Asset2Extension = &mp.ext
-				c.Maven2Asset2Classifier = &mp.classifier
-			}
-			if filepath.Ext(path) == ".zip" {
-				f3, err = os.Open(filepath.Clean(path))
-				if err != nil {
-					return err
-				}
-				c.Maven2Asset3 = f3
-				ext3 := "zip"
-				c.Maven2Asset3Extension = &ext3
-			}
-			return nil
-		}); err != nil {
-		return err
+func (af artifactFiles) mavenJarAndOtherExtensions(c *components.UploadComponentParams, fileNameWithoutExtIncludingDir string, skipErrors bool) error {
+	filePathJar := fileNameWithoutExtIncludingDir + ".jar"
+	filePathSourcesJar := fileNameWithoutExtIncludingDir + "-sources.jar"
+	filePathJavadocJar := fileNameWithoutExtIncludingDir + "-javadoc.jar"
+
+	if _, err := os.Stat(filePathSourcesJar); err == nil {
+		af.f2, err = os.Open(filepath.Clean(filePathSourcesJar))
+		if err != nil {
+			return err
+		}
+		mp, err := maven(filePathSourcesJar, skipErrors)
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset2 = af.f2
+		c.Maven2Asset2Extension = &mp.ext
+		c.Maven2Asset2Classifier = &mp.classifier
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset2.Name(),
+			"extension":  *c.Maven2Asset2Extension,
+			"classifier": *c.Maven2Asset2Classifier,
+		}).Trace("Maven2 asset2")
 	}
+
+	if _, err := os.Stat(filePathJavadocJar); err == nil {
+		af.f7, err = os.Open(filepath.Clean(filePathJavadocJar))
+		if err != nil {
+			return err
+		}
+		mp, err := maven(filePathJavadocJar, skipErrors)
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset7 = af.f7
+		c.Maven2Asset7Extension = &mp.ext
+		c.Maven2Asset7Classifier = &mp.classifier
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset7.Name(),
+			"extension":  *c.Maven2Asset7Extension,
+			"classifier": *c.Maven2Asset7Classifier,
+		}).Trace("Maven2 asset7")
+	}
+
+	if _, err := os.Stat(filePathJar); err == nil {
+		af.f3, err = os.Open(filepath.Clean(filePathJar))
+		if err != nil {
+			return err
+		}
+		mp, err := maven(filePathJar, skipErrors)
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset3 = af.f3
+		c.Maven2Asset3Extension = &mp.ext
+		c.Maven2Asset3Classifier = &mp.classifier
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset3.Name(),
+			"extension":  *c.Maven2Asset3Extension,
+			"classifier": *c.Maven2Asset3Classifier,
+		}).Trace("Maven2 asset3")
+	}
+
+	filePathWar := fileNameWithoutExtIncludingDir + ".war"
+	if _, err := os.Stat(filePathWar); err == nil {
+		af.f4, err = os.Open(filepath.Clean(filePathWar))
+		if err != nil {
+			return err
+		}
+		mp, err := maven(filePathWar, skipErrors)
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset4 = af.f4
+		c.Maven2Asset4Extension = &mp.ext
+		c.Maven2Asset4Classifier = &mp.classifier
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset4.Name(),
+			"extension":  *c.Maven2Asset4Extension,
+			"classifier": *c.Maven2Asset4Classifier,
+		}).Trace("Maven2 asset4")
+	}
+
+	filePathZip := fileNameWithoutExtIncludingDir + ".zip"
+	if _, err := os.Stat(filePathZip); err == nil {
+		af.f5, err = os.Open(filepath.Clean(filePathZip))
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset5 = af.f5
+		ext5 := "zip"
+		c.Maven2Asset5Extension = &ext5
+
+		log.WithFields(log.Fields{
+			"file":      c.Maven2Asset5.Name(),
+			"extension": *c.Maven2Asset5Extension,
+		}).Trace("Maven2 asset5")
+	}
+
+	filePathModule := fileNameWithoutExtIncludingDir + ".module"
+	if _, err := os.Stat(filePathModule); err == nil {
+		af.f6, err = os.Open(filepath.Clean(filePathModule))
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset6 = af.f6
+		ext6 := "module"
+		c.Maven2Asset6Extension = &ext6
+
+		log.WithFields(log.Fields{
+			"file":      c.Maven2Asset6.Name(),
+			"extension": *c.Maven2Asset6Extension,
+		}).Trace("Maven2 asset6")
+	}
+
 	return nil
 }
 
-func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string) error {
+func removeExtension(fileName string) string {
+	ext := filepath.Ext(fileName)
+	re := regexp.MustCompile(`(-[a-zA-Z]+)?` + ext + `$`)
+	result := re.ReplaceAllString(fileName, "")
+	filename := filepath.Base(result)
+	return filename
+}
+
+var checkedMavenFolders = []string{""}
+
+func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, dir, filename string) (bool, error) {
+	identical := false
+
+	downloadedFileChecksum, err := artifacts.ChecksumLocalFile(f, "")
+	if err != nil {
+		return false, err
+	}
+	log.Info(f, downloadedFileChecksum)
+
+	retryClient := retryablehttp.NewClient()
+	retryClient.Logger = nil
+	retryClient.RetryMax = 3
+	standardClient := retryClient.StandardClient()
+
+	scheme := "http"
+	if n.HTTPS {
+		scheme = "https"
+	}
+
+	u := scheme + "://" + n.FQDN + "/repository/" + localDiskRepo + "/" + dir + "/" + filename + ".sha512"
+	log.Info("URL:             ", u)
+
+	req, err := http.NewRequest("GET", u, nil)
+	if err != nil {
+		return false, err
+	}
+	req.SetBasicAuth(n.User, n.Pass)
+
+	resp, err := standardClient.Do(req)
+	if err != nil {
+		return false, err
+	}
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			panic(err)
+		}
+	}()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			panic(err)
+		}
+	}()
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return identical, err
+	}
+	bodyString := string(bodyBytes)
+	log.Info(bodyString)
+
+	if bodyString == downloadedFileChecksum {
+		identical = true
+	}
+
+	return identical, nil
+}
+
+func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) error {
 	dir := strings.Replace(filepath.Dir(path), localDiskRepoHome+"/", "", -1)
 	filename := filepath.Base(path)
 
-	var f, f2, f3 *os.File
+	var f *os.File
+	af := artifactFiles{}
+
+	if identical, _ := n.checkLocalChecksumAndCompareWithOneInRemote(filepath.Clean(path), localDiskRepo, dir, filename); identical {
+		log.Info("Already uploaded")
+		return nil
+	}
+
 	c := components.UploadComponentParams{}
 	switch rf := repoFormat; rf {
 	case "apt":
@@ -192,10 +362,26 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		}
 		c.AptAsset = f
 	case "maven2":
-		if filepath.Ext(path) == ".pom" {
+		dirPath := filepath.Dir(path)
+		fileNameWithoutExt := removeExtension(path)
+		fileNameWithoutExtIncludingDir := filepath.Join(dirPath, fileNameWithoutExt)
+		filePathPom := fileNameWithoutExtIncludingDir + ".pom"
+
+		if slices.Contains(checkedMavenFolders, dirPath) {
+			return nil
+		}
+
+		if _, err := os.Stat(filePathPom); err == nil {
+			log.Debugf("folder: '%s' contains a pom file: '%s'", dirPath, filePathPom)
+
 			c.Repository = localDiskRepo
+
+			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
+				return err
+			}
+
 			var err error
-			f, err = os.Open(filepath.Clean(path))
+			f, err = os.Open(filepath.Clean(filePathPom))
 			if err != nil {
 				return err
 			}
@@ -203,12 +389,122 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 			ext1 := "pom"
 			c.Maven2Asset1Extension = &ext1
 
-			if err := mavenJarAndZip(&c, path, f2, f3); err != nil {
+			maven2Asset1 := "empty"
+			maven2Asset2 := "empty"
+			maven2Asset3 := "empty"
+			maven2Asset4 := "empty"
+			maven2Asset5 := "empty"
+			maven2Asset6 := "empty"
+			maven2Asset7 := "empty"
+
+			if c.Maven2Asset1 != nil {
+				maven2Asset1 = c.Maven2Asset1.Name()
+			}
+			if c.Maven2Asset2 != nil {
+				maven2Asset2 = c.Maven2Asset2.Name()
+			}
+			if c.Maven2Asset3 != nil {
+				maven2Asset3 = c.Maven2Asset3.Name()
+			}
+			if c.Maven2Asset4 != nil {
+				maven2Asset4 = c.Maven2Asset4.Name()
+			}
+			if c.Maven2Asset5 != nil {
+				maven2Asset5 = c.Maven2Asset5.Name()
+			}
+			if c.Maven2Asset6 != nil {
+				maven2Asset6 = c.Maven2Asset6.Name()
+			}
+			if c.Maven2Asset7 != nil {
+				maven2Asset7 = c.Maven2Asset7.Name()
+			}
+
+			log.WithFields(log.Fields{
+				"1": maven2Asset1,
+				"2": maven2Asset2,
+				"3": maven2Asset3,
+				"4": maven2Asset4,
+				"5": maven2Asset5,
+				"6": maven2Asset6,
+				"7": maven2Asset7,
+			}).Debug("Maven2 asset upload")
+		} else {
+			log.Debugf("folder: '%s' does not contain a pom file: '%s'", dirPath, filePathPom)
+
+			c.Repository = localDiskRepo
+
+			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
 				return err
 			}
 
-			log.Tracef("Maven2Asset1Name: '%v',Maven2Asset2Name: '%v',Maven2Asset3Name: '%v'", c.Maven2Asset1, c.Maven2Asset2, c.Maven2Asset3)
+			//
+			mp, err := maven(path, skipErrors)
+			if err != nil {
+				return err
+			}
+			c.Maven2ArtifactID = &mp.artifact
+			c.Maven2Version = &mp.version
+
+			// Match "/some/group/" and capture the group name.
+			regex := `^` + localDiskRepoHome + `/([\w+\/]+)/` + mp.artifact
+			re := regexp.MustCompile(regex)
+			groupID := ""
+
+			// Extract the group name from the path.
+			match := re.FindStringSubmatch(path)
+			if len(match) >= 2 {
+				groupID = match[1]
+				groupID = strings.ReplaceAll(groupID, `/`, `.`)
+			} else {
+				return fmt.Errorf("groupID should not be empty, path: '%s' and regex: '%s'", path, regex)
+			}
+			c.Maven2GroupID = &groupID
+			generatePOM := true
+			c.Maven2GeneratePom = &generatePOM
+
+			maven2Asset1 := "empty"
+			maven2Asset2 := "empty"
+			maven2Asset3 := "empty"
+			maven2Asset4 := "empty"
+			maven2Asset5 := "empty"
+			maven2Asset6 := "empty"
+			maven2Asset7 := "empty"
+
+			if c.Maven2Asset1 != nil {
+				maven2Asset1 = c.Maven2Asset1.Name()
+			}
+			if c.Maven2Asset2 != nil {
+				maven2Asset2 = c.Maven2Asset2.Name()
+			}
+			if c.Maven2Asset3 != nil {
+				maven2Asset3 = c.Maven2Asset3.Name()
+			}
+			if c.Maven2Asset4 != nil {
+				maven2Asset4 = c.Maven2Asset4.Name()
+			}
+			if c.Maven2Asset5 != nil {
+				maven2Asset5 = c.Maven2Asset5.Name()
+			}
+			if c.Maven2Asset6 != nil {
+				maven2Asset6 = c.Maven2Asset6.Name()
+			}
+			if c.Maven2Asset7 != nil {
+				maven2Asset7 = c.Maven2Asset7.Name()
+			}
+
+			log.WithFields(log.Fields{
+				"1": maven2Asset1,
+				"2": maven2Asset2,
+				"3": maven2Asset3,
+				"4": maven2Asset4,
+				"5": maven2Asset5,
+				"6": maven2Asset6,
+				"7": maven2Asset7,
+			}).Debug("Maven2 asset upload")
 		}
+
+		checkedMavenFolders = append(checkedMavenFolders, dirPath)
+		checkedMavenFolders = lo.Uniq(checkedMavenFolders)
 	case "npm":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
@@ -254,7 +550,7 @@ func UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskR
 		return nil
 	}
 
-	files := []*os.File{f, f2, f3}
+	files := []*os.File{f, af.f2, af.f3, af.f4, af.f5, af.f6, af.f2, af.f7}
 	if err := upload(c, client, path, files); err != nil {
 		return err
 	}
@@ -293,6 +589,8 @@ func upload(c components.UploadComponentParams, client *client.Nexus3, path stri
 }
 
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
+	var wg sync.WaitGroup
+
 	c := n.Nexus3.Client()
 	if err := filepath.WalkDir(localDiskRepoHome,
 		func(path string, info fs.DirEntry, err error) error {
@@ -305,25 +603,36 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				return err
 			}
 			if !info.IsDir() && !filesToBeSkipped {
-				if err := UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat); err != nil {
-					uploaded, errRegex := regexp.MatchString("status 400", err.Error())
-					if errRegex != nil {
-						panic(err)
-					}
-					if uploaded {
-						log.Debugf("artifact: '%s' has already been uploaded", path)
-						return nil
-					}
+				wg.Add(1)
+				go func(path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) {
+					defer wg.Done()
 
-					log.Errorf("could not upload artifact: '%s', err: '%v'", path, err)
-				} else {
-					artifacts.PrintType(repoFormat)
-				}
+					if err := n.UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors); err != nil {
+						uploaded, errRegex := regexp.MatchString("status 400", err.Error())
+						if errRegex != nil {
+							panic(err)
+						}
+						if uploaded {
+							log.Debugf("artifact: '%s' has already been uploaded", path)
+							return
+						}
+
+						errString := fmt.Errorf("could not upload artifact: '%s', err: '%w'", path, err)
+						if n.SkipErrors {
+							log.Error(errString)
+						} else {
+							panic(errString)
+						}
+					} else {
+						artifacts.PrintType(repoFormat)
+					}
+				}(path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors)
 			}
 			return nil
 		}); err != nil {
 		return err
 	}
+	wg.Wait()
 
 	return nil
 }
@@ -351,7 +660,7 @@ func (n *Nexus3) maven2SnapshotsUpload(localDiskRepo string) {
 		return
 	}
 	vp := resp.Payload.Maven.VersionPolicy
-	log.Tracef("VersionPolicy: ''%s", vp)
+	log.Tracef("VersionPolicy: '%s'", vp)
 
 	if strings.EqualFold(vp, "snapshot") {
 		s := snapshot.Nexus3{DownloadDirName: n.DownloadDirName, FQDN: n.FQDN, Pass: n.Pass, RepoFormat: "maven2", RepoName: localDiskRepo, SkipErrors: n.SkipErrors, User: n.User}

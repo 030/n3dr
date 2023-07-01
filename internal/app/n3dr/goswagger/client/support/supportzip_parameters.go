@@ -54,10 +54,12 @@ func NewSupportzipParamsWithHTTPClient(client *http.Client) *SupportzipParams {
 	}
 }
 
-/* SupportzipParams contains all the parameters to send to the API endpoint
-   for the supportzip operation.
+/*
+SupportzipParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the supportzip operation.
+
+	Typically these are written to a http.Request.
 */
 type SupportzipParams struct {
 

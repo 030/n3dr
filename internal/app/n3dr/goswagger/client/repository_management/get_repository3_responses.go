@@ -39,7 +39,8 @@ func NewGetRepository3OK() *GetRepository3OK {
 	return &GetRepository3OK{}
 }
 
-/* GetRepository3OK describes a response with status code 200, with default header values.
+/*
+GetRepository3OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository3OK struct {
 	Payload *models.MavenProxyAPIRepository
 }
 
+// IsSuccess returns true when this get repository3 o k response has a 2xx status code
+func (o *GetRepository3OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository3 o k response has a 3xx status code
+func (o *GetRepository3OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository3 o k response has a 4xx status code
+func (o *GetRepository3OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository3 o k response has a 5xx status code
+func (o *GetRepository3OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository3 o k response a status code equal to that given
+func (o *GetRepository3OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository3 o k response
+func (o *GetRepository3OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository3OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/maven/proxy/{repositoryName}][%d] getRepository3OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository3OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/maven/proxy/{repositoryName}][%d] getRepository3OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository3OK) GetPayload() *models.MavenProxyAPIRepository {
 	return o.Payload
 }

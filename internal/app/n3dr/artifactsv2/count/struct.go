@@ -15,5 +15,6 @@ type csvWriter struct {
 type Nexus3 struct {
 	*connection.Nexus3
 	CsvFile string
+	Sort    bool
 	writer  *csv.Writer
 }

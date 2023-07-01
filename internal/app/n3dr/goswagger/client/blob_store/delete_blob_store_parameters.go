@@ -52,10 +52,12 @@ func NewDeleteBlobStoreParamsWithHTTPClient(client *http.Client) *DeleteBlobStor
 	}
 }
 
-/* DeleteBlobStoreParams contains all the parameters to send to the API endpoint
-   for the delete blob store operation.
+/*
+DeleteBlobStoreParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete blob store operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteBlobStoreParams struct {
 

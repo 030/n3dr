@@ -40,7 +40,7 @@ type ClientService interface {
 }
 
 /*
-  GetSystemStatusChecks healths check endpoint that returns the results of the system status checks
+GetSystemStatusChecks healths check endpoint that returns the results of the system status checks
 */
 func (a *Client) GetSystemStatusChecks(params *GetSystemStatusChecksParams, opts ...ClientOption) (*GetSystemStatusChecksOK, error) {
 	// TODO: Validate the params before sending
@@ -78,7 +78,7 @@ func (a *Client) GetSystemStatusChecks(params *GetSystemStatusChecksParams, opts
 }
 
 /*
-  IsAvailable healths check endpoint that validates server can respond to read requests
+IsAvailable healths check endpoint that validates server can respond to read requests
 */
 func (a *Client) IsAvailable(params *IsAvailableParams, opts ...ClientOption) (*IsAvailableOK, error) {
 	// TODO: Validate the params before sending
@@ -116,7 +116,7 @@ func (a *Client) IsAvailable(params *IsAvailableParams, opts ...ClientOption) (*
 }
 
 /*
-  IsWritable healths check endpoint that validates server can respond to read and write requests
+IsWritable healths check endpoint that validates server can respond to read and write requests
 */
 func (a *Client) IsWritable(params *IsWritableParams, opts ...ClientOption) (*IsWritableOK, error) {
 	// TODO: Validate the params before sending

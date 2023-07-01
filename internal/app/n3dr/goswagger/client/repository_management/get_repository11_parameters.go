@@ -52,10 +52,12 @@ func NewGetRepository11ParamsWithHTTPClient(client *http.Client) *GetRepository1
 	}
 }
 
-/* GetRepository11Params contains all the parameters to send to the API endpoint
-   for the get repository 11 operation.
+/*
+GetRepository11Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get repository 11 operation.
+
+	Typically these are written to a http.Request.
 */
 type GetRepository11Params struct {
 

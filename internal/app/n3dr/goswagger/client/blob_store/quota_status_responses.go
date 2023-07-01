@@ -39,7 +39,8 @@ func NewQuotaStatusOK() *QuotaStatusOK {
 	return &QuotaStatusOK{}
 }
 
-/* QuotaStatusOK describes a response with status code 200, with default header values.
+/*
+QuotaStatusOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type QuotaStatusOK struct {
 	Payload *models.BlobStoreQuotaResultXO
 }
 
+// IsSuccess returns true when this quota status o k response has a 2xx status code
+func (o *QuotaStatusOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this quota status o k response has a 3xx status code
+func (o *QuotaStatusOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this quota status o k response has a 4xx status code
+func (o *QuotaStatusOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this quota status o k response has a 5xx status code
+func (o *QuotaStatusOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this quota status o k response a status code equal to that given
+func (o *QuotaStatusOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the quota status o k response
+func (o *QuotaStatusOK) Code() int {
+	return 200
+}
+
 func (o *QuotaStatusOK) Error() string {
 	return fmt.Sprintf("[GET /v1/blobstores/{name}/quota-status][%d] quotaStatusOK  %+v", 200, o.Payload)
 }
+
+func (o *QuotaStatusOK) String() string {
+	return fmt.Sprintf("[GET /v1/blobstores/{name}/quota-status][%d] quotaStatusOK  %+v", 200, o.Payload)
+}
+
 func (o *QuotaStatusOK) GetPayload() *models.BlobStoreQuotaResultXO {
 	return o.Payload
 }

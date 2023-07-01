@@ -54,10 +54,12 @@ func NewCreateRoutingRuleParamsWithHTTPClient(client *http.Client) *CreateRoutin
 	}
 }
 
-/* CreateRoutingRuleParams contains all the parameters to send to the API endpoint
-   for the create routing rule operation.
+/*
+CreateRoutingRuleParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create routing rule operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateRoutingRuleParams struct {
 

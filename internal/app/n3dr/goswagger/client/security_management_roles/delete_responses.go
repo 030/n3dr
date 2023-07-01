@@ -42,14 +42,49 @@ func NewDeleteForbidden() *DeleteForbidden {
 	return &DeleteForbidden{}
 }
 
-/* DeleteForbidden describes a response with status code 403, with default header values.
+/*
+DeleteForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to delete role
 */
 type DeleteForbidden struct {
 }
 
+// IsSuccess returns true when this delete forbidden response has a 2xx status code
+func (o *DeleteForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete forbidden response has a 3xx status code
+func (o *DeleteForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete forbidden response has a 4xx status code
+func (o *DeleteForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete forbidden response has a 5xx status code
+func (o *DeleteForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete forbidden response a status code equal to that given
+func (o *DeleteForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete forbidden response
+func (o *DeleteForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/roles/{id}][%d] deleteForbidden ", 403)
+}
+
+func (o *DeleteForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/roles/{id}][%d] deleteForbidden ", 403)
 }
 
@@ -63,14 +98,49 @@ func NewDeleteNotFound() *DeleteNotFound {
 	return &DeleteNotFound{}
 }
 
-/* DeleteNotFound describes a response with status code 404, with default header values.
+/*
+DeleteNotFound describes a response with status code 404, with default header values.
 
 Role not found
 */
 type DeleteNotFound struct {
 }
 
+// IsSuccess returns true when this delete not found response has a 2xx status code
+func (o *DeleteNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete not found response has a 3xx status code
+func (o *DeleteNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete not found response has a 4xx status code
+func (o *DeleteNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete not found response has a 5xx status code
+func (o *DeleteNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete not found response a status code equal to that given
+func (o *DeleteNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete not found response
+func (o *DeleteNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/roles/{id}][%d] deleteNotFound ", 404)
+}
+
+func (o *DeleteNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/roles/{id}][%d] deleteNotFound ", 404)
 }
 

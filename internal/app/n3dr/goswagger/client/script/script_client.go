@@ -46,7 +46,7 @@ type ClientService interface {
 }
 
 /*
-  Add adds a new script
+Add adds a new script
 */
 func (a *Client) Add(params *AddParams, opts ...ClientOption) (*AddNoContent, error) {
 	// TODO: Validate the params before sending
@@ -84,7 +84,7 @@ func (a *Client) Add(params *AddParams, opts ...ClientOption) (*AddNoContent, er
 }
 
 /*
-  Browse lists all stored scripts
+Browse lists all stored scripts
 */
 func (a *Client) Browse(params *BrowseParams, opts ...ClientOption) (*BrowseOK, error) {
 	// TODO: Validate the params before sending
@@ -122,7 +122,7 @@ func (a *Client) Browse(params *BrowseParams, opts ...ClientOption) (*BrowseOK, 
 }
 
 /*
-  Delete1 deletes stored script by name
+Delete1 deletes stored script by name
 */
 func (a *Client) Delete1(params *Delete1Params, opts ...ClientOption) (*Delete1NoContent, error) {
 	// TODO: Validate the params before sending
@@ -160,7 +160,7 @@ func (a *Client) Delete1(params *Delete1Params, opts ...ClientOption) (*Delete1N
 }
 
 /*
-  Edit updates stored script by name
+Edit updates stored script by name
 */
 func (a *Client) Edit(params *EditParams, opts ...ClientOption) (*EditNoContent, error) {
 	// TODO: Validate the params before sending
@@ -198,7 +198,7 @@ func (a *Client) Edit(params *EditParams, opts ...ClientOption) (*EditNoContent,
 }
 
 /*
-  Read1 reads stored script by name
+Read1 reads stored script by name
 */
 func (a *Client) Read1(params *Read1Params, opts ...ClientOption) (*Read1OK, error) {
 	// TODO: Validate the params before sending
@@ -236,7 +236,7 @@ func (a *Client) Read1(params *Read1Params, opts ...ClientOption) (*Read1OK, err
 }
 
 /*
-  Run1 runs stored script by name
+Run1 runs stored script by name
 */
 func (a *Client) Run1(params *Run1Params, opts ...ClientOption) (*Run1OK, error) {
 	// TODO: Validate the params before sending

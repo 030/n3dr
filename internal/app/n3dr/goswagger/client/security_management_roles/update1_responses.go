@@ -42,14 +42,49 @@ func NewUpdate1Forbidden() *Update1Forbidden {
 	return &Update1Forbidden{}
 }
 
-/* Update1Forbidden describes a response with status code 403, with default header values.
+/*
+Update1Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to update role
 */
 type Update1Forbidden struct {
 }
 
+// IsSuccess returns true when this update1 forbidden response has a 2xx status code
+func (o *Update1Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update1 forbidden response has a 3xx status code
+func (o *Update1Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update1 forbidden response has a 4xx status code
+func (o *Update1Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update1 forbidden response has a 5xx status code
+func (o *Update1Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update1 forbidden response a status code equal to that given
+func (o *Update1Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update1 forbidden response
+func (o *Update1Forbidden) Code() int {
+	return 403
+}
+
 func (o *Update1Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/roles/{id}][%d] update1Forbidden ", 403)
+}
+
+func (o *Update1Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/security/roles/{id}][%d] update1Forbidden ", 403)
 }
 
@@ -63,14 +98,49 @@ func NewUpdate1NotFound() *Update1NotFound {
 	return &Update1NotFound{}
 }
 
-/* Update1NotFound describes a response with status code 404, with default header values.
+/*
+Update1NotFound describes a response with status code 404, with default header values.
 
 Role not found
 */
 type Update1NotFound struct {
 }
 
+// IsSuccess returns true when this update1 not found response has a 2xx status code
+func (o *Update1NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update1 not found response has a 3xx status code
+func (o *Update1NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update1 not found response has a 4xx status code
+func (o *Update1NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update1 not found response has a 5xx status code
+func (o *Update1NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update1 not found response a status code equal to that given
+func (o *Update1NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update1 not found response
+func (o *Update1NotFound) Code() int {
+	return 404
+}
+
 func (o *Update1NotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/security/roles/{id}][%d] update1NotFound ", 404)
+}
+
+func (o *Update1NotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/security/roles/{id}][%d] update1NotFound ", 404)
 }
 

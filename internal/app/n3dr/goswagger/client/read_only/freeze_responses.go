@@ -48,14 +48,49 @@ func NewFreezeNoContent() *FreezeNoContent {
 	return &FreezeNoContent{}
 }
 
-/* FreezeNoContent describes a response with status code 204, with default header values.
+/*
+FreezeNoContent describes a response with status code 204, with default header values.
 
 System is now read-only
 */
 type FreezeNoContent struct {
 }
 
+// IsSuccess returns true when this freeze no content response has a 2xx status code
+func (o *FreezeNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this freeze no content response has a 3xx status code
+func (o *FreezeNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this freeze no content response has a 4xx status code
+func (o *FreezeNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this freeze no content response has a 5xx status code
+func (o *FreezeNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this freeze no content response a status code equal to that given
+func (o *FreezeNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the freeze no content response
+func (o *FreezeNoContent) Code() int {
+	return 204
+}
+
 func (o *FreezeNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/freeze][%d] freezeNoContent ", 204)
+}
+
+func (o *FreezeNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/freeze][%d] freezeNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewFreezeForbidden() *FreezeForbidden {
 	return &FreezeForbidden{}
 }
 
-/* FreezeForbidden describes a response with status code 403, with default header values.
+/*
+FreezeForbidden describes a response with status code 403, with default header values.
 
 Authentication required
 */
 type FreezeForbidden struct {
 }
 
+// IsSuccess returns true when this freeze forbidden response has a 2xx status code
+func (o *FreezeForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this freeze forbidden response has a 3xx status code
+func (o *FreezeForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this freeze forbidden response has a 4xx status code
+func (o *FreezeForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this freeze forbidden response has a 5xx status code
+func (o *FreezeForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this freeze forbidden response a status code equal to that given
+func (o *FreezeForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the freeze forbidden response
+func (o *FreezeForbidden) Code() int {
+	return 403
+}
+
 func (o *FreezeForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/freeze][%d] freezeForbidden ", 403)
+}
+
+func (o *FreezeForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/freeze][%d] freezeForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewFreezeNotFound() *FreezeNotFound {
 	return &FreezeNotFound{}
 }
 
-/* FreezeNotFound describes a response with status code 404, with default header values.
+/*
+FreezeNotFound describes a response with status code 404, with default header values.
 
 No change to read-only state
 */
 type FreezeNotFound struct {
 }
 
+// IsSuccess returns true when this freeze not found response has a 2xx status code
+func (o *FreezeNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this freeze not found response has a 3xx status code
+func (o *FreezeNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this freeze not found response has a 4xx status code
+func (o *FreezeNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this freeze not found response has a 5xx status code
+func (o *FreezeNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this freeze not found response a status code equal to that given
+func (o *FreezeNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the freeze not found response
+func (o *FreezeNotFound) Code() int {
+	return 404
+}
+
 func (o *FreezeNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/freeze][%d] freezeNotFound ", 404)
+}
+
+func (o *FreezeNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/freeze][%d] freezeNotFound ", 404)
 }
 

@@ -6,7 +6,7 @@ require (
 	github.com/030/logging v0.1.2
 	github.com/030/mij v1.0.2
 	github.com/030/p2iwd v1.0.3
-	github.com/aws/aws-sdk-go v1.44.289
+	github.com/aws/aws-sdk-go v1.44.292
 	github.com/go-openapi/errors v0.20.4
 	github.com/go-openapi/runtime v0.26.0
 	github.com/go-openapi/strfmt v0.21.7
@@ -15,10 +15,12 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.4
 	github.com/mholt/archiver v3.1.1+incompatible
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/samber/lo v1.38.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 	github.com/stretchr/testify v1.8.3
+	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
 )
 
 require (

@@ -52,10 +52,12 @@ func NewGetContentSelectorsParamsWithHTTPClient(client *http.Client) *GetContent
 	}
 }
 
-/* GetContentSelectorsParams contains all the parameters to send to the API endpoint
-   for the get content selectors operation.
+/*
+GetContentSelectorsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get content selectors operation.
+
+	Typically these are written to a http.Request.
 */
 type GetContentSelectorsParams struct {
 	timeout    time.Duration

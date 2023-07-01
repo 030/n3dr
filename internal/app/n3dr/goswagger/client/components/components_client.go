@@ -42,7 +42,7 @@ type ClientService interface {
 }
 
 /*
-  DeleteComponent deletes a single component
+DeleteComponent deletes a single component
 */
 func (a *Client) DeleteComponent(params *DeleteComponentParams, opts ...ClientOption) (*DeleteComponentNoContent, error) {
 	// TODO: Validate the params before sending
@@ -80,7 +80,7 @@ func (a *Client) DeleteComponent(params *DeleteComponentParams, opts ...ClientOp
 }
 
 /*
-  GetComponentByID gets a single component
+GetComponentByID gets a single component
 */
 func (a *Client) GetComponentByID(params *GetComponentByIDParams, opts ...ClientOption) (*GetComponentByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -118,7 +118,7 @@ func (a *Client) GetComponentByID(params *GetComponentByIDParams, opts ...Client
 }
 
 /*
-  GetComponents lists components
+GetComponents lists components
 */
 func (a *Client) GetComponents(params *GetComponentsParams, opts ...ClientOption) (*GetComponentsOK, error) {
 	// TODO: Validate the params before sending
@@ -156,7 +156,7 @@ func (a *Client) GetComponents(params *GetComponentsParams, opts ...ClientOption
 }
 
 /*
-  UploadComponent uploads a single component
+UploadComponent uploads a single component
 */
 func (a *Client) UploadComponent(params *UploadComponentParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending

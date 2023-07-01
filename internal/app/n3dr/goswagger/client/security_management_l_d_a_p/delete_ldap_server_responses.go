@@ -54,14 +54,49 @@ func NewDeleteLdapServerNoContent() *DeleteLdapServerNoContent {
 	return &DeleteLdapServerNoContent{}
 }
 
-/* DeleteLdapServerNoContent describes a response with status code 204, with default header values.
+/*
+DeleteLdapServerNoContent describes a response with status code 204, with default header values.
 
 LDAP server deleted
 */
 type DeleteLdapServerNoContent struct {
 }
 
+// IsSuccess returns true when this delete ldap server no content response has a 2xx status code
+func (o *DeleteLdapServerNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete ldap server no content response has a 3xx status code
+func (o *DeleteLdapServerNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete ldap server no content response has a 4xx status code
+func (o *DeleteLdapServerNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete ldap server no content response has a 5xx status code
+func (o *DeleteLdapServerNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete ldap server no content response a status code equal to that given
+func (o *DeleteLdapServerNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete ldap server no content response
+func (o *DeleteLdapServerNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteLdapServerNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerNoContent ", 204)
+}
+
+func (o *DeleteLdapServerNoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewDeleteLdapServerUnauthorized() *DeleteLdapServerUnauthorized {
 	return &DeleteLdapServerUnauthorized{}
 }
 
-/* DeleteLdapServerUnauthorized describes a response with status code 401, with default header values.
+/*
+DeleteLdapServerUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type DeleteLdapServerUnauthorized struct {
 }
 
+// IsSuccess returns true when this delete ldap server unauthorized response has a 2xx status code
+func (o *DeleteLdapServerUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete ldap server unauthorized response has a 3xx status code
+func (o *DeleteLdapServerUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete ldap server unauthorized response has a 4xx status code
+func (o *DeleteLdapServerUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete ldap server unauthorized response has a 5xx status code
+func (o *DeleteLdapServerUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete ldap server unauthorized response a status code equal to that given
+func (o *DeleteLdapServerUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the delete ldap server unauthorized response
+func (o *DeleteLdapServerUnauthorized) Code() int {
+	return 401
+}
+
 func (o *DeleteLdapServerUnauthorized) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerUnauthorized ", 401)
+}
+
+func (o *DeleteLdapServerUnauthorized) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerUnauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewDeleteLdapServerForbidden() *DeleteLdapServerForbidden {
 	return &DeleteLdapServerForbidden{}
 }
 
-/* DeleteLdapServerForbidden describes a response with status code 403, with default header values.
+/*
+DeleteLdapServerForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type DeleteLdapServerForbidden struct {
 }
 
+// IsSuccess returns true when this delete ldap server forbidden response has a 2xx status code
+func (o *DeleteLdapServerForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete ldap server forbidden response has a 3xx status code
+func (o *DeleteLdapServerForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete ldap server forbidden response has a 4xx status code
+func (o *DeleteLdapServerForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete ldap server forbidden response has a 5xx status code
+func (o *DeleteLdapServerForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete ldap server forbidden response a status code equal to that given
+func (o *DeleteLdapServerForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete ldap server forbidden response
+func (o *DeleteLdapServerForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteLdapServerForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerForbidden ", 403)
+}
+
+func (o *DeleteLdapServerForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerForbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewDeleteLdapServerNotFound() *DeleteLdapServerNotFound {
 	return &DeleteLdapServerNotFound{}
 }
 
-/* DeleteLdapServerNotFound describes a response with status code 404, with default header values.
+/*
+DeleteLdapServerNotFound describes a response with status code 404, with default header values.
 
 LDAP server not found
 */
 type DeleteLdapServerNotFound struct {
 }
 
+// IsSuccess returns true when this delete ldap server not found response has a 2xx status code
+func (o *DeleteLdapServerNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete ldap server not found response has a 3xx status code
+func (o *DeleteLdapServerNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete ldap server not found response has a 4xx status code
+func (o *DeleteLdapServerNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete ldap server not found response has a 5xx status code
+func (o *DeleteLdapServerNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete ldap server not found response a status code equal to that given
+func (o *DeleteLdapServerNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete ldap server not found response
+func (o *DeleteLdapServerNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteLdapServerNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerNotFound ", 404)
+}
+
+func (o *DeleteLdapServerNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/ldap/{name}][%d] deleteLdapServerNotFound ", 404)
 }
 

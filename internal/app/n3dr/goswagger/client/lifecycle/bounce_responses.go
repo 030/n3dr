@@ -36,12 +36,38 @@ func NewBounceDefault(code int) *BounceDefault {
 	}
 }
 
-/* BounceDefault describes a response with status code -1, with default header values.
+/*
+BounceDefault describes a response with status code -1, with default header values.
 
 successful operation
 */
 type BounceDefault struct {
 	_statusCode int
+}
+
+// IsSuccess returns true when this bounce default response has a 2xx status code
+func (o *BounceDefault) IsSuccess() bool {
+	return o._statusCode/100 == 2
+}
+
+// IsRedirect returns true when this bounce default response has a 3xx status code
+func (o *BounceDefault) IsRedirect() bool {
+	return o._statusCode/100 == 3
+}
+
+// IsClientError returns true when this bounce default response has a 4xx status code
+func (o *BounceDefault) IsClientError() bool {
+	return o._statusCode/100 == 4
+}
+
+// IsServerError returns true when this bounce default response has a 5xx status code
+func (o *BounceDefault) IsServerError() bool {
+	return o._statusCode/100 == 5
+}
+
+// IsCode returns true when this bounce default response a status code equal to that given
+func (o *BounceDefault) IsCode(code int) bool {
+	return o._statusCode == code
 }
 
 // Code gets the status code for the bounce default response
@@ -50,6 +76,10 @@ func (o *BounceDefault) Code() int {
 }
 
 func (o *BounceDefault) Error() string {
+	return fmt.Sprintf("[PUT /v1/lifecycle/bounce][%d] bounce default ", o._statusCode)
+}
+
+func (o *BounceDefault) String() string {
 	return fmt.Sprintf("[PUT /v1/lifecycle/bounce][%d] bounce default ", o._statusCode)
 }
 

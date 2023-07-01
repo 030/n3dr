@@ -36,14 +36,49 @@ func NewVerifyConnectionOK() *VerifyConnectionOK {
 	return &VerifyConnectionOK{}
 }
 
-/* VerifyConnectionOK describes a response with status code 200, with default header values.
+/*
+VerifyConnectionOK describes a response with status code 200, with default header values.
 
 Connection verification complete, check response body for result
 */
 type VerifyConnectionOK struct {
 }
 
+// IsSuccess returns true when this verify connection o k response has a 2xx status code
+func (o *VerifyConnectionOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this verify connection o k response has a 3xx status code
+func (o *VerifyConnectionOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this verify connection o k response has a 4xx status code
+func (o *VerifyConnectionOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this verify connection o k response has a 5xx status code
+func (o *VerifyConnectionOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this verify connection o k response a status code equal to that given
+func (o *VerifyConnectionOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the verify connection o k response
+func (o *VerifyConnectionOK) Code() int {
+	return 200
+}
+
 func (o *VerifyConnectionOK) Error() string {
+	return fmt.Sprintf("[POST /v1/iq/verify-connection][%d] verifyConnectionOK ", 200)
+}
+
+func (o *VerifyConnectionOK) String() string {
 	return fmt.Sprintf("[POST /v1/iq/verify-connection][%d] verifyConnectionOK ", 200)
 }
 

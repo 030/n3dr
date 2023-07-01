@@ -44,7 +44,7 @@ type ClientService interface {
 }
 
 /*
-  DisableIq disables i q server
+DisableIq disables i q server
 */
 func (a *Client) DisableIq(params *DisableIqParams, opts ...ClientOption) (*DisableIqNoContent, error) {
 	// TODO: Validate the params before sending
@@ -82,7 +82,7 @@ func (a *Client) DisableIq(params *DisableIqParams, opts ...ClientOption) (*Disa
 }
 
 /*
-  EnableIq enables i q server
+EnableIq enables i q server
 */
 func (a *Client) EnableIq(params *EnableIqParams, opts ...ClientOption) (*EnableIqNoContent, error) {
 	// TODO: Validate the params before sending
@@ -120,7 +120,7 @@ func (a *Client) EnableIq(params *EnableIqParams, opts ...ClientOption) (*Enable
 }
 
 /*
-  GetConfiguration gets i q server configuration
+GetConfiguration gets i q server configuration
 */
 func (a *Client) GetConfiguration(params *GetConfigurationParams, opts ...ClientOption) (*GetConfigurationOK, error) {
 	// TODO: Validate the params before sending
@@ -158,7 +158,7 @@ func (a *Client) GetConfiguration(params *GetConfigurationParams, opts ...Client
 }
 
 /*
-  UpdateConfiguration updates i q server configuration
+UpdateConfiguration updates i q server configuration
 */
 func (a *Client) UpdateConfiguration(params *UpdateConfigurationParams, opts ...ClientOption) (*UpdateConfigurationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -196,7 +196,7 @@ func (a *Client) UpdateConfiguration(params *UpdateConfigurationParams, opts ...
 }
 
 /*
-  VerifyConnection verifies i q server connection
+VerifyConnection verifies i q server connection
 */
 func (a *Client) VerifyConnection(params *VerifyConnectionParams, opts ...ClientOption) (*VerifyConnectionOK, error) {
 	// TODO: Validate the params before sending

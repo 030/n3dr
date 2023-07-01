@@ -52,10 +52,12 @@ func NewRun1ParamsWithHTTPClient(client *http.Client) *Run1Params {
 	}
 }
 
-/* Run1Params contains all the parameters to send to the API endpoint
-   for the run 1 operation.
+/*
+Run1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the run 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type Run1Params struct {
 

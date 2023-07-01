@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	configRepoDockerPortSecure, configRepoDelete, snapshot               bool
-	configRepoDockerPort                                                 int32
-	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL string
+	configRepoDockerPortSecure, configRepoDelete, snapshot, strictContentTypeValidation bool
+	configRepoDockerPort                                                                int32
+	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL                string
 )
 
 // configRepositoryCmd represents the configRepository command.
@@ -29,6 +29,9 @@ Examples:
   # Create a Maven2 repository:
   n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType maven2
 
+  # Create a Maven2 repository without strictContentTypeValidation:
+  n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType maven2 --strictContentTypeValidation=false
+
   # Create a Maven2 snapshot repository:
   n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType maven2 --snapshot
 
@@ -39,7 +42,7 @@ Examples:
   n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-rubygems --configRepoType gem
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, StrictContentTypeValidation: strictContentTypeValidation, User: n3drUser}
 		r := repository.Repository{Nexus3: n}
 
 		if configRepoDelete {
@@ -110,7 +113,7 @@ Examples:
 				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
 			}
 		default:
-			log.Fatalf("configRepoType should not be empty, but: 'apt', 'docker', 'maven', 'raw' or 'yum' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
+			log.Fatalf("configRepoType should not be empty, but: 'apt', 'docker', 'maven2', 'raw' or 'yum' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
 		}
 	},
 }
@@ -130,4 +133,5 @@ func init() {
 	configRepositoryCmd.Flags().StringVar(&configRepoProxyURL, "configRepoProxyURL", "", "The proxy repository URL, e.g.: 'http://nl.archive.ubuntu.com/ubuntu/'")
 	configRepositoryCmd.Flags().Int32Var(&configRepoDockerPort, "configRepoDockerPort", 8082, "The docker connector port, e.g. 8082")
 	configRepositoryCmd.Flags().BoolVar(&configRepoDockerPortSecure, "configRepoDockerPortSecure", false, "Whether the docker connector port should be secure")
+	configRepositoryCmd.Flags().BoolVar(&strictContentTypeValidation, "strictContentTypeValidation", true, "whether strictContentTypeValidation should be enabled")
 }

@@ -39,7 +39,8 @@ func NewGetRepository4OK() *GetRepository4OK {
 	return &GetRepository4OK{}
 }
 
-/* GetRepository4OK describes a response with status code 200, with default header values.
+/*
+GetRepository4OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository4OK struct {
 	Payload *models.AptHostedAPIRepository
 }
 
+// IsSuccess returns true when this get repository4 o k response has a 2xx status code
+func (o *GetRepository4OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository4 o k response has a 3xx status code
+func (o *GetRepository4OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository4 o k response has a 4xx status code
+func (o *GetRepository4OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository4 o k response has a 5xx status code
+func (o *GetRepository4OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository4 o k response a status code equal to that given
+func (o *GetRepository4OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository4 o k response
+func (o *GetRepository4OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository4OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/apt/hosted/{repositoryName}][%d] getRepository4OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository4OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/apt/hosted/{repositoryName}][%d] getRepository4OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository4OK) GetPayload() *models.AptHostedAPIRepository {
 	return o.Payload
 }

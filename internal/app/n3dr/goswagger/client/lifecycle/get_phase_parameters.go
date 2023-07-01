@@ -52,10 +52,12 @@ func NewGetPhaseParamsWithHTTPClient(client *http.Client) *GetPhaseParams {
 	}
 }
 
-/* GetPhaseParams contains all the parameters to send to the API endpoint
-   for the get phase operation.
+/*
+GetPhaseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get phase operation.
+
+	Typically these are written to a http.Request.
 */
 type GetPhaseParams struct {
 	timeout    time.Duration

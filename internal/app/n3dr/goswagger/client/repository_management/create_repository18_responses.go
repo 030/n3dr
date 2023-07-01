@@ -48,14 +48,49 @@ func NewCreateRepository18Created() *CreateRepository18Created {
 	return &CreateRepository18Created{}
 }
 
-/* CreateRepository18Created describes a response with status code 201, with default header values.
+/*
+CreateRepository18Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository18Created struct {
 }
 
+// IsSuccess returns true when this create repository18 created response has a 2xx status code
+func (o *CreateRepository18Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository18 created response has a 3xx status code
+func (o *CreateRepository18Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository18 created response has a 4xx status code
+func (o *CreateRepository18Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository18 created response has a 5xx status code
+func (o *CreateRepository18Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository18 created response a status code equal to that given
+func (o *CreateRepository18Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository18 created response
+func (o *CreateRepository18Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository18Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/docker/hosted][%d] createRepository18Created ", 201)
+}
+
+func (o *CreateRepository18Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/docker/hosted][%d] createRepository18Created ", 201)
 }
 
@@ -69,14 +104,49 @@ func NewCreateRepository18Unauthorized() *CreateRepository18Unauthorized {
 	return &CreateRepository18Unauthorized{}
 }
 
-/* CreateRepository18Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository18Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository18Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository18 unauthorized response has a 2xx status code
+func (o *CreateRepository18Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository18 unauthorized response has a 3xx status code
+func (o *CreateRepository18Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository18 unauthorized response has a 4xx status code
+func (o *CreateRepository18Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository18 unauthorized response has a 5xx status code
+func (o *CreateRepository18Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository18 unauthorized response a status code equal to that given
+func (o *CreateRepository18Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository18 unauthorized response
+func (o *CreateRepository18Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository18Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/docker/hosted][%d] createRepository18Unauthorized ", 401)
+}
+
+func (o *CreateRepository18Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/docker/hosted][%d] createRepository18Unauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewCreateRepository18Forbidden() *CreateRepository18Forbidden {
 	return &CreateRepository18Forbidden{}
 }
 
-/* CreateRepository18Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository18Forbidden describes a response with status code 403, with default header values.
 
 Repository not found
 */
 type CreateRepository18Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository18 forbidden response has a 2xx status code
+func (o *CreateRepository18Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository18 forbidden response has a 3xx status code
+func (o *CreateRepository18Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository18 forbidden response has a 4xx status code
+func (o *CreateRepository18Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository18 forbidden response has a 5xx status code
+func (o *CreateRepository18Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository18 forbidden response a status code equal to that given
+func (o *CreateRepository18Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository18 forbidden response
+func (o *CreateRepository18Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository18Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/docker/hosted][%d] createRepository18Forbidden ", 403)
+}
+
+func (o *CreateRepository18Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/docker/hosted][%d] createRepository18Forbidden ", 403)
 }
 

@@ -36,7 +36,7 @@ type ClientService interface {
 }
 
 /*
-  GetUserSources retrieves a list of the available user sources
+GetUserSources retrieves a list of the available user sources
 */
 func (a *Client) GetUserSources(params *GetUserSourcesParams, opts ...ClientOption) (*GetUserSourcesOK, error) {
 	// TODO: Validate the params before sending

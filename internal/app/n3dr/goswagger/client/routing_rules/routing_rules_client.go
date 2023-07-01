@@ -44,7 +44,7 @@ type ClientService interface {
 }
 
 /*
-  CreateRoutingRule creates a single routing rule
+CreateRoutingRule creates a single routing rule
 */
 func (a *Client) CreateRoutingRule(params *CreateRoutingRuleParams, opts ...ClientOption) (*CreateRoutingRuleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -82,7 +82,7 @@ func (a *Client) CreateRoutingRule(params *CreateRoutingRuleParams, opts ...Clie
 }
 
 /*
-  DeleteRoutingRule deletes a single routing rule
+DeleteRoutingRule deletes a single routing rule
 */
 func (a *Client) DeleteRoutingRule(params *DeleteRoutingRuleParams, opts ...ClientOption) (*DeleteRoutingRuleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -120,7 +120,7 @@ func (a *Client) DeleteRoutingRule(params *DeleteRoutingRuleParams, opts ...Clie
 }
 
 /*
-  GetRoutingRule gets a single routing rule
+GetRoutingRule gets a single routing rule
 */
 func (a *Client) GetRoutingRule(params *GetRoutingRuleParams, opts ...ClientOption) (*GetRoutingRuleOK, error) {
 	// TODO: Validate the params before sending
@@ -158,7 +158,7 @@ func (a *Client) GetRoutingRule(params *GetRoutingRuleParams, opts ...ClientOpti
 }
 
 /*
-  GetRoutingRules lists routing rules
+GetRoutingRules lists routing rules
 */
 func (a *Client) GetRoutingRules(params *GetRoutingRulesParams, opts ...ClientOption) (*GetRoutingRulesOK, error) {
 	// TODO: Validate the params before sending
@@ -196,7 +196,7 @@ func (a *Client) GetRoutingRules(params *GetRoutingRulesParams, opts ...ClientOp
 }
 
 /*
-  UpdateRoutingRule updates a single routing rule
+UpdateRoutingRule updates a single routing rule
 */
 func (a *Client) UpdateRoutingRule(params *UpdateRoutingRuleParams, opts ...ClientOption) (*UpdateRoutingRuleNoContent, error) {
 	// TODO: Validate the params before sending

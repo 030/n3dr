@@ -54,10 +54,12 @@ func NewUpdateBlobStore1ParamsWithHTTPClient(client *http.Client) *UpdateBlobSto
 	}
 }
 
-/* UpdateBlobStore1Params contains all the parameters to send to the API endpoint
-   for the update blob store 1 operation.
+/*
+UpdateBlobStore1Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update blob store 1 operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateBlobStore1Params struct {
 

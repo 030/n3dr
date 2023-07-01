@@ -39,7 +39,8 @@ func NewGet2OK() *Get2OK {
 	return &Get2OK{}
 }
 
-/* Get2OK describes a response with status code 200, with default header values.
+/*
+Get2OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type Get2OK struct {
 	Payload []*models.UploadDefinitionXO
 }
 
+// IsSuccess returns true when this get2 o k response has a 2xx status code
+func (o *Get2OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get2 o k response has a 3xx status code
+func (o *Get2OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get2 o k response has a 4xx status code
+func (o *Get2OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get2 o k response has a 5xx status code
+func (o *Get2OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get2 o k response a status code equal to that given
+func (o *Get2OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get2 o k response
+func (o *Get2OK) Code() int {
+	return 200
+}
+
 func (o *Get2OK) Error() string {
 	return fmt.Sprintf("[GET /v1/formats/upload-specs][%d] get2OK  %+v", 200, o.Payload)
 }
+
+func (o *Get2OK) String() string {
+	return fmt.Sprintf("[GET /v1/formats/upload-specs][%d] get2OK  %+v", 200, o.Payload)
+}
+
 func (o *Get2OK) GetPayload() []*models.UploadDefinitionXO {
 	return o.Payload
 }

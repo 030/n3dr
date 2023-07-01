@@ -52,10 +52,12 @@ func NewGetFileBlobStoreConfigurationParamsWithHTTPClient(client *http.Client) *
 	}
 }
 
-/* GetFileBlobStoreConfigurationParams contains all the parameters to send to the API endpoint
-   for the get file blob store configuration operation.
+/*
+GetFileBlobStoreConfigurationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get file blob store configuration operation.
+
+	Typically these are written to a http.Request.
 */
 type GetFileBlobStoreConfigurationParams struct {
 

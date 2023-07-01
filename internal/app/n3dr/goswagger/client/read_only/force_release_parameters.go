@@ -52,10 +52,12 @@ func NewForceReleaseParamsWithHTTPClient(client *http.Client) *ForceReleaseParam
 	}
 }
 
-/* ForceReleaseParams contains all the parameters to send to the API endpoint
-   for the force release operation.
+/*
+ForceReleaseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the force release operation.
+
+	Typically these are written to a http.Request.
 */
 type ForceReleaseParams struct {
 	timeout    time.Duration

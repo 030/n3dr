@@ -54,10 +54,12 @@ func NewCreateLdapServerParamsWithHTTPClient(client *http.Client) *CreateLdapSer
 	}
 }
 
-/* CreateLdapServerParams contains all the parameters to send to the API endpoint
-   for the create ldap server operation.
+/*
+CreateLdapServerParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create ldap server operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateLdapServerParams struct {
 

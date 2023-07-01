@@ -40,9 +40,9 @@ type ClientService interface {
 }
 
 /*
-  Bounce bounces lifecycle phase
+Bounce bounces lifecycle phase
 
-  Re-runs all phases from the given phase to the current phase
+Re-runs all phases from the given phase to the current phase
 */
 func (a *Client) Bounce(params *BounceParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -73,7 +73,7 @@ func (a *Client) Bounce(params *BounceParams, opts ...ClientOption) error {
 }
 
 /*
-  GetPhase gets current lifecycle phase
+GetPhase gets current lifecycle phase
 */
 func (a *Client) GetPhase(params *GetPhaseParams, opts ...ClientOption) (*GetPhaseOK, error) {
 	// TODO: Validate the params before sending
@@ -111,7 +111,7 @@ func (a *Client) GetPhase(params *GetPhaseParams, opts ...ClientOption) (*GetPha
 }
 
 /*
-  SetPhase moves to new lifecycle phase
+SetPhase moves to new lifecycle phase
 */
 func (a *Client) SetPhase(params *SetPhaseParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending

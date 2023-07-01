@@ -48,14 +48,49 @@ func NewReleaseNoContent() *ReleaseNoContent {
 	return &ReleaseNoContent{}
 }
 
-/* ReleaseNoContent describes a response with status code 204, with default header values.
+/*
+ReleaseNoContent describes a response with status code 204, with default header values.
 
 System is no longer read-only
 */
 type ReleaseNoContent struct {
 }
 
+// IsSuccess returns true when this release no content response has a 2xx status code
+func (o *ReleaseNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this release no content response has a 3xx status code
+func (o *ReleaseNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this release no content response has a 4xx status code
+func (o *ReleaseNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this release no content response has a 5xx status code
+func (o *ReleaseNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this release no content response a status code equal to that given
+func (o *ReleaseNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the release no content response
+func (o *ReleaseNoContent) Code() int {
+	return 204
+}
+
 func (o *ReleaseNoContent) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/release][%d] releaseNoContent ", 204)
+}
+
+func (o *ReleaseNoContent) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/release][%d] releaseNoContent ", 204)
 }
 
@@ -69,14 +104,49 @@ func NewReleaseForbidden() *ReleaseForbidden {
 	return &ReleaseForbidden{}
 }
 
-/* ReleaseForbidden describes a response with status code 403, with default header values.
+/*
+ReleaseForbidden describes a response with status code 403, with default header values.
 
 Authentication required
 */
 type ReleaseForbidden struct {
 }
 
+// IsSuccess returns true when this release forbidden response has a 2xx status code
+func (o *ReleaseForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this release forbidden response has a 3xx status code
+func (o *ReleaseForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this release forbidden response has a 4xx status code
+func (o *ReleaseForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this release forbidden response has a 5xx status code
+func (o *ReleaseForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this release forbidden response a status code equal to that given
+func (o *ReleaseForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the release forbidden response
+func (o *ReleaseForbidden) Code() int {
+	return 403
+}
+
 func (o *ReleaseForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/release][%d] releaseForbidden ", 403)
+}
+
+func (o *ReleaseForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/release][%d] releaseForbidden ", 403)
 }
 
@@ -90,14 +160,49 @@ func NewReleaseNotFound() *ReleaseNotFound {
 	return &ReleaseNotFound{}
 }
 
-/* ReleaseNotFound describes a response with status code 404, with default header values.
+/*
+ReleaseNotFound describes a response with status code 404, with default header values.
 
 No change to read-only state
 */
 type ReleaseNotFound struct {
 }
 
+// IsSuccess returns true when this release not found response has a 2xx status code
+func (o *ReleaseNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this release not found response has a 3xx status code
+func (o *ReleaseNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this release not found response has a 4xx status code
+func (o *ReleaseNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this release not found response has a 5xx status code
+func (o *ReleaseNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this release not found response a status code equal to that given
+func (o *ReleaseNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the release not found response
+func (o *ReleaseNotFound) Code() int {
+	return 404
+}
+
 func (o *ReleaseNotFound) Error() string {
+	return fmt.Sprintf("[POST /v1/read-only/release][%d] releaseNotFound ", 404)
+}
+
+func (o *ReleaseNotFound) String() string {
 	return fmt.Sprintf("[POST /v1/read-only/release][%d] releaseNotFound ", 404)
 }
 

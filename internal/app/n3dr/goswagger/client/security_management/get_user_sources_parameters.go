@@ -52,10 +52,12 @@ func NewGetUserSourcesParamsWithHTTPClient(client *http.Client) *GetUserSourcesP
 	}
 }
 
-/* GetUserSourcesParams contains all the parameters to send to the API endpoint
-   for the get user sources operation.
+/*
+GetUserSourcesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get user sources operation.
+
+	Typically these are written to a http.Request.
 */
 type GetUserSourcesParams struct {
 	timeout    time.Duration

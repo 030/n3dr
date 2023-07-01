@@ -39,7 +39,8 @@ func NewSearchOK() *SearchOK {
 	return &SearchOK{}
 }
 
-/* SearchOK describes a response with status code 200, with default header values.
+/*
+SearchOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type SearchOK struct {
 	Payload *models.PageComponentXO
 }
 
+// IsSuccess returns true when this search o k response has a 2xx status code
+func (o *SearchOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this search o k response has a 3xx status code
+func (o *SearchOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this search o k response has a 4xx status code
+func (o *SearchOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this search o k response has a 5xx status code
+func (o *SearchOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this search o k response a status code equal to that given
+func (o *SearchOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the search o k response
+func (o *SearchOK) Code() int {
+	return 200
+}
+
 func (o *SearchOK) Error() string {
 	return fmt.Sprintf("[GET /v1/search][%d] searchOK  %+v", 200, o.Payload)
 }
+
+func (o *SearchOK) String() string {
+	return fmt.Sprintf("[GET /v1/search][%d] searchOK  %+v", 200, o.Payload)
+}
+
 func (o *SearchOK) GetPayload() *models.PageComponentXO {
 	return o.Payload
 }

@@ -46,7 +46,7 @@ type ClientService interface {
 }
 
 /*
-  ChangeOrder changes l d a p server order
+ChangeOrder changes l d a p server order
 */
 func (a *Client) ChangeOrder(params *ChangeOrderParams, opts ...ClientOption) (*ChangeOrderNoContent, error) {
 	// TODO: Validate the params before sending
@@ -84,7 +84,7 @@ func (a *Client) ChangeOrder(params *ChangeOrderParams, opts ...ClientOption) (*
 }
 
 /*
-  CreateLdapServer creates l d a p server
+CreateLdapServer creates l d a p server
 */
 func (a *Client) CreateLdapServer(params *CreateLdapServerParams, opts ...ClientOption) (*CreateLdapServerCreated, error) {
 	// TODO: Validate the params before sending
@@ -122,7 +122,7 @@ func (a *Client) CreateLdapServer(params *CreateLdapServerParams, opts ...Client
 }
 
 /*
-  DeleteLdapServer deletes l d a p server
+DeleteLdapServer deletes l d a p server
 */
 func (a *Client) DeleteLdapServer(params *DeleteLdapServerParams, opts ...ClientOption) (*DeleteLdapServerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -160,7 +160,7 @@ func (a *Client) DeleteLdapServer(params *DeleteLdapServerParams, opts ...Client
 }
 
 /*
-  GetLdapServer gets l d a p server
+GetLdapServer gets l d a p server
 */
 func (a *Client) GetLdapServer(params *GetLdapServerParams, opts ...ClientOption) (*GetLdapServerOK, error) {
 	// TODO: Validate the params before sending
@@ -198,7 +198,7 @@ func (a *Client) GetLdapServer(params *GetLdapServerParams, opts ...ClientOption
 }
 
 /*
-  GetLdapServers lists l d a p servers
+GetLdapServers lists l d a p servers
 */
 func (a *Client) GetLdapServers(params *GetLdapServersParams, opts ...ClientOption) (*GetLdapServersOK, error) {
 	// TODO: Validate the params before sending
@@ -236,7 +236,7 @@ func (a *Client) GetLdapServers(params *GetLdapServersParams, opts ...ClientOpti
 }
 
 /*
-  UpdateLdapServer updates l d a p server
+UpdateLdapServer updates l d a p server
 */
 func (a *Client) UpdateLdapServer(params *UpdateLdapServerParams, opts ...ClientOption) (*UpdateLdapServerNoContent, error) {
 	// TODO: Validate the params before sending

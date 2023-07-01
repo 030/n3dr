@@ -42,14 +42,49 @@ func NewSearchAndDownloadAssetsBadRequest() *SearchAndDownloadAssetsBadRequest {
 	return &SearchAndDownloadAssetsBadRequest{}
 }
 
-/* SearchAndDownloadAssetsBadRequest describes a response with status code 400, with default header values.
+/*
+SearchAndDownloadAssetsBadRequest describes a response with status code 400, with default header values.
 
 Search returned multiple assets, please refine search criteria to find a single asset or use the sort query parameter to retrieve the first result.
 */
 type SearchAndDownloadAssetsBadRequest struct {
 }
 
+// IsSuccess returns true when this search and download assets bad request response has a 2xx status code
+func (o *SearchAndDownloadAssetsBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this search and download assets bad request response has a 3xx status code
+func (o *SearchAndDownloadAssetsBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this search and download assets bad request response has a 4xx status code
+func (o *SearchAndDownloadAssetsBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this search and download assets bad request response has a 5xx status code
+func (o *SearchAndDownloadAssetsBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this search and download assets bad request response a status code equal to that given
+func (o *SearchAndDownloadAssetsBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the search and download assets bad request response
+func (o *SearchAndDownloadAssetsBadRequest) Code() int {
+	return 400
+}
+
 func (o *SearchAndDownloadAssetsBadRequest) Error() string {
+	return fmt.Sprintf("[GET /v1/search/assets/download][%d] searchAndDownloadAssetsBadRequest ", 400)
+}
+
+func (o *SearchAndDownloadAssetsBadRequest) String() string {
 	return fmt.Sprintf("[GET /v1/search/assets/download][%d] searchAndDownloadAssetsBadRequest ", 400)
 }
 
@@ -63,14 +98,49 @@ func NewSearchAndDownloadAssetsNotFound() *SearchAndDownloadAssetsNotFound {
 	return &SearchAndDownloadAssetsNotFound{}
 }
 
-/* SearchAndDownloadAssetsNotFound describes a response with status code 404, with default header values.
+/*
+SearchAndDownloadAssetsNotFound describes a response with status code 404, with default header values.
 
 Asset search returned no results
 */
 type SearchAndDownloadAssetsNotFound struct {
 }
 
+// IsSuccess returns true when this search and download assets not found response has a 2xx status code
+func (o *SearchAndDownloadAssetsNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this search and download assets not found response has a 3xx status code
+func (o *SearchAndDownloadAssetsNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this search and download assets not found response has a 4xx status code
+func (o *SearchAndDownloadAssetsNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this search and download assets not found response has a 5xx status code
+func (o *SearchAndDownloadAssetsNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this search and download assets not found response a status code equal to that given
+func (o *SearchAndDownloadAssetsNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the search and download assets not found response
+func (o *SearchAndDownloadAssetsNotFound) Code() int {
+	return 404
+}
+
 func (o *SearchAndDownloadAssetsNotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/search/assets/download][%d] searchAndDownloadAssetsNotFound ", 404)
+}
+
+func (o *SearchAndDownloadAssetsNotFound) String() string {
 	return fmt.Sprintf("[GET /v1/search/assets/download][%d] searchAndDownloadAssetsNotFound ", 404)
 }
 

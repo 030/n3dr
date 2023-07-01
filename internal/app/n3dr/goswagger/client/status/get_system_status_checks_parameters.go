@@ -52,10 +52,12 @@ func NewGetSystemStatusChecksParamsWithHTTPClient(client *http.Client) *GetSyste
 	}
 }
 
-/* GetSystemStatusChecksParams contains all the parameters to send to the API endpoint
-   for the get system status checks operation.
+/*
+GetSystemStatusChecksParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get system status checks operation.
+
+	Typically these are written to a http.Request.
 */
 type GetSystemStatusChecksParams struct {
 	timeout    time.Duration

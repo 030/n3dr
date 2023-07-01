@@ -42,15 +42,50 @@ func NewCreatePrivilege3BadRequest() *CreatePrivilege3BadRequest {
 	return &CreatePrivilege3BadRequest{}
 }
 
-/* CreatePrivilege3BadRequest describes a response with status code 400, with default header values.
+/*
+CreatePrivilege3BadRequest describes a response with status code 400, with default header values.
 
 Privilege object not configured properly.
 */
 type CreatePrivilege3BadRequest struct {
 }
 
+// IsSuccess returns true when this create privilege3 bad request response has a 2xx status code
+func (o *CreatePrivilege3BadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create privilege3 bad request response has a 3xx status code
+func (o *CreatePrivilege3BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create privilege3 bad request response has a 4xx status code
+func (o *CreatePrivilege3BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create privilege3 bad request response has a 5xx status code
+func (o *CreatePrivilege3BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create privilege3 bad request response a status code equal to that given
+func (o *CreatePrivilege3BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create privilege3 bad request response
+func (o *CreatePrivilege3BadRequest) Code() int {
+	return 400
+}
+
 func (o *CreatePrivilege3BadRequest) Error() string {
-	return fmt.Sprintf("[POST /v1/security/privileges/repository-view][%d] createPrivilege3BadRequest ", 400)
+	return fmt.Sprintf("[POST /v1/security/privileges/repository-admin][%d] createPrivilege3BadRequest ", 400)
+}
+
+func (o *CreatePrivilege3BadRequest) String() string {
+	return fmt.Sprintf("[POST /v1/security/privileges/repository-admin][%d] createPrivilege3BadRequest ", 400)
 }
 
 func (o *CreatePrivilege3BadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -63,15 +98,50 @@ func NewCreatePrivilege3Forbidden() *CreatePrivilege3Forbidden {
 	return &CreatePrivilege3Forbidden{}
 }
 
-/* CreatePrivilege3Forbidden describes a response with status code 403, with default header values.
+/*
+CreatePrivilege3Forbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type CreatePrivilege3Forbidden struct {
 }
 
+// IsSuccess returns true when this create privilege3 forbidden response has a 2xx status code
+func (o *CreatePrivilege3Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create privilege3 forbidden response has a 3xx status code
+func (o *CreatePrivilege3Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create privilege3 forbidden response has a 4xx status code
+func (o *CreatePrivilege3Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create privilege3 forbidden response has a 5xx status code
+func (o *CreatePrivilege3Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create privilege3 forbidden response a status code equal to that given
+func (o *CreatePrivilege3Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create privilege3 forbidden response
+func (o *CreatePrivilege3Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreatePrivilege3Forbidden) Error() string {
-	return fmt.Sprintf("[POST /v1/security/privileges/repository-view][%d] createPrivilege3Forbidden ", 403)
+	return fmt.Sprintf("[POST /v1/security/privileges/repository-admin][%d] createPrivilege3Forbidden ", 403)
+}
+
+func (o *CreatePrivilege3Forbidden) String() string {
+	return fmt.Sprintf("[POST /v1/security/privileges/repository-admin][%d] createPrivilege3Forbidden ", 403)
 }
 
 func (o *CreatePrivilege3Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

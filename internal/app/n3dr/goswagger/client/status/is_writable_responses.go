@@ -42,14 +42,49 @@ func NewIsWritableOK() *IsWritableOK {
 	return &IsWritableOK{}
 }
 
-/* IsWritableOK describes a response with status code 200, with default header values.
+/*
+IsWritableOK describes a response with status code 200, with default header values.
 
 Available to service requests
 */
 type IsWritableOK struct {
 }
 
+// IsSuccess returns true when this is writable o k response has a 2xx status code
+func (o *IsWritableOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this is writable o k response has a 3xx status code
+func (o *IsWritableOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this is writable o k response has a 4xx status code
+func (o *IsWritableOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this is writable o k response has a 5xx status code
+func (o *IsWritableOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this is writable o k response a status code equal to that given
+func (o *IsWritableOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the is writable o k response
+func (o *IsWritableOK) Code() int {
+	return 200
+}
+
 func (o *IsWritableOK) Error() string {
+	return fmt.Sprintf("[GET /v1/status/writable][%d] isWritableOK ", 200)
+}
+
+func (o *IsWritableOK) String() string {
 	return fmt.Sprintf("[GET /v1/status/writable][%d] isWritableOK ", 200)
 }
 
@@ -63,14 +98,49 @@ func NewIsWritableServiceUnavailable() *IsWritableServiceUnavailable {
 	return &IsWritableServiceUnavailable{}
 }
 
-/* IsWritableServiceUnavailable describes a response with status code 503, with default header values.
+/*
+IsWritableServiceUnavailable describes a response with status code 503, with default header values.
 
 Unavailable to service requests
 */
 type IsWritableServiceUnavailable struct {
 }
 
+// IsSuccess returns true when this is writable service unavailable response has a 2xx status code
+func (o *IsWritableServiceUnavailable) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this is writable service unavailable response has a 3xx status code
+func (o *IsWritableServiceUnavailable) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this is writable service unavailable response has a 4xx status code
+func (o *IsWritableServiceUnavailable) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this is writable service unavailable response has a 5xx status code
+func (o *IsWritableServiceUnavailable) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this is writable service unavailable response a status code equal to that given
+func (o *IsWritableServiceUnavailable) IsCode(code int) bool {
+	return code == 503
+}
+
+// Code gets the status code for the is writable service unavailable response
+func (o *IsWritableServiceUnavailable) Code() int {
+	return 503
+}
+
 func (o *IsWritableServiceUnavailable) Error() string {
+	return fmt.Sprintf("[GET /v1/status/writable][%d] isWritableServiceUnavailable ", 503)
+}
+
+func (o *IsWritableServiceUnavailable) String() string {
 	return fmt.Sprintf("[GET /v1/status/writable][%d] isWritableServiceUnavailable ", 503)
 }
 

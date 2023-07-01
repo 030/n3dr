@@ -48,14 +48,49 @@ func NewGetLdapServersOK() *GetLdapServersOK {
 	return &GetLdapServersOK{}
 }
 
-/* GetLdapServersOK describes a response with status code 200, with default header values.
+/*
+GetLdapServersOK describes a response with status code 200, with default header values.
 
 LDAP server list returned
 */
 type GetLdapServersOK struct {
 }
 
+// IsSuccess returns true when this get ldap servers o k response has a 2xx status code
+func (o *GetLdapServersOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get ldap servers o k response has a 3xx status code
+func (o *GetLdapServersOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get ldap servers o k response has a 4xx status code
+func (o *GetLdapServersOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get ldap servers o k response has a 5xx status code
+func (o *GetLdapServersOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get ldap servers o k response a status code equal to that given
+func (o *GetLdapServersOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get ldap servers o k response
+func (o *GetLdapServersOK) Code() int {
+	return 200
+}
+
 func (o *GetLdapServersOK) Error() string {
+	return fmt.Sprintf("[GET /v1/security/ldap][%d] getLdapServersOK ", 200)
+}
+
+func (o *GetLdapServersOK) String() string {
 	return fmt.Sprintf("[GET /v1/security/ldap][%d] getLdapServersOK ", 200)
 }
 
@@ -69,14 +104,49 @@ func NewGetLdapServersUnauthorized() *GetLdapServersUnauthorized {
 	return &GetLdapServersUnauthorized{}
 }
 
-/* GetLdapServersUnauthorized describes a response with status code 401, with default header values.
+/*
+GetLdapServersUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type GetLdapServersUnauthorized struct {
 }
 
+// IsSuccess returns true when this get ldap servers unauthorized response has a 2xx status code
+func (o *GetLdapServersUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get ldap servers unauthorized response has a 3xx status code
+func (o *GetLdapServersUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get ldap servers unauthorized response has a 4xx status code
+func (o *GetLdapServersUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get ldap servers unauthorized response has a 5xx status code
+func (o *GetLdapServersUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get ldap servers unauthorized response a status code equal to that given
+func (o *GetLdapServersUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get ldap servers unauthorized response
+func (o *GetLdapServersUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetLdapServersUnauthorized) Error() string {
+	return fmt.Sprintf("[GET /v1/security/ldap][%d] getLdapServersUnauthorized ", 401)
+}
+
+func (o *GetLdapServersUnauthorized) String() string {
 	return fmt.Sprintf("[GET /v1/security/ldap][%d] getLdapServersUnauthorized ", 401)
 }
 
@@ -90,14 +160,49 @@ func NewGetLdapServersForbidden() *GetLdapServersForbidden {
 	return &GetLdapServersForbidden{}
 }
 
-/* GetLdapServersForbidden describes a response with status code 403, with default header values.
+/*
+GetLdapServersForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type GetLdapServersForbidden struct {
 }
 
+// IsSuccess returns true when this get ldap servers forbidden response has a 2xx status code
+func (o *GetLdapServersForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get ldap servers forbidden response has a 3xx status code
+func (o *GetLdapServersForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get ldap servers forbidden response has a 4xx status code
+func (o *GetLdapServersForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get ldap servers forbidden response has a 5xx status code
+func (o *GetLdapServersForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get ldap servers forbidden response a status code equal to that given
+func (o *GetLdapServersForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get ldap servers forbidden response
+func (o *GetLdapServersForbidden) Code() int {
+	return 403
+}
+
 func (o *GetLdapServersForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/security/ldap][%d] getLdapServersForbidden ", 403)
+}
+
+func (o *GetLdapServersForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/security/ldap][%d] getLdapServersForbidden ", 403)
 }
 

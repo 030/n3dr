@@ -52,10 +52,12 @@ func NewSetActiveRealmsParamsWithHTTPClient(client *http.Client) *SetActiveRealm
 	}
 }
 
-/* SetActiveRealmsParams contains all the parameters to send to the API endpoint
-   for the set active realms operation.
+/*
+SetActiveRealmsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the set active realms operation.
+
+	Typically these are written to a http.Request.
 */
 type SetActiveRealmsParams struct {
 

@@ -52,10 +52,12 @@ func NewGet2ParamsWithHTTPClient(client *http.Client) *Get2Params {
 	}
 }
 
-/* Get2Params contains all the parameters to send to the API endpoint
-   for the get 2 operation.
+/*
+Get2Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get 2 operation.
+
+	Typically these are written to a http.Request.
 */
 type Get2Params struct {
 	timeout    time.Duration

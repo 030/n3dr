@@ -54,14 +54,49 @@ func NewUpdateBlobStore1NoContent() *UpdateBlobStore1NoContent {
 	return &UpdateBlobStore1NoContent{}
 }
 
-/* UpdateBlobStore1NoContent describes a response with status code 204, with default header values.
+/*
+UpdateBlobStore1NoContent describes a response with status code 204, with default header values.
 
 Azure blob store updated
 */
 type UpdateBlobStore1NoContent struct {
 }
 
+// IsSuccess returns true when this update blob store1 no content response has a 2xx status code
+func (o *UpdateBlobStore1NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update blob store1 no content response has a 3xx status code
+func (o *UpdateBlobStore1NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store1 no content response has a 4xx status code
+func (o *UpdateBlobStore1NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update blob store1 no content response has a 5xx status code
+func (o *UpdateBlobStore1NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store1 no content response a status code equal to that given
+func (o *UpdateBlobStore1NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update blob store1 no content response
+func (o *UpdateBlobStore1NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateBlobStore1NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1NoContent ", 204)
+}
+
+func (o *UpdateBlobStore1NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1NoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewUpdateBlobStore1BadRequest() *UpdateBlobStore1BadRequest {
 	return &UpdateBlobStore1BadRequest{}
 }
 
-/* UpdateBlobStore1BadRequest describes a response with status code 400, with default header values.
+/*
+UpdateBlobStore1BadRequest describes a response with status code 400, with default header values.
 
 Specified Azure blob store doesn't exist
 */
 type UpdateBlobStore1BadRequest struct {
 }
 
+// IsSuccess returns true when this update blob store1 bad request response has a 2xx status code
+func (o *UpdateBlobStore1BadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update blob store1 bad request response has a 3xx status code
+func (o *UpdateBlobStore1BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store1 bad request response has a 4xx status code
+func (o *UpdateBlobStore1BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update blob store1 bad request response has a 5xx status code
+func (o *UpdateBlobStore1BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store1 bad request response a status code equal to that given
+func (o *UpdateBlobStore1BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update blob store1 bad request response
+func (o *UpdateBlobStore1BadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateBlobStore1BadRequest) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1BadRequest ", 400)
+}
+
+func (o *UpdateBlobStore1BadRequest) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1BadRequest ", 400)
 }
 
@@ -96,14 +166,49 @@ func NewUpdateBlobStore1Unauthorized() *UpdateBlobStore1Unauthorized {
 	return &UpdateBlobStore1Unauthorized{}
 }
 
-/* UpdateBlobStore1Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateBlobStore1Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateBlobStore1Unauthorized struct {
 }
 
+// IsSuccess returns true when this update blob store1 unauthorized response has a 2xx status code
+func (o *UpdateBlobStore1Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update blob store1 unauthorized response has a 3xx status code
+func (o *UpdateBlobStore1Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store1 unauthorized response has a 4xx status code
+func (o *UpdateBlobStore1Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update blob store1 unauthorized response has a 5xx status code
+func (o *UpdateBlobStore1Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store1 unauthorized response a status code equal to that given
+func (o *UpdateBlobStore1Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update blob store1 unauthorized response
+func (o *UpdateBlobStore1Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateBlobStore1Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1Unauthorized ", 401)
+}
+
+func (o *UpdateBlobStore1Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1Unauthorized ", 401)
 }
 
@@ -117,14 +222,49 @@ func NewUpdateBlobStore1Forbidden() *UpdateBlobStore1Forbidden {
 	return &UpdateBlobStore1Forbidden{}
 }
 
-/* UpdateBlobStore1Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateBlobStore1Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateBlobStore1Forbidden struct {
 }
 
+// IsSuccess returns true when this update blob store1 forbidden response has a 2xx status code
+func (o *UpdateBlobStore1Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update blob store1 forbidden response has a 3xx status code
+func (o *UpdateBlobStore1Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update blob store1 forbidden response has a 4xx status code
+func (o *UpdateBlobStore1Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update blob store1 forbidden response has a 5xx status code
+func (o *UpdateBlobStore1Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update blob store1 forbidden response a status code equal to that given
+func (o *UpdateBlobStore1Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update blob store1 forbidden response
+func (o *UpdateBlobStore1Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateBlobStore1Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1Forbidden ", 403)
+}
+
+func (o *UpdateBlobStore1Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/blobstores/azure/{name}][%d] updateBlobStore1Forbidden ", 403)
 }
 

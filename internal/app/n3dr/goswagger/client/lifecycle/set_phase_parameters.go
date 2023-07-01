@@ -52,10 +52,12 @@ func NewSetPhaseParamsWithHTTPClient(client *http.Client) *SetPhaseParams {
 	}
 }
 
-/* SetPhaseParams contains all the parameters to send to the API endpoint
-   for the set phase operation.
+/*
+SetPhaseParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the set phase operation.
+
+	Typically these are written to a http.Request.
 */
 type SetPhaseParams struct {
 

@@ -39,7 +39,8 @@ func NewGetRepository22OK() *GetRepository22OK {
 	return &GetRepository22OK{}
 }
 
-/* GetRepository22OK describes a response with status code 200, with default header values.
+/*
+GetRepository22OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository22OK struct {
 	Payload *models.YumHostedAPIRepository
 }
 
+// IsSuccess returns true when this get repository22 o k response has a 2xx status code
+func (o *GetRepository22OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository22 o k response has a 3xx status code
+func (o *GetRepository22OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository22 o k response has a 4xx status code
+func (o *GetRepository22OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository22 o k response has a 5xx status code
+func (o *GetRepository22OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository22 o k response a status code equal to that given
+func (o *GetRepository22OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository22 o k response
+func (o *GetRepository22OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository22OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/yum/hosted/{repositoryName}][%d] getRepository22OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository22OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/yum/hosted/{repositoryName}][%d] getRepository22OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository22OK) GetPayload() *models.YumHostedAPIRepository {
 	return o.Payload
 }

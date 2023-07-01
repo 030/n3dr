@@ -52,10 +52,12 @@ func NewRemoveCertificateParamsWithHTTPClient(client *http.Client) *RemoveCertif
 	}
 }
 
-/* RemoveCertificateParams contains all the parameters to send to the API endpoint
-   for the remove certificate operation.
+/*
+RemoveCertificateParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the remove certificate operation.
+
+	Typically these are written to a http.Request.
 */
 type RemoveCertificateParams struct {
 

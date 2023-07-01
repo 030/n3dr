@@ -57,7 +57,8 @@ func NewGetBlobStore1OK() *GetBlobStore1OK {
 	return &GetBlobStore1OK{}
 }
 
-/* GetBlobStore1OK describes a response with status code 200, with default header values.
+/*
+GetBlobStore1OK describes a response with status code 200, with default header values.
 
 Success
 */
@@ -65,9 +66,44 @@ type GetBlobStore1OK struct {
 	Payload *models.AzureBlobStoreAPIModel
 }
 
+// IsSuccess returns true when this get blob store1 o k response has a 2xx status code
+func (o *GetBlobStore1OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get blob store1 o k response has a 3xx status code
+func (o *GetBlobStore1OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get blob store1 o k response has a 4xx status code
+func (o *GetBlobStore1OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get blob store1 o k response has a 5xx status code
+func (o *GetBlobStore1OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get blob store1 o k response a status code equal to that given
+func (o *GetBlobStore1OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get blob store1 o k response
+func (o *GetBlobStore1OK) Code() int {
+	return 200
+}
+
 func (o *GetBlobStore1OK) Error() string {
 	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1OK  %+v", 200, o.Payload)
 }
+
+func (o *GetBlobStore1OK) String() string {
+	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1OK  %+v", 200, o.Payload)
+}
+
 func (o *GetBlobStore1OK) GetPayload() *models.AzureBlobStoreAPIModel {
 	return o.Payload
 }
@@ -89,14 +125,49 @@ func NewGetBlobStore1BadRequest() *GetBlobStore1BadRequest {
 	return &GetBlobStore1BadRequest{}
 }
 
-/* GetBlobStore1BadRequest describes a response with status code 400, with default header values.
+/*
+GetBlobStore1BadRequest describes a response with status code 400, with default header values.
 
 Specified Azure blob store doesn't exist
 */
 type GetBlobStore1BadRequest struct {
 }
 
+// IsSuccess returns true when this get blob store1 bad request response has a 2xx status code
+func (o *GetBlobStore1BadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get blob store1 bad request response has a 3xx status code
+func (o *GetBlobStore1BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get blob store1 bad request response has a 4xx status code
+func (o *GetBlobStore1BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get blob store1 bad request response has a 5xx status code
+func (o *GetBlobStore1BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get blob store1 bad request response a status code equal to that given
+func (o *GetBlobStore1BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get blob store1 bad request response
+func (o *GetBlobStore1BadRequest) Code() int {
+	return 400
+}
+
 func (o *GetBlobStore1BadRequest) Error() string {
+	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1BadRequest ", 400)
+}
+
+func (o *GetBlobStore1BadRequest) String() string {
 	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1BadRequest ", 400)
 }
 
@@ -110,14 +181,49 @@ func NewGetBlobStore1Unauthorized() *GetBlobStore1Unauthorized {
 	return &GetBlobStore1Unauthorized{}
 }
 
-/* GetBlobStore1Unauthorized describes a response with status code 401, with default header values.
+/*
+GetBlobStore1Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type GetBlobStore1Unauthorized struct {
 }
 
+// IsSuccess returns true when this get blob store1 unauthorized response has a 2xx status code
+func (o *GetBlobStore1Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get blob store1 unauthorized response has a 3xx status code
+func (o *GetBlobStore1Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get blob store1 unauthorized response has a 4xx status code
+func (o *GetBlobStore1Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get blob store1 unauthorized response has a 5xx status code
+func (o *GetBlobStore1Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get blob store1 unauthorized response a status code equal to that given
+func (o *GetBlobStore1Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get blob store1 unauthorized response
+func (o *GetBlobStore1Unauthorized) Code() int {
+	return 401
+}
+
 func (o *GetBlobStore1Unauthorized) Error() string {
+	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1Unauthorized ", 401)
+}
+
+func (o *GetBlobStore1Unauthorized) String() string {
 	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1Unauthorized ", 401)
 }
 
@@ -131,14 +237,49 @@ func NewGetBlobStore1Forbidden() *GetBlobStore1Forbidden {
 	return &GetBlobStore1Forbidden{}
 }
 
-/* GetBlobStore1Forbidden describes a response with status code 403, with default header values.
+/*
+GetBlobStore1Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type GetBlobStore1Forbidden struct {
 }
 
+// IsSuccess returns true when this get blob store1 forbidden response has a 2xx status code
+func (o *GetBlobStore1Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get blob store1 forbidden response has a 3xx status code
+func (o *GetBlobStore1Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get blob store1 forbidden response has a 4xx status code
+func (o *GetBlobStore1Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get blob store1 forbidden response has a 5xx status code
+func (o *GetBlobStore1Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get blob store1 forbidden response a status code equal to that given
+func (o *GetBlobStore1Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get blob store1 forbidden response
+func (o *GetBlobStore1Forbidden) Code() int {
+	return 403
+}
+
 func (o *GetBlobStore1Forbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1Forbidden ", 403)
+}
+
+func (o *GetBlobStore1Forbidden) String() string {
 	return fmt.Sprintf("[GET /v1/blobstores/azure/{name}][%d] getBlobStore1Forbidden ", 403)
 }
 

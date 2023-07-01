@@ -36,14 +36,49 @@ func NewRemoveCertificateForbidden() *RemoveCertificateForbidden {
 	return &RemoveCertificateForbidden{}
 }
 
-/* RemoveCertificateForbidden describes a response with status code 403, with default header values.
+/*
+RemoveCertificateForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to remove certificate from the trust store
 */
 type RemoveCertificateForbidden struct {
 }
 
+// IsSuccess returns true when this remove certificate forbidden response has a 2xx status code
+func (o *RemoveCertificateForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this remove certificate forbidden response has a 3xx status code
+func (o *RemoveCertificateForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this remove certificate forbidden response has a 4xx status code
+func (o *RemoveCertificateForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this remove certificate forbidden response has a 5xx status code
+func (o *RemoveCertificateForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this remove certificate forbidden response a status code equal to that given
+func (o *RemoveCertificateForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the remove certificate forbidden response
+func (o *RemoveCertificateForbidden) Code() int {
+	return 403
+}
+
 func (o *RemoveCertificateForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/security/ssl/truststore/{id}][%d] removeCertificateForbidden ", 403)
+}
+
+func (o *RemoveCertificateForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/security/ssl/truststore/{id}][%d] removeCertificateForbidden ", 403)
 }
 

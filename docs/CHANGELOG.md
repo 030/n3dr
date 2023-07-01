@@ -2,12 +2,24 @@
 ## [Unreleased]
 
 
-<a name="7.2.2"></a>
-## [7.2.2] - 2023-06-25
-### Build
-- **deps:** Update versions.
+<a name="7.2.3"></a>
+## [7.2.3] - 2023-07-01
+### Feat
+- [[#359](https://github.com/030/n3dr/issues/359)] Maven2 quickstart.
 
 ### Fix
+- [[#359](https://github.com/030/n3dr/issues/359)] Golang-ci issues.
+- [[#359](https://github.com/030/n3dr/issues/359)] Reduce complexity.
+
+### Reverts
+- fix: [[#359](https://github.com/030/n3dr/issues/359)] Reduce complexity.
+
+
+<a name="7.2.2"></a>
+## [7.2.2] - 2023-06-27
+### Fix
+- yamllint line too long.
+- mirror and depguard issues.
 - [[GH-371](https://github.com/030/n3dr/issues/371)] Resolve indentation issue in count table formatting.
 
 
@@ -364,7 +376,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.2.2...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.2.3...HEAD
+[7.2.3]: https://github.com/030/n3dr/compare/7.2.2...7.2.3
 [7.2.2]: https://github.com/030/n3dr/compare/7.2.1...7.2.2
 [7.2.1]: https://github.com/030/n3dr/compare/7.2.0...7.2.1
 [7.2.0]: https://github.com/030/n3dr/compare/7.1.1...7.2.0

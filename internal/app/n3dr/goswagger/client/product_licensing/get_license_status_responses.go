@@ -39,7 +39,8 @@ func NewGetLicenseStatusOK() *GetLicenseStatusOK {
 	return &GetLicenseStatusOK{}
 }
 
-/* GetLicenseStatusOK describes a response with status code 200, with default header values.
+/*
+GetLicenseStatusOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetLicenseStatusOK struct {
 	Payload *models.APILicenseDetailsXO
 }
 
+// IsSuccess returns true when this get license status o k response has a 2xx status code
+func (o *GetLicenseStatusOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get license status o k response has a 3xx status code
+func (o *GetLicenseStatusOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get license status o k response has a 4xx status code
+func (o *GetLicenseStatusOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get license status o k response has a 5xx status code
+func (o *GetLicenseStatusOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get license status o k response a status code equal to that given
+func (o *GetLicenseStatusOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get license status o k response
+func (o *GetLicenseStatusOK) Code() int {
+	return 200
+}
+
 func (o *GetLicenseStatusOK) Error() string {
 	return fmt.Sprintf("[GET /v1/system/license][%d] getLicenseStatusOK  %+v", 200, o.Payload)
 }
+
+func (o *GetLicenseStatusOK) String() string {
+	return fmt.Sprintf("[GET /v1/system/license][%d] getLicenseStatusOK  %+v", 200, o.Payload)
+}
+
 func (o *GetLicenseStatusOK) GetPayload() *models.APILicenseDetailsXO {
 	return o.Payload
 }

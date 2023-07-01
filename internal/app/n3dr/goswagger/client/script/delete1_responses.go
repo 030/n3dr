@@ -42,14 +42,49 @@ func NewDelete1NoContent() *Delete1NoContent {
 	return &Delete1NoContent{}
 }
 
-/* Delete1NoContent describes a response with status code 204, with default header values.
+/*
+Delete1NoContent describes a response with status code 204, with default header values.
 
 Script was deleted
 */
 type Delete1NoContent struct {
 }
 
+// IsSuccess returns true when this delete1 no content response has a 2xx status code
+func (o *Delete1NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete1 no content response has a 3xx status code
+func (o *Delete1NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete1 no content response has a 4xx status code
+func (o *Delete1NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete1 no content response has a 5xx status code
+func (o *Delete1NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete1 no content response a status code equal to that given
+func (o *Delete1NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete1 no content response
+func (o *Delete1NoContent) Code() int {
+	return 204
+}
+
 func (o *Delete1NoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/script/{name}][%d] delete1NoContent ", 204)
+}
+
+func (o *Delete1NoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/script/{name}][%d] delete1NoContent ", 204)
 }
 
@@ -63,14 +98,49 @@ func NewDelete1NotFound() *Delete1NotFound {
 	return &Delete1NotFound{}
 }
 
-/* Delete1NotFound describes a response with status code 404, with default header values.
+/*
+Delete1NotFound describes a response with status code 404, with default header values.
 
 No script with the specified name
 */
 type Delete1NotFound struct {
 }
 
+// IsSuccess returns true when this delete1 not found response has a 2xx status code
+func (o *Delete1NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete1 not found response has a 3xx status code
+func (o *Delete1NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete1 not found response has a 4xx status code
+func (o *Delete1NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete1 not found response has a 5xx status code
+func (o *Delete1NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete1 not found response a status code equal to that given
+func (o *Delete1NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete1 not found response
+func (o *Delete1NotFound) Code() int {
+	return 404
+}
+
 func (o *Delete1NotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/script/{name}][%d] delete1NotFound ", 404)
+}
+
+func (o *Delete1NotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/script/{name}][%d] delete1NotFound ", 404)
 }
 

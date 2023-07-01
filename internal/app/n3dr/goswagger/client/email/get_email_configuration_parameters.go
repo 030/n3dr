@@ -52,10 +52,12 @@ func NewGetEmailConfigurationParamsWithHTTPClient(client *http.Client) *GetEmail
 	}
 }
 
-/* GetEmailConfigurationParams contains all the parameters to send to the API endpoint
-   for the get email configuration operation.
+/*
+GetEmailConfigurationParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the get email configuration operation.
+
+	Typically these are written to a http.Request.
 */
 type GetEmailConfigurationParams struct {
 	timeout    time.Duration

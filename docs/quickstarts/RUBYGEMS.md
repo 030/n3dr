@@ -22,13 +22,13 @@ mkdir -p ${downloadDir} && \
 for f in chef-17.4.25 chef-18.1.0 puppet-7.23.0 rack-3.0.4.1; do
 curl -L https://rubygems.org/downloads/${f}.gem > ${downloadDir}/${f}.gem
 curl -X 'POST' \
-    localhost:8081/service/rest/v1/components?repository=some-rubygems \
-    -s \
-    -f \
-    -u "admin:$(docker exec -it nexus3-n3dr-src cat /nexus-data/admin.password)" \
-    -H 'accept: application/json' \
-    -H 'Content-Type: multipart/form-data' \
-    -F "rubygems.asset=@${downloadDir}/${f}.gem;type=application/x-tar"
+  localhost:8081/service/rest/v1/components?repository=some-rubygems \
+  -s \
+  -f \
+  -u "admin:$(docker exec -it nexus3-n3dr-src cat /nexus-data/admin.password)" \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F "rubygems.asset=@${downloadDir}/${f}.gem;type=application/x-tar"
 done
 ```
 

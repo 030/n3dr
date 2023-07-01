@@ -54,10 +54,12 @@ func NewCreateRepository8ParamsWithHTTPClient(client *http.Client) *CreateReposi
 	}
 }
 
-/* CreateRepository8Params contains all the parameters to send to the API endpoint
-   for the create repository 8 operation.
+/*
+CreateRepository8Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the create repository 8 operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateRepository8Params struct {
 

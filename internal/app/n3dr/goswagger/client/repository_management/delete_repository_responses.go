@@ -54,14 +54,49 @@ func NewDeleteRepositoryNoContent() *DeleteRepositoryNoContent {
 	return &DeleteRepositoryNoContent{}
 }
 
-/* DeleteRepositoryNoContent describes a response with status code 204, with default header values.
+/*
+DeleteRepositoryNoContent describes a response with status code 204, with default header values.
 
 Repository deleted
 */
 type DeleteRepositoryNoContent struct {
 }
 
+// IsSuccess returns true when this delete repository no content response has a 2xx status code
+func (o *DeleteRepositoryNoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete repository no content response has a 3xx status code
+func (o *DeleteRepositoryNoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete repository no content response has a 4xx status code
+func (o *DeleteRepositoryNoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete repository no content response has a 5xx status code
+func (o *DeleteRepositoryNoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete repository no content response a status code equal to that given
+func (o *DeleteRepositoryNoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the delete repository no content response
+func (o *DeleteRepositoryNoContent) Code() int {
+	return 204
+}
+
 func (o *DeleteRepositoryNoContent) Error() string {
+	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryNoContent ", 204)
+}
+
+func (o *DeleteRepositoryNoContent) String() string {
 	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryNoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewDeleteRepositoryUnauthorized() *DeleteRepositoryUnauthorized {
 	return &DeleteRepositoryUnauthorized{}
 }
 
-/* DeleteRepositoryUnauthorized describes a response with status code 401, with default header values.
+/*
+DeleteRepositoryUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type DeleteRepositoryUnauthorized struct {
 }
 
+// IsSuccess returns true when this delete repository unauthorized response has a 2xx status code
+func (o *DeleteRepositoryUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete repository unauthorized response has a 3xx status code
+func (o *DeleteRepositoryUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete repository unauthorized response has a 4xx status code
+func (o *DeleteRepositoryUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete repository unauthorized response has a 5xx status code
+func (o *DeleteRepositoryUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete repository unauthorized response a status code equal to that given
+func (o *DeleteRepositoryUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the delete repository unauthorized response
+func (o *DeleteRepositoryUnauthorized) Code() int {
+	return 401
+}
+
 func (o *DeleteRepositoryUnauthorized) Error() string {
+	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryUnauthorized ", 401)
+}
+
+func (o *DeleteRepositoryUnauthorized) String() string {
 	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryUnauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewDeleteRepositoryForbidden() *DeleteRepositoryForbidden {
 	return &DeleteRepositoryForbidden{}
 }
 
-/* DeleteRepositoryForbidden describes a response with status code 403, with default header values.
+/*
+DeleteRepositoryForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type DeleteRepositoryForbidden struct {
 }
 
+// IsSuccess returns true when this delete repository forbidden response has a 2xx status code
+func (o *DeleteRepositoryForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete repository forbidden response has a 3xx status code
+func (o *DeleteRepositoryForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete repository forbidden response has a 4xx status code
+func (o *DeleteRepositoryForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete repository forbidden response has a 5xx status code
+func (o *DeleteRepositoryForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete repository forbidden response a status code equal to that given
+func (o *DeleteRepositoryForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete repository forbidden response
+func (o *DeleteRepositoryForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteRepositoryForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryForbidden ", 403)
+}
+
+func (o *DeleteRepositoryForbidden) String() string {
 	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryForbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewDeleteRepositoryNotFound() *DeleteRepositoryNotFound {
 	return &DeleteRepositoryNotFound{}
 }
 
-/* DeleteRepositoryNotFound describes a response with status code 404, with default header values.
+/*
+DeleteRepositoryNotFound describes a response with status code 404, with default header values.
 
 Repository not found
 */
 type DeleteRepositoryNotFound struct {
 }
 
+// IsSuccess returns true when this delete repository not found response has a 2xx status code
+func (o *DeleteRepositoryNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete repository not found response has a 3xx status code
+func (o *DeleteRepositoryNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete repository not found response has a 4xx status code
+func (o *DeleteRepositoryNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete repository not found response has a 5xx status code
+func (o *DeleteRepositoryNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete repository not found response a status code equal to that given
+func (o *DeleteRepositoryNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete repository not found response
+func (o *DeleteRepositoryNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteRepositoryNotFound) Error() string {
+	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryNotFound ", 404)
+}
+
+func (o *DeleteRepositoryNotFound) String() string {
 	return fmt.Sprintf("[DELETE /v1/repositories/{repositoryName}][%d] deleteRepositoryNotFound ", 404)
 }
 

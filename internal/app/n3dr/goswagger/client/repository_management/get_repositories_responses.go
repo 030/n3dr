@@ -51,7 +51,8 @@ func NewGetRepositoriesOK() *GetRepositoriesOK {
 	return &GetRepositoriesOK{}
 }
 
-/* GetRepositoriesOK describes a response with status code 200, with default header values.
+/*
+GetRepositoriesOK describes a response with status code 200, with default header values.
 
 Repositories list returned
 */
@@ -59,9 +60,44 @@ type GetRepositoriesOK struct {
 	Payload []*models.AbstractAPIRepository
 }
 
+// IsSuccess returns true when this get repositories o k response has a 2xx status code
+func (o *GetRepositoriesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repositories o k response has a 3xx status code
+func (o *GetRepositoriesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repositories o k response has a 4xx status code
+func (o *GetRepositoriesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repositories o k response has a 5xx status code
+func (o *GetRepositoriesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repositories o k response a status code equal to that given
+func (o *GetRepositoriesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repositories o k response
+func (o *GetRepositoriesOK) Code() int {
+	return 200
+}
+
 func (o *GetRepositoriesOK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositorySettings][%d] getRepositoriesOK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepositoriesOK) String() string {
+	return fmt.Sprintf("[GET /v1/repositorySettings][%d] getRepositoriesOK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepositoriesOK) GetPayload() []*models.AbstractAPIRepository {
 	return o.Payload
 }
@@ -81,14 +117,49 @@ func NewGetRepositoriesUnauthorized() *GetRepositoriesUnauthorized {
 	return &GetRepositoriesUnauthorized{}
 }
 
-/* GetRepositoriesUnauthorized describes a response with status code 401, with default header values.
+/*
+GetRepositoriesUnauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type GetRepositoriesUnauthorized struct {
 }
 
+// IsSuccess returns true when this get repositories unauthorized response has a 2xx status code
+func (o *GetRepositoriesUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get repositories unauthorized response has a 3xx status code
+func (o *GetRepositoriesUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repositories unauthorized response has a 4xx status code
+func (o *GetRepositoriesUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get repositories unauthorized response has a 5xx status code
+func (o *GetRepositoriesUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repositories unauthorized response a status code equal to that given
+func (o *GetRepositoriesUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get repositories unauthorized response
+func (o *GetRepositoriesUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetRepositoriesUnauthorized) Error() string {
+	return fmt.Sprintf("[GET /v1/repositorySettings][%d] getRepositoriesUnauthorized ", 401)
+}
+
+func (o *GetRepositoriesUnauthorized) String() string {
 	return fmt.Sprintf("[GET /v1/repositorySettings][%d] getRepositoriesUnauthorized ", 401)
 }
 
@@ -102,14 +173,49 @@ func NewGetRepositoriesForbidden() *GetRepositoriesForbidden {
 	return &GetRepositoriesForbidden{}
 }
 
-/* GetRepositoriesForbidden describes a response with status code 403, with default header values.
+/*
+GetRepositoriesForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type GetRepositoriesForbidden struct {
 }
 
+// IsSuccess returns true when this get repositories forbidden response has a 2xx status code
+func (o *GetRepositoriesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get repositories forbidden response has a 3xx status code
+func (o *GetRepositoriesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repositories forbidden response has a 4xx status code
+func (o *GetRepositoriesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get repositories forbidden response has a 5xx status code
+func (o *GetRepositoriesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repositories forbidden response a status code equal to that given
+func (o *GetRepositoriesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get repositories forbidden response
+func (o *GetRepositoriesForbidden) Code() int {
+	return 403
+}
+
 func (o *GetRepositoriesForbidden) Error() string {
+	return fmt.Sprintf("[GET /v1/repositorySettings][%d] getRepositoriesForbidden ", 403)
+}
+
+func (o *GetRepositoriesForbidden) String() string {
 	return fmt.Sprintf("[GET /v1/repositorySettings][%d] getRepositoriesForbidden ", 403)
 }
 

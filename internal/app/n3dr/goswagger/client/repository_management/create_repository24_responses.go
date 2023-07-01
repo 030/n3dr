@@ -54,14 +54,49 @@ func NewCreateRepository24Created() *CreateRepository24Created {
 	return &CreateRepository24Created{}
 }
 
-/* CreateRepository24Created describes a response with status code 201, with default header values.
+/*
+CreateRepository24Created describes a response with status code 201, with default header values.
 
 Repository created
 */
 type CreateRepository24Created struct {
 }
 
+// IsSuccess returns true when this create repository24 created response has a 2xx status code
+func (o *CreateRepository24Created) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create repository24 created response has a 3xx status code
+func (o *CreateRepository24Created) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository24 created response has a 4xx status code
+func (o *CreateRepository24Created) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create repository24 created response has a 5xx status code
+func (o *CreateRepository24Created) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository24 created response a status code equal to that given
+func (o *CreateRepository24Created) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the create repository24 created response
+func (o *CreateRepository24Created) Code() int {
+	return 201
+}
+
 func (o *CreateRepository24Created) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24Created ", 201)
+}
+
+func (o *CreateRepository24Created) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24Created ", 201)
 }
 
@@ -75,14 +110,49 @@ func NewCreateRepository24Unauthorized() *CreateRepository24Unauthorized {
 	return &CreateRepository24Unauthorized{}
 }
 
-/* CreateRepository24Unauthorized describes a response with status code 401, with default header values.
+/*
+CreateRepository24Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type CreateRepository24Unauthorized struct {
 }
 
+// IsSuccess returns true when this create repository24 unauthorized response has a 2xx status code
+func (o *CreateRepository24Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository24 unauthorized response has a 3xx status code
+func (o *CreateRepository24Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository24 unauthorized response has a 4xx status code
+func (o *CreateRepository24Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository24 unauthorized response has a 5xx status code
+func (o *CreateRepository24Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository24 unauthorized response a status code equal to that given
+func (o *CreateRepository24Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create repository24 unauthorized response
+func (o *CreateRepository24Unauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateRepository24Unauthorized) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24Unauthorized ", 401)
+}
+
+func (o *CreateRepository24Unauthorized) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24Unauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewCreateRepository24Forbidden() *CreateRepository24Forbidden {
 	return &CreateRepository24Forbidden{}
 }
 
-/* CreateRepository24Forbidden describes a response with status code 403, with default header values.
+/*
+CreateRepository24Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type CreateRepository24Forbidden struct {
 }
 
+// IsSuccess returns true when this create repository24 forbidden response has a 2xx status code
+func (o *CreateRepository24Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository24 forbidden response has a 3xx status code
+func (o *CreateRepository24Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository24 forbidden response has a 4xx status code
+func (o *CreateRepository24Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository24 forbidden response has a 5xx status code
+func (o *CreateRepository24Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository24 forbidden response a status code equal to that given
+func (o *CreateRepository24Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create repository24 forbidden response
+func (o *CreateRepository24Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreateRepository24Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24Forbidden ", 403)
+}
+
+func (o *CreateRepository24Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24Forbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewCreateRepository24MethodNotAllowed() *CreateRepository24MethodNotAllowed
 	return &CreateRepository24MethodNotAllowed{}
 }
 
-/* CreateRepository24MethodNotAllowed describes a response with status code 405, with default header values.
+/*
+CreateRepository24MethodNotAllowed describes a response with status code 405, with default header values.
 
 Feature is disabled in High Availability
 */
 type CreateRepository24MethodNotAllowed struct {
 }
 
+// IsSuccess returns true when this create repository24 method not allowed response has a 2xx status code
+func (o *CreateRepository24MethodNotAllowed) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create repository24 method not allowed response has a 3xx status code
+func (o *CreateRepository24MethodNotAllowed) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create repository24 method not allowed response has a 4xx status code
+func (o *CreateRepository24MethodNotAllowed) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create repository24 method not allowed response has a 5xx status code
+func (o *CreateRepository24MethodNotAllowed) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create repository24 method not allowed response a status code equal to that given
+func (o *CreateRepository24MethodNotAllowed) IsCode(code int) bool {
+	return code == 405
+}
+
+// Code gets the status code for the create repository24 method not allowed response
+func (o *CreateRepository24MethodNotAllowed) Code() int {
+	return 405
+}
+
 func (o *CreateRepository24MethodNotAllowed) Error() string {
+	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24MethodNotAllowed ", 405)
+}
+
+func (o *CreateRepository24MethodNotAllowed) String() string {
 	return fmt.Sprintf("[POST /v1/repositories/helm/proxy][%d] createRepository24MethodNotAllowed ", 405)
 }
 

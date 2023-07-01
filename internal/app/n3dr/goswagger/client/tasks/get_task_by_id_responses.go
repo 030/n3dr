@@ -45,7 +45,8 @@ func NewGetTaskByIDOK() *GetTaskByIDOK {
 	return &GetTaskByIDOK{}
 }
 
-/* GetTaskByIDOK describes a response with status code 200, with default header values.
+/*
+GetTaskByIDOK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -53,9 +54,44 @@ type GetTaskByIDOK struct {
 	Payload *models.TaskXO
 }
 
+// IsSuccess returns true when this get task by Id o k response has a 2xx status code
+func (o *GetTaskByIDOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get task by Id o k response has a 3xx status code
+func (o *GetTaskByIDOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get task by Id o k response has a 4xx status code
+func (o *GetTaskByIDOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get task by Id o k response has a 5xx status code
+func (o *GetTaskByIDOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get task by Id o k response a status code equal to that given
+func (o *GetTaskByIDOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get task by Id o k response
+func (o *GetTaskByIDOK) Code() int {
+	return 200
+}
+
 func (o *GetTaskByIDOK) Error() string {
 	return fmt.Sprintf("[GET /v1/tasks/{id}][%d] getTaskByIdOK  %+v", 200, o.Payload)
 }
+
+func (o *GetTaskByIDOK) String() string {
+	return fmt.Sprintf("[GET /v1/tasks/{id}][%d] getTaskByIdOK  %+v", 200, o.Payload)
+}
+
 func (o *GetTaskByIDOK) GetPayload() *models.TaskXO {
 	return o.Payload
 }
@@ -77,14 +113,49 @@ func NewGetTaskByIDNotFound() *GetTaskByIDNotFound {
 	return &GetTaskByIDNotFound{}
 }
 
-/* GetTaskByIDNotFound describes a response with status code 404, with default header values.
+/*
+GetTaskByIDNotFound describes a response with status code 404, with default header values.
 
 Task not found
 */
 type GetTaskByIDNotFound struct {
 }
 
+// IsSuccess returns true when this get task by Id not found response has a 2xx status code
+func (o *GetTaskByIDNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get task by Id not found response has a 3xx status code
+func (o *GetTaskByIDNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get task by Id not found response has a 4xx status code
+func (o *GetTaskByIDNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get task by Id not found response has a 5xx status code
+func (o *GetTaskByIDNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get task by Id not found response a status code equal to that given
+func (o *GetTaskByIDNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get task by Id not found response
+func (o *GetTaskByIDNotFound) Code() int {
+	return 404
+}
+
 func (o *GetTaskByIDNotFound) Error() string {
+	return fmt.Sprintf("[GET /v1/tasks/{id}][%d] getTaskByIdNotFound ", 404)
+}
+
+func (o *GetTaskByIDNotFound) String() string {
 	return fmt.Sprintf("[GET /v1/tasks/{id}][%d] getTaskByIdNotFound ", 404)
 }
 

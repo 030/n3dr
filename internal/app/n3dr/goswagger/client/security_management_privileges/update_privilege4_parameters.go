@@ -54,10 +54,12 @@ func NewUpdatePrivilege4ParamsWithHTTPClient(client *http.Client) *UpdatePrivile
 	}
 }
 
-/* UpdatePrivilege4Params contains all the parameters to send to the API endpoint
-   for the update privilege 4 operation.
+/*
+UpdatePrivilege4Params contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update privilege 4 operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdatePrivilege4Params struct {
 
@@ -65,7 +67,7 @@ type UpdatePrivilege4Params struct {
 
 	   The privilege to update.
 	*/
-	Body *models.APIPrivilegeRepositoryContentSelectorRequest
+	Body *models.APIPrivilegeRepositoryAdminRequest
 
 	/* PrivilegeName.
 
@@ -127,13 +129,13 @@ func (o *UpdatePrivilege4Params) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update privilege 4 params
-func (o *UpdatePrivilege4Params) WithBody(body *models.APIPrivilegeRepositoryContentSelectorRequest) *UpdatePrivilege4Params {
+func (o *UpdatePrivilege4Params) WithBody(body *models.APIPrivilegeRepositoryAdminRequest) *UpdatePrivilege4Params {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update privilege 4 params
-func (o *UpdatePrivilege4Params) SetBody(body *models.APIPrivilegeRepositoryContentSelectorRequest) {
+func (o *UpdatePrivilege4Params) SetBody(body *models.APIPrivilegeRepositoryAdminRequest) {
 	o.Body = body
 }
 

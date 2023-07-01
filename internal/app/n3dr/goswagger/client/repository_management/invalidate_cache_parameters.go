@@ -52,10 +52,12 @@ func NewInvalidateCacheParamsWithHTTPClient(client *http.Client) *InvalidateCach
 	}
 }
 
-/* InvalidateCacheParams contains all the parameters to send to the API endpoint
-   for the invalidate cache operation.
+/*
+InvalidateCacheParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the invalidate cache operation.
+
+	Typically these are written to a http.Request.
 */
 type InvalidateCacheParams struct {
 

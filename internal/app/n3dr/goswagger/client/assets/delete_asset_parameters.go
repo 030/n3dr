@@ -52,10 +52,12 @@ func NewDeleteAssetParamsWithHTTPClient(client *http.Client) *DeleteAssetParams 
 	}
 }
 
-/* DeleteAssetParams contains all the parameters to send to the API endpoint
-   for the delete asset operation.
+/*
+DeleteAssetParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the delete asset operation.
+
+	Typically these are written to a http.Request.
 */
 type DeleteAssetParams struct {
 

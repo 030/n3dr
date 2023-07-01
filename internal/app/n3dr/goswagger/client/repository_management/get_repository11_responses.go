@@ -39,7 +39,8 @@ func NewGetRepository11OK() *GetRepository11OK {
 	return &GetRepository11OK{}
 }
 
-/* GetRepository11OK describes a response with status code 200, with default header values.
+/*
+GetRepository11OK describes a response with status code 200, with default header values.
 
 successful operation
 */
@@ -47,9 +48,44 @@ type GetRepository11OK struct {
 	Payload *models.NpmProxyAPIRepository
 }
 
+// IsSuccess returns true when this get repository11 o k response has a 2xx status code
+func (o *GetRepository11OK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get repository11 o k response has a 3xx status code
+func (o *GetRepository11OK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get repository11 o k response has a 4xx status code
+func (o *GetRepository11OK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get repository11 o k response has a 5xx status code
+func (o *GetRepository11OK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get repository11 o k response a status code equal to that given
+func (o *GetRepository11OK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get repository11 o k response
+func (o *GetRepository11OK) Code() int {
+	return 200
+}
+
 func (o *GetRepository11OK) Error() string {
 	return fmt.Sprintf("[GET /v1/repositories/npm/proxy/{repositoryName}][%d] getRepository11OK  %+v", 200, o.Payload)
 }
+
+func (o *GetRepository11OK) String() string {
+	return fmt.Sprintf("[GET /v1/repositories/npm/proxy/{repositoryName}][%d] getRepository11OK  %+v", 200, o.Payload)
+}
+
 func (o *GetRepository11OK) GetPayload() *models.NpmProxyAPIRepository {
 	return o.Payload
 }

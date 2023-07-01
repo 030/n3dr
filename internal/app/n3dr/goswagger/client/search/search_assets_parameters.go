@@ -53,10 +53,12 @@ func NewSearchAssetsParamsWithHTTPClient(client *http.Client) *SearchAssetsParam
 	}
 }
 
-/* SearchAssetsParams contains all the parameters to send to the API endpoint
-   for the search assets operation.
+/*
+SearchAssetsParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the search assets operation.
+
+	Typically these are written to a http.Request.
 */
 type SearchAssetsParams struct {
 
@@ -71,6 +73,12 @@ type SearchAssetsParams struct {
 	   Conan channel
 	*/
 	ConanChannel *string
+
+	/* ConanRevision.
+
+	   Conan recipe revision
+	*/
+	ConanRevision *string
 
 	/* ContinuationToken.
 
@@ -113,6 +121,12 @@ type SearchAssetsParams struct {
 	   Query by format
 	*/
 	Format *string
+
+	/* Gavec.
+
+	   Group asset version extension classifier
+	*/
+	Gavec *string
 
 	/* Group.
 
@@ -162,11 +176,59 @@ type SearchAssetsParams struct {
 	*/
 	Name *string
 
+	/* NpmAuthor.
+
+	   npm author
+	*/
+	NpmAuthor *string
+
+	/* NpmDescription.
+
+	   npm description
+	*/
+	NpmDescription *string
+
+	/* NpmKeywords.
+
+	   npm keywords
+	*/
+	NpmKeywords *string
+
+	/* NpmLicense.
+
+	   npm license
+	*/
+	NpmLicense *string
+
 	/* NpmScope.
 
 	   npm scope
 	*/
 	NpmScope *string
+
+	/* NpmTaggedIs.
+
+	   npm tagged is
+	*/
+	NpmTaggedIs *string
+
+	/* NpmTaggedNot.
+
+	   npm tagged not
+	*/
+	NpmTaggedNot *string
+
+	/* NugetAuthors.
+
+	   NuGet authors
+	*/
+	NugetAuthors *string
+
+	/* NugetDescription.
+
+	   NuGet description
+	*/
+	NugetDescription *string
 
 	/* NugetID.
 
@@ -174,11 +236,23 @@ type SearchAssetsParams struct {
 	*/
 	NugetID *string
 
+	/* NugetSummary.
+
+	   NuGet summary
+	*/
+	NugetSummary *string
+
 	/* NugetTags.
 
 	   NuGet tags
 	*/
 	NugetTags *string
+
+	/* NugetTitle.
+
+	   NuGet title
+	*/
+	NugetTitle *string
 
 	/* P2PluginName.
 
@@ -290,6 +364,12 @@ type SearchAssetsParams struct {
 	*/
 	YumArchitecture *string
 
+	/* YumName.
+
+	   Yum package name
+	*/
+	YumName *string
+
 	requestTimeout time.Duration
 	Context        context.Context
 	HTTPClient     *http.Client
@@ -363,6 +443,17 @@ func (o *SearchAssetsParams) WithConanChannel(conanChannel *string) *SearchAsset
 // SetConanChannel adds the conanChannel to the search assets params
 func (o *SearchAssetsParams) SetConanChannel(conanChannel *string) {
 	o.ConanChannel = conanChannel
+}
+
+// WithConanRevision adds the conanRevision to the search assets params
+func (o *SearchAssetsParams) WithConanRevision(conanRevision *string) *SearchAssetsParams {
+	o.SetConanRevision(conanRevision)
+	return o
+}
+
+// SetConanRevision adds the conanRevision to the search assets params
+func (o *SearchAssetsParams) SetConanRevision(conanRevision *string) {
+	o.ConanRevision = conanRevision
 }
 
 // WithContinuationToken adds the continuationToken to the search assets params
@@ -440,6 +531,17 @@ func (o *SearchAssetsParams) WithFormat(format *string) *SearchAssetsParams {
 // SetFormat adds the format to the search assets params
 func (o *SearchAssetsParams) SetFormat(format *string) {
 	o.Format = format
+}
+
+// WithGavec adds the gavec to the search assets params
+func (o *SearchAssetsParams) WithGavec(gavec *string) *SearchAssetsParams {
+	o.SetGavec(gavec)
+	return o
+}
+
+// SetGavec adds the gavec to the search assets params
+func (o *SearchAssetsParams) SetGavec(gavec *string) {
+	o.Gavec = gavec
 }
 
 // WithGroup adds the group to the search assets params
@@ -530,6 +632,50 @@ func (o *SearchAssetsParams) SetName(name *string) {
 	o.Name = name
 }
 
+// WithNpmAuthor adds the npmAuthor to the search assets params
+func (o *SearchAssetsParams) WithNpmAuthor(npmAuthor *string) *SearchAssetsParams {
+	o.SetNpmAuthor(npmAuthor)
+	return o
+}
+
+// SetNpmAuthor adds the npmAuthor to the search assets params
+func (o *SearchAssetsParams) SetNpmAuthor(npmAuthor *string) {
+	o.NpmAuthor = npmAuthor
+}
+
+// WithNpmDescription adds the npmDescription to the search assets params
+func (o *SearchAssetsParams) WithNpmDescription(npmDescription *string) *SearchAssetsParams {
+	o.SetNpmDescription(npmDescription)
+	return o
+}
+
+// SetNpmDescription adds the npmDescription to the search assets params
+func (o *SearchAssetsParams) SetNpmDescription(npmDescription *string) {
+	o.NpmDescription = npmDescription
+}
+
+// WithNpmKeywords adds the npmKeywords to the search assets params
+func (o *SearchAssetsParams) WithNpmKeywords(npmKeywords *string) *SearchAssetsParams {
+	o.SetNpmKeywords(npmKeywords)
+	return o
+}
+
+// SetNpmKeywords adds the npmKeywords to the search assets params
+func (o *SearchAssetsParams) SetNpmKeywords(npmKeywords *string) {
+	o.NpmKeywords = npmKeywords
+}
+
+// WithNpmLicense adds the npmLicense to the search assets params
+func (o *SearchAssetsParams) WithNpmLicense(npmLicense *string) *SearchAssetsParams {
+	o.SetNpmLicense(npmLicense)
+	return o
+}
+
+// SetNpmLicense adds the npmLicense to the search assets params
+func (o *SearchAssetsParams) SetNpmLicense(npmLicense *string) {
+	o.NpmLicense = npmLicense
+}
+
 // WithNpmScope adds the npmScope to the search assets params
 func (o *SearchAssetsParams) WithNpmScope(npmScope *string) *SearchAssetsParams {
 	o.SetNpmScope(npmScope)
@@ -539,6 +685,50 @@ func (o *SearchAssetsParams) WithNpmScope(npmScope *string) *SearchAssetsParams 
 // SetNpmScope adds the npmScope to the search assets params
 func (o *SearchAssetsParams) SetNpmScope(npmScope *string) {
 	o.NpmScope = npmScope
+}
+
+// WithNpmTaggedIs adds the npmTaggedIs to the search assets params
+func (o *SearchAssetsParams) WithNpmTaggedIs(npmTaggedIs *string) *SearchAssetsParams {
+	o.SetNpmTaggedIs(npmTaggedIs)
+	return o
+}
+
+// SetNpmTaggedIs adds the npmTaggedIs to the search assets params
+func (o *SearchAssetsParams) SetNpmTaggedIs(npmTaggedIs *string) {
+	o.NpmTaggedIs = npmTaggedIs
+}
+
+// WithNpmTaggedNot adds the npmTaggedNot to the search assets params
+func (o *SearchAssetsParams) WithNpmTaggedNot(npmTaggedNot *string) *SearchAssetsParams {
+	o.SetNpmTaggedNot(npmTaggedNot)
+	return o
+}
+
+// SetNpmTaggedNot adds the npmTaggedNot to the search assets params
+func (o *SearchAssetsParams) SetNpmTaggedNot(npmTaggedNot *string) {
+	o.NpmTaggedNot = npmTaggedNot
+}
+
+// WithNugetAuthors adds the nugetAuthors to the search assets params
+func (o *SearchAssetsParams) WithNugetAuthors(nugetAuthors *string) *SearchAssetsParams {
+	o.SetNugetAuthors(nugetAuthors)
+	return o
+}
+
+// SetNugetAuthors adds the nugetAuthors to the search assets params
+func (o *SearchAssetsParams) SetNugetAuthors(nugetAuthors *string) {
+	o.NugetAuthors = nugetAuthors
+}
+
+// WithNugetDescription adds the nugetDescription to the search assets params
+func (o *SearchAssetsParams) WithNugetDescription(nugetDescription *string) *SearchAssetsParams {
+	o.SetNugetDescription(nugetDescription)
+	return o
+}
+
+// SetNugetDescription adds the nugetDescription to the search assets params
+func (o *SearchAssetsParams) SetNugetDescription(nugetDescription *string) {
+	o.NugetDescription = nugetDescription
 }
 
 // WithNugetID adds the nugetID to the search assets params
@@ -552,6 +742,17 @@ func (o *SearchAssetsParams) SetNugetID(nugetID *string) {
 	o.NugetID = nugetID
 }
 
+// WithNugetSummary adds the nugetSummary to the search assets params
+func (o *SearchAssetsParams) WithNugetSummary(nugetSummary *string) *SearchAssetsParams {
+	o.SetNugetSummary(nugetSummary)
+	return o
+}
+
+// SetNugetSummary adds the nugetSummary to the search assets params
+func (o *SearchAssetsParams) SetNugetSummary(nugetSummary *string) {
+	o.NugetSummary = nugetSummary
+}
+
 // WithNugetTags adds the nugetTags to the search assets params
 func (o *SearchAssetsParams) WithNugetTags(nugetTags *string) *SearchAssetsParams {
 	o.SetNugetTags(nugetTags)
@@ -561,6 +762,17 @@ func (o *SearchAssetsParams) WithNugetTags(nugetTags *string) *SearchAssetsParam
 // SetNugetTags adds the nugetTags to the search assets params
 func (o *SearchAssetsParams) SetNugetTags(nugetTags *string) {
 	o.NugetTags = nugetTags
+}
+
+// WithNugetTitle adds the nugetTitle to the search assets params
+func (o *SearchAssetsParams) WithNugetTitle(nugetTitle *string) *SearchAssetsParams {
+	o.SetNugetTitle(nugetTitle)
+	return o
+}
+
+// SetNugetTitle adds the nugetTitle to the search assets params
+func (o *SearchAssetsParams) SetNugetTitle(nugetTitle *string) {
+	o.NugetTitle = nugetTitle
 }
 
 // WithP2PluginName adds the p2PluginName to the search assets params
@@ -761,6 +973,17 @@ func (o *SearchAssetsParams) SetYumArchitecture(yumArchitecture *string) {
 	o.YumArchitecture = yumArchitecture
 }
 
+// WithYumName adds the yumName to the search assets params
+func (o *SearchAssetsParams) WithYumName(yumName *string) *SearchAssetsParams {
+	o.SetYumName(yumName)
+	return o
+}
+
+// SetYumName adds the yumName to the search assets params
+func (o *SearchAssetsParams) SetYumName(yumName *string) {
+	o.YumName = yumName
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -798,6 +1021,23 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		if qConanChannel != "" {
 
 			if err := r.SetQueryParam("conan.channel", qConanChannel); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.ConanRevision != nil {
+
+		// query param conan.revision
+		var qrConanRevision string
+
+		if o.ConanRevision != nil {
+			qrConanRevision = *o.ConanRevision
+		}
+		qConanRevision := qrConanRevision
+		if qConanRevision != "" {
+
+			if err := r.SetQueryParam("conan.revision", qConanRevision); err != nil {
 				return err
 			}
 		}
@@ -908,6 +1148,23 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		if qFormat != "" {
 
 			if err := r.SetQueryParam("format", qFormat); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Gavec != nil {
+
+		// query param gavec
+		var qrGavec string
+
+		if o.Gavec != nil {
+			qrGavec = *o.Gavec
+		}
+		qGavec := qrGavec
+		if qGavec != "" {
+
+			if err := r.SetQueryParam("gavec", qGavec); err != nil {
 				return err
 			}
 		}
@@ -1049,6 +1306,74 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		}
 	}
 
+	if o.NpmAuthor != nil {
+
+		// query param npm.author
+		var qrNpmAuthor string
+
+		if o.NpmAuthor != nil {
+			qrNpmAuthor = *o.NpmAuthor
+		}
+		qNpmAuthor := qrNpmAuthor
+		if qNpmAuthor != "" {
+
+			if err := r.SetQueryParam("npm.author", qNpmAuthor); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmDescription != nil {
+
+		// query param npm.description
+		var qrNpmDescription string
+
+		if o.NpmDescription != nil {
+			qrNpmDescription = *o.NpmDescription
+		}
+		qNpmDescription := qrNpmDescription
+		if qNpmDescription != "" {
+
+			if err := r.SetQueryParam("npm.description", qNpmDescription); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmKeywords != nil {
+
+		// query param npm.keywords
+		var qrNpmKeywords string
+
+		if o.NpmKeywords != nil {
+			qrNpmKeywords = *o.NpmKeywords
+		}
+		qNpmKeywords := qrNpmKeywords
+		if qNpmKeywords != "" {
+
+			if err := r.SetQueryParam("npm.keywords", qNpmKeywords); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmLicense != nil {
+
+		// query param npm.license
+		var qrNpmLicense string
+
+		if o.NpmLicense != nil {
+			qrNpmLicense = *o.NpmLicense
+		}
+		qNpmLicense := qrNpmLicense
+		if qNpmLicense != "" {
+
+			if err := r.SetQueryParam("npm.license", qNpmLicense); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NpmScope != nil {
 
 		// query param npm.scope
@@ -1061,6 +1386,74 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		if qNpmScope != "" {
 
 			if err := r.SetQueryParam("npm.scope", qNpmScope); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmTaggedIs != nil {
+
+		// query param npm.tagged_is
+		var qrNpmTaggedIs string
+
+		if o.NpmTaggedIs != nil {
+			qrNpmTaggedIs = *o.NpmTaggedIs
+		}
+		qNpmTaggedIs := qrNpmTaggedIs
+		if qNpmTaggedIs != "" {
+
+			if err := r.SetQueryParam("npm.tagged_is", qNpmTaggedIs); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NpmTaggedNot != nil {
+
+		// query param npm.tagged_not
+		var qrNpmTaggedNot string
+
+		if o.NpmTaggedNot != nil {
+			qrNpmTaggedNot = *o.NpmTaggedNot
+		}
+		qNpmTaggedNot := qrNpmTaggedNot
+		if qNpmTaggedNot != "" {
+
+			if err := r.SetQueryParam("npm.tagged_not", qNpmTaggedNot); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NugetAuthors != nil {
+
+		// query param nuget.authors
+		var qrNugetAuthors string
+
+		if o.NugetAuthors != nil {
+			qrNugetAuthors = *o.NugetAuthors
+		}
+		qNugetAuthors := qrNugetAuthors
+		if qNugetAuthors != "" {
+
+			if err := r.SetQueryParam("nuget.authors", qNugetAuthors); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NugetDescription != nil {
+
+		// query param nuget.description
+		var qrNugetDescription string
+
+		if o.NugetDescription != nil {
+			qrNugetDescription = *o.NugetDescription
+		}
+		qNugetDescription := qrNugetDescription
+		if qNugetDescription != "" {
+
+			if err := r.SetQueryParam("nuget.description", qNugetDescription); err != nil {
 				return err
 			}
 		}
@@ -1083,6 +1476,23 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		}
 	}
 
+	if o.NugetSummary != nil {
+
+		// query param nuget.summary
+		var qrNugetSummary string
+
+		if o.NugetSummary != nil {
+			qrNugetSummary = *o.NugetSummary
+		}
+		qNugetSummary := qrNugetSummary
+		if qNugetSummary != "" {
+
+			if err := r.SetQueryParam("nuget.summary", qNugetSummary); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NugetTags != nil {
 
 		// query param nuget.tags
@@ -1095,6 +1505,23 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		if qNugetTags != "" {
 
 			if err := r.SetQueryParam("nuget.tags", qNugetTags); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NugetTitle != nil {
+
+		// query param nuget.title
+		var qrNugetTitle string
+
+		if o.NugetTitle != nil {
+			qrNugetTitle = *o.NugetTitle
+		}
+		qNugetTitle := qrNugetTitle
+		if qNugetTitle != "" {
+
+			if err := r.SetQueryParam("nuget.title", qNugetTitle); err != nil {
 				return err
 			}
 		}
@@ -1383,6 +1810,23 @@ func (o *SearchAssetsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		if qYumArchitecture != "" {
 
 			if err := r.SetQueryParam("yum.architecture", qYumArchitecture); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.YumName != nil {
+
+		// query param yum.name
+		var qrYumName string
+
+		if o.YumName != nil {
+			qrYumName = *o.YumName
+		}
+		qYumName := qrYumName
+		if qYumName != "" {
+
+			if err := r.SetQueryParam("yum.name", qYumName); err != nil {
 				return err
 			}
 		}

@@ -38,7 +38,7 @@ type ClientService interface {
 }
 
 /*
-  Read gets anonymous access settings
+Read gets anonymous access settings
 */
 func (a *Client) Read(params *ReadParams, opts ...ClientOption) (*ReadOK, error) {
 	// TODO: Validate the params before sending
@@ -76,7 +76,7 @@ func (a *Client) Read(params *ReadParams, opts ...ClientOption) (*ReadOK, error)
 }
 
 /*
-  Update updates anonymous access settings
+Update updates anonymous access settings
 */
 func (a *Client) Update(params *UpdateParams, opts ...ClientOption) (*UpdateOK, error) {
 	// TODO: Validate the params before sending

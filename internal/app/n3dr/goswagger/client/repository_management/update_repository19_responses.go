@@ -54,14 +54,49 @@ func NewUpdateRepository19NoContent() *UpdateRepository19NoContent {
 	return &UpdateRepository19NoContent{}
 }
 
-/* UpdateRepository19NoContent describes a response with status code 204, with default header values.
+/*
+UpdateRepository19NoContent describes a response with status code 204, with default header values.
 
 Repository updated
 */
 type UpdateRepository19NoContent struct {
 }
 
+// IsSuccess returns true when this update repository19 no content response has a 2xx status code
+func (o *UpdateRepository19NoContent) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update repository19 no content response has a 3xx status code
+func (o *UpdateRepository19NoContent) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository19 no content response has a 4xx status code
+func (o *UpdateRepository19NoContent) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update repository19 no content response has a 5xx status code
+func (o *UpdateRepository19NoContent) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository19 no content response a status code equal to that given
+func (o *UpdateRepository19NoContent) IsCode(code int) bool {
+	return code == 204
+}
+
+// Code gets the status code for the update repository19 no content response
+func (o *UpdateRepository19NoContent) Code() int {
+	return 204
+}
+
 func (o *UpdateRepository19NoContent) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19NoContent ", 204)
+}
+
+func (o *UpdateRepository19NoContent) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19NoContent ", 204)
 }
 
@@ -75,14 +110,49 @@ func NewUpdateRepository19Unauthorized() *UpdateRepository19Unauthorized {
 	return &UpdateRepository19Unauthorized{}
 }
 
-/* UpdateRepository19Unauthorized describes a response with status code 401, with default header values.
+/*
+UpdateRepository19Unauthorized describes a response with status code 401, with default header values.
 
 Authentication required
 */
 type UpdateRepository19Unauthorized struct {
 }
 
+// IsSuccess returns true when this update repository19 unauthorized response has a 2xx status code
+func (o *UpdateRepository19Unauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository19 unauthorized response has a 3xx status code
+func (o *UpdateRepository19Unauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository19 unauthorized response has a 4xx status code
+func (o *UpdateRepository19Unauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository19 unauthorized response has a 5xx status code
+func (o *UpdateRepository19Unauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository19 unauthorized response a status code equal to that given
+func (o *UpdateRepository19Unauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update repository19 unauthorized response
+func (o *UpdateRepository19Unauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateRepository19Unauthorized) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19Unauthorized ", 401)
+}
+
+func (o *UpdateRepository19Unauthorized) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19Unauthorized ", 401)
 }
 
@@ -96,14 +166,49 @@ func NewUpdateRepository19Forbidden() *UpdateRepository19Forbidden {
 	return &UpdateRepository19Forbidden{}
 }
 
-/* UpdateRepository19Forbidden describes a response with status code 403, with default header values.
+/*
+UpdateRepository19Forbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions
 */
 type UpdateRepository19Forbidden struct {
 }
 
+// IsSuccess returns true when this update repository19 forbidden response has a 2xx status code
+func (o *UpdateRepository19Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository19 forbidden response has a 3xx status code
+func (o *UpdateRepository19Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository19 forbidden response has a 4xx status code
+func (o *UpdateRepository19Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository19 forbidden response has a 5xx status code
+func (o *UpdateRepository19Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository19 forbidden response a status code equal to that given
+func (o *UpdateRepository19Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update repository19 forbidden response
+func (o *UpdateRepository19Forbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateRepository19Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19Forbidden ", 403)
+}
+
+func (o *UpdateRepository19Forbidden) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19Forbidden ", 403)
 }
 
@@ -117,14 +222,49 @@ func NewUpdateRepository19NotFound() *UpdateRepository19NotFound {
 	return &UpdateRepository19NotFound{}
 }
 
-/* UpdateRepository19NotFound describes a response with status code 404, with default header values.
+/*
+UpdateRepository19NotFound describes a response with status code 404, with default header values.
 
 Repository not found
 */
 type UpdateRepository19NotFound struct {
 }
 
+// IsSuccess returns true when this update repository19 not found response has a 2xx status code
+func (o *UpdateRepository19NotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update repository19 not found response has a 3xx status code
+func (o *UpdateRepository19NotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update repository19 not found response has a 4xx status code
+func (o *UpdateRepository19NotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update repository19 not found response has a 5xx status code
+func (o *UpdateRepository19NotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update repository19 not found response a status code equal to that given
+func (o *UpdateRepository19NotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update repository19 not found response
+func (o *UpdateRepository19NotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateRepository19NotFound) Error() string {
+	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19NotFound ", 404)
+}
+
+func (o *UpdateRepository19NotFound) String() string {
 	return fmt.Sprintf("[PUT /v1/repositories/docker/proxy/{repositoryName}][%d] updateRepository19NotFound ", 404)
 }
 

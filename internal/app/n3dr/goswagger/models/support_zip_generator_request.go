@@ -23,6 +23,9 @@ type SupportZipGeneratorRequest struct {
 	// configuration
 	Configuration bool `json:"configuration,omitempty"`
 
+	// hostname
+	Hostname string `json:"hostname,omitempty"`
+
 	// jmx
 	Jmx bool `json:"jmx,omitempty"`
 

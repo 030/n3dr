@@ -44,7 +44,7 @@ type ClientService interface {
 }
 
 /*
-  ChangePassword changes a user s password
+ChangePassword changes a user s password
 */
 func (a *Client) ChangePassword(params *ChangePasswordParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -75,7 +75,7 @@ func (a *Client) ChangePassword(params *ChangePasswordParams, opts ...ClientOpti
 }
 
 /*
-  CreateUser creates a new user in the default source
+CreateUser creates a new user in the default source
 */
 func (a *Client) CreateUser(params *CreateUserParams, opts ...ClientOption) (*CreateUserOK, error) {
 	// TODO: Validate the params before sending
@@ -113,7 +113,7 @@ func (a *Client) CreateUser(params *CreateUserParams, opts ...ClientOption) (*Cr
 }
 
 /*
-  DeleteUser deletes a user
+DeleteUser deletes a user
 */
 func (a *Client) DeleteUser(params *DeleteUserParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -144,7 +144,7 @@ func (a *Client) DeleteUser(params *DeleteUserParams, opts ...ClientOption) erro
 }
 
 /*
-  GetUsers retrieves a list of users note if the source is not default the response is limited to 100 users
+GetUsers retrieves a list of users note if the source is not default the response is limited to 100 users
 */
 func (a *Client) GetUsers(params *GetUsersParams, opts ...ClientOption) (*GetUsersOK, error) {
 	// TODO: Validate the params before sending
@@ -182,7 +182,7 @@ func (a *Client) GetUsers(params *GetUsersParams, opts ...ClientOption) (*GetUse
 }
 
 /*
-  UpdateUser updates an existing user
+UpdateUser updates an existing user
 */
 func (a *Client) UpdateUser(params *UpdateUserParams, opts ...ClientOption) error {
 	// TODO: Validate the params before sending

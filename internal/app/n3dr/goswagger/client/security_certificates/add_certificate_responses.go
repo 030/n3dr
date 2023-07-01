@@ -51,7 +51,8 @@ func NewAddCertificateCreated() *AddCertificateCreated {
 	return &AddCertificateCreated{}
 }
 
-/* AddCertificateCreated describes a response with status code 201, with default header values.
+/*
+AddCertificateCreated describes a response with status code 201, with default header values.
 
 The certificate was successfully added.
 */
@@ -59,9 +60,44 @@ type AddCertificateCreated struct {
 	Payload *models.APICertificate
 }
 
+// IsSuccess returns true when this add certificate created response has a 2xx status code
+func (o *AddCertificateCreated) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this add certificate created response has a 3xx status code
+func (o *AddCertificateCreated) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this add certificate created response has a 4xx status code
+func (o *AddCertificateCreated) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this add certificate created response has a 5xx status code
+func (o *AddCertificateCreated) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this add certificate created response a status code equal to that given
+func (o *AddCertificateCreated) IsCode(code int) bool {
+	return code == 201
+}
+
+// Code gets the status code for the add certificate created response
+func (o *AddCertificateCreated) Code() int {
+	return 201
+}
+
 func (o *AddCertificateCreated) Error() string {
 	return fmt.Sprintf("[POST /v1/security/ssl/truststore][%d] addCertificateCreated  %+v", 201, o.Payload)
 }
+
+func (o *AddCertificateCreated) String() string {
+	return fmt.Sprintf("[POST /v1/security/ssl/truststore][%d] addCertificateCreated  %+v", 201, o.Payload)
+}
+
 func (o *AddCertificateCreated) GetPayload() *models.APICertificate {
 	return o.Payload
 }
@@ -83,14 +119,49 @@ func NewAddCertificateForbidden() *AddCertificateForbidden {
 	return &AddCertificateForbidden{}
 }
 
-/* AddCertificateForbidden describes a response with status code 403, with default header values.
+/*
+AddCertificateForbidden describes a response with status code 403, with default header values.
 
 Insufficient permissions to add certificate to the trust store.
 */
 type AddCertificateForbidden struct {
 }
 
+// IsSuccess returns true when this add certificate forbidden response has a 2xx status code
+func (o *AddCertificateForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this add certificate forbidden response has a 3xx status code
+func (o *AddCertificateForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this add certificate forbidden response has a 4xx status code
+func (o *AddCertificateForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this add certificate forbidden response has a 5xx status code
+func (o *AddCertificateForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this add certificate forbidden response a status code equal to that given
+func (o *AddCertificateForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the add certificate forbidden response
+func (o *AddCertificateForbidden) Code() int {
+	return 403
+}
+
 func (o *AddCertificateForbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ssl/truststore][%d] addCertificateForbidden ", 403)
+}
+
+func (o *AddCertificateForbidden) String() string {
 	return fmt.Sprintf("[POST /v1/security/ssl/truststore][%d] addCertificateForbidden ", 403)
 }
 
@@ -104,14 +175,49 @@ func NewAddCertificateConflict() *AddCertificateConflict {
 	return &AddCertificateConflict{}
 }
 
-/* AddCertificateConflict describes a response with status code 409, with default header values.
+/*
+AddCertificateConflict describes a response with status code 409, with default header values.
 
 The certificate already exists in the system.
 */
 type AddCertificateConflict struct {
 }
 
+// IsSuccess returns true when this add certificate conflict response has a 2xx status code
+func (o *AddCertificateConflict) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this add certificate conflict response has a 3xx status code
+func (o *AddCertificateConflict) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this add certificate conflict response has a 4xx status code
+func (o *AddCertificateConflict) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this add certificate conflict response has a 5xx status code
+func (o *AddCertificateConflict) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this add certificate conflict response a status code equal to that given
+func (o *AddCertificateConflict) IsCode(code int) bool {
+	return code == 409
+}
+
+// Code gets the status code for the add certificate conflict response
+func (o *AddCertificateConflict) Code() int {
+	return 409
+}
+
 func (o *AddCertificateConflict) Error() string {
+	return fmt.Sprintf("[POST /v1/security/ssl/truststore][%d] addCertificateConflict ", 409)
+}
+
+func (o *AddCertificateConflict) String() string {
 	return fmt.Sprintf("[POST /v1/security/ssl/truststore][%d] addCertificateConflict ", 409)
 }
 

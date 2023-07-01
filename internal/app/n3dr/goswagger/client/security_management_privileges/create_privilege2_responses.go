@@ -42,14 +42,49 @@ func NewCreatePrivilege2BadRequest() *CreatePrivilege2BadRequest {
 	return &CreatePrivilege2BadRequest{}
 }
 
-/* CreatePrivilege2BadRequest describes a response with status code 400, with default header values.
+/*
+CreatePrivilege2BadRequest describes a response with status code 400, with default header values.
 
 Privilege object not configured properly.
 */
 type CreatePrivilege2BadRequest struct {
 }
 
+// IsSuccess returns true when this create privilege2 bad request response has a 2xx status code
+func (o *CreatePrivilege2BadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create privilege2 bad request response has a 3xx status code
+func (o *CreatePrivilege2BadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create privilege2 bad request response has a 4xx status code
+func (o *CreatePrivilege2BadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create privilege2 bad request response has a 5xx status code
+func (o *CreatePrivilege2BadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create privilege2 bad request response a status code equal to that given
+func (o *CreatePrivilege2BadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create privilege2 bad request response
+func (o *CreatePrivilege2BadRequest) Code() int {
+	return 400
+}
+
 func (o *CreatePrivilege2BadRequest) Error() string {
+	return fmt.Sprintf("[POST /v1/security/privileges/repository-content-selector][%d] createPrivilege2BadRequest ", 400)
+}
+
+func (o *CreatePrivilege2BadRequest) String() string {
 	return fmt.Sprintf("[POST /v1/security/privileges/repository-content-selector][%d] createPrivilege2BadRequest ", 400)
 }
 
@@ -63,14 +98,49 @@ func NewCreatePrivilege2Forbidden() *CreatePrivilege2Forbidden {
 	return &CreatePrivilege2Forbidden{}
 }
 
-/* CreatePrivilege2Forbidden describes a response with status code 403, with default header values.
+/*
+CreatePrivilege2Forbidden describes a response with status code 403, with default header values.
 
 The user does not have permission to perform the operation.
 */
 type CreatePrivilege2Forbidden struct {
 }
 
+// IsSuccess returns true when this create privilege2 forbidden response has a 2xx status code
+func (o *CreatePrivilege2Forbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create privilege2 forbidden response has a 3xx status code
+func (o *CreatePrivilege2Forbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create privilege2 forbidden response has a 4xx status code
+func (o *CreatePrivilege2Forbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create privilege2 forbidden response has a 5xx status code
+func (o *CreatePrivilege2Forbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create privilege2 forbidden response a status code equal to that given
+func (o *CreatePrivilege2Forbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create privilege2 forbidden response
+func (o *CreatePrivilege2Forbidden) Code() int {
+	return 403
+}
+
 func (o *CreatePrivilege2Forbidden) Error() string {
+	return fmt.Sprintf("[POST /v1/security/privileges/repository-content-selector][%d] createPrivilege2Forbidden ", 403)
+}
+
+func (o *CreatePrivilege2Forbidden) String() string {
 	return fmt.Sprintf("[POST /v1/security/privileges/repository-content-selector][%d] createPrivilege2Forbidden ", 403)
 }
 
