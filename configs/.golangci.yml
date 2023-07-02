@@ -124,7 +124,6 @@ linters-settings:
         allow:
           - $gostd
           - github.com/030/logging/pkg/logging
-          - github.com/030/mij
           - github.com/030/n3dr/internal/app/n3dr
           - github.com/030/p2iwd/pkg/p2iwd
           - github.com/aws/aws-sdk-go/aws
