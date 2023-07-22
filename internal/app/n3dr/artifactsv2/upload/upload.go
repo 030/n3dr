@@ -519,6 +519,13 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			return err
 		}
 		c.NugetAsset = f
+	case "pypi":
+		c.Repository = localDiskRepo
+		f, err := os.Open(filepath.Clean(path))
+		if err != nil {
+			return err
+		}
+		c.NugetAsset = f
 	case "raw":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))

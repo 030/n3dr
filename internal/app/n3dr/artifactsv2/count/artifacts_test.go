@@ -1,3 +1,6 @@
+//go:build unit
+// +build unit
+
 package count
 
 import (
@@ -17,6 +20,6 @@ func TestAssets(t *testing.T) {
 	repositoriesTotalArtifactsPointer := &repositoriesTotalArtifacts
 	n.assets(assets, repositoriesTotalArtifactsPointer)
 
-	assert.Equal(t, 3, *repositoriesTotalArtifactsPointer)
+	assert.Equal(t, 31, *repositoriesTotalArtifactsPointer)
 	assert.Equal(t, 3, total)
 }

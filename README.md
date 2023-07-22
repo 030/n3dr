@@ -101,6 +101,7 @@ configured by N3DR.
 
 - [docker](./docs/quickstarts/DOCKER.md)
 - [maven2](./docs/quickstarts/MAVEN2.md)
+- [pypi](./docs/quickstarts/PYPI.md)
 - [rubygems](./docs/quickstarts/RUBYGEMS.md)
 
 ## Instructions
@@ -110,3 +111,5 @@ configured by N3DR.
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/030/n3dr.svg)](https://starchart.cc/030/n3dr)
+
+go test -tags=integration ./...

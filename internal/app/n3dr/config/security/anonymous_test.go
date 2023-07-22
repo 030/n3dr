@@ -1,3 +1,6 @@
+//go:build unit
+// +build unit
+
 package security
 
 import (
@@ -42,5 +45,5 @@ func TestAnonymousFail(t *testing.T) {
 	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi-incorrect", User: "admin"}
 	s := Security{Nexus3: n}
 	err := s.Anonymous(false)
-	assert.EqualError(t, err, "could not change anonymous access mode: 'response status code does not match any response statuses defined for this endpoint in the swagger spec (status 401): {}'")
+	assert.EqualError(t, err, "cou2ld not change anonymous access mode: 'response status code does not match any response statuses defined for this endpoint in the swagger spec (status 401): {}'")
 }

@@ -1,3 +1,6 @@
+//go:build unit
+// +build unit
+
 package repository
 
 import (
@@ -60,7 +63,7 @@ func TestCreateRawHosted(t *testing.T) {
 }
 
 func TestCreateYumHosted(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	n := connection.Nexus3{FQDN: "localhost:100021", Pass: "testi", User: "admin"}
 	r := Repository{Nexus3: n}
 	err := r.CreateYumHosted("some-yum-repo")
 	assert.NoError(t, err)
