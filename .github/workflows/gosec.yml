@@ -15,7 +15,7 @@ jobs:
       - name: Download gosec
         run: |
           export GOSEC_URL=https://github.com/securego/gosec/releases/download
-          export GOSEC_VERSION=2.16.0
+          export GOSEC_VERSION=2.17.0
           export GOSEC=${GOSEC_URL}/v${GOSEC_VERSION}/gosec_${GOSEC_VERSION}
           curl -L ${GOSEC}_linux_amd64.tar.gz -o gosec.tar.gz
           tar -xvf gosec.tar.gz
