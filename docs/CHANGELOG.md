@@ -2,11 +2,14 @@
 ## [Unreleased]
 
 
-<a name="7.2.4"></a>
-## [7.2.4] - 2023-07-25
+<a name="7.2.5"></a>
+## [7.2.5] - 2023-08-25
 ### Build
 - **deps:** Update versions.
 
+
+<a name="7.2.4"></a>
+## [7.2.4] - 2023-07-27
 
 <a name="7.2.3"></a>
 ## [7.2.3] - 2023-07-01
@@ -382,7 +385,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.2.4...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.2.5...HEAD
+[7.2.5]: https://github.com/030/n3dr/compare/7.2.4...7.2.5
 [7.2.4]: https://github.com/030/n3dr/compare/7.2.3...7.2.4
 [7.2.3]: https://github.com/030/n3dr/compare/7.2.2...7.2.3
 [7.2.2]: https://github.com/030/n3dr/compare/7.2.1...7.2.2
