@@ -25,21 +25,24 @@ func TestMain(m *testing.M) {
 }
 
 func TestAnonymousEnable(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi", User: "admin", HTTPS: &https}
 	s := Security{Nexus3: n}
 	err := s.Anonymous(true)
 	assert.NoError(t, err)
 }
 
 func TestAnonymousDisable(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi", User: "admin", HTTPS: &https}
 	s := Security{Nexus3: n}
 	err := s.Anonymous(false)
 	assert.NoError(t, err)
 }
 
 func TestAnonymousFail(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi-incorrect", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10000", Pass: "testi-incorrect", User: "admin", HTTPS: &https}
 	s := Security{Nexus3: n}
 	err := s.Anonymous(false)
 	assert.EqualError(t, err, "could not change anonymous access mode: 'response status code does not match any response statuses defined for this endpoint in the swagger spec (status 401): {}'")

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/030/n3dr/internal/app/n3dr/artifactsv2"
@@ -23,7 +22,6 @@ var syncCmd = &cobra.Command{
 	Short: "sync",
 	Long:  `sync`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("sync called")
 		numberOfURLs := len(otherNexus3URLs)
 		numberOfPasswords := len(otherNexus3Passwords)
 		numberOfUsers := len(otherNexus3Users)
@@ -31,7 +29,16 @@ var syncCmd = &cobra.Command{
 			log.Fatal("incorrect number of elements. Ensure that the number of elements is identical")
 		}
 
-		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure}
+		n := connection.Nexus3{
+			DockerHost:       dockerHost,
+			DockerPort:       dockerPort,
+			DockerPortSecure: dockerPortSecure,
+			DownloadDirName:  downloadDirName,
+			FQDN:             n3drURL,
+			HTTPS:            &https,
+			Pass:             n3drPass,
+			User:             n3drUser,
+		}
 		a := artifactsv2.Nexus3{Nexus3: &n}
 		if err := a.Backup(); err != nil {
 			log.Fatal(err)

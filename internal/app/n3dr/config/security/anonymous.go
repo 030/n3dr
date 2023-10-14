@@ -19,7 +19,10 @@ func (s *Security) Anonymous(enabled bool) error {
 
 	log.Info("changing anonymous access")
 
-	client := s.Nexus3.Client()
+	client, err := s.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 
 	anonymousAccess := security_management_anonymous_access.UpdateParams{Body: &aasx}
 	anonymousAccess.WithTimeout(time.Second * 30)

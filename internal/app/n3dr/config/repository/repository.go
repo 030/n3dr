@@ -33,7 +33,10 @@ func created(name string, err error) error {
 
 func (r *Repository) CreateAptProxied(name string) error {
 	log.Infof("Creating proxied apt repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -67,7 +70,10 @@ func (r *Repository) CreateAptProxied(name string) error {
 
 func (r *Repository) CreateYumProxied(name string) error {
 	log.Infof("Creating proxied yum repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -99,7 +105,10 @@ func (r *Repository) CreateYumProxied(name string) error {
 
 func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) error {
 	log.Infof("Creating docker hosted repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -130,7 +139,10 @@ func (r *Repository) CreateDockerHosted(secure bool, port int32, name string) er
 
 func (r *Repository) CreateGemHosted(name string) error {
 	log.Infof("creating gem hosted repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -152,7 +164,10 @@ func (r *Repository) CreateGemHosted(name string) error {
 
 func (r *Repository) CreateMavenHosted(name string, snapshot bool) error {
 	log.Infof("creating maven hosted repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -179,7 +194,10 @@ func (r *Repository) CreateMavenHosted(name string, snapshot bool) error {
 
 func (r *Repository) CreateNpmHosted(name string, snapshot bool) error {
 	log.Infof("creating npm hosted repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -201,7 +219,10 @@ func (r *Repository) CreateNpmHosted(name string, snapshot bool) error {
 
 func (r *Repository) CreateRawHosted(name string) error {
 	log.Infof("Creating raw hosted repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -223,7 +244,10 @@ func (r *Repository) CreateRawHosted(name string) error {
 
 func (r *Repository) CreateYumHosted(name string) error {
 	log.Infof("Creating yum hosted repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}
@@ -248,7 +272,10 @@ func (r *Repository) CreateYumHosted(name string) error {
 
 func (r *Repository) Delete(name string) error {
 	log.Infof("Deleting repository: '%s'...", name)
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if name == "" {
 		return fmt.Errorf("repo name should not be empty")
 	}

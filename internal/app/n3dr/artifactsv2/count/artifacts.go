@@ -111,7 +111,10 @@ func (n *Nexus3) items(items []*models.ComponentXO, repositoriesTotalArtifacts *
 }
 
 func (n *Nexus3) artifact(continuationToken string, repositoriesTotalArtifacts *int, repo *models.AbstractAPIRepository) error {
-	client := n.Nexus3.Client()
+	client, err := n.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	c := components.GetComponentsParams{ContinuationToken: &continuationToken, Repository: repo.Name}
 	c.WithTimeout(time.Second * 60)
 	resp, err := client.Components.GetComponents(&c)

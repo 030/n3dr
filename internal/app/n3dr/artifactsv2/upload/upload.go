@@ -74,7 +74,14 @@ func (n *Nexus3) reposOnDisk() (localDiskRepos []string, err error) {
 }
 
 func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
-	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS}
+	cn := connection.Nexus3{
+		BasePathPrefix:  n.BasePathPrefix,
+		FQDN:            n.FQDN,
+		DownloadDirName: n.DownloadDirName,
+		Pass:            n.Pass,
+		User:            n.User,
+		HTTPS:           n.HTTPS,
+	}
 	a := artifacts.Nexus3{Nexus3: &cn}
 	repos, err := a.Repos()
 	if err != nil {
@@ -299,7 +306,7 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 	standardClient := retryClient.StandardClient()
 
 	scheme := "http"
-	if n.HTTPS {
+	if *n.HTTPS {
 		scheme = "https"
 	}
 
@@ -591,7 +598,10 @@ func upload(c components.UploadComponentParams, client *client.Nexus3, path stri
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
 	var wg sync.WaitGroup
 
-	c := n.Nexus3.Client()
+	c, err := n.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	if err := filepath.WalkDir(localDiskRepoHome,
 		func(path string, info fs.DirEntry, err error) error {
 			if err != nil {
@@ -651,7 +661,10 @@ func closeFileObjectIfNeeded(f *os.File) error {
 }
 
 func (n *Nexus3) maven2SnapshotsUpload(localDiskRepo string) {
-	client := n.Nexus3.Client()
+	client, err := n.Nexus3.Client()
+	if err != nil {
+		panic(err)
+	}
 	r := repository_management.GetRepository2Params{RepositoryName: localDiskRepo}
 	r.WithTimeout(time.Second * 30)
 	resp, err := client.RepositoryManagement.GetRepository2(&r)

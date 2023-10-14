@@ -25,42 +25,48 @@ func TestMain(m *testing.M) {
 }
 
 func TestCreateDockerHosted(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin", HTTPS: &https}
 	r := Repository{Nexus3: n}
 	err := r.CreateDockerHosted(false, 2345, "some-docker-repo")
 	assert.NoError(t, err)
 }
 
 func TestCreateDockerHostedFail(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin", HTTPS: &https}
 	r := Repository{Nexus3: n}
 	err := r.CreateDockerHosted(false, 2345, "")
 	assert.EqualError(t, err, "repo name should not be empty")
 }
 
 func TestCreateMavenHosted(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin", HTTPS: &https}
 	r := Repository{Nexus3: n}
 	err := r.CreateMavenHosted("some-maven-repo", false)
 	assert.NoError(t, err)
 }
 
 func TestCreateNpmHosted(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin", HTTPS: &https}
 	r := Repository{Nexus3: n}
 	err := r.CreateNpmHosted("some-npm-repo", false)
 	assert.NoError(t, err)
 }
 
 func TestCreateRawHosted(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin", HTTPS: &https}
 	r := Repository{Nexus3: n}
 	err := r.CreateRawHosted("some-raw-repo")
 	assert.NoError(t, err)
 }
 
 func TestCreateYumHosted(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10001", Pass: "testi", User: "admin", HTTPS: &https}
 	r := Repository{Nexus3: n}
 	err := r.CreateYumHosted("some-yum-repo")
 	assert.NoError(t, err)

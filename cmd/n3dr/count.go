@@ -29,7 +29,28 @@ Examples:
   n3dr count --csv /tmp/helloworld --sort
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		n := connection.Nexus3{AwsBucket: awsBucket, AwsID: awsID, AwsRegion: awsRegion, AwsSecret: awsSecret, BasePathPrefix: basePathPrefix, FQDN: n3drURL, Pass: n3drPass, User: n3drUser, DownloadDirName: downloadDirName, DownloadDirNameZip: downloadDirNameZip, HTTPS: https, DockerHost: dockerHost, DockerPort: dockerPort, DockerPortSecure: dockerPortSecure, ZIP: zip, RepoName: n3drRepo, SkipErrors: skipErrors, WithoutWaitGroups: withoutWaitGroups, WithoutWaitGroupArtifacts: withoutWaitGroupArtifacts, WithoutWaitGroupRepositories: withoutWaitGroupRepositories}
+		n := connection.Nexus3{
+			AwsBucket:                    awsBucket,
+			AwsID:                        awsID,
+			AwsRegion:                    awsRegion,
+			AwsSecret:                    awsSecret,
+			BasePathPrefix:               basePathPrefix,
+			DockerHost:                   dockerHost,
+			DockerPort:                   dockerPort,
+			DockerPortSecure:             dockerPortSecure,
+			DownloadDirName:              downloadDirName,
+			DownloadDirNameZip:           downloadDirNameZip,
+			FQDN:                         n3drURL,
+			HTTPS:                        &https,
+			Pass:                         n3drPass,
+			RepoName:                     n3drRepo,
+			SkipErrors:                   skipErrors,
+			User:                         n3drUser,
+			WithoutWaitGroupArtifacts:    withoutWaitGroupArtifacts,
+			WithoutWaitGroupRepositories: withoutWaitGroupRepositories,
+			WithoutWaitGroups:            withoutWaitGroups,
+			ZIP:                          zip,
+		}
 		c := count.Nexus3{Nexus3: &n, CsvFile: csv, Sort: sort}
 
 		if err := c.Artifacts(); err != nil {

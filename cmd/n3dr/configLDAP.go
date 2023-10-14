@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/030/n3dr/internal/app/n3dr/config/security"
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/models"
@@ -22,9 +20,12 @@ var configLDAPCmd = &cobra.Command{
 	Short: "configLDAP",
 	Long:  `configLDAP`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("configure LDAP")
-
-		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{
+			FQDN:  n3drURL,
+			HTTPS: &https,
+			Pass:  n3drPass,
+			User:  n3drUser,
+		}
 		s := security.Security{Nexus3: n}
 		m := models.CreateLdapServerXo{
 			AuthPassword:                &configLDAPAuthPassword,

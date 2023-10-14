@@ -26,7 +26,8 @@ func TestMain(m *testing.M) {
 }
 
 func TestUploadSnapshots(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10002", Pass: "testi", User: "admin", DownloadDirName: "../../../../../test/testdata/upload/snapshots"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10002", HTTPS: &https, Pass: "testi", User: "admin", DownloadDirName: "../../../../../test/testdata/upload/snapshots"}
 
 	r := repository.Repository{Nexus3: n}
 	err := r.CreateMavenHosted("maven-snapshots", true)
@@ -38,7 +39,8 @@ func TestUploadSnapshots(t *testing.T) {
 }
 
 func TestUploadSnapshotsSkipErrors(t *testing.T) {
-	n := connection.Nexus3{FQDN: "localhost:10002", Pass: "testi", User: "admin", DownloadDirName: "../../../../../test/testdata/upload/snapshots-fail"}
+	https := false
+	n := connection.Nexus3{FQDN: "localhost:10002", HTTPS: &https, Pass: "testi", User: "admin", DownloadDirName: "../../../../../test/testdata/upload/snapshots-fail"}
 	n.SkipErrors = true
 
 	r := repository.Repository{Nexus3: n}

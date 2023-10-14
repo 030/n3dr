@@ -71,7 +71,13 @@ func pass(m mij.DockerImage) error {
 		Password:     "testi",
 		UserID:       "admin",
 	}
-	n := connection.Nexus3{FQDN: "localhost:" + strconv.Itoa(m.PortExternal), Pass: string(b), User: "admin"}
+	https := false
+	n := connection.Nexus3{
+		FQDN:  "localhost:" + strconv.Itoa(m.PortExternal),
+		Pass:  string(b),
+		HTTPS: &https,
+		User:  "admin",
+	}
 	u := user.User{APICreateUser: acu, Nexus3: n}
 	if err := u.ChangePass(); err != nil {
 		return err

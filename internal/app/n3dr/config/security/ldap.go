@@ -18,7 +18,10 @@ type LDAPParams struct {
 func (l *LDAPParams) LDAP() error {
 	log.Info("configuring LDAP")
 
-	client := l.Security.Nexus3.Client()
+	client, err := l.Security.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 
 	createLdapServerParams := security_management_l_d_a_p.CreateLdapServerParams{Body: &l.CreateLdapServerXo}
 	createLdapServerParams.WithTimeout(time.Second * 30)

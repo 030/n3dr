@@ -27,7 +27,10 @@ func (u *User) Create() error {
 	status := "active"
 	u.Status = &status
 
-	client := u.Nexus3.Client()
+	client, err := u.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 
 	createUser := security_management_users.CreateUserParams{Body: &u.APICreateUser}
 	createUser.WithTimeout(time.Second * 30)
@@ -50,8 +53,10 @@ func (u *User) Create() error {
 
 func (r *Role) CreateRole() error {
 	log.Infof("creating role: '%s'...", r.ID)
-
-	client := r.Nexus3.Client()
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 
 	createRole := security_management_roles.CreateParams{Body: &r.RoleXORequest}
 	createRole.WithTimeout(time.Second * 30)
@@ -75,7 +80,10 @@ func (r *Role) CreateRole() error {
 
 func (u *User) ChangePass() error {
 	log.Infof("changing pass user: '%s'...", u.UserID)
-	client := u.Nexus3.Client()
+	client, err := u.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 
 	changePass := security_management_users.ChangePasswordParams{Body: u.Password, UserID: u.UserID}
 	changePass.WithTimeout(time.Second * 30)
