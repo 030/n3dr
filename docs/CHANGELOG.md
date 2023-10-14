@@ -2,11 +2,20 @@
 ## [Unreleased]
 
 
-<a name="7.2.5"></a>
-## [7.2.5] - 2023-08-25
-### Build
-- **deps:** Update versions.
+<a name="7.3.1"></a>
+## [7.3.1] - 2023-10-14
+### Fix
+- [[#381](https://github.com/030/n3dr/issues/381)] 405 not allowed when creating repositories as 'https' could not be enabled.
 
+
+<a name="7.3.0"></a>
+## [7.3.0] - 2023-10-14
+### Fix
+- [[#378](https://github.com/030/n3dr/issues/378)] Change initial admin pass (automatically).
+
+
+<a name="7.2.5"></a>
+## [7.2.5] - 2023-08-26
 
 <a name="7.2.4"></a>
 ## [7.2.4] - 2023-07-27
@@ -385,7 +394,9 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.2.5...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.3.1...HEAD
+[7.3.1]: https://github.com/030/n3dr/compare/7.3.0...7.3.1
+[7.3.0]: https://github.com/030/n3dr/compare/7.2.5...7.3.0
 [7.2.5]: https://github.com/030/n3dr/compare/7.2.4...7.2.5
 [7.2.4]: https://github.com/030/n3dr/compare/7.2.3...7.2.4
 [7.2.3]: https://github.com/030/n3dr/compare/7.2.2...7.2.3

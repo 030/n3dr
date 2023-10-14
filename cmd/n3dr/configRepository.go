@@ -42,7 +42,13 @@ Examples:
   n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-rubygems --configRepoType gem
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, StrictContentTypeValidation: strictContentTypeValidation, User: n3drUser}
+		n := connection.Nexus3{
+			FQDN:                        n3drURL,
+			HTTPS:                       &https,
+			Pass:                        n3drPass,
+			StrictContentTypeValidation: strictContentTypeValidation,
+			User:                        n3drUser,
+		}
 		r := repository.Repository{Nexus3: n}
 
 		if configRepoDelete {

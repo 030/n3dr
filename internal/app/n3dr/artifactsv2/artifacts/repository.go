@@ -14,7 +14,10 @@ type Nexus3 struct {
 }
 
 func (n *Nexus3) Repos() ([]*models.AbstractAPIRepository, error) {
-	client := n.Nexus3.Client()
+	client, err := n.Nexus3.Client()
+	if err != nil {
+		return nil, err
+	}
 	r := repository_management.GetRepositoriesParams{}
 	r.WithTimeout(time.Second * 30)
 

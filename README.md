@@ -44,6 +44,8 @@
 [godoc]: https://godoc.org/github.com/030/n3dr
 [godoc widget]: https://godoc.org/github.com/030/n3dr?status.svg
 
+[![dockeri.co](https://dockeri.co/image/utrecht/n3dr)](https://hub.docker.com/r/utrecht/n3dr)
+
 ## Backup or Migrate an entire Nexus Artifact Server
 
 Download all artifacts at once or migrate automatically from Nexus to Nexus.

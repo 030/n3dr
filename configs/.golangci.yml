@@ -133,6 +133,7 @@ linters-settings:
           - github.com/aws/aws-sdk-go/service/s3/s3manager
           - github.com/go-openapi/runtime/client
           - github.com/go-openapi/strfmt
+          - github.com/go-playground/validator/v10
           - github.com/hashicorp/go-retryablehttp
           - github.com/mholt/archiver
           - github.com/mitchellh/go-homedir

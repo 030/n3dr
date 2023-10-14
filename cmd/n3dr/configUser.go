@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/030/n3dr/internal/app/n3dr/config/user"
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	"github.com/030/n3dr/internal/app/n3dr/goswagger/models"
@@ -26,8 +24,6 @@ Examples:
   n3dr configUser --changePass --https false --n3drUser admin --n3drURL nexus3:8081 --n3drPass initial-pass --pass some-pass --email admin@example.org --firstName admin --id admin --lastName admin
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("configUser called")
-
 		if !admin && !downloadUser && !uploadUser && !changePass {
 			log.Fatal("either the admin, changePass, downloadUser or uploadUser is required")
 		}
@@ -39,7 +35,12 @@ Examples:
 			Password:     pass,
 			UserID:       id,
 		}
-		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{
+			FQDN:  n3drURL,
+			HTTPS: &https,
+			Pass:  n3drPass,
+			User:  n3drUser,
+		}
 		u := user.User{APICreateUser: acu, Nexus3: n}
 
 		if admin {

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/030/n3dr/internal/app/n3dr/config/security"
 	"github.com/030/n3dr/internal/app/n3dr/connection"
 	log "github.com/sirupsen/logrus"
@@ -17,9 +15,12 @@ var configCmd = &cobra.Command{
 	Short: "config",
 	Long:  `config`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("config called")
-
-		n := connection.Nexus3{FQDN: n3drURL, Pass: n3drPass, User: n3drUser}
+		n := connection.Nexus3{
+			FQDN:  n3drURL,
+			HTTPS: &https,
+			Pass:  n3drPass,
+			User:  n3drUser,
+		}
 		s := security.Security{Nexus3: n}
 		if err := s.Anonymous(configUserAnonymous); err != nil {
 			log.Fatal(err)

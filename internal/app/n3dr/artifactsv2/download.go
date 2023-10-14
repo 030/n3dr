@@ -115,7 +115,10 @@ func (n *Nexus3) downloadSingleArtifact(asset *models.AssetXO, repo string) {
 func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo string) error {
 	var wg sync.WaitGroup
 
-	client := n.Nexus3.Client()
+	client, err := n.Nexus3.Client()
+	if err != nil {
+		return err
+	}
 	c := components.GetComponentsParams{ContinuationToken: &continuationToken, Repository: repo}
 	c.WithTimeout(time.Second * 60)
 	resp, err := client.Components.GetComponents(&c)
