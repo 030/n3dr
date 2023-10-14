@@ -22,7 +22,8 @@ jobs:
           sudo snap install --dangerous ${{ steps.snapcraft.outputs.snap }}
           n3dr --version | grep "[0-9]\."
       - uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
         with:
-          store_login: ${{ secrets.SNAPCRAFT_LOGIN }}
           snap: ${{ steps.snapcraft.outputs.snap }}
           release: candidate

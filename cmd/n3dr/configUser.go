@@ -18,13 +18,13 @@ var (
 // configUserCmd represents the configUser command.
 var configUserCmd = &cobra.Command{
 	Use:   "configUser",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Configure users.",
+	Long: `Create users or change their passwords.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Examples:
+  # Change the admin password:
+  n3dr configUser --changePass --https false --n3drUser admin --n3drURL nexus3:8081 --n3drPass initial-pass --pass some-pass --email admin@example.org --firstName admin --id admin --lastName admin
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("configUser called")
 

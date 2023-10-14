@@ -1,0 +1,193 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nexus3
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: n3dr
+  namespace: nexus3
+data:
+  admin-password: aGVsbG93b3JsZA==
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nexus3
+  namespace: nexus3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus3
+  serviceName: nexus3
+  template:
+    metadata:
+      labels:
+        app: nexus3
+    spec:
+      containers:
+        - image: sonatype/nexus3:3.59.0
+          imagePullPolicy: IfNotPresent
+          name: nexus3
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 120
+            httpGet:
+              path: /
+              port: 8081
+              scheme: HTTP
+            periodSeconds: 60
+            timeoutSeconds: 30
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 120
+            httpGet:
+              path: /
+              port: 8081
+              scheme: HTTP
+            periodSeconds: 60
+            timeoutSeconds: 30
+          ports:
+            - containerPort: 8081
+              name: nexus3
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 1250m
+              memory: 2Gi
+            requests:
+              cpu: 1m
+              memory: 50Mi
+          securityContext:
+            readOnlyRootFilesystem: false
+            runAsUser: 8484
+            runAsGroup: 8484
+          volumeMounts:
+            - mountPath: /nexus-data
+              name: nexus3
+            - mountPath: /tmp
+              name: tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: nexus3
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
+        volumeMode: Filesystem
+        volumeName: nexus3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus3
+  namespace: nexus3
+spec:
+  selector:
+    app: nexus3
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: n3dr
+  namespace: nexus3
+spec:
+  schedule: '*/15 * * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: utrecht/n3dr:7.2.4
+              imagePullPolicy: IfNotPresent
+              name: n3dr
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  cat /tmp/nexus-data/admin.password
+                  echo $NEXUS_ADMIN_PASSWORD
+                  if [ -e /tmp/nexus-data/admin.password ]; then
+                    echo "changing randomized generated password..."
+                    pw=$(cat /tmp/nexus-data/admin.password)
+                    n3dr configUser \
+                      --changePass \
+                      --https false \
+                      --n3drUser admin \
+                      --n3drURL nexus3:8081 \
+                      --n3drPass "${pw}" \
+                      --pass "${NEXUS_ADMIN_PASSWORD}" \
+                      --email admin@example.org \
+                      --firstName Administrator \
+                      --id admin \
+                      --lastName User \
+                      --showLogo=false
+                  else
+                    echo "Assumed that initial password has been changed as"
+                    echo "/tmp/nexus-data/admin.password file was not been"
+                    echo "found."
+                  fi
+              env:
+                - name: NEXUS_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: n3dr
+                      key: admin-password
+              securityContext:
+                readOnlyRootFilesystem: false
+                runAsUser: 8484
+                runAsGroup: 8484
+              volumeMounts:
+                - mountPath: /tmp/nexus-data
+                  name: nexus3
+          volumes:
+            - name: nexus3
+              persistentVolumeClaim:
+                claimName: nexus3-nexus3-0
+          restartPolicy: Never
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nexus3
+  namespace: nexus3
+spec:
+  rules:
+    - host: nexus3.some-domain
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: nexus3
+                port:
+                  number: 8081
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nexus3
+  namespace: nexus3
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 4Gi
+  hostPath:
+    path: /nexus-data
