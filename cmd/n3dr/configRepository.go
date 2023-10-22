@@ -13,6 +13,7 @@ var (
 	configRepoDockerPortSecure, configRepoDelete, snapshot, strictContentTypeValidation bool
 	configRepoDockerPort                                                                int32
 	configRepoName, configRepoRecipe, configRepoType, configRepoProxyURL                string
+	configRepoGroupMemberNames                                                          []string
 )
 
 // configRepositoryCmd represents the configRepository command.
@@ -40,6 +41,15 @@ Examples:
 
   # Create a Rubygems repository:
   n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-rubygems --configRepoType gem
+
+  # Create a Maven2 proxy:
+  n3dr configRepository --configRepoType maven2 --configRepoName 3rdparty-maven --configRepoRecipe proxy --configRepoProxyURL https://repo.maven.apache.org/maven2/
+
+  # Create a NPM proxy:
+  n3dr configRepository --configRepoType npm --configRepoName 3rdparty-npm --configRepoRecipe proxy --configRepoProxyURL https://registry.npmjs.org/
+
+  # Create a group:
+  n3dr configRepository --configRepoType maven2 --configRepoRecipe group --configRepoName some-group --configRepoGroupMemberNames releases,snapshots
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		n := connection.Nexus3{
@@ -89,16 +99,32 @@ Examples:
 				}
 			}
 		case "maven2":
-			if configRepoRecipe == "hosted" {
+			if configRepoRecipe == "group" {
+				if err := r.CreateMavenGroup(configRepoGroupMemberNames, configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			} else if configRepoRecipe == "hosted" {
 				if err := r.CreateMavenHosted(configRepoName, snapshot); err != nil {
 					log.Fatal(err)
 				}
+			} else if configRepoRecipe == "proxy" {
+				if err := r.CreateMavenProxied(configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
 			}
 		case "npm":
 			if configRepoRecipe == "hosted" {
 				if err := r.CreateNpmHosted(configRepoName, snapshot); err != nil {
 					log.Fatal(err)
 				}
+			} else if configRepoRecipe == "proxy" {
+				if err := r.CreateNpmProxied(configRepoName); err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
 			}
 		case "raw":
 			if configRepoRecipe == "hosted" {
@@ -140,4 +166,5 @@ func init() {
 	configRepositoryCmd.Flags().Int32Var(&configRepoDockerPort, "configRepoDockerPort", 8082, "The docker connector port, e.g. 8082")
 	configRepositoryCmd.Flags().BoolVar(&configRepoDockerPortSecure, "configRepoDockerPortSecure", false, "Whether the docker connector port should be secure")
 	configRepositoryCmd.Flags().BoolVar(&strictContentTypeValidation, "strictContentTypeValidation", true, "whether strictContentTypeValidation should be enabled")
+	configRepositoryCmd.Flags().StringSliceVar(&configRepoGroupMemberNames, "configRepoGroupMemberNames", []string{}, "The repository type, e.g.: 'apt', 'raw'")
 }
