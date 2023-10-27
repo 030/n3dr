@@ -40,6 +40,10 @@ type Nexus3 struct {
 	*connection.Nexus3
 }
 
+type repoFormatAndType struct {
+	format, repoType string
+}
+
 func uploadStatus(err error) (int, error) {
 	re := regexp.MustCompile(`status (\d{3})`)
 	match := re.FindStringSubmatch(err.Error())
@@ -73,7 +77,7 @@ func (n *Nexus3) reposOnDisk() (localDiskRepos []string, err error) {
 	return localDiskRepos, nil
 }
 
-func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
+func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (repoFormatAndType, error) {
 	cn := connection.Nexus3{
 		BasePathPrefix:  n.BasePathPrefix,
 		FQDN:            n.FQDN,
@@ -85,19 +89,21 @@ func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
 	a := artifacts.Nexus3{Nexus3: &cn}
 	repos, err := a.Repos()
 	if err != nil {
-		return "", err
+		return repoFormatAndType{}, err
 	}
 
 	var repoFormat string
+	var repoType string
 	for _, repo := range repos {
 		repoName := repo.Name
 		if repoName == localDiskRepo {
 			repoFormat = repo.Format
+			repoType = repo.Type
 		}
 	}
-	log.Infof("format of repo: '%s' is: '%s'", localDiskRepo, repoFormat)
+	log.Infof("format of repo: '%s' is: '%s' and repoType: '%s'", localDiskRepo, repoFormat, repoType)
 
-	return repoFormat, nil
+	return repoFormatAndType{repoFormat, repoType}, nil
 }
 
 func maven(path string, skipErrors bool) (mp mavenParts, err error) {
@@ -698,22 +704,25 @@ func (n *Nexus3) uploadArtifactsSingleDir(localDiskRepo string) {
 		return
 	}
 
-	repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
+	repoFormatAndType, err := n.repoFormatLocalDiskRepo(localDiskRepo)
 	if err != nil {
 		panic(err)
 	}
-	if repoFormat == "" {
+	if repoFormatAndType.format == "" {
 		log.Errorf("repoFormat not detected. Verify whether repo: '%s' resides in Nexus", localDiskRepo)
 		return
 	}
 
-	if repoFormat == "maven2" {
-		n.maven2SnapshotsUpload(localDiskRepo)
-	}
+	log.Info("==================> ", repoFormatAndType.repoType)
+	if repoFormatAndType.repoType == "hosted" {
+		if repoFormatAndType.format == "maven2" {
+			n.maven2SnapshotsUpload(localDiskRepo)
+		}
 
-	localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
-	if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat); err != nil {
-		panic(err)
+		localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
+		if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormatAndType.format); err != nil {
+			panic(err)
+		}
 	}
 }
 

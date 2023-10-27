@@ -55,7 +55,9 @@ func (r *Repository) CreateMavenGroup(memberNames []string, name string) error {
 	}
 	createMavenGroup := repository_management.CreateRepositoryParams{Body: &body}
 	createMavenGroup.WithTimeout(time.Second * 30)
-	if _, err := client.RepositoryManagement.CreateRepository(&createMavenGroup); err != nil {
+	if a, err := client.RepositoryManagement.CreateRepository(&createMavenGroup); err != nil {
+		log.Info("aaaaa ", a)
+		log.Info("bbbbb ", err)
 		if err := created(name, err); err != nil {
 			return err
 		}
