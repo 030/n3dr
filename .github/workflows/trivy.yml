@@ -12,7 +12,7 @@ jobs:
         run: |
           docker build -t utrecht/n3dr:${{ github.sha }} .
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.14.0
         with:
           image-ref: 'utrecht/n3dr:${{ github.sha }}'
           format: 'table'
@@ -20,3 +20,8 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+      - name: Run Trivy vulnerability scanner in fs mode
+        uses: aquasecurity/trivy-action@v0.14.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
