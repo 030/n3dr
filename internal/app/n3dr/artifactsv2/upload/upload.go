@@ -713,7 +713,7 @@ func (n *Nexus3) uploadArtifactsSingleDir(localDiskRepo string) {
 		return
 	}
 
-	log.Info("==================> ", repoFormatAndType.repoType)
+	log.Warnf("only uploads to 'hosted' repositories are supported. Current: '%v'", repoFormatAndType)
 	if repoFormatAndType.repoType == "hosted" {
 		if repoFormatAndType.format == "maven2" {
 			n.maven2SnapshotsUpload(localDiskRepo)
