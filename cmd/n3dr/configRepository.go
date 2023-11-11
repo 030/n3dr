@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/030/n3dr/internal/app/n3dr/config/repository"
@@ -16,6 +17,106 @@ var (
 	configRepoGroupMemberNames                                                          []string
 )
 
+type repo struct {
+	conn               repository.Repository
+	kind, name, recipe string
+	snapshot           bool
+}
+
+var repoRecipeAndKindNotSupported = "repoRecipe: '%s' not supported in conjunction with repoKind: '%s'"
+
+func (r *repo) createByType() error {
+	switch configRepoType {
+	case "apt":
+		return r.Apt()
+	case "docker":
+		return r.Docker()
+	case "gem":
+		return r.Gem()
+	case "maven2":
+		return r.Maven2()
+	case "npm":
+		return r.Npm()
+	case "raw":
+		return r.Raw()
+	case "yum":
+		return r.Yum()
+	default:
+		return fmt.Errorf("configRepoType should not be empty, but: 'apt', 'docker', 'gem', 'maven2', 'npm' 'raw' or 'yum' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
+	}
+}
+
+func (r *repo) Apt() error {
+	switch r.recipe {
+	case "proxy":
+		return r.conn.CreateAptProxied(r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
+func (r *repo) Docker() error {
+	switch r.recipe {
+	case "hosted":
+		return r.conn.CreateDockerHosted(configRepoDockerPortSecure, configRepoDockerPort, r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
+func (r *repo) Gem() error {
+	switch r.recipe {
+	case "hosted":
+		return r.conn.CreateGemHosted(r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
+func (r *repo) Maven2() error {
+	switch r.recipe {
+	case "group":
+		return r.conn.CreateMavenGroup(configRepoGroupMemberNames, r.name)
+	case "hosted":
+		return r.conn.CreateMavenHosted(r.name, snapshot)
+	case "proxy":
+		return r.conn.CreateMavenProxied(r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
+func (r *repo) Npm() error {
+	switch r.recipe {
+	case "hosted":
+		return r.conn.CreateNpmHosted(r.name, snapshot)
+	case "proxy":
+		return r.conn.CreateNpmProxied(r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
+func (r *repo) Raw() error {
+	switch r.recipe {
+	case "hosted":
+		return r.conn.CreateRawHosted(r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
+func (r *repo) Yum() error {
+	switch r.recipe {
+	case "hosted":
+		return r.conn.CreateYumHosted(r.name)
+	case "proxy":
+		return r.conn.CreateYumProxied(r.name)
+	default:
+		return fmt.Errorf(repoRecipeAndKindNotSupported, r.recipe, r.kind)
+	}
+}
+
 // configRepositoryCmd represents the configRepository command.
 var configRepositoryCmd = &cobra.Command{
 	Use:   "configRepository",
@@ -26,6 +127,9 @@ var configRepositoryCmd = &cobra.Command{
 Examples:
   # Create a Docker repository:
   n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType docker
+
+  # Create a Maven2 repository if credentials and FQDN have been set in a '~/.n3dr/config.yml' file:
+  n3dr configRepository --configRepoName some-name --configRepoType maven2
 
   # Create a Maven2 repository:
   n3dr configRepository -u some-user -p some-pass -n localhost:9000 --https=false --configRepoName some-name --configRepoType maven2
@@ -59,10 +163,10 @@ Examples:
 			StrictContentTypeValidation: strictContentTypeValidation,
 			User:                        n3drUser,
 		}
-		r := repository.Repository{Nexus3: n}
+		rr := repository.Repository{Nexus3: n}
 
 		if configRepoDelete {
-			if err := r.Delete(configRepoName); err != nil {
+			if err := rr.Delete(configRepoName); err != nil {
 				log.Fatal(err)
 			}
 			os.Exit(0)
@@ -72,80 +176,15 @@ Examples:
 			log.Fatal("configRepoReceipe should not be empty")
 		}
 
-		if configRepoRecipe == "proxy" {
-			if configRepoProxyURL == "" {
-				log.Fatal("configRepoProxyURL should not be empty")
-			}
-			r.ProxyRemoteURL = configRepoProxyURL
+		if configRepoRecipe == "proxy" && configRepoProxyURL == "" {
+			log.Fatal("configRepoProxyURL should not be empty")
+
+			rr.ProxyRemoteURL = configRepoProxyURL
 		}
 
-		switch configRepoType {
-		case "apt":
-			if configRepoRecipe == "proxy" {
-				if err := r.CreateAptProxied(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			}
-		case "docker":
-			if configRepoRecipe == "hosted" {
-				if err := r.CreateDockerHosted(configRepoDockerPortSecure, configRepoDockerPort, configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			}
-		case "gem":
-			if configRepoRecipe == "hosted" {
-				if err := r.CreateGemHosted(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			}
-		case "maven2":
-			if configRepoRecipe == "group" {
-				if err := r.CreateMavenGroup(configRepoGroupMemberNames, configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			} else if configRepoRecipe == "hosted" {
-				if err := r.CreateMavenHosted(configRepoName, snapshot); err != nil {
-					log.Fatal(err)
-				}
-			} else if configRepoRecipe == "proxy" {
-				if err := r.CreateMavenProxied(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			} else {
-				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
-			}
-		case "npm":
-			if configRepoRecipe == "hosted" {
-				if err := r.CreateNpmHosted(configRepoName, snapshot); err != nil {
-					log.Fatal(err)
-				}
-			} else if configRepoRecipe == "proxy" {
-				if err := r.CreateNpmProxied(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			} else {
-				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
-			}
-		case "raw":
-			if configRepoRecipe == "hosted" {
-				if err := r.CreateRawHosted(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			}
-		case "yum":
-			if configRepoRecipe == "hosted" {
-				if err := r.CreateYumHosted(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			} else if configRepoRecipe == "proxy" {
-				if err := r.CreateYumProxied(configRepoName); err != nil {
-					log.Fatal(err)
-				}
-			} else {
-				log.Fatalf("configRepoRecipe: '%s' not supported in conjunction with configRepoType: '%s'", configRepoRecipe, configRepoType)
-			}
-		default:
-			log.Fatalf("configRepoType should not be empty, but: 'apt', 'docker', 'maven2', 'raw' or 'yum' and not: '%s'. Did you populate the --configRepoType parameter?", configRepoType)
+		r := repo{conn: rr, kind: configRepoType, name: configRepoName, recipe: configRepoRecipe, snapshot: snapshot}
+		if err := r.createByType(); err != nil {
+			log.Fatalf("repo not created. Error: '%v'", err)
 		}
 	},
 }
