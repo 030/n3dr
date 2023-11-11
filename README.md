@@ -8,7 +8,7 @@
 [![DevOps SE Questions](https://img.shields.io/stackexchange/devops/t/n3dr.svg?logo=stackexchange)](https://devops.stackexchange.com/tags/n3dr)
 [![ServerFault SE Questions](https://img.shields.io/stackexchange/serverfault/t/n3dr.svg?logo=serverfault)](https://serverfault.com/tags/n3dr)
 [![Docker Pulls](https://img.shields.io/docker/pulls/utrecht/n3dr?logo=docker&logoColor=white)](https://hub.docker.com/r/utrecht/n3dr)
-![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/utrecht/n3dr?logo=docker&logoColor=white&sort=semver)
+[![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/utrecht/n3dr?logo=docker&logoColor=white&sort=semver)](https://hub.docker.com/r/utrecht/n3dr)
 ![Issues](https://img.shields.io/github/issues-raw/030/n3dr.svg)
 ![Pull requests](https://img.shields.io/github/issues-pr-raw/030/n3dr.svg)
 ![Total downloads](https://img.shields.io/github/downloads/030/n3dr/total.svg)
