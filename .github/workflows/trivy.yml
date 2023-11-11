@@ -20,7 +20,7 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-          trivyignores: ../../.trivyignore
+          trivyignores: .trivyignore
       - name: Run Trivy vulnerability scanner in fs mode
         uses: aquasecurity/trivy-action@0.14.0
         with:
@@ -29,4 +29,4 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
-          trivyignores: ../../.trivyignore
+          trivyignores: .trivyignore

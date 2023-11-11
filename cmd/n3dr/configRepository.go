@@ -152,7 +152,7 @@ Examples:
   # Create a NPM proxy:
   n3dr configRepository --configRepoType npm --configRepoName 3rdparty-npm --configRepoRecipe proxy --configRepoProxyURL https://registry.npmjs.org/
 
-  # Create a group:
+  # Create a Maven2 group:
   n3dr configRepository --configRepoType maven2 --configRepoRecipe group --configRepoName some-group --configRepoGroupMemberNames releases,snapshots
 `,
 	Run: func(cmd *cobra.Command, args []string) {
