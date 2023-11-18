@@ -17,4 +17,4 @@ RUN apk add --no-cache \
         libcrypto3=3.1.4-r1 \
         libssl3=3.1.4-r1
 USER n3dr
-ENTRYPOINT n3dr
+ENTRYPOINT ["n3dr"]
