@@ -1,3 +1,1 @@
-# upgrading to libcrypto3=3.1.4-r0 breaks apk-tools and no newer version
-# available of latter package.
-CVE-2023-5363
+#CVE-2023-5363
