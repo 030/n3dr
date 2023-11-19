@@ -181,8 +181,10 @@ func (r *Repository) CreateMavenProxied(name string) error {
 	if err != nil {
 		return err
 	}
-	if name == "" {
-		return fmt.Errorf("repo name should not be empty")
+	remoteURL := r.ProxyRemoteURL
+	log.Infof("remoteURL: '%s'", remoteURL)
+	if name == "" || remoteURL == "" {
+		return fmt.Errorf("repo name of proxy url should not be empty")
 	}
 
 	httpClientBlocked := false
@@ -193,8 +195,6 @@ func (r *Repository) CreateMavenProxied(name string) error {
 	negativeCache := models.NegativeCacheAttributes{Enabled: &negativeCacheEnabled, TimeToLive: &negativeCacheTimeToLive}
 	var contentMaxAge int32 = 1440
 	var metadataMaxAge int32 = 1440
-	remoteURL := r.ProxyRemoteURL
-	log.Infof("remoteURL: '%s'", remoteURL)
 	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
 	online := true
 	maven := models.MavenAttributes{LayoutPolicy: "STRICT", VersionPolicy: "MIXED"}

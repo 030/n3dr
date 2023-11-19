@@ -146,8 +146,9 @@ Examples:
   # Create a Rubygems repository:
   n3dr configRepository -u admin -p some-pass -n localhost:9000 --https=false --configRepoName 3rdparty-rubygems --configRepoType gem
 
-  # Create a Maven2 proxy:
+  # Create Maven2 proxies:
   n3dr configRepository --configRepoType maven2 --configRepoName 3rdparty-maven --configRepoRecipe proxy --configRepoProxyURL https://repo.maven.apache.org/maven2/
+  n3dr configRepository --configRepoType maven2 --configRepoName 3rdparty-maven-gradle-plugins --configRepoRecipe proxy --configRepoProxyURL https://plugins.gradle.org/m2/
 
   # Create a NPM proxy:
   n3dr configRepository --configRepoType npm --configRepoName 3rdparty-npm --configRepoRecipe proxy --configRepoProxyURL https://registry.npmjs.org/
@@ -178,10 +179,12 @@ Examples:
 
 		if configRepoRecipe == "proxy" && configRepoProxyURL == "" {
 			log.Fatal("configRepoProxyURL should not be empty")
-
+		} else {
 			rr.ProxyRemoteURL = configRepoProxyURL
+			log.Infof("configRepoProxyURL has been set to: '%s'", rr.ProxyRemoteURL)
 		}
 
+		log.Infof("creating repo: '%s' of type: '%s'", configRepoName, configRepoType)
 		r := repo{conn: rr, kind: configRepoType, name: configRepoName, recipe: configRepoRecipe, snapshot: snapshot}
 		if err := r.createByType(); err != nil {
 			log.Fatalf("repo not created. Error: '%v'", err)
