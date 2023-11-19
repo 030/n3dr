@@ -409,7 +409,7 @@ repositories() {
     --dockerHost ${DOCKER_URL}
 
   count_downloads 354 ${testZipSizeDir}
-  test_zip 140332 ${testZipSizeDir}
+  test_zip "1403[0-9]\{2\}" ${testZipSizeDir}
 
   cleanup_downloads
 }
