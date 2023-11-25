@@ -372,7 +372,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return false, nil
+			return false, err
 		}
 		c.AptAsset = f
 	case "maven2":
@@ -391,13 +391,13 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Repository = localDiskRepo
 
 			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
-				return false, nil
+				return false, err
 			}
 
 			var err error
 			f, err = os.Open(filepath.Clean(filePathPom))
 			if err != nil {
-				return false, nil
+				return false, err
 			}
 			c.Maven2Asset1 = f
 			ext1 := "pom"
@@ -448,13 +448,13 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Repository = localDiskRepo
 
 			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
-				return false, nil
+				return false, err
 			}
 
 			//
 			mp, err := maven(path, skipErrors)
 			if err != nil {
-				return false, nil
+				return false, err
 			}
 			c.Maven2ArtifactID = &mp.artifact
 			c.Maven2Version = &mp.version
@@ -523,21 +523,21 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return false, nil
+			return false, err
 		}
 		c.NpmAsset = f
 	case "nuget":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return false, nil
+			return false, err
 		}
 		c.NugetAsset = f
 	case "raw":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return false, nil
+			return false, err
 		}
 		c.RawAsset1 = f
 		c.RawDirectory = &dir
@@ -548,7 +548,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Repository = localDiskRepo
 			f, err := os.Open(filepath.Clean(path))
 			if err != nil {
-				return false, nil
+				return false, err
 			}
 			c.RubygemsAsset = f
 		}
@@ -556,7 +556,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return false, nil
+			return false, err
 		}
 		c.YumAsset = f
 		c.YumAssetFilename = &filename
@@ -566,7 +566,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 
 	files := []*os.File{f, af.f2, af.f3, af.f4, af.f5, af.f6, af.f2, af.f7}
 	if err := upload(c, client, path, files); err != nil {
-		return false, nil
+		return false, err
 	}
 
 	return false, nil
