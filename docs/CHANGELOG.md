@@ -2,6 +2,18 @@
 ## [Unreleased]
 
 
+<a name="7.3.2"></a>
+## [7.3.2] - 2023-12-02
+### Build
+- **deps:** bump golang.org/x/net from 0.15.0 to 0.17.0
+
+### Feat
+- Determine what images are running in a k8s cluster.
+
+### Fix
+- [[#384](https://github.com/030/n3dr/issues/384)] Create groups.
+
+
 <a name="7.3.1"></a>
 ## [7.3.1] - 2023-10-14
 ### Fix
@@ -394,7 +406,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.3.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.3.2...HEAD
+[7.3.2]: https://github.com/030/n3dr/compare/7.3.1...7.3.2
 [7.3.1]: https://github.com/030/n3dr/compare/7.3.0...7.3.1
 [7.3.0]: https://github.com/030/n3dr/compare/7.2.5...7.3.0
 [7.2.5]: https://github.com/030/n3dr/compare/7.2.4...7.2.5
