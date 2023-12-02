@@ -126,7 +126,7 @@ spec:
                     pw=$(cat /tmp/nexus-data/admin.password)
                     n3dr configUser \
                       --changePass \
-                      --https false \
+                      --https=false \
                       --n3drUser admin \
                       --n3drURL nexus3:8081 \
                       --n3drPass "${pw}" \

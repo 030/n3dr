@@ -21,7 +21,7 @@ var configUserCmd = &cobra.Command{
 
 Examples:
   # Change the admin password:
-  n3dr configUser --changePass --https false --n3drUser admin --n3drURL nexus3:8081 --n3drPass initial-pass --pass some-pass --email admin@example.org --firstName admin --id admin --lastName admin
+  n3dr configUser --changePass --https=false --n3drUser admin --n3drURL nexus3:8081 --n3drPass initial-pass --pass some-pass --email admin@example.org --firstName admin --id admin --lastName admin
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if !admin && !downloadUser && !uploadUser && !changePass {
