@@ -602,6 +602,35 @@ func upload(c components.UploadComponentParams, client *client.Nexus3, path stri
 	return nil
 }
 
+func (n *Nexus3) uploadAndPrintRepoFormat(c *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) error {
+	identical, err := n.UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors)
+	if err != nil {
+		uploaded, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if uploaded {
+			log.Debugf("artifact: '%s' has already been uploaded", path)
+			return nil
+		}
+
+		errString := fmt.Errorf("could not upload artifact: '%s', err: '%w'", path, err)
+		if n.SkipErrors {
+			log.Error(errString)
+		} else {
+			return errString
+		}
+	} else {
+		artifacts.PrintType(repoFormat)
+	}
+	if identical {
+		log.Debugf("checksum file: '%s' locally is identical compared to one in nexus", path)
+		return nil
+	}
+
+	return nil
+}
+
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
 	var wg sync.WaitGroup
 
@@ -624,30 +653,9 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				go func(path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) {
 					defer wg.Done()
 
-					identical, err := n.UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors)
-					if err != nil {
-						uploaded, errRegex := regexp.MatchString("status 400", err.Error())
-						if errRegex != nil {
-							panic(err)
-						}
-						if uploaded {
-							log.Debugf("artifact: '%s' has already been uploaded", path)
-							return
-						}
-
-						errString := fmt.Errorf("could not upload artifact: '%s', err: '%w'", path, err)
-						if n.SkipErrors {
-							log.Error(errString)
-						} else {
-							panic(errString)
-						}
+					if err := n.uploadAndPrintRepoFormat(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors); err != nil {
+						panic(err)
 					}
-					if identical {
-						log.Debugf("checksum file: '%s' locally is identical compared to one in nexus", path)
-						return
-					}
-
-					artifacts.PrintType(repoFormat)
 				}(path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors)
 			}
 			return nil
