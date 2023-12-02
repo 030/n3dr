@@ -40,6 +40,10 @@ type Nexus3 struct {
 	*connection.Nexus3
 }
 
+type repoFormatAndType struct {
+	format, repoType string
+}
+
 func uploadStatus(err error) (int, error) {
 	re := regexp.MustCompile(`status (\d{3})`)
 	match := re.FindStringSubmatch(err.Error())
@@ -70,10 +74,11 @@ func (n *Nexus3) reposOnDisk() (localDiskRepos []string, err error) {
 		return nil, err
 	}
 	log.Infof("found the following localDiskRepos: '%v'", localDiskRepos)
+
 	return localDiskRepos, nil
 }
 
-func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
+func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (repoFormatAndType, error) {
 	cn := connection.Nexus3{
 		BasePathPrefix:  n.BasePathPrefix,
 		FQDN:            n.FQDN,
@@ -85,19 +90,21 @@ func (n *Nexus3) repoFormatLocalDiskRepo(localDiskRepo string) (string, error) {
 	a := artifacts.Nexus3{Nexus3: &cn}
 	repos, err := a.Repos()
 	if err != nil {
-		return "", err
+		return repoFormatAndType{}, err
 	}
 
 	var repoFormat string
+	var repoType string
 	for _, repo := range repos {
 		repoName := repo.Name
 		if repoName == localDiskRepo {
 			repoFormat = repo.Format
+			repoType = repo.Type
 		}
 	}
-	log.Infof("format of repo: '%s' is: '%s'", localDiskRepo, repoFormat)
+	log.Infof("format of repo: '%s' is: '%s' and repoType: '%s'", localDiskRepo, repoFormat, repoType)
 
-	return repoFormat, nil
+	return repoFormatAndType{repoFormat, repoType}, nil
 }
 
 func maven(path string, skipErrors bool) (mp mavenParts, err error) {
@@ -298,7 +305,7 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 	if err != nil {
 		return false, err
 	}
-	log.Info(f, downloadedFileChecksum)
+	log.Debugf("checksum of file: '%s' is '%s'", f, downloadedFileChecksum)
 
 	retryClient := retryablehttp.NewClient()
 	retryClient.Logger = nil
@@ -311,7 +318,7 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 	}
 
 	u := scheme + "://" + n.FQDN + "/repository/" + localDiskRepo + "/" + dir + "/" + filename + ".sha512"
-	log.Info("URL:             ", u)
+	log.Debugf("upload URL: '%s'", u)
 
 	req, err := http.NewRequest("GET", u, nil)
 	if err != nil {
@@ -335,10 +342,10 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 	}()
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return identical, err
+		return false, err
 	}
 	bodyString := string(bodyBytes)
-	log.Info(bodyString)
+	log.Debugf("checksum of artifact in nexus3: '%s'", bodyString)
 
 	if bodyString == downloadedFileChecksum {
 		identical = true
@@ -347,7 +354,7 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 	return identical, nil
 }
 
-func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) error {
+func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) (bool, error) {
 	dir := strings.Replace(filepath.Dir(path), localDiskRepoHome+"/", "", -1)
 	filename := filepath.Base(path)
 
@@ -355,8 +362,8 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 	af := artifactFiles{}
 
 	if identical, _ := n.checkLocalChecksumAndCompareWithOneInRemote(filepath.Clean(path), localDiskRepo, dir, filename); identical {
-		log.Info("Already uploaded")
-		return nil
+		log.Debugf("artifact: '%s' has already been uploaded", filename)
+		return true, nil
 	}
 
 	c := components.UploadComponentParams{}
@@ -365,7 +372,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return err
+			return false, err
 		}
 		c.AptAsset = f
 	case "maven2":
@@ -375,7 +382,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		filePathPom := fileNameWithoutExtIncludingDir + ".pom"
 
 		if slices.Contains(checkedMavenFolders, dirPath) {
-			return nil
+			return false, nil
 		}
 
 		if _, err := os.Stat(filePathPom); err == nil {
@@ -384,13 +391,13 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Repository = localDiskRepo
 
 			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
-				return err
+				return false, err
 			}
 
 			var err error
 			f, err = os.Open(filepath.Clean(filePathPom))
 			if err != nil {
-				return err
+				return false, err
 			}
 			c.Maven2Asset1 = f
 			ext1 := "pom"
@@ -441,13 +448,13 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Repository = localDiskRepo
 
 			if err := af.mavenJarAndOtherExtensions(&c, fileNameWithoutExtIncludingDir, skipErrors); err != nil {
-				return err
+				return false, err
 			}
 
 			//
 			mp, err := maven(path, skipErrors)
 			if err != nil {
-				return err
+				return false, err
 			}
 			c.Maven2ArtifactID = &mp.artifact
 			c.Maven2Version = &mp.version
@@ -463,7 +470,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 				groupID = match[1]
 				groupID = strings.ReplaceAll(groupID, `/`, `.`)
 			} else {
-				return fmt.Errorf("groupID should not be empty, path: '%s' and regex: '%s'", path, regex)
+				return false, fmt.Errorf("groupID should not be empty, path: '%s' and regex: '%s'", path, regex)
 			}
 			c.Maven2GroupID = &groupID
 			generatePOM := true
@@ -516,21 +523,21 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return err
+			return false, err
 		}
 		c.NpmAsset = f
 	case "nuget":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return err
+			return false, err
 		}
 		c.NugetAsset = f
 	case "raw":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return err
+			return false, err
 		}
 		c.RawAsset1 = f
 		c.RawDirectory = &dir
@@ -541,7 +548,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Repository = localDiskRepo
 			f, err := os.Open(filepath.Clean(path))
 			if err != nil {
-				return err
+				return false, err
 			}
 			c.RubygemsAsset = f
 		}
@@ -549,20 +556,20 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
 		if err != nil {
-			return err
+			return false, err
 		}
 		c.YumAsset = f
 		c.YumAssetFilename = &filename
 	default:
-		return nil
+		return false, nil
 	}
 
 	files := []*os.File{f, af.f2, af.f3, af.f4, af.f5, af.f6, af.f2, af.f7}
 	if err := upload(c, client, path, files); err != nil {
-		return err
+		return false, err
 	}
 
-	return nil
+	return false, nil
 }
 
 func upload(c components.UploadComponentParams, client *client.Nexus3, path string, files []*os.File) error {
@@ -595,6 +602,35 @@ func upload(c components.UploadComponentParams, client *client.Nexus3, path stri
 	return nil
 }
 
+func (n *Nexus3) uploadAndPrintRepoFormat(c *client.Nexus3, path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) error {
+	identical, err := n.UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors)
+	if err != nil {
+		uploaded, errRegex := regexp.MatchString("status 400", err.Error())
+		if errRegex != nil {
+			return err
+		}
+		if uploaded {
+			log.Debugf("artifact: '%s' has already been uploaded", path)
+			return nil
+		}
+
+		errString := fmt.Errorf("could not upload artifact: '%s', err: '%w'", path, err)
+		if n.SkipErrors {
+			log.Error(errString)
+		} else {
+			return errString
+		}
+	} else {
+		artifacts.PrintType(repoFormat)
+	}
+	if identical {
+		log.Debugf("checksum file: '%s' locally is identical compared to one in nexus", path)
+		return nil
+	}
+
+	return nil
+}
+
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
 	var wg sync.WaitGroup
 
@@ -617,24 +653,8 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				go func(path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) {
 					defer wg.Done()
 
-					if err := n.UploadSingleArtifact(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors); err != nil {
-						uploaded, errRegex := regexp.MatchString("status 400", err.Error())
-						if errRegex != nil {
-							panic(err)
-						}
-						if uploaded {
-							log.Debugf("artifact: '%s' has already been uploaded", path)
-							return
-						}
-
-						errString := fmt.Errorf("could not upload artifact: '%s', err: '%w'", path, err)
-						if n.SkipErrors {
-							log.Error(errString)
-						} else {
-							panic(errString)
-						}
-					} else {
-						artifacts.PrintType(repoFormat)
+					if err := n.uploadAndPrintRepoFormat(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors); err != nil {
+						panic(err)
 					}
 				}(path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors)
 			}
@@ -676,8 +696,17 @@ func (n *Nexus3) maven2SnapshotsUpload(localDiskRepo string) {
 	log.Tracef("VersionPolicy: '%s'", vp)
 
 	if strings.EqualFold(vp, "snapshot") {
-		s := snapshot.Nexus3{DownloadDirName: n.DownloadDirName, FQDN: n.FQDN, Pass: n.Pass, RepoFormat: "maven2", RepoName: localDiskRepo, SkipErrors: n.SkipErrors, User: n.User}
+		s := snapshot.Nexus3{DownloadDirName: n.DownloadDirName, FQDN: n.FQDN, HTTPS: *n.HTTPS, Pass: n.Pass, RepoFormat: "maven2", RepoName: localDiskRepo, SkipErrors: n.SkipErrors, User: n.User}
+
 		if err := s.Upload(); err != nil {
+			uploaded, errRegex := regexp.MatchString("bad status: 400 Repository does not allow updating assets", err.Error())
+			if errRegex != nil {
+				panic(err)
+			}
+			if uploaded {
+				log.Debugf("artifact from localDiskRepo: '%s' has been uploaded already", localDiskRepo)
+				return
+			}
 			if !n.SkipErrors {
 				panic(err)
 			}
@@ -698,22 +727,26 @@ func (n *Nexus3) uploadArtifactsSingleDir(localDiskRepo string) {
 		return
 	}
 
-	repoFormat, err := n.repoFormatLocalDiskRepo(localDiskRepo)
+	repoFormatAndType, err := n.repoFormatLocalDiskRepo(localDiskRepo)
 	if err != nil {
 		panic(err)
 	}
-	if repoFormat == "" {
+	if repoFormatAndType.format == "" {
 		log.Errorf("repoFormat not detected. Verify whether repo: '%s' resides in Nexus", localDiskRepo)
 		return
 	}
 
-	if repoFormat == "maven2" {
-		n.maven2SnapshotsUpload(localDiskRepo)
-	}
+	log.Warnf("only uploads to 'hosted' repositories are supported. Current: '%v'", repoFormatAndType)
+	if repoFormatAndType.repoType == "hosted" {
+		if repoFormatAndType.format == "maven2" {
+			log.Info("upload to snapshot repo")
+			n.maven2SnapshotsUpload(localDiskRepo)
+		}
 
-	localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
-	if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat); err != nil {
-		panic(err)
+		localDiskRepoHome := filepath.Join(n.DownloadDirName, localDiskRepo)
+		if err := n.ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormatAndType.format); err != nil {
+			panic(err)
+		}
 	}
 }
 

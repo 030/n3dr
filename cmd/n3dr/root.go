@@ -219,7 +219,7 @@ func parseConfig(cfgFile string) error {
 			return err
 		}
 	} else {
-		log.Warnf("Looked for config file: '%v', but found: '%v' including err: '%v'. Check whether it exists, the YAML is correct and the content is valid", cfgFile, viper.ConfigFileUsed(), err)
+		log.Debugf("Looked for config file: '%v', but found: '%v' including err: '%v'. Check whether it exists, the YAML is correct and the content is valid", cfgFile, viper.ConfigFileUsed(), err)
 	}
 
 	return nil

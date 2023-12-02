@@ -9,7 +9,6 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/030/n3dr/internal/app/n3dr/artifactsv2/artifacts"
 	"github.com/hashicorp/go-retryablehttp"
 	log "github.com/sirupsen/logrus"
 )
@@ -22,8 +21,6 @@ type Nexus3 struct {
 func (n *Nexus3) statusCode(resp *http.Response) error {
 	if resp.StatusCode == http.StatusCreated {
 		log.Trace("file has been uploaded")
-		artifacts.PrintType(n.RepoFormat)
-		return nil
 	} else {
 		bodyBytes, err := io.ReadAll(resp.Body)
 		if err != nil {
@@ -65,7 +62,7 @@ func (n *Nexus3) readRetryAndUpload(path string) error {
 	log.Tracef("uri: '%s'", uri)
 
 	u := protocol + "://" + n.FQDN + "/repository/" + n.RepoName + "/" + uri
-	log.Tracef("upload url: '%s'", u)
+	log.Tracef("snapshot upload url: '%s'", u)
 	req, err := http.NewRequest("PUT", u, f)
 	if err != nil {
 		return err

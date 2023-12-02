@@ -16,7 +16,7 @@ import (
 	"github.com/030/n3dr/internal/app/n3dr/s3"
 	"github.com/030/p2iwd/pkg/p2iwd"
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/mholt/archiver"
+	"github.com/mholt/archiver/v3"
 	log "github.com/sirupsen/logrus"
 )
 

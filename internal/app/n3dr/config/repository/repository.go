@@ -31,6 +31,42 @@ func created(name string, err error) error {
 	return fmt.Errorf("could not create repository: '%v', err: '%w'", name, err)
 }
 
+func (r *Repository) CreateMavenGroup(memberNames []string, name string) error {
+	log.Infof("creating maven group: '%s'...", name)
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+	if len(memberNames) == 0 {
+		return fmt.Errorf("memberNames should not be empty")
+	}
+
+	online := true
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation}
+	group := models.GroupAttributes{MemberNames: memberNames}
+	body := models.MavenGroupRepositoryAPIRequest{
+		Group:   &group,
+		Name:    &name,
+		Online:  &online,
+		Storage: &mhsa,
+	}
+	createMavenGroup := repository_management.CreateRepositoryParams{Body: &body}
+	createMavenGroup.WithTimeout(time.Second * 30)
+	if createRepositoryCreated, err := client.RepositoryManagement.CreateRepository(&createMavenGroup); err != nil {
+		log.Debugf("createRepositoryCreated: '%v'", createRepositoryCreated)
+		log.Tracef("createRepositoryCreatedError '%v'", err)
+		if err := created(name, err); err != nil {
+			return err
+		}
+	}
+	log.Infof("created the following maven group: '%v'", name)
+
+	return nil
+}
+
 func (r *Repository) CreateAptProxied(name string) error {
 	log.Infof("Creating proxied apt repository: '%s'...", name)
 	client, err := r.Nexus3.Client()
@@ -59,6 +95,42 @@ func (r *Repository) CreateAptProxied(name string) error {
 	createAptProxy := repository_management.CreateRepository4Params{Body: &ma}
 	createAptProxy.WithTimeout(time.Second * 30)
 	if _, err := client.RepositoryManagement.CreateRepository4(&createAptProxy); err != nil {
+		if err := created(name, err); err != nil {
+			return err
+		}
+	}
+	log.Infof("created the following repository: '%v'", name)
+
+	return nil
+}
+
+func (r *Repository) CreateNpmProxied(name string) error {
+	log.Infof("Creating npm proxy: '%s'...", name)
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
+	if name == "" {
+		return fmt.Errorf("repo name should not be empty")
+	}
+
+	httpClientBlocked := false
+	httpClientAutoBlocked := true
+	httpClient := models.HTTPClientAttributes{AutoBlock: &httpClientAutoBlocked, Blocked: &httpClientBlocked}
+	negativeCacheEnabled := true
+	var negativeCacheTimeToLive int32 = 1440
+	negativeCache := models.NegativeCacheAttributes{Enabled: &negativeCacheEnabled, TimeToLive: &negativeCacheTimeToLive}
+	var contentMaxAge int32 = 1440
+	var metadataMaxAge int32 = 1440
+	remoteURL := r.ProxyRemoteURL
+	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
+	online := true
+	npm := models.NpmAttributes{}
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation}
+	ma := models.NpmProxyRepositoryAPIRequest{Npm: &npm, Name: &name, Online: &online, Storage: &mhsa, Proxy: &proxy, NegativeCache: &negativeCache, HTTPClient: &httpClient}
+	createNpmProxy := repository_management.CreateRepository10Params{Body: &ma}
+	createNpmProxy.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository10(&createNpmProxy); err != nil {
 		if err := created(name, err); err != nil {
 			return err
 		}
@@ -99,6 +171,43 @@ func (r *Repository) CreateYumProxied(name string) error {
 		}
 	}
 	log.Infof("created the following repository: '%v'", name)
+
+	return nil
+}
+
+func (r *Repository) CreateMavenProxied(name string) error {
+	log.Infof("creating the following maven proxy: '%s'...", name)
+	client, err := r.Nexus3.Client()
+	if err != nil {
+		return err
+	}
+	remoteURL := r.ProxyRemoteURL
+	log.Infof("remoteURL: '%s'", remoteURL)
+	if name == "" || remoteURL == "" {
+		return fmt.Errorf("repo name of proxy url should not be empty")
+	}
+
+	httpClientBlocked := false
+	httpClientAutoBlocked := true
+	httpClient := models.HTTPClientAttributesWithPreemptiveAuth{AutoBlock: &httpClientAutoBlocked, Blocked: &httpClientBlocked}
+	negativeCacheEnabled := true
+	var negativeCacheTimeToLive int32 = 1440
+	negativeCache := models.NegativeCacheAttributes{Enabled: &negativeCacheEnabled, TimeToLive: &negativeCacheTimeToLive}
+	var contentMaxAge int32 = 1440
+	var metadataMaxAge int32 = 1440
+	proxy := models.ProxyAttributes{ContentMaxAge: &contentMaxAge, MetadataMaxAge: &metadataMaxAge, RemoteURL: remoteURL}
+	online := true
+	maven := models.MavenAttributes{LayoutPolicy: "STRICT", VersionPolicy: "MIXED"}
+	mhsa := models.StorageAttributes{BlobStoreName: "default", StrictContentTypeValidation: &r.StrictContentTypeValidation}
+	ma := models.MavenProxyRepositoryAPIRequest{Maven: &maven, Name: &name, Online: &online, Storage: &mhsa, Proxy: &proxy, NegativeCache: &negativeCache, HTTPClient: &httpClient}
+	createMavenProxy := repository_management.CreateRepository2Params{Body: &ma}
+	createMavenProxy.WithTimeout(time.Second * 30)
+	if _, err := client.RepositoryManagement.CreateRepository2(&createMavenProxy); err != nil {
+		if err := created(name, err); err != nil {
+			return err
+		}
+	}
+	log.Infof("created the following maven proxy: '%v'", name)
 
 	return nil
 }
