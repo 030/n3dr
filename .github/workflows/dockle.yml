@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Analyze image using dockle
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build image
         run: docker build -t utrecht/n3dr:${{ github.sha }} .
       - uses: hands-lab/dockle-action@v1
