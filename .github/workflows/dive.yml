@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Analyze image efficiency
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - name: Build image
         run: docker build -t utrecht/n3dr:${{ github.sha }} .
       - uses: 030/dive-action@v0.1.0

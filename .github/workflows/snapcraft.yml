@@ -11,17 +11,17 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
         with:
           ref: main
-      - uses: snapcore/action-build@v1
+      - uses: snapcore/action-build@v1.2.0
         with:
           path: build/package
         id: snapcraft
       - run: |
           sudo snap install --dangerous ${{ steps.snapcraft.outputs.snap }}
           n3dr --version | grep "[0-9]\."
-      - uses: snapcore/action-publish@v1
+      - uses: snapcore/action-publish@v1.2.0
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
         with:
