@@ -3,9 +3,13 @@
 
 
 <a name="7.3.3"></a>
-## [7.3.3] - 2023-12-02
+## [7.3.3] - 2023-12-09
+### Build
+- **deps:** [[#399](https://github.com/030/n3dr/issues/399)] Use semantic versioning for plugins in github actions.
+- **deps:** bump actions/checkout from 3 to 4 ([#394](https://github.com/030/n3dr/issues/394))
+
 ### Fix
-- https=false otherwise https was not disabled.
+- https=false otherwise https was not disabled. ([#401](https://github.com/030/n3dr/issues/401))
 
 
 <a name="7.3.2"></a>
