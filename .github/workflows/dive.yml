@@ -5,12 +5,14 @@ jobs:
   dive:
     runs-on: ubuntu-latest
     name: Analyze image efficiency
-    env:
-      DIVE_ANALYZE_IMAGE_TAG: utrecht/n3dr:${{ github.sha }}
     steps:
       - uses: actions/checkout@v4.1.1
+      - name: Set DIVE_ANALYZE_IMAGE_TAG
+        run: echo "DIVE_ANALYZE_IMAGE_TAG=utrecht/n3dr:${{ github.sha }}" >> $GITHUB_ENV
+      - name: Test
+        run: echo $DIVE_ANALYZE_IMAGE_TAG
       - name: Build image
-        run: docker build -t {{ env.DIVE_ANALYZE_IMAGE_TAG }} .
+        run: docker build -t ${DIVE_ANALYZE_IMAGE_TAG} .
       - uses: 030/dive-action@image
         with:
-          image: '{{ env.DIVE_ANALYZE_IMAGE_TAG }}'
+          image: ${DIVE_ANALYZE_IMAGE_TAG}
