@@ -8,4 +8,4 @@ jobs:
       - uses: actions/checkout@v4.1.1
       - uses: 030/mcaf-mcvs-golang-action@1-golangci-lint
         with:
-          inputs.golang-unit-tests-exclusions: "\(cmd\/n3dr\|internal\/app\/n3dr\/\(goswagger\|n3drtest\)\)"
+          inputs.golang-unit-tests-exclusions: '\(cmd\/n3dr\|internal\/app\/n3dr\/\(goswagger\|n3drtest\)\)'
