@@ -14,7 +14,7 @@ COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /n3dr /usr/local/bin/n3dr
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 RUN apk add --no-cache \
-        libcrypto3=3.1.4-r1 \
-        libssl3=3.1.4-r1
+        libcrypto3=~3 \
+        libssl3=~3
 USER n3dr
 ENTRYPOINT ["n3dr"]
