@@ -9,6 +9,6 @@ jobs:
       - uses: actions/checkout@v4.1.1
       - name: Build image
         run: docker build -t utrecht/n3dr:${{ github.sha }} .
-      - uses: 030/dive-action@v0.1.0
+      - uses: 030/dive-action@image
         with:
           image: utrecht/n3dr:${{ github.sha }}
