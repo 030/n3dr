@@ -1,0 +1,32 @@
+---
+name: Dockerhub
+'on':
+  push:
+    tags:
+      - '*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.0.0
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.0.0
+      - name: Login to DockerHub
+        uses: docker/login-action@v3.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: version
+        id: version
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v5.1.0
+        with:
+          push: true
+          tags: utrecht/n3dr:${{ steps.version.outputs.version }}
+          build-args: |
+            VERSION=${{ github.ref }}
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
