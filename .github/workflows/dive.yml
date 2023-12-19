@@ -7,12 +7,8 @@ jobs:
     name: Analyze image efficiency
     steps:
       - uses: actions/checkout@v4.1.1
-      - name: Set DIVE_ANALYZE_IMAGE_TAG
-        run: echo "DIVE_ANALYZE_IMAGE_TAG=utrecht/n3dr:${{ github.sha }}" >> $GITHUB_ENV
-      - name: Test
-        run: echo $DIVE_ANALYZE_IMAGE_TAG
-      - name: Build image
-        run: docker build -t ${DIVE_ANALYZE_IMAGE_TAG} .
+      - run: echo "DIVE_ANALYZE_IMAGE_TAG=utrecht/n3dr:${{ github.sha }}" >> $GITHUB_ENV
+      - run: docker build -t ${DIVE_ANALYZE_IMAGE_TAG} .
       - uses: 030/dive-action@image
         with:
           image: ${DIVE_ANALYZE_IMAGE_TAG}
