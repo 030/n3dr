@@ -76,7 +76,9 @@ linters:
     - noctx
     - nonamedreturns
     - paralleltest
+    - perfsprint
     - revive
+    - testifylint
     - testpackage
     - usestdlibvars
     - varnamelen

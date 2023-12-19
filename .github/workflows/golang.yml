@@ -1,5 +1,5 @@
 ---
-name: Golang2
+name: Golang
 'on': push
 jobs:
   golang:
