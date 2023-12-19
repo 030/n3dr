@@ -1,14 +1,11 @@
 ---
-name: Dive CI
+name: Dive
 'on': push
 jobs:
   dive:
-    runs-on: ubuntu-latest
-    name: Analyze image efficiency
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4.1.1
-      - run: echo "DIVE_ANALYZE_IMAGE_TAG=utrecht/n3dr:${{ github.sha }}" >> $GITHUB_ENV
-      - run: docker build -t ${DIVE_ANALYZE_IMAGE_TAG} .
       - uses: 030/dive-action@image
         with:
-          image: ${DIVE_ANALYZE_IMAGE_TAG}
+          image: utrecht/n3dr:${{ github.sha }}
