@@ -2,11 +2,11 @@
 name: Docker
 'on': push
 jobs:
-  mcaf-mcvs-docker-action:
+  mcvs-docker-action:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4.1.1
-      - uses: schubergphilis/mcaf-mcvs-docker-action@v0.2.0
+      - uses: schubergphilis/mcvs-docker-action@v0.2.0
         with:
           dockle-accept-key: libcrypto3,libssl3
           token: ${{ secrets.GITHUB_TOKEN }}
