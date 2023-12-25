@@ -523,12 +523,10 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			}).Debug("Maven2 asset upload")
 		}
 
-		checkedMavenFoldersAll := append(checkedMavenFolders, dirPath)
-		checkedMavenFoldersUnique := lo.Uniq(checkedMavenFoldersAll)
-
 		checkedMavenFoldersMu.Lock()
 		defer checkedMavenFoldersMu.Unlock()
-		checkedMavenFolders = checkedMavenFoldersUnique
+		checkedMavenFolders = append(checkedMavenFolders, dirPath)
+		checkedMavenFolders = lo.Uniq(checkedMavenFolders)
 	case "npm":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))

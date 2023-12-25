@@ -37,7 +37,7 @@ jobs:
           verbose: true
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@v2.1.1
         with:
           args: >
             -Dsonar.organization=030-github
