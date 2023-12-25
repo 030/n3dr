@@ -44,6 +44,14 @@ type repoFormatAndType struct {
 	format, repoType string
 }
 
+// prevent race condition while using global variables in conjunction with go
+// routines, see: "Unprotected global variable" paragraph in
+// https://go.dev/doc/articles/race_detector
+var (
+	checkedMavenFolders   []string
+	checkedMavenFoldersMu sync.Mutex
+)
+
 func uploadStatus(err error) (int, error) {
 	re := regexp.MustCompile(`status (\d{3})`)
 	match := re.FindStringSubmatch(err.Error())
@@ -296,8 +304,6 @@ func removeExtension(fileName string) string {
 	return filename
 }
 
-var checkedMavenFolders = []string{""}
-
 func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, dir, filename string) (bool, error) {
 	identical := false
 
@@ -517,8 +523,12 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			}).Debug("Maven2 asset upload")
 		}
 
-		checkedMavenFolders = append(checkedMavenFolders, dirPath)
-		checkedMavenFolders = lo.Uniq(checkedMavenFolders)
+		checkedMavenFoldersAll := append(checkedMavenFolders, dirPath)
+		checkedMavenFoldersUnique := lo.Uniq(checkedMavenFoldersAll)
+
+		checkedMavenFoldersMu.Lock()
+		defer checkedMavenFoldersMu.Unlock()
+		checkedMavenFolders = checkedMavenFoldersUnique
 	case "npm":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
@@ -650,13 +660,13 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 			}
 			if !info.IsDir() && !filesToBeSkipped {
 				wg.Add(1)
-				go func(path, localDiskRepo, localDiskRepoHome, repoFormat string, skipErrors bool) {
+				go func(cPreventDataRace *client.Nexus3, pathPreventDataRace, localDiskRepoPreventDataRace, localDiskRepoHomePreventDataRace, repoFormatPreventDataRace string, skipErrors bool) {
 					defer wg.Done()
 
-					if err := n.uploadAndPrintRepoFormat(c, path, localDiskRepo, localDiskRepoHome, repoFormat, skipErrors); err != nil {
+					if err := n.uploadAndPrintRepoFormat(cPreventDataRace, pathPreventDataRace, localDiskRepoPreventDataRace, localDiskRepoHomePreventDataRace, repoFormatPreventDataRace, skipErrors); err != nil {
 						panic(err)
 					}
-				}(path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors)
+				}(c, path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors)
 			}
 			return nil
 		}); err != nil {
@@ -762,10 +772,10 @@ func (n *Nexus3) Upload() error {
 			n.uploadArtifactsSingleDir(localDiskRepo)
 		} else {
 			wg.Add(1)
-			go func(localDiskRepo string) {
+			go func(localDiskRepoPreventDataRace string) {
 				defer wg.Done()
 
-				n.uploadArtifactsSingleDir(localDiskRepo)
+				n.uploadArtifactsSingleDir(localDiskRepoPreventDataRace)
 			}(localDiskRepo)
 		}
 	}
