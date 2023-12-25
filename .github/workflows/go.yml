@@ -1,6 +1,9 @@
 ---
 name: Go
-'on': push
+'on':
+  push:
+    branches-ignore:
+      - dependabot/**
 jobs:
   build:
     runs-on: ${{ matrix.os }}
