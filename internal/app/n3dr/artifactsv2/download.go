@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sync"
 	"time"
 
@@ -86,7 +87,7 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 	return nil
 }
 
-func (n *Nexus3) downloadSingleArtifact(asset *models.AssetXO, repo string) {
+func (n *Nexus3) downloadSingleArtifact(asset *models.AssetXO, repo string) error {
 	shaType, checksum := artifacts.Checksum(asset)
 
 	log.WithFields(log.Fields{
@@ -101,6 +102,17 @@ func (n *Nexus3) downloadSingleArtifact(asset *models.AssetXO, repo string) {
 	}
 	if !filesToBeSkipped {
 		file := filepath.Join(n.DownloadDirName, repo, assetPath)
+
+		// skip download of artifact if it does not match the regex
+		r, err := regexp.Compile(n.Regex)
+		if err != nil {
+			return err
+		}
+		if !r.MatchString(file) {
+			log.Debugf("file: '%s' skipped as it does not match regex: '%s'", file, n.Regex)
+			return nil
+		}
+
 		downloadedFileChecksum, err := artifacts.ChecksumLocalFile(file, shaType)
 		if err != nil {
 			panic(err)
@@ -110,6 +122,8 @@ func (n *Nexus3) downloadSingleArtifact(asset *models.AssetXO, repo string) {
 			panic(err)
 		}
 	}
+
+	return nil
 }
 
 func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo string) error {
@@ -129,13 +143,17 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 	for _, item := range resp.GetPayload().Items {
 		for _, asset := range item.Assets {
 			if n.WithoutWaitGroups || n.WithoutWaitGroupArtifacts {
-				n.downloadSingleArtifact(asset, repo)
+				if err := n.downloadSingleArtifact(asset, repo); err != nil {
+					return err
+				}
 			} else {
 				wg.Add(1)
 				go func(asset *models.AssetXO) {
 					defer wg.Done()
 
-					n.downloadSingleArtifact(asset, repo)
+					if err := n.downloadSingleArtifact(asset, repo); err != nil {
+						panic(err)
+					}
 				}(asset)
 			}
 		}
@@ -199,7 +217,7 @@ func (n *Nexus3) repository(repo *models.AbstractAPIRepository) {
 func (n *Nexus3) Backup() error {
 	var wg sync.WaitGroup
 
-	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS, DockerHost: n.DockerHost, DockerPort: n.DockerPort, DockerPortSecure: n.DockerPortSecure}
+	cn := connection.Nexus3{BasePathPrefix: n.BasePathPrefix, FQDN: n.FQDN, DownloadDirName: n.DownloadDirName, Pass: n.Pass, User: n.User, HTTPS: n.HTTPS, DockerHost: n.DockerHost, DockerPort: n.DockerPort, DockerPortSecure: n.DockerPortSecure, Regex: n.Regex}
 	a := artifacts.Nexus3{Nexus3: &cn}
 	repos, err := a.Repos()
 	if err != nil {

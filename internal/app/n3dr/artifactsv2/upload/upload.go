@@ -652,6 +652,16 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				return err
 			}
 
+			// skip upload of artifact if it does not match the regex
+			r, err := regexp.Compile(n.Regex)
+			if err != nil {
+				return err
+			}
+			if !r.MatchString(path) {
+				log.Debugf("file: '%s' skipped as it does not match regex: '%s'", path, n.Regex)
+				return nil
+			}
+
 			filesToBeSkipped, err := artifacts.FilesToBeSkipped(filepath.Ext(path))
 			if err != nil {
 				return err
@@ -704,7 +714,7 @@ func (n *Nexus3) maven2SnapshotsUpload(localDiskRepo string) {
 	log.Tracef("VersionPolicy: '%s'", vp)
 
 	if strings.EqualFold(vp, "snapshot") {
-		s := snapshot.Nexus3{DownloadDirName: n.DownloadDirName, FQDN: n.FQDN, HTTPS: *n.HTTPS, Pass: n.Pass, RepoFormat: "maven2", RepoName: localDiskRepo, SkipErrors: n.SkipErrors, User: n.User}
+		s := snapshot.Nexus3{DownloadDirName: n.DownloadDirName, FQDN: n.FQDN, HTTPS: *n.HTTPS, Pass: n.Pass, RepoFormat: "maven2", Regex: n.Regex, RepoName: localDiskRepo, SkipErrors: n.SkipErrors, User: n.User}
 
 		if err := s.Upload(); err != nil {
 			uploaded, errRegex := regexp.MatchString("bad status: 400 Repository does not allow updating assets", err.Error())

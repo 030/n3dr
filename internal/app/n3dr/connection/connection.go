@@ -9,7 +9,7 @@ import (
 )
 
 type Nexus3 struct {
-	AwsBucket, AwsID, AwsRegion, AwsSecret, BasePathPrefix, DockerHost, DownloadDirName, DownloadDirNameZip, Pass, RepoName, User              string
+	AwsBucket, AwsID, AwsRegion, AwsSecret, BasePathPrefix, DockerHost, DownloadDirName, DownloadDirNameZip, Pass, Regex, RepoName, User       string
 	DockerPort                                                                                                                                 int32
 	DockerPortSecure, SkipErrors, StrictContentTypeValidation, WithoutWaitGroups, WithoutWaitGroupArtifacts, WithoutWaitGroupRepositories, ZIP bool
 	HTTPS                                                                                                                                      *bool  `validate:"required"`

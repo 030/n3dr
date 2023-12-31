@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"sync"
 	"time"
@@ -70,6 +71,8 @@ func (n *Nexus3) write(asset *models.AssetXO, repositoriesTotalArtifacts *int) {
 	for _, checksum := range checksums {
 		if value, ok := asset.Checksum[checksum]; ok {
 			record = append(record, value.(string))
+		} else {
+			record = append(record, "unknown")
 		}
 	}
 
@@ -180,6 +183,18 @@ func (n *Nexus3) Artifacts() error {
 	var wg sync.WaitGroup
 	fmt.Printf("COUNT\t\tFORMAT\t\tTYPE\t\tNAME\n")
 	for _, repo := range repos {
+
+		// skip count of artifact if it does not match the regex
+		repoName := repo.Name
+		r, err := regexp.Compile(n.Regex)
+		if err != nil {
+			panic(err)
+		}
+		if !r.MatchString(repoName) {
+			log.Debugf("repo: '%s' skipped as it does not match regex: '%s'", repoName, n.Regex)
+			continue
+		}
+
 		wg.Add(1)
 		go func(repo *models.AbstractAPIRepository) {
 			defer wg.Done()

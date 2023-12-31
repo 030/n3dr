@@ -27,6 +27,9 @@ Examples:
 
   # Return the number of artifacts, write them to a /tmp/helloworld.csv and sort it:
   n3dr count --csv /tmp/helloworld --sort
+
+  # Return the number of specific artifacts using regex, write them to a /tmp/helloworld.csv and sort it:
+  n3dr count --regex="some" --csv /tmp/helloworld --sort
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		n := connection.Nexus3{
@@ -43,6 +46,7 @@ Examples:
 			FQDN:                         n3drURL,
 			HTTPS:                        &https,
 			Pass:                         n3drPass,
+			Regex:                        regex,
 			RepoName:                     n3drRepo,
 			SkipErrors:                   skipErrors,
 			User:                         n3drUser,
@@ -62,6 +66,7 @@ Examples:
 
 func init() {
 	countCmd.Flags().StringVar(&csv, "csv", "", "write to a csvFile")
+	countCmd.Flags().StringVarP(&regex, "regex", "x", ".*", "only count artifacts that match a regular expression, e.g. 'some/group42'")
 	countCmd.Flags().BoolVar(&sort, "sort", false, "sort the csvFile")
 
 	rootCmd.AddCommand(countCmd)

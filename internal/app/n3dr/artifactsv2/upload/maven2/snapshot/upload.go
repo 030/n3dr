@@ -14,8 +14,8 @@ import (
 )
 
 type Nexus3 struct {
-	HTTPS, SkipErrors                                       bool
-	DownloadDirName, FQDN, Pass, RepoFormat, RepoName, User string
+	HTTPS, SkipErrors                                              bool
+	DownloadDirName, FQDN, Pass, Regex, RepoFormat, RepoName, User string
 }
 
 func (n *Nexus3) statusCode(resp *http.Response) error {
@@ -39,6 +39,16 @@ func (n *Nexus3) statusCode(resp *http.Response) error {
 }
 
 func (n *Nexus3) readRetryAndUpload(path string) error {
+	// skip upload of artifact if it does not match the regex
+	r, err := regexp.Compile(n.Regex)
+	if err != nil {
+		return err
+	}
+	if !r.MatchString(path) {
+		log.Debugf("file: '%s' skipped as it does not match regex: '%s'", path, n.Regex)
+		return nil
+	}
+
 	log.Debugf("reading path: '%s' and uploading it", path)
 	f, err := os.Open(filepath.Clean(path))
 	if err != nil {

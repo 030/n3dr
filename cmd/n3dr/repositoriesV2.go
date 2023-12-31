@@ -83,6 +83,7 @@ Examples:
 			FQDN:                         n3drURL,
 			HTTPS:                        &https,
 			Pass:                         n3drPass,
+			Regex:                        regex,
 			RepoName:                     n3drRepo,
 			SkipErrors:                   skipErrors,
 			User:                         n3drUser,
