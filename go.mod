@@ -7,9 +7,9 @@ require (
 	github.com/030/mij v1.0.2
 	github.com/030/p2iwd v1.0.3
 	github.com/aws/aws-sdk-go v1.48.16
-	github.com/go-openapi/errors v0.20.4
+	github.com/go-openapi/errors v0.21.0
 	github.com/go-openapi/runtime v0.26.0
-	github.com/go-openapi/strfmt v0.21.7
+	github.com/go-openapi/strfmt v0.22.0
 	github.com/go-openapi/swag v0.22.4
 	github.com/go-openapi/validate v0.22.3
 	github.com/go-playground/validator/v10 v10.15.5
@@ -41,6 +41,7 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -74,7 +75,7 @@ require (
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
-	go.mongodb.org/mongo-driver v1.12.0 // indirect
+	go.mongodb.org/mongo-driver v1.13.1 // indirect
 	go.opentelemetry.io/otel v1.14.0 // indirect
 	go.opentelemetry.io/otel/trace v1.14.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
