@@ -54,10 +54,10 @@ var syncCmd = &cobra.Command{
 			n.DockerPortSecure = otherDockerSecurePorts[i]
 
 			wg.Add(1)
-			go func(n connection.Nexus3) {
+			go func(nPreventDataRace connection.Nexus3) {
 				defer wg.Done()
 
-				u := upload.Nexus3{Nexus3: &n}
+				u := upload.Nexus3{Nexus3: &nPreventDataRace}
 				if err := u.Upload(); err != nil {
 					panic(err)
 				}
