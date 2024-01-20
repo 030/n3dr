@@ -181,13 +181,13 @@ func (n *Nexus3) Artifacts() error {
 	fmt.Printf("COUNT\t\tFORMAT\t\tTYPE\t\tNAME\n")
 	for _, repo := range repos {
 		wg.Add(1)
-		go func(repo *models.AbstractAPIRepository) {
+		go func(repoPreventDataRace *models.AbstractAPIRepository) {
 			defer wg.Done()
 
 			repositoriesTotalArtifacts := 0
 			log.Debugf("repositoriesTotalArtifacts: '%d'", repositoriesTotalArtifacts)
 
-			if err := n.artifact("", &repositoriesTotalArtifacts, repo); err != nil {
+			if err := n.artifact("", &repositoriesTotalArtifacts, repoPreventDataRace); err != nil {
 				panic(err)
 			}
 		}(repo)

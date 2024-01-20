@@ -132,11 +132,11 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 				n.downloadSingleArtifact(asset, repo)
 			} else {
 				wg.Add(1)
-				go func(asset *models.AssetXO) {
+				go func(assetPreventDataRace *models.AssetXO, repoPreventDataRace string) {
 					defer wg.Done()
 
-					n.downloadSingleArtifact(asset, repo)
-				}(asset)
+					n.downloadSingleArtifact(assetPreventDataRace, repoPreventDataRace)
+				}(asset, repo)
 			}
 		}
 	}
@@ -222,10 +222,10 @@ func (n *Nexus3) Backup() error {
 				n.repository(repo)
 			} else {
 				wg.Add(1)
-				go func(repo *models.AbstractAPIRepository) {
+				go func(repoPreventDataRace *models.AbstractAPIRepository) {
 					defer wg.Done()
 
-					n.repository(repo)
+					n.repository(repoPreventDataRace)
 				}(repo)
 			}
 		}

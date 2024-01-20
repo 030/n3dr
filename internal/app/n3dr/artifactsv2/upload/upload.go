@@ -524,9 +524,9 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		}
 
 		checkedMavenFoldersMu.Lock()
-		defer checkedMavenFoldersMu.Unlock()
 		checkedMavenFolders = append(checkedMavenFolders, dirPath)
 		checkedMavenFolders = lo.Uniq(checkedMavenFolders)
+		checkedMavenFoldersMu.Unlock()
 	case "npm":
 		c.Repository = localDiskRepo
 		f, err := os.Open(filepath.Clean(path))
@@ -640,8 +640,6 @@ func (n *Nexus3) uploadAndPrintRepoFormat(c *client.Nexus3, path, localDiskRepo,
 }
 
 func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo, repoFormat string) error {
-	var wg sync.WaitGroup
-
 	c, err := n.Nexus3.Client()
 	if err != nil {
 		return err
@@ -657,20 +655,14 @@ func (n *Nexus3) ReadLocalDirAndUploadArtifacts(localDiskRepoHome, localDiskRepo
 				return err
 			}
 			if !info.IsDir() && !filesToBeSkipped {
-				wg.Add(1)
-				go func(cPreventDataRace *client.Nexus3, pathPreventDataRace, localDiskRepoPreventDataRace, localDiskRepoHomePreventDataRace, repoFormatPreventDataRace string, skipErrors bool) {
-					defer wg.Done()
-
-					if err := n.uploadAndPrintRepoFormat(cPreventDataRace, pathPreventDataRace, localDiskRepoPreventDataRace, localDiskRepoHomePreventDataRace, repoFormatPreventDataRace, skipErrors); err != nil {
-						panic(err)
-					}
-				}(c, path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors)
+				if err := n.uploadAndPrintRepoFormat(c, path, localDiskRepo, localDiskRepoHome, repoFormat, n.SkipErrors); err != nil {
+					panic(err)
+				}
 			}
 			return nil
 		}); err != nil {
 		return err
 	}
-	wg.Wait()
 
 	return nil
 }
@@ -770,11 +762,11 @@ func (n *Nexus3) Upload() error {
 			n.uploadArtifactsSingleDir(localDiskRepo)
 		} else {
 			wg.Add(1)
-			go func(localDiskRepoPreventDataRace string) {
+			go func(nPreventDataRace *Nexus3, localDiskRepoPreventDataRace string) {
 				defer wg.Done()
 
-				n.uploadArtifactsSingleDir(localDiskRepoPreventDataRace)
-			}(localDiskRepo)
+				nPreventDataRace.uploadArtifactsSingleDir(localDiskRepoPreventDataRace)
+			}(n, localDiskRepo)
 		}
 	}
 	wg.Wait()

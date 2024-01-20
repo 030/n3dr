@@ -15,9 +15,9 @@ var countV2, namesV2, backupV2, uploadV2, withoutWaitGroups, withoutWaitGroupArt
 // repositoriesCmd represents the repositories command.
 var repositoriesV2Cmd = &cobra.Command{
 	Use:   "repositoriesV2",
-	Short: "Count the number of repositories or return their names.",
-	Long: `Count the number of repositories, count the total or
-download artifacts from all repositories.
+	Short: "Return repository names, number of repositories or backup/upload artifacts.",
+	Long: `Count the number of repositories, count the total, return the names or
+download/upload artifacts from all repositories.
 
 Examples:
   # Return the number of repositories without logging:
