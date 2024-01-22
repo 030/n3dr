@@ -10,7 +10,7 @@ require (
 	github.com/go-openapi/errors v0.21.0
 	github.com/go-openapi/runtime v0.26.0
 	github.com/go-openapi/strfmt v0.22.0
-	github.com/go-openapi/swag v0.22.4
+	github.com/go-openapi/swag v0.22.7
 	github.com/go-openapi/validate v0.22.3
 	github.com/go-playground/validator/v10 v10.17.0
 	github.com/hashicorp/go-retryablehttp v0.7.5
