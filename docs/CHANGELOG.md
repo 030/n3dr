@@ -2,10 +2,51 @@
 ## [Unreleased]
 
 
+<a name="7.4.0"></a>
+## [7.4.0] - 2024-02-03
+### Build
+- [[#423](https://github.com/030/n3dr/issues/423)] Add golang action. ([#424](https://github.com/030/n3dr/issues/424))
+- Replace separate hadolint, dockle and trivy by one workflow. ([#417](https://github.com/030/n3dr/issues/417))
+- **deps:** bump github.com/spf13/viper from 1.17.0 to 1.18.2 ([#426](https://github.com/030/n3dr/issues/426))
+- **deps:** bump github.com/go-openapi/swag from 0.22.4 to 0.22.9 ([#454](https://github.com/030/n3dr/issues/454))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.48.16 to 1.50.5 ([#453](https://github.com/030/n3dr/issues/453))
+- **deps:** bump golang.org/x/crypto from 0.14.0 to 0.17.0 ([#416](https://github.com/030/n3dr/issues/416))
+- **deps:** bump alpine from 3.19.0 to 3.19.1 ([#455](https://github.com/030/n3dr/issues/455))
+- **deps:** bump schubergphilis/mcvs-golang-action from 0.2.2 to 0.2.3 ([#457](https://github.com/030/n3dr/issues/457))
+- **deps:** bump EndBug/add-and-commit from 9.1.3 to 9.1.4 ([#458](https://github.com/030/n3dr/issues/458))
+- **deps:** bump schubergphilis/mcvs-golang-action from 0.1.1 to 0.2.2 ([#448](https://github.com/030/n3dr/issues/448))
+- **deps:** bump schubergphilis/mcvs-docker-action from 0.2.1 to 0.3.2 ([#449](https://github.com/030/n3dr/issues/449))
+- **deps:** bump github.com/go-playground/validator/v10 ([#444](https://github.com/030/n3dr/issues/444))
+- **deps:** bump golang from 1.21.5-alpine3.18 to 1.21.6-alpine3.18 ([#445](https://github.com/030/n3dr/issues/445))
+- **deps:** bump alpine from 3.18.5 to 3.19.0 ([#413](https://github.com/030/n3dr/issues/413))
+- **deps:** bump github.com/go-openapi/strfmt from 0.21.7 to 0.22.0 ([#434](https://github.com/030/n3dr/issues/434))
+- **deps:** bump schubergphilis/mcvs-docker-action from 0.2.0 to 0.2.1 ([#427](https://github.com/030/n3dr/issues/427))
+- **deps:** bump codecov/codecov-action from 3.1.4 to 4.0.1 ([#463](https://github.com/030/n3dr/issues/463))
+- **deps:** bump github.com/go-openapi/runtime from 0.26.0 to 0.27.1 ([#452](https://github.com/030/n3dr/issues/452))
+- **deps:** bump github.com/samber/lo from 1.38.1 to 1.39.0 ([#389](https://github.com/030/n3dr/issues/389))
+- **deps:** bump github.com/hashicorp/go-retryablehttp ([#392](https://github.com/030/n3dr/issues/392))
+- **deps:** bump github.com/spf13/cobra from 1.7.0 to 1.8.0 ([#393](https://github.com/030/n3dr/issues/393))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.45.25 to 1.48.16 ([#406](https://github.com/030/n3dr/issues/406))
+- **deps:** bump golang from 1.21.0-alpine3.18 to 1.21.5-alpine3.18 ([#405](https://github.com/030/n3dr/issues/405))
+- **deps:** bump github.com/go-openapi/validate from 0.22.1 to 0.22.3 ([#388](https://github.com/030/n3dr/issues/388))
+- **deps:** bump alpine from 3.18.4 to 3.18.5 ([#387](https://github.com/030/n3dr/issues/387))
+
+### Feat
+- [[#440](https://github.com/030/n3dr/issues/440)] Create user and assign roles.
+
+### Fix
+- [[#428](https://github.com/030/n3dr/issues/428)] Resolve race condition. ([#435](https://github.com/030/n3dr/issues/435))
+- [[#430](https://github.com/030/n3dr/issues/430)] Use semantic version. ([#432](https://github.com/030/n3dr/issues/432))
+- [[#430](https://github.com/030/n3dr/issues/430)] Do not run Sonar if dependabot branch. ([#431](https://github.com/030/n3dr/issues/431))
+- [[#428](https://github.com/030/n3dr/issues/428)] Resolve data race condition in upload. ([#429](https://github.com/030/n3dr/issues/429))
+- Ensure that integration tests are skipped on dep updates. ([#420](https://github.com/030/n3dr/issues/420))
+
+
 <a name="7.3.3"></a>
 ## [7.3.3] - 2023-12-09
 ### Build
-- **deps:** [[#399](https://github.com/030/n3dr/issues/399)] Use semantic versioning for plugins in github actions.
+- **deps:** [[#399](https://github.com/030/n3dr/issues/399)] V is omitted in upload-release-action. ([#404](https://github.com/030/n3dr/issues/404))
+- **deps:** [[#399](https://github.com/030/n3dr/issues/399)] Use semantic versioning for plugins in github actions. ([#403](https://github.com/030/n3dr/issues/403))
 - **deps:** bump actions/checkout from 3 to 4 ([#394](https://github.com/030/n3dr/issues/394))
 
 ### Fix
@@ -413,7 +454,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.3.3...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.4.0...HEAD
+[7.4.0]: https://github.com/030/n3dr/compare/7.3.3...7.4.0
 [7.3.3]: https://github.com/030/n3dr/compare/7.3.2...7.3.3
 [7.3.2]: https://github.com/030/n3dr/compare/7.3.1...7.3.2
 [7.3.1]: https://github.com/030/n3dr/compare/7.3.0...7.3.1

@@ -19,6 +19,10 @@ issues:
       text: "don't use `init` function"
     - linters:
         - gochecknoinits
+      path: cmd/n3dr/configRole.go
+      text: "don't use `init` function"
+    - linters:
+        - gochecknoinits
       path: cmd/n3dr/count.go
       text: "don't use `init` function"
     - linters:

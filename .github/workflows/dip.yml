@@ -23,7 +23,8 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5.0.0
         with:
-          go-version: 1.19.0
+          go-version-file: 'go.mod'
+          cache: false
       - name: Check Golang
         run: |
           ./dip image --name=golang --regex=^1\.[0-9]+\.[0-9]+-alpine3\.[0-9]+$ --updateDockerfile

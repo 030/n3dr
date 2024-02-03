@@ -11,3 +11,5 @@ test/gpg/my_rsa_key
 test/rproxy-nginx-nexus3.conf.tmp
 
 .vagrant
+
+coverage*
