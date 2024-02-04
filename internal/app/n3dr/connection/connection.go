@@ -13,7 +13,7 @@ type Nexus3 struct {
 	DockerPort                                                                                                                                 int32
 	DockerPortSecure, SkipErrors, StrictContentTypeValidation, WithoutWaitGroups, WithoutWaitGroupArtifacts, WithoutWaitGroupRepositories, ZIP bool
 	HTTPS                                                                                                                                      *bool  `validate:"required"`
-	FQDN                                                                                                                                       string `validate:"required"`
+	FQDN                                                                                                                                       string `validate:"required,min=3"`
 }
 
 func (n *Nexus3) Client() (*apiclient.Nexus3, error) {
