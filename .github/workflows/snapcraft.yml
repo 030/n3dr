@@ -19,6 +19,9 @@ jobs:
           path: build/package
         id: snapcraft
       - run: |
+          snap --version
+          echo "check ldd version"
+          ldd --version
           sudo snap install --dangerous ${{ steps.snapcraft.outputs.snap }}
           n3dr --version | grep "[0-9]\."
       - uses: snapcore/action-publish@v1.2.0

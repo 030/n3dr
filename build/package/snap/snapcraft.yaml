@@ -1,7 +1,7 @@
 ---
 name: n3dr
-base: core20
-version: 7.4.0
+base: core22
+version: 7.4.1
 summary: Nexus3 Disaster Recovery
 description: |
   Download all artifacts at once or migrate automatically from Nexus to Nexus.
@@ -20,7 +20,11 @@ parts:
     plugin: nil
     build-packages:
       - curl
+      - libc6-dev
     override-build: |
+      snap --version
+      echo "check ldd version"
+      ldd --version
       cd $SNAPCRAFT_PART_INSTALL
       export N3DR_URL=https://github.com/030/n3dr/releases/download
       export N3DR_URL_VERSION=${N3DR_URL}/${SNAPCRAFT_PROJECT_VERSION}

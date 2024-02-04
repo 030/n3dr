@@ -2,8 +2,14 @@
 ## [Unreleased]
 
 
+<a name="7.4.1"></a>
+## [7.4.1] - 2024-02-04
+### Build
+- Resolve 'GLIBC_2.34 not found in snapcraft' issue.
+
+
 <a name="7.4.0"></a>
-## [7.4.0] - 2024-02-03
+## [7.4.0] - 2024-02-04
 ### Build
 - [[#423](https://github.com/030/n3dr/issues/423)] Add golang action. ([#424](https://github.com/030/n3dr/issues/424))
 - Replace separate hadolint, dockle and trivy by one workflow. ([#417](https://github.com/030/n3dr/issues/417))
@@ -32,7 +38,7 @@
 - **deps:** bump alpine from 3.18.4 to 3.18.5 ([#387](https://github.com/030/n3dr/issues/387))
 
 ### Feat
-- [[#440](https://github.com/030/n3dr/issues/440)] Create user and assign roles.
+- [[#440](https://github.com/030/n3dr/issues/440)] Create user and assign roles. ([#447](https://github.com/030/n3dr/issues/447))
 
 ### Fix
 - [[#428](https://github.com/030/n3dr/issues/428)] Resolve race condition. ([#435](https://github.com/030/n3dr/issues/435))
@@ -454,7 +460,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.4.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.4.1...HEAD
+[7.4.1]: https://github.com/030/n3dr/compare/7.4.0...7.4.1
 [7.4.0]: https://github.com/030/n3dr/compare/7.3.3...7.4.0
 [7.3.3]: https://github.com/030/n3dr/compare/7.3.2...7.3.3
 [7.3.2]: https://github.com/030/n3dr/compare/7.3.1...7.3.2
