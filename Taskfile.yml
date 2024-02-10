@@ -4,7 +4,7 @@ version: '3'
 env:
   GIT_CHGLOG_URL: https://github.com/git-chglog/git-chglog/releases/download
   GIT_CHGLOG_VERSION: v0.15.1/git-chglog_0.15.1_linux_amd64.tar.gz
-  CHANGELOG_NEXT_TAG: 7.4.1
+  CHANGELOG_NEXT_TAG: 7.5.0
 
 tasks:
   changelog:
