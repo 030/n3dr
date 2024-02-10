@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/030/logging/pkg/logging"
 	cli "github.com/030/n3dr/internal/app/n3dr/artifactsv2"
@@ -58,10 +59,14 @@ Nexus3 repository and restoring them.`,
 }
 
 func execute() {
+	now := time.Now()
+
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
+	log.Infof("n3dr was running for: '%s'", time.Since(now))
 }
 
 func init() {

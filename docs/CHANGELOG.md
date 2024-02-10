@@ -2,10 +2,24 @@
 ## [Unreleased]
 
 
+<a name="7.5.0"></a>
+## [7.5.0] - 2024-02-10
+### Build
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.10 to 1.50.14 ([#474](https://github.com/030/n3dr/issues/474))
+- **deps:** bump schubergphilis/mcvs-golang-action from 0.2.3 to 0.3.0 ([#473](https://github.com/030/n3dr/issues/473))
+- **deps:** bump golang from 1.21.6-alpine3.18 to 1.22.0-alpine3.18 ([#471](https://github.com/030/n3dr/issues/471))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.5 to 1.50.10 ([#464](https://github.com/030/n3dr/issues/464))
+- **deps:** bump github.com/go-openapi/validate from 0.22.4 to 0.23.0 ([#465](https://github.com/030/n3dr/issues/465))
+- **deps:** bump github.com/docker/docker from 20.10.24+incompatible to 20.10.27+incompatible ([#466](https://github.com/030/n3dr/issues/466))
+
+### Feat
+- [[#459](https://github.com/030/n3dr/issues/459)] Display how long N3DR was running.
+
+
 <a name="7.4.1"></a>
 ## [7.4.1] - 2024-02-04
 ### Build
-- Resolve 'GLIBC_2.34 not found in snapcraft' issue.
+- [[#467](https://github.com/030/n3dr/issues/467)] Resolve 'GLIBC_2.34 not found in snapcraft' issue. ([#468](https://github.com/030/n3dr/issues/468))
 
 
 <a name="7.4.0"></a>
@@ -460,7 +474,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.4.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.5.0...HEAD
+[7.5.0]: https://github.com/030/n3dr/compare/7.4.1...7.5.0
 [7.4.1]: https://github.com/030/n3dr/compare/7.4.0...7.4.1
 [7.4.0]: https://github.com/030/n3dr/compare/7.3.3...7.4.0
 [7.3.3]: https://github.com/030/n3dr/compare/7.3.2...7.3.3
