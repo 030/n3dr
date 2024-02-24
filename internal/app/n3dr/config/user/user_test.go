@@ -193,7 +193,7 @@ func TestCreateRole(t *testing.T) {
 		},
 		{
 			adminPassword:                      initialAdminPassword,
-			expectedErrorString:                "could not create role. Response: '<nil>'. Error: 'response status code does not match any response statuses defined for this endpoint in the swagger spec (status 400): {}'",
+			expectedErrorString:                "could not create role. Error: 'response status code does not match any response statuses defined for this endpoint in the swagger spec (status 400): {}'",
 			name:                               "Trying to create a role with a privilege that does not exist.",
 			passwordOfUserIdThatHasToBeChanged: "admin",
 			unsetHostAndPort:                   false,
