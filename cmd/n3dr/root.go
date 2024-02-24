@@ -60,13 +60,14 @@ Nexus3 repository and restoring them.`,
 
 func execute() {
 	now := time.Now()
+	defer func() {
+		log.Debugf("n3dr was running for: '%s'", time.Since(now))
+	}()
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	log.Infof("n3dr was running for: '%s'", time.Since(now))
 }
 
 func init() {
