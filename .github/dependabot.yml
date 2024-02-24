@@ -3,13 +3,19 @@ version: 2
 updates:
   - package-ecosystem: 'docker'
     directory: '/'
+    reviewers:
+      - '030'
     schedule:
       interval: 'daily'
   - package-ecosystem: 'github-actions'
     directory: '/'
+    reviewers:
+      - '030'
     schedule:
       interval: 'daily'
   - package-ecosystem: 'gomod'
     directory: '/'
+    reviewers:
+      - '030'
     schedule:
       interval: 'daily'
