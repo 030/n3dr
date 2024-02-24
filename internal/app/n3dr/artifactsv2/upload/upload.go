@@ -323,10 +323,13 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 		scheme = "https"
 	}
 
-	u := scheme + "://" + n.FQDN + "/repository/" + localDiskRepo + "/" + dir + "/" + filename + ".sha512"
-	log.Debugf("upload URL: '%s'", u)
+	// URL for checking the sha512 checksum of a file that has been stored in Nexus3
+	// which has to be compared with the one of the downloaded file.
+	// If equal then do not upload the file again
+	checksumOfArtifactInNexus3Sha512URL := scheme + "://" + n.FQDN + "/repository/" + localDiskRepo + "/" + dir + "/" + filename + ".sha512"
+	log.Debugf("checksumOfArtifactInNexus3Sha512URL: '%s'", checksumOfArtifactInNexus3Sha512URL)
 
-	req, err := http.NewRequest("GET", u, nil)
+	req, err := http.NewRequest("GET", checksumOfArtifactInNexus3Sha512URL, nil)
 	if err != nil {
 		return false, err
 	}
@@ -341,20 +344,16 @@ func (n *Nexus3) checkLocalChecksumAndCompareWithOneInRemote(f, localDiskRepo, d
 			panic(err)
 		}
 	}()
-	defer func() {
-		if err := resp.Body.Close(); err != nil {
-			panic(err)
-		}
-	}()
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return false, err
 	}
-	bodyString := string(bodyBytes)
-	log.Debugf("checksum of artifact in nexus3: '%s'", bodyString)
+	checksumOfArtifactInNexus3 := string(bodyBytes)
+	log.Debugf("checksum of artifact in nexus3: '%s'", checksumOfArtifactInNexus3)
 
-	if bodyString == downloadedFileChecksum {
+	if checksumOfArtifactInNexus3 == downloadedFileChecksum {
 		identical = true
+		log.Infof("the checksum of the filesystem: '%s' is identical to the one in Nexus3: '%s'. Outcome: '%t'", downloadedFileChecksum, checksumOfArtifactInNexus3, identical)
 	}
 
 	return identical, nil
@@ -466,15 +465,20 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			c.Maven2Version = &mp.version
 
 			// Match "/some/group/" and capture the group name.
-			regex := `^` + localDiskRepoHome + `/([\w+\/]+)/` + mp.artifact
+			regex := `^` + localDiskRepoHome + `/([\.\-\d+\w+\/]+)/` + mp.artifact
 			re := regexp.MustCompile(regex)
 			groupID := ""
 
 			// Extract the group name from the path.
+			// * the path will be validated
+			// * subsequently the groupID will be extracted from the path. Note: a groupID could be: 'some/group/some/artifact'
 			match := re.FindStringSubmatch(path)
 			if len(match) >= 2 {
+				log.Tracef("elements: '%v' that were found that are required to determine the groupID", match)
 				groupID = match[1]
+				log.Debugf("the following groupID has been found: '%s'", groupID)
 				groupID = strings.ReplaceAll(groupID, `/`, `.`)
+				log.Tracef("groupID without slash: '%s'", groupID)
 			} else {
 				return false, fmt.Errorf("groupID should not be empty, path: '%s' and regex: '%s'", path, regex)
 			}
@@ -482,13 +486,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			generatePOM := true
 			c.Maven2GeneratePom = &generatePOM
 
-			maven2Asset1 := "empty"
-			maven2Asset2 := "empty"
-			maven2Asset3 := "empty"
-			maven2Asset4 := "empty"
-			maven2Asset5 := "empty"
-			maven2Asset6 := "empty"
-			maven2Asset7 := "empty"
+			maven2Asset1, maven2Asset2, maven2Asset3, maven2Asset4, maven2Asset5, maven2Asset6, maven2Asset7 := "empty", "empty", "empty", "empty", "empty", "empty", "empty"
 
 			if c.Maven2Asset1 != nil {
 				maven2Asset1 = c.Maven2Asset1.Name()

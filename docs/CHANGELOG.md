@@ -2,6 +2,16 @@
 ## [Unreleased]
 
 
+<a name="7.5.1"></a>
+## [7.5.1] - 2024-02-24
+### Build
+- **deps:** bump schubergphilis/mcvs-golang-action from 0.3.0 to 0.4.1 ([#483](https://github.com/030/n3dr/issues/483))
+
+### Fix
+- [[#495](https://github.com/030/n3dr/issues/495)] Upload issues due to incomplete regex.
+- [[#493](https://github.com/030/n3dr/issues/493)] Resolve issue in integration test. ([#494](https://github.com/030/n3dr/issues/494))
+
+
 <a name="7.5.0"></a>
 ## [7.5.0] - 2024-02-10
 ### Build
@@ -13,7 +23,7 @@
 - **deps:** bump github.com/docker/docker from 20.10.24+incompatible to 20.10.27+incompatible ([#466](https://github.com/030/n3dr/issues/466))
 
 ### Feat
-- [[#459](https://github.com/030/n3dr/issues/459)] Display how long N3DR was running.
+- [[#459](https://github.com/030/n3dr/issues/459)] Display how long N3DR was running. ([#475](https://github.com/030/n3dr/issues/475))
 
 
 <a name="7.4.1"></a>
@@ -474,7 +484,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.5.0...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.5.1...HEAD
+[7.5.1]: https://github.com/030/n3dr/compare/7.5.0...7.5.1
 [7.5.0]: https://github.com/030/n3dr/compare/7.4.1...7.5.0
 [7.4.1]: https://github.com/030/n3dr/compare/7.4.0...7.4.1
 [7.4.0]: https://github.com/030/n3dr/compare/7.3.3...7.4.0
