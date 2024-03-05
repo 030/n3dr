@@ -7,9 +7,9 @@ require (
 	github.com/030/mij v1.0.2
 	github.com/030/p2iwd v1.0.3
 	github.com/aws/aws-sdk-go v1.50.30
-	github.com/go-openapi/errors v0.21.0
+	github.com/go-openapi/errors v0.21.1
 	github.com/go-openapi/runtime v0.27.1
-	github.com/go-openapi/strfmt v0.22.1
+	github.com/go-openapi/strfmt v0.22.2
 	github.com/go-openapi/swag v0.22.9
 	github.com/go-openapi/validate v0.23.0
 	github.com/go-playground/validator/v10 v10.19.0
