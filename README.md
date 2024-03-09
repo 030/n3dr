@@ -1,5 +1,7 @@
 # N3DR
 
+!!!SNAP STABLE WILL BE UPDATED TO N3DR 7 SOON!!!
+
 [![CI](https://github.com/030/n3dr/workflows/Go/badge.svg?event=push)](https://github.com/030/n3dr/actions?query=workflow%3AGo)
 [![GoDoc Widget]][godoc]
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/030/n3dr?logo=go)
