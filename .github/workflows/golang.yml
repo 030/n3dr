@@ -4,8 +4,11 @@ name: golang
   push:
   # required by gomod-go-version-updater to trigger this action
   workflow_dispatch:
+  pull_request:
+    types: [labeled]
 jobs:
   mcvs-golang-action:
+    # if: ${{ github.event.label.name == 'gomod-go-version-updater' }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4.1.1
