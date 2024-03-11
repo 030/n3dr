@@ -1,6 +1,9 @@
 ---
-name: Golang
-'on': push
+name: golang
+'on':
+  push:
+  # required by gomod-go-version-updater to trigger this action
+  workflow_dispatch:
 jobs:
   mcvs-golang-action:
     runs-on: ubuntu-20.04
