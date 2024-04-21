@@ -2,13 +2,59 @@
 ## [Unreleased]
 
 
+<a name="7.5.2"></a>
+## [7.5.2] - 2024-04-21
+### Build
+- [[#535](https://github.com/030/n3dr/issues/535)] allow gomod-go-version-updater action to trigger golang… ([#543](https://github.com/030/n3dr/issues/543))
+- [[#535](https://github.com/030/n3dr/issues/535)] allow gomod-go-version-updater action to trigger golang… ([#536](https://github.com/030/n3dr/issues/536))
+- [[#535](https://github.com/030/n3dr/issues/535)] allow gomod-go-version-updater action to trigger golang… ([#539](https://github.com/030/n3dr/issues/539))
+- **deps:** bump github.com/go-openapi/runtime from 0.27.2 to 0.28.0 ([#529](https://github.com/030/n3dr/issues/529))
+- **deps:** bump docker/setup-buildx-action from 3.2.0 to 3.3.0 ([#556](https://github.com/030/n3dr/issues/556))
+- **deps:** bump codecov/codecov-action from 4.1.0 to 4.3.0 ([#557](https://github.com/030/n3dr/issues/557))
+- **deps:** bump github.com/docker/docker from 20.10.27+incompatible to 24.0.9+incompatible ([#551](https://github.com/030/n3dr/issues/551))
+- **deps:** bump 030/gomod-go-version-updater-action from 0.1.1 to 0.1.2 ([#555](https://github.com/030/n3dr/issues/555))
+- **deps:** bump golang version in go.mod file from 1.21.5 to 1.22.2 ([#545](https://github.com/030/n3dr/issues/545))
+- **deps:** bump svenstaro/upload-release-action from 2.7.0 to 2.9.0 ([#491](https://github.com/030/n3dr/issues/491))
+- **deps:** bump golang.org/x/net from 0.21.0 to 0.23.0 ([#558](https://github.com/030/n3dr/issues/558))
+- **deps:** bump docker/login-action from 3.0.0 to 3.1.0 ([#547](https://github.com/030/n3dr/issues/547))
+- **deps:** bump actions/checkout from 4.1.1 to 4.1.2 ([#546](https://github.com/030/n3dr/issues/546))
+- **deps:** bump docker/build-push-action from 5.1.0 to 5.3.0 ([#548](https://github.com/030/n3dr/issues/548))
+- **deps:** bump docker/setup-buildx-action from 3.1.0 to 3.2.0 ([#549](https://github.com/030/n3dr/issues/549))
+- **deps:** bump golang from 1.22.1-alpine3.18 to 1.22.2-alpine3.18 ([#553](https://github.com/030/n3dr/issues/553))
+- **deps:** bump github.com/go-openapi/swag from 0.22.10 to 0.23.0 ([#533](https://github.com/030/n3dr/issues/533))
+- **deps:** bump github.com/go-openapi/errors from 0.21.1 to 0.22.0 ([#532](https://github.com/030/n3dr/issues/532))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.30 to 1.50.35 ([#523](https://github.com/030/n3dr/issues/523))
+- **deps:** [[#524](https://github.com/030/n3dr/issues/524)] Update go version in go.mod ([#527](https://github.com/030/n3dr/issues/527))
+- **deps:** bump github.com/go-openapi/runtime from 0.27.1 to 0.27.2 ([#517](https://github.com/030/n3dr/issues/517))
+- **deps:** bump golang from 1.22.0-alpine3.18 to 1.22.1-alpine3.18 ([#519](https://github.com/030/n3dr/issues/519))
+- **deps:** bump github.com/go-openapi/validate from 0.23.0 to 0.23.2 ([#514](https://github.com/030/n3dr/issues/514))
+- **deps:** bump github.com/stretchr/testify from 1.8.4 to 1.9.0 ([#513](https://github.com/030/n3dr/issues/513))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.29 to 1.50.30 ([#512](https://github.com/030/n3dr/issues/512))
+- **deps:** bump github.com/go-playground/validator/v10 from 10.18.0 to 10.19.0 ([#511](https://github.com/030/n3dr/issues/511))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.28 to 1.50.29 ([#509](https://github.com/030/n3dr/issues/509))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.27 to 1.50.28 ([#508](https://github.com/030/n3dr/issues/508))
+- **deps:** bump github.com/go-openapi/strfmt from 0.22.0 to 0.22.1 ([#506](https://github.com/030/n3dr/issues/506))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.25 to 1.50.27 ([#505](https://github.com/030/n3dr/issues/505))
+- **deps:** bump codecov/codecov-action from 4.0.2 to 4.1.0 ([#504](https://github.com/030/n3dr/issues/504))
+- **deps:** bump github.com/go-playground/validator/v10 from 10.17.0 to 10.18.0 ([#479](https://github.com/030/n3dr/issues/479))
+- **deps:** bump docker/setup-buildx-action from 3.0.0 to 3.1.0 ([#507](https://github.com/030/n3dr/issues/507))
+- **deps:** bump github.com/aws/aws-sdk-go from 1.50.14 to 1.50.25 ([#502](https://github.com/030/n3dr/issues/502))
+- **deps:** bump codecov/codecov-action from 4.0.1 to 4.0.2 ([#501](https://github.com/030/n3dr/issues/501))
+
+### Fix
+- [[#496](https://github.com/030/n3dr/issues/496)] Default snap channel should point to n3dr 7
+- [[#535](https://github.com/030/n3dr/issues/535)] Go mod updater go mod tidy ([#537](https://github.com/030/n3dr/issues/537))
+- [[#499](https://github.com/030/n3dr/issues/499)] Add default reviewer 030 to dependabot PRs. ([#500](https://github.com/030/n3dr/issues/500))
+- [[#485](https://github.com/030/n3dr/issues/485)] Resolve defer issue in time now. ([#497](https://github.com/030/n3dr/issues/497))
+
+
 <a name="7.5.1"></a>
 ## [7.5.1] - 2024-02-24
 ### Build
 - **deps:** bump schubergphilis/mcvs-golang-action from 0.3.0 to 0.4.1 ([#483](https://github.com/030/n3dr/issues/483))
 
 ### Fix
-- [[#495](https://github.com/030/n3dr/issues/495)] Upload issues due to incomplete regex.
+- [[#495](https://github.com/030/n3dr/issues/495)] Upload issues due to incomplete regex. ([#498](https://github.com/030/n3dr/issues/498))
 - [[#493](https://github.com/030/n3dr/issues/493)] Resolve issue in integration test. ([#494](https://github.com/030/n3dr/issues/494))
 
 
@@ -484,7 +530,8 @@ The `backup`, `upload` and `repositories` commands have been removed.
 <a name="1.0.0"></a>
 ## 1.0.0 - 2019-05-12
 
-[Unreleased]: https://github.com/030/n3dr/compare/7.5.1...HEAD
+[Unreleased]: https://github.com/030/n3dr/compare/7.5.2...HEAD
+[7.5.2]: https://github.com/030/n3dr/compare/7.5.1...7.5.2
 [7.5.1]: https://github.com/030/n3dr/compare/7.5.0...7.5.1
 [7.5.0]: https://github.com/030/n3dr/compare/7.4.1...7.5.0
 [7.4.1]: https://github.com/030/n3dr/compare/7.4.0...7.4.1
