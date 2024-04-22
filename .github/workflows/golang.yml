@@ -10,7 +10,7 @@ jobs:
   mcvs-golang-action:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4.1.2
+      - uses: actions/checkout@v4.1.3
       - uses: schubergphilis/mcvs-golang-action@v0.4.1
         with:
           golang-unit-tests-exclusions: |-
