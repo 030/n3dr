@@ -11,7 +11,7 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.3
+      - uses: actions/checkout@v4.1.4
         with:
           ref: main
       - uses: snapcore/action-build@v1.2.0
