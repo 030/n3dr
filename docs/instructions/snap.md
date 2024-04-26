@@ -14,11 +14,17 @@ snap install n3dr
 
 ## Usage
 
+Download artifacts:
+
+```bash
+n3dr repositoriesV2 --backup --directory-prefix /tmp/some-dir
+```
+
 Check the downloaded artifacts:
 
 ```bash
-sudo ls /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764>
-sudo cp -r /tmp/snap.n3dr/tmp/n3dr/download<some number, e.g.: 082028764> /home/${USER}/n3dr-backup
+sudo ls /tmp/snap-private-tmp/snap.n3dr/tmp/some-dir
+sudo cp -r sudo ls /tmp/snap-private-tmp/snap.n3dr/tmp/some-dir /home/${USER}/n3dr-backup
 sudo chown $USER:$USER -R /home/${USER}/n3dr-backup
 ```
 
