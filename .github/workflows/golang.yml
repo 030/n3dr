@@ -1,5 +1,5 @@
 ---
-name: golang
+name: Golang
 'on':
   # required by gomod-go-version-updater to trigger this action once pr has
   # been reviewed

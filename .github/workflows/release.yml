@@ -8,11 +8,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
+          - os: macos-14
             shasum: shasum -a 512
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shasum: sha512sum
-          - os: windows-latest
+          - os: windows-2019
             shasum: sha512sum
     steps:
       - uses: actions/checkout@v4.1.4

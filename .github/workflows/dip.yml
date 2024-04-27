@@ -5,7 +5,7 @@ name: DIP
     - cron: '35 21 25 * *'
 jobs:
   dip:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: Check whether images are up-to-date
     steps:
       - uses: actions/checkout@v4.1.4

@@ -3,7 +3,7 @@ name: Yamllint
 'on': push
 jobs:
   yamllint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
       image: pipelinecomponents/yamllint:0.21.0
       env:

@@ -1,6 +1,11 @@
 ---
 name: Docker
-'on': push
+'on':
+  # required by gomod-go-version-updater to trigger this action once pr has
+  # been reviewed
+  pull_request_review:
+    types: [submitted]
+  push:
 jobs:
   mcvs-docker-action:
     runs-on: ubuntu-20.04
