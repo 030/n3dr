@@ -21,7 +21,7 @@ jobs:
       - name: Check Alpine
         run: ./dip image --name=alpine --regex=^3\.[0-9]+\.[0-9]+$ --updateDockerfile
       - name: Set up Go
-        uses: actions/setup-go@v5.0.0
+        uses: actions/setup-go@v5.0.1
         with:
           go-version-file: 'go.mod'
           cache: false
