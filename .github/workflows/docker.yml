@@ -5,7 +5,7 @@ jobs:
   mcvs-docker-action:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4.1.4
+      - uses: actions/checkout@v4.1.5
       - uses: schubergphilis/mcvs-docker-action@v0.3.2
         with:
           dockle-accept-key: libcrypto3,libssl3
