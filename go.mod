@@ -6,7 +6,7 @@ require (
 	github.com/030/logging v0.1.2
 	github.com/030/mij v1.0.2
 	github.com/030/p2iwd v1.0.3
-	github.com/aws/aws-sdk-go v1.51.29
+	github.com/aws/aws-sdk-go v1.52.3
 	github.com/go-openapi/errors v0.22.0
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-openapi/strfmt v0.23.0
