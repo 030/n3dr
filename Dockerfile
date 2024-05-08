@@ -1,4 +1,4 @@
-FROM golang:1.22.2-alpine3.18 as builder
+FROM golang:1.22.3-alpine3.18 as builder
 ARG VERSION
 ENV USERNAME n3dr
 RUN adduser -D -g '' $USERNAME
