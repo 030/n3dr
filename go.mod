@@ -6,7 +6,7 @@ require (
 	github.com/030/logging v0.1.2
 	github.com/030/mij v1.0.2
 	github.com/030/p2iwd v1.0.3
-	github.com/aws/aws-sdk-go v1.51.29
+	github.com/aws/aws-sdk-go v1.53.17
 	github.com/go-openapi/errors v0.22.0
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-openapi/strfmt v0.23.0
@@ -76,7 +76,6 @@ require (
 	github.com/opencontainers/runc v1.1.12 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
-	github.com/pierrec/lz4/v4 v4.1.18 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
