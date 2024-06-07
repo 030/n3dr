@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -33,6 +34,11 @@ func (n *Nexus3) download(checksum, downloadedFileChecksum string, asset *models
 			"url":      asset.DownloadURL,
 			"expected": checksum,
 		}).Debug("download artifact as checksum deviates")
+
+		if *n.HTTPS && strings.Contains(asset.DownloadURL, ":443") {
+			replacer := strings.NewReplacer(":443", "", "http", "https")
+			asset.DownloadURL = replacer.Replace(asset.DownloadURL)
+		}
 
 		req, err := http.NewRequest("GET", asset.DownloadURL, nil)
 		if err != nil {
