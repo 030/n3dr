@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.4
       - name: Set up Go
-        uses: actions/setup-go@v5.0.0
+        uses: actions/setup-go@v5.0.2
         with:
           go-version-file: 'go.mod'
           cache: false
