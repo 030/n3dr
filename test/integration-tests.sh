@@ -227,7 +227,7 @@ uploadYum() {
 
 backupHelper() {
   count_downloads 301 "${1}"
-  test_zip 132 "${1}"
+  test_zip 136 "${1}"
 
   cleanup_downloads
 }

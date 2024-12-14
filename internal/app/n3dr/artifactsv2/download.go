@@ -1,6 +1,7 @@
 package artifactsv2
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -16,7 +17,7 @@ import (
 	"github.com/030/n3dr/internal/app/n3dr/s3"
 	"github.com/030/p2iwd/pkg/p2iwd"
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/mholt/archiver/v3"
+	"github.com/mholt/archives"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -149,12 +150,35 @@ func (n *Nexus3) downloadIfChecksumMismatchLocalFile(continuationToken, repo str
 	return n.downloadIfChecksumMismatchLocalFile(continuationToken, repo)
 }
 
-func (n *Nexus3) zipFile() error {
+func (n *Nexus3) zipFile() (err error) {
 	zipFilename := "n3dr-backup-" + time.Now().Format("01-02-2006T15-04-05") + ".zip"
 	zipFilenamePath := filepath.Join(n.DownloadDirNameZip, zipFilename)
 	if n.AwsBucket != "" || n.ZIP {
 		log.Infof("Trying to create a zip file: '%s' in '%s'...", zipFilename, zipFilenamePath)
-		if err := archiver.Archive([]string{n.DownloadDirName}, zipFilenamePath); err != nil {
+
+		ctx := context.TODO()
+		log.Infof("adding folder: '%s' to zip: '%s'", n.DownloadDirName, zipFilenamePath)
+		files, err := archives.FilesFromDisk(ctx, nil, map[string]string{
+			n.DownloadDirName: "",
+		})
+		if err != nil {
+			return err
+		}
+		out, err := os.Create(zipFilenamePath)
+		if err != nil {
+			return err
+		}
+		defer func() {
+			if cerr := out.Close(); cerr != nil {
+				err = fmt.Errorf("cannot close zipfile to be created: '%w'", cerr)
+			}
+		}()
+		format := archives.CompressedArchive{
+			// Compression: archives.Gz{},
+			Archival: archives.Zip{},
+		}
+		err = format.Archive(ctx, out, files)
+		if err != nil {
 			return err
 		}
 		log.Infof("Zipfile: '%v' created in '%v'", zipFilename, zipFilenamePath)
