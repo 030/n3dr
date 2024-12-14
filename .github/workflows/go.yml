@@ -17,7 +17,7 @@ jobs:
           - os: windows-latest
             shasum: sha512sum
     steps:
-      - uses: actions/checkout@v4.1.4
+      - uses: actions/checkout@v4.2.2
       - name: Set up Go
         uses: actions/setup-go@v5.2.0
         with:
