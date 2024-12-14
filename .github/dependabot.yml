@@ -5,10 +5,18 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      docker-all:
+        patterns:
+          - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions-all:
+        patterns:
+          - "*"
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
