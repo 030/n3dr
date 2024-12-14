@@ -1,12 +1,20 @@
 ---
 name: Docker
-'on': push
+"on":
+  # required by gomod-go-version-updater to trigger this action once pr has
+  # been reviewed
+  pull_request_review:
+    types: [submitted]
+  push:
+permissions:
+  contents: read
+  packages: write
 jobs:
   mcvs-docker-action:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4.1.4
-      - uses: schubergphilis/mcvs-docker-action@v0.3.2
+      - uses: actions/checkout@v4.2.2
+      - uses: schubergphilis/mcvs-docker-action@v0.5.6
         with:
           dockle-accept-key: libcrypto3,libssl3
           token: ${{ secrets.GITHUB_TOKEN }}

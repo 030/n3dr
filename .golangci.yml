@@ -40,7 +40,7 @@ issues:
     - linters:
         - gocognit
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: 'cognitive complexity 71'
+      text: "cognitive complexity 71"
     - linters:
         - gocognit
       path: internal/app/n3dr/artifactsv2/upload/upload.go
@@ -48,7 +48,7 @@ issues:
     - linters:
         - gocyclo
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: 'cyclomatic complexity 38'
+      text: "cyclomatic complexity 38"
     - linters:
         - funlen
       path: internal/app/n3dr/artifactsv2/upload/upload.go
@@ -60,7 +60,7 @@ issues:
     - linters:
         - maintidx
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: 'Cyclomatic Complexity: 38'
+      text: "Cyclomatic Complexity: 38"
 linters:
   enable-all: true
   disable:
@@ -68,6 +68,7 @@ linters:
     - exhaustruct
     - forbidigo
     - forcetypeassert
+    - funlen
     - gochecknoglobals
     - goconst
     - gocritic
@@ -75,6 +76,7 @@ linters:
     - golint
     - gomnd
     - lll
+    - mnd
     - nestif
     - nlreturn
     - noctx
@@ -125,7 +127,7 @@ linters-settings:
         # against.
         # Default: $all
         files:
-          - '!**/*_a _file.go'
+          - "!**/*_a _file.go"
         # List of allowed packages.
         allow:
           - $gostd
@@ -141,9 +143,11 @@ linters-settings:
           - github.com/go-openapi/strfmt
           - github.com/go-playground/validator/v10
           - github.com/hashicorp/go-retryablehttp
-          - github.com/mholt/archiver
+          - github.com/mholt/archives
           - github.com/mitchellh/go-homedir
           - github.com/OpenPeeDeeP
+          - github.com/ory/dockertest/v3
+          - github.com/ory/dockertest/v3/docker
           - github.com/samber/lo
           - github.com/sirupsen/logrus
           - github.com/spf13/cobra
@@ -153,5 +157,5 @@ linters-settings:
         deny:
           # - pkg: 'github.com/sirupsen/logrus'
           #   desc: not allowed
-          - pkg: 'github.com/pkg/errors'
+          - pkg: "github.com/pkg/errors"
             desc: Should be replaced by standard lib errors package

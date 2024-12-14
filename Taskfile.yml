@@ -1,50 +1,13 @@
 ---
-version: '3'
+version: 3
 
-env:
-  GIT_CHGLOG_URL: https://github.com/git-chglog/git-chglog/releases/download
-  GIT_CHGLOG_VERSION: v0.15.1/git-chglog_0.15.1_linux_amd64.tar.gz
-  CHANGELOG_NEXT_TAG: 7.5.2
+vars:
+  REMOTE_URL: https://raw.githubusercontent.com
+  REMOTE_URL_REF: v0.15.3
+  REMOTE_URL_REPO: schubergphilis/mcvs-golang-action
 
-tasks:
-  changelog:
-    cmds:
-      - |
-        git fetch -p -P
-        curl \
-          -L ${GIT_CHGLOG_URL}/${GIT_CHGLOG_VERSION} \
-          -o /tmp/git-chglog.tar.gz
-        tar -xvf /tmp/git-chglog.tar.gz -C /tmp
-        chmod +x /tmp/git-chglog
-        /tmp/git-chglog \
-          -o docs/CHANGELOG.md \
-          --config configs/chglog/config.yml \
-          --next-tag ${CHANGELOG_NEXT_TAG}
-        sed -i "s|\/\([0-9]\+\.\)\{2\}[0-9]\+|/${CHANGELOG_NEXT_TAG}|g" \
-          ./docs/quickstarts/snippets/n3dr/DOWNLOAD.md
-        sed -i "s|version:.*|version: ${CHANGELOG_NEXT_TAG}|" \
-          ./build/package/snap/snapcraft.yaml
-  integration-tests:
-    cmds:
-      - |
-        go test \
-          -coverprofile=coverage.cov \
-          --tags=integration \
-          -v \
-          -count=1 \
-          --cover \
-          -race \
-          -p=4 \
-          ./...
-        go tool cover -func=coverage.cov > coverage-functions.out
-        go tool cover -html=coverage.cov -o coverage.html
-        open ./coverage.html
-  lint:
-    cmds:
-      - |
-        go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
-        ~/go/bin/golangci-lint --version
-        ~/go/bin/golangci-lint run \
-          -v \
-          --timeout 2m30s \
-          --config .golangci.yml
+includes:
+  common:
+    taskfile: ./build/TaskfileCommon.yml
+  remote: >-
+    {{.REMOTE_URL}}/{{.REMOTE_URL_REPO}}/{{.REMOTE_URL_REF}}/Taskfile.yml
