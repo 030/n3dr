@@ -27,7 +27,7 @@ jobs:
       TASK_X_REMOTE_TASKFILES: 1
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: schubergphilis/mcvs-golang-action@v0.15.0
+      - uses: schubergphilis/mcvs-golang-action@v0.15.3
         with:
           code-coverage-expected: 38.4
           golang-unit-tests-exclusions: |-
