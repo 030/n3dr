@@ -29,7 +29,7 @@ import (
 )
 
 type artifactFiles struct {
-	f2, f3, f4, f5, f6, f7 *os.File
+	f2, f3, f4, f5, f6, f7, f8, f9, f10, f11 *os.File
 }
 
 type mavenParts struct {
@@ -293,12 +293,82 @@ func (af artifactFiles) mavenJarAndOtherExtensions(c *components.UploadComponent
 		}).Trace("Maven2 asset6")
 	}
 
+	filePathAar := fileNameWithoutExtIncludingDir + ".aar"
+	if _, err := os.Stat(filePathAar); err == nil {
+		af.f8, err = os.Open(filepath.Clean(filePathAar))
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset8 = af.f8
+		ext8 := "aar"
+		c.Maven2Asset8Extension = &ext8
+
+		log.WithFields(log.Fields{
+			"file":      c.Maven2Asset8.Name(),
+			"extension": *c.Maven2Asset8Extension,
+		}).Trace("Maven2 asset8")
+	}
+
+	filePathKotlinToolingMetadata := fileNameWithoutExtIncludingDir + "-kotlin-tooling-metadata.json"
+	if _, err := os.Stat(filePathKotlinToolingMetadata); err == nil {
+		af.f9, err = os.Open(filepath.Clean(filePathKotlinToolingMetadata))
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset9 = af.f9
+		ext9 := "json"
+		c.Maven2Asset9Extension = &ext9
+		classifier9 := "kotlin-tooling-metadata"
+		c.Maven2Asset9Classifier = &classifier9
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset9.Name(),
+			"extension":  *c.Maven2Asset9Extension,
+			"classifier": *c.Maven2Asset9Classifier,
+		}).Trace("Maven2 asset9")
+	}
+
+	filePathMetadata := fileNameWithoutExtIncludingDir + "-metadata.jar"
+	if _, err := os.Stat(filePathMetadata); err == nil {
+		af.f10, err = os.Open(filepath.Clean(filePathMetadata))
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset10 = af.f10
+		ext10 := "jar"
+		c.Maven2Asset10Extension = &ext10
+		classifier10 := "metadata"
+		c.Maven2Asset10Classifier = &classifier10
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset10.Name(),
+			"extension":  *c.Maven2Asset10Extension,
+			"classifier": *c.Maven2Asset10Classifier,
+		}).Trace("Maven2 asset10")
+	}
+
+	filePathKlib := fileNameWithoutExtIncludingDir + ".klib"
+	if _, err := os.Stat(filePathKlib); err == nil {
+		af.f11, err = os.Open(filepath.Clean(filePathKlib))
+		if err != nil {
+			return err
+		}
+		c.Maven2Asset11 = af.f11
+		ext11 := "klib"
+		c.Maven2Asset11Extension = &ext11
+
+		log.WithFields(log.Fields{
+			"file":       c.Maven2Asset11.Name(),
+			"extension":  *c.Maven2Asset11Extension,
+		}).Trace("Maven2 asset11")
+	}
+
 	return nil
 }
 
 func removeExtension(fileName string) string {
 	ext := filepath.Ext(fileName)
-	re := regexp.MustCompile(`(-[a-zA-Z]+)?` + ext + `$`)
+	re := regexp.MustCompile(`(-[a-zA-Z]+)*\` + ext + `$`)
 	result := re.ReplaceAllString(fileName, "")
 	filename := filepath.Base(result)
 	return filename
@@ -415,6 +485,10 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			maven2Asset5 := "empty"
 			maven2Asset6 := "empty"
 			maven2Asset7 := "empty"
+			maven2Asset8 := "empty"
+			maven2Asset9 := "empty"
+			maven2Asset10 := "empty"
+			maven2Asset11 := "empty"
 
 			if c.Maven2Asset1 != nil {
 				maven2Asset1 = c.Maven2Asset1.Name()
@@ -437,15 +511,31 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			if c.Maven2Asset7 != nil {
 				maven2Asset7 = c.Maven2Asset7.Name()
 			}
+			if c.Maven2Asset8 != nil {
+				maven2Asset8 = c.Maven2Asset8.Name()
+			}
+			if c.Maven2Asset9 != nil {
+				maven2Asset9 = c.Maven2Asset9.Name()
+			}
+			if c.Maven2Asset10 != nil {
+				maven2Asset10 = c.Maven2Asset10.Name()
+			}
+			if c.Maven2Asset11 != nil {
+				maven2Asset11 = c.Maven2Asset11.Name()
+			}
 
 			log.WithFields(log.Fields{
-				"1": maven2Asset1,
-				"2": maven2Asset2,
-				"3": maven2Asset3,
-				"4": maven2Asset4,
-				"5": maven2Asset5,
-				"6": maven2Asset6,
-				"7": maven2Asset7,
+				"1":  maven2Asset1,
+				"2":  maven2Asset2,
+				"3":  maven2Asset3,
+				"4":  maven2Asset4,
+				"5":  maven2Asset5,
+				"6":  maven2Asset6,
+				"7":  maven2Asset7,
+				"8":  maven2Asset8,
+				"9":  maven2Asset9,
+				"10": maven2Asset10,
+				"11": maven2Asset11,
 			}).Debug("Maven2 asset upload")
 		} else {
 			log.Debugf("folder: '%s' does not contain a pom file: '%s'", dirPath, filePathPom)
@@ -486,7 +576,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			generatePOM := true
 			c.Maven2GeneratePom = &generatePOM
 
-			maven2Asset1, maven2Asset2, maven2Asset3, maven2Asset4, maven2Asset5, maven2Asset6, maven2Asset7 := "empty", "empty", "empty", "empty", "empty", "empty", "empty"
+			maven2Asset1, maven2Asset2, maven2Asset3, maven2Asset4, maven2Asset5, maven2Asset6, maven2Asset7, maven2Asset8, maven2Asset9, maven2Asset10, maven2Asset11 := "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty", "empty"
 
 			if c.Maven2Asset1 != nil {
 				maven2Asset1 = c.Maven2Asset1.Name()
@@ -509,15 +599,31 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 			if c.Maven2Asset7 != nil {
 				maven2Asset7 = c.Maven2Asset7.Name()
 			}
+			if c.Maven2Asset8 != nil {
+				maven2Asset8 = c.Maven2Asset8.Name()
+			}
+			if c.Maven2Asset9 != nil {
+				maven2Asset9 = c.Maven2Asset9.Name()
+			}
+			if c.Maven2Asset10 != nil {
+				maven2Asset10 = c.Maven2Asset10.Name()
+			}
+			if c.Maven2Asset11 != nil {
+				maven2Asset11 = c.Maven2Asset11.Name()
+			}
 
 			log.WithFields(log.Fields{
-				"1": maven2Asset1,
-				"2": maven2Asset2,
-				"3": maven2Asset3,
-				"4": maven2Asset4,
-				"5": maven2Asset5,
-				"6": maven2Asset6,
-				"7": maven2Asset7,
+				"1":  maven2Asset1,
+				"2":  maven2Asset2,
+				"3":  maven2Asset3,
+				"4":  maven2Asset4,
+				"5":  maven2Asset5,
+				"6":  maven2Asset6,
+				"7":  maven2Asset7,
+				"8":  maven2Asset8,
+				"9":  maven2Asset9,
+				"10": maven2Asset10,
+				"11": maven2Asset11,
 			}).Debug("Maven2 asset upload")
 		}
 
@@ -570,7 +676,7 @@ func (n *Nexus3) UploadSingleArtifact(client *client.Nexus3, path, localDiskRepo
 		return false, nil
 	}
 
-	files := []*os.File{f, af.f2, af.f3, af.f4, af.f5, af.f6, af.f2, af.f7}
+	files := []*os.File{f, af.f2, af.f3, af.f4, af.f5, af.f6, af.f2, af.f7, af.f8, af.f9, af.f10, af.f11}
 	if err := upload(c, client, path, files); err != nil {
 		return false, err
 	}
