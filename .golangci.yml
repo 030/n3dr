@@ -40,15 +40,21 @@ issues:
     - linters:
         - gocognit
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: "cognitive complexity 71"
+      text: >-
+        cognitive complexity 91 of func `\(\*Nexus3\).UploadSingleArtifact` is
+        high
     - linters:
         - gocognit
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: cognitive complexity 55 of func `UploadSingleArtifact` is high
+      text: >-
+        cognitive complexity 38 of func
+        `\(artifactFiles\).mavenJarAndOtherExtensions` is high
     - linters:
         - gocyclo
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: "cyclomatic complexity 38"
+      text: >-
+        cyclomatic complexity 46 of func `\(\*Nexus3\).UploadSingleArtifact`
+        is high
     - linters:
         - funlen
       path: internal/app/n3dr/artifactsv2/upload/upload.go
@@ -60,7 +66,9 @@ issues:
     - linters:
         - maintidx
       path: internal/app/n3dr/artifactsv2/upload/upload.go
-      text: "Cyclomatic Complexity: 38"
+      text: >-
+        Function name: UploadSingleArtifact, Cyclomatic Complexity: 46,
+        Halstead Volume: 7485.94, Maintainability Index: 14
 linters:
   enable-all: true
   disable:

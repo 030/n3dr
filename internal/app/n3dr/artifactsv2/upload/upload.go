@@ -358,8 +358,8 @@ func (af artifactFiles) mavenJarAndOtherExtensions(c *components.UploadComponent
 		c.Maven2Asset11Extension = &ext11
 
 		log.WithFields(log.Fields{
-			"file":       c.Maven2Asset11.Name(),
-			"extension":  *c.Maven2Asset11Extension,
+			"file":      c.Maven2Asset11.Name(),
+			"extension": *c.Maven2Asset11Extension,
 		}).Trace("Maven2 asset11")
 	}
 

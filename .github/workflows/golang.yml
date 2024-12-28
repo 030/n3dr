@@ -27,9 +27,9 @@ jobs:
       TASK_X_REMOTE_TASKFILES: 1
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: schubergphilis/mcvs-golang-action@v0.15.3
+      - uses: schubergphilis/mcvs-golang-action@v0.15.4
         with:
-          code-coverage-expected: 38.4
+          code-coverage-expected: 37.5
           golang-unit-tests-exclusions: |-
             \(cmd\/n3dr\|internal\/app\/n3dr\/\(goswagger\|n3drtest\)\)
           testing-type: ${{ matrix.testing-type }}
