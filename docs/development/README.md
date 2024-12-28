@@ -17,7 +17,7 @@ curl http://localhost:8081/service/rest/swagger.json -o \
 
 Lookup the `maven2.asset3` json snippet, septuple it and change it to:
 `maven2.asset4`, `maven2.asset5`, `maven2.asset6`, `maven2.asset7`,
-`maven2.asset8`, `maven2.asset9` and `maven2.asset10` respectively. After
+`maven2.asset8`, `maven2.asset9`, `maven2.asset10` and `maven2.asset11` respectively. After
 adding the seven snippets and renaming them, download go-swagger and generate
 internal go-swagger code:
 
