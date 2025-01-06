@@ -14,7 +14,7 @@ require (
 	github.com/go-openapi/validate v0.24.0
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/hashicorp/go-retryablehttp v0.7.7
-	github.com/mholt/archives v0.0.0-20241207175349-5e373c52f8aa
+	github.com/mholt/archives v0.1.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/ory/dockertest/v3 v3.11.0
 	github.com/samber/lo v1.47.0
