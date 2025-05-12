@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: schubergphilis/mcvs-docker-action@v0.6.1
+      - uses: schubergphilis/mcvs-docker-action@v0.7.1
         with:
           dockle-accept-key: libcrypto3,libssl3
           token: ${{ secrets.GITHUB_TOKEN }}

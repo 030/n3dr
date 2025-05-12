@@ -10,4 +10,4 @@ jobs:
   gomod-go-version-updater-action:
     runs-on: ubuntu-22.04
     steps:
-      - uses: 030/gomod-go-version-updater-action@v0.2.2
+      - uses: 030/gomod-go-version-updater-action@v0.3.3
