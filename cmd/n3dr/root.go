@@ -90,7 +90,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&n3drPass, "n3drPass", "p", "", "nexus3 password")
 	rootCmd.PersistentFlags().StringVarP(&n3drURL, "n3drURL", "n", "", "nexus3 URL")
 	rootCmd.PersistentFlags().StringVarP(&n3drUser, "n3drUser", "u", "", "nexus3 user")
-	rootCmd.PersistentFlags().BoolVarP(&showLogo, "showLogo", "", true, "show N3DR logo or not")
+	rootCmd.PersistentFlags().BoolVarP(&showLogo, "showLogo", "l", false, "don't show N3DR logo ")
 	rootCmd.PersistentFlags().BoolVarP(&skipErrors, "skipErrors", "s", false, "Skip errors")
 	rootCmd.PersistentFlags().BoolVar(&syslog, "syslog", false, "whether the logs should be written to syslog")
 	rootCmd.PersistentFlags().BoolVarP(&zip, "zip", "z", false, "add downloaded artifacts to a ZIP archive")
@@ -137,7 +137,7 @@ func configFilePath() (string, error) {
 }
 
 func ascii() {
-	if showLogo {
+	if !showLogo {
 		fmt.Println(logo)
 	}
 }
