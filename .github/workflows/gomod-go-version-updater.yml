@@ -8,6 +8,6 @@ permissions:
   pull-requests: write
 jobs:
   gomod-go-version-updater-action:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: 030/gomod-go-version-updater-action@v0.3.5
