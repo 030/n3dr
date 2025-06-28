@@ -19,7 +19,7 @@ jobs:
         with:
           ref: main
       - name: Set up Go
-        uses: actions/setup-go@v5.2.0
+        uses: actions/setup-go@v5.5.0
         with:
           go-version-file: 'go.mod'
           cache: false
@@ -60,14 +60,14 @@ jobs:
         if: ${{ startsWith(matrix.os, 'windows') }}
         # yamllint enable rule:line-length
       - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@2.9.0
+        uses: svenstaro/upload-release-action@2.10.0
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: cmd/n3dr/${{ env.n3dr-deliverable }}
           asset_name: ${{ env.n3dr-deliverable }}
           tag: ${{ github.ref }}
       - name: Upload checksums
-        uses: svenstaro/upload-release-action@2.9.0
+        uses: svenstaro/upload-release-action@2.10.0
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: cmd/n3dr/${{ env.n3dr-deliverable }}.sha512.txt
