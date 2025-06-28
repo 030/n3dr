@@ -76,17 +76,16 @@ The aims of the n3dr tool are:
 | type      | backup | upload | label | cac |
 | --------- | ------ | ------ | ----- | --- |
 | apt       | x      | x      | `^`   | x   |
-| bower     |        |        |       |     |
+| cargo     |        |        |       |     |
 | cocoapods |        |        |       |     |
 | composer  |        |        |       |     |
 | conan     |        |        |       |     |
 | conda     |        |        |       |     |
-| cpan      |        |        |       |     |
 | docker    | x      | x      | ``    | x   |
-| elpa      |        |        |       |     |
 | gitlfs    |        |        |       |     |
 | go        |        |        |       |     |
 | helm      |        |        |       |     |
+|huggingface|        |        |       |     |
 | maven2    | x      | x      | `+`   | x   |
 | npm       | x      | x      | `*`   | x   |
 | nuget     | x      | x      | `$`   | x   |
