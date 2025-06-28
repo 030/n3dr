@@ -11,10 +11,13 @@ permissions:
   packages: write
 jobs:
   mcvs-docker-action:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: schubergphilis/mcvs-docker-action@v0.7.2
+      - uses: 030/mcvs-docker-action@123-build-args
         with:
-          dockle-accept-key: libcrypto3,libssl3
+          build-args: |
+            APPLICATION=n3dr
+            VERSION=${{ github.ref }}
+          dockle-accept-key: APPLICATION,libcrypto3,libssl3
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -3,11 +3,12 @@ version: 3
 
 vars:
   REMOTE_URL: https://raw.githubusercontent.com
-  REMOTE_URL_REF: v0.15.3
+  REMOTE_URL_REF: v3.3.1
   REMOTE_URL_REPO: schubergphilis/mcvs-golang-action
 
 includes:
   common:
     taskfile: ./build/TaskfileCommon.yml
-  remote: >-
-    {{.REMOTE_URL}}/{{.REMOTE_URL_REPO}}/{{.REMOTE_URL_REF}}/Taskfile.yml
+  remote:
+    taskfile: >-
+      {{.REMOTE_URL}}/{{.REMOTE_URL_REPO}}/{{.REMOTE_URL_REF}}/build/task.yml

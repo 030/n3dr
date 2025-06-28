@@ -22,7 +22,7 @@ jobs:
           - security-grype
           - security-trivy
           - unit
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       TASK_X_REMOTE_TASKFILES: 1
     steps:
