@@ -73,29 +73,29 @@ The aims of the n3dr tool are:
 - to migrate and/or restore them to another Nexus3 server.
 - configuration-as-code (cac).
 
-| type      | backup | upload | label | cac |
-| --------- | ------ | ------ | ----- | --- |
-| apt       | x      | x      | `^`   | x   |
-| cargo     |        |        |       |     |
-| cocoapods |        |        |       |     |
-| composer  |        |        |       |     |
-| conan     |        |        |       |     |
-| conda     |        |        |       |     |
-| docker    | x      | x      | ``    | x   |
-| gitlfs    |        |        |       |     |
-| go        |        |        |       |     |
-| helm      |        |        |       |     |
-|huggingface|        |        |       |     |
-| maven2    | x      | x      | `+`   | x   |
-| npm       | x      | x      | `*`   | x   |
-| nuget     | x      | x      | `$`   | x   |
-| p2        |        |        |       |     |
-| pypi      |        |        |       |     |
-| r         |        |        |       |     |
-| raw       | x      | x      | `%`   | x   |
-| rubygems  | x      | x      | `-`   | x   |
-| yum       | x      | x      | `#`   | x   |
-| unknown   | n/a    | n/a    | `?`   |     |
+| type        | backup | upload | label | cac |
+| ----------- | ------ | ------ | ----- | --- |
+| apt         | x      | x      | `^`   | x   |
+| cargo       |        |        |       |     |
+| cocoapods   |        |        |       |     |
+| composer    |        |        |       |     |
+| conan       |        |        |       |     |
+| conda       |        |        |       |     |
+| docker      | x      | x      | ``    | x   |
+| gitlfs      |        |        |       |     |
+| go          |        |        |       |     |
+| helm        |        |        |       |     |
+| huggingface |        |        |       |     |
+| maven2      | x      | x      | `+`   | x   |
+| npm         | x      | x      | `*`   | x   |
+| nuget       | x      | x      | `$`   | x   |
+| p2          |        |        |       |     |
+| pypi        |        |        |       |     |
+| r           |        |        |       |     |
+| raw         | x      | x      | `%`   | x   |
+| rubygems    | x      | x      | `-`   | x   |
+| yum         | x      | x      | `#`   | x   |
+| unknown     | n/a    | n/a    | `?`   |     |
 
 **Table 1**: Overview of Nexus3 types that can be downloaded, uploaded and/or
 configured by N3DR.
