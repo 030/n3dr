@@ -12,7 +12,7 @@ require (
 	github.com/go-openapi/strfmt v0.23.0
 	github.com/go-openapi/swag v0.23.1
 	github.com/go-openapi/validate v0.24.0
-	github.com/go-playground/validator/v10 v10.26.0
+	github.com/go-playground/validator/v10 v10.27.0
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/mholt/archives v0.1.3
 	github.com/mitchellh/go-homedir v1.1.0
