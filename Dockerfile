@@ -12,7 +12,7 @@ RUN apk add --no-cache \
         CGO_ENABLED=0 go build -ldflags "-X main.Version=${VERSION}" -buildvcs=false && \
         cp ${APPLICATION} /${APPLICATION}
 
-FROM alpine:3.22.0
+FROM alpine:3.22.1
 ARG APPLICATION
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /${APPLICATION} /usr/local/bin/app
