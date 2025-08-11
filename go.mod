@@ -6,13 +6,13 @@ require (
 	github.com/030/logging v0.1.2
 	github.com/030/mij v1.0.2
 	github.com/030/p2iwd v1.0.3
-	github.com/aws/aws-sdk-go v1.55.7
-	github.com/go-openapi/errors v0.22.1
+	github.com/aws/aws-sdk-go v1.55.8
+	github.com/go-openapi/errors v0.22.2
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-openapi/strfmt v0.23.0
 	github.com/go-openapi/swag v0.23.1
 	github.com/go-openapi/validate v0.24.0
-	github.com/go-playground/validator/v10 v10.26.0
+	github.com/go-playground/validator/v10 v10.27.0
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/mholt/archives v0.1.3
 	github.com/mitchellh/go-homedir v1.1.0
