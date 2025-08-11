@@ -1,7 +1,7 @@
 ARG APPLICATION=n3dr \
     VERSION=0.1.0-rc.1
 
-FROM golang:1.24.5-alpine AS builder
+FROM golang:1.24.6-alpine AS builder
 ARG APPLICATION \
     VERSION
 RUN adduser -D -g '' ${APPLICATION}
@@ -12,7 +12,7 @@ RUN apk add --no-cache \
         CGO_ENABLED=0 go build -ldflags "-X main.Version=${VERSION}" -buildvcs=false && \
         cp ${APPLICATION} /${APPLICATION}
 
-FROM alpine:3.22.0
+FROM alpine:3.22.1
 ARG APPLICATION
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /${APPLICATION} /usr/local/bin/app
