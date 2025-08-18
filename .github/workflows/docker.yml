@@ -13,8 +13,8 @@ jobs:
   mcvs-docker-action:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: schubergphilis/mcvs-docker-action@v0.7.2
+      - uses: actions/checkout@v5.0.0
+      - uses: schubergphilis/mcvs-docker-action@v0.8.1
         with:
           build-args: |
             APPLICATION=n3dr
