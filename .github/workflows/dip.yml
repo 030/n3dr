@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Check whether images are up-to-date
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
         with:
           fetch-depth: 0
           token: ${{ secrets.WORKFLOW_TOKEN }}
@@ -21,7 +21,7 @@ jobs:
       - name: Check Alpine
         run: ./dip image --name=alpine --regex=^3\.[0-9]+\.[0-9]+$ --updateDockerfile
       - name: Set up Go
-        uses: actions/setup-go@v5.5.0
+        uses: actions/setup-go@v6.0.0
         with:
           go-version-file: 'go.mod'
           cache: false
