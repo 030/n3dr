@@ -1,6 +1,6 @@
 module github.com/030/n3dr
 
-go 1.25.6
+go 1.25.7
 
 require (
 	github.com/030/logging v0.1.2
